@@ -1,7 +1,6 @@
 package userinterface;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
 
@@ -15,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
-
 
 public class LoginSignUpWindow {
 
@@ -39,15 +38,15 @@ public class LoginSignUpWindow {
 
 		LoginSignUpWindowFrame.setTitle("Welcome to Alchemists!");
 		LoginSignUpWindowFrame.setResizable(false);
-		LoginSignUpWindowFrame.setSize(new Dimension(1920, 1080));
-		LoginSignUpWindowFrame.setPreferredSize(new Dimension(1920, 1080));
+		LoginSignUpWindowFrame.setSize(GlobalDimensions.FULL_SCREEN);
+		LoginSignUpWindowFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
 		LoginSignUpWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		LoginSignUpWindowFrame.setBounds(100, 100, 1920, 1080);
 		contentPane = new JPanel();
-		contentPane.setSize(new Dimension(1920, 1080));
-		contentPane.setPreferredSize(new Dimension(1920, 1080));
-		contentPane.setMinimumSize(new Dimension(1920, 1080));
-		contentPane.setMaximumSize(new Dimension(1920, 1080));
+		contentPane.setSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setPreferredSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setMinimumSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setMaximumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		LoginSignUpWindowFrame.setContentPane(contentPane);
@@ -123,13 +122,13 @@ public class LoginSignUpWindow {
 		loginFormPanel.add(loginButton);
 		contentPane.add(closeButton);
 
-		JLabel backgroundImage = new JLabel("New label");
+		JLabel backgroundImage = new JLabel();
 		backgroundImage.setBounds(0, 0, 1920, 1080);
-		backgroundImage.setSize(new Dimension(1920, 1080));
-		backgroundImage.setPreferredSize(new Dimension(1920, 1080));
+		backgroundImage.setSize(GlobalDimensions.FULL_SCREEN);
+		backgroundImage.setPreferredSize(GlobalDimensions.FULL_SCREEN);
 		backgroundImage.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/login.png")));
-		backgroundImage.setMinimumSize(new Dimension(1920, 1080));
-		backgroundImage.setMaximumSize(new Dimension(1920, 1080));
+		backgroundImage.setMinimumSize(GlobalDimensions.FULL_SCREEN);
+		backgroundImage.setMaximumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.add(backgroundImage);
 
 		LoginSignUpWindowFrame.setVisible(true);

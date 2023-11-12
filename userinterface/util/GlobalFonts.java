@@ -1,5 +1,7 @@
 package userinterface.util;
 
 public class GlobalFonts {
-    public static String TAHOMA = "Tahoma";
+
+	public static String TAHOMA = "Tahoma";
+
 }
