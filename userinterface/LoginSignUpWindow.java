@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
@@ -36,25 +37,27 @@ public class LoginSignUpWindow {
 	public LoginSignUpWindow() {
 
 		JFrame LoginSignUpWindowFrame = new JFrame();
-		LoginSignUpWindowFrame.setBounds(0, 0, 1920, 1080);
-		LoginSignUpWindowFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		LoginSignUpWindowFrame.setUndecorated(true);
+		LoginSignUpWindowFrame.setMaximumSize(new Dimension(1920, 1080));
+		LoginSignUpWindowFrame.setBounds(0, 0, 1920, 1080);
+		//LoginSignUpWindowFrame.setExtendedState(JFrame.NORMAL);
 
 		LoginSignUpWindowFrame.setTitle("Welcome to Alchemists!");
 		LoginSignUpWindowFrame.setResizable(false);
 		LoginSignUpWindowFrame.setSize(GlobalDimensions.FULL_SCREEN);
 		LoginSignUpWindowFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
 		LoginSignUpWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		LoginSignUpWindowFrame.setBounds(100, 100, 1920, 1080);
+		LoginSignUpWindowFrame.setBounds(0, 0, 1920, 1080);
+
 		contentPane = new JPanel();
 		contentPane.setSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setPreferredSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setMinimumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setMaximumSize(GlobalDimensions.FULL_SCREEN);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		LoginSignUpWindowFrame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+
 
 		JButton closeButton = new JButton("X");
 		closeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -131,6 +134,7 @@ public class LoginSignUpWindow {
 		loginButton.setFont(GlobalFonts.DISPLAYFONT);
 		loginButton.addActionListener(e -> {
 			//TODO log in action
+			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 		}
 				);
@@ -200,7 +204,7 @@ public class LoginSignUpWindow {
 		contentPane.add(closeButton);
 
 		JLabel backgroundImage = new JLabel();
-		backgroundImage.setBounds(0, 0, 1920, 1080);
+		backgroundImage.setBounds(0, 0, GlobalDimensions.FULL_SCREEN.height, GlobalDimensions.FULL_SCREEN.width);
 		backgroundImage.setSize(GlobalDimensions.FULL_SCREEN);
 		backgroundImage.setPreferredSize(GlobalDimensions.FULL_SCREEN);
 		backgroundImage.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/login.png")));
