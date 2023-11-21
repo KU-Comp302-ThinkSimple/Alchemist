@@ -205,22 +205,11 @@ public class LoginSignUpWindow {
 		loginSignUpFormPanel.add(signUpButton);
 		contentPane.add(closeButton);
 
-		/*
-		JLabel backgroundImage = new JLabel();
-		backgroundImage.setBounds(0, -11, 1920, 967);
-		backgroundImage.setSize(GlobalDimensions.FULL_SCREEN);
-		backgroundImage.setPreferredSize(GlobalDimensions.FULL_SCREEN);
-		backgroundImage.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/login.png")));
-		backgroundImage.setMinimumSize(GlobalDimensions.FULL_SCREEN);
-		backgroundImage.setMaximumSize(GlobalDimensions.FULL_SCREEN);
-		contentPane.add(backgroundImage);
-		 */
 
 		alchemistImageLabel = new JLabel();
-		alchemistImageLabel.setBounds(112, 186, 766, 766);
+		alchemistImageLabel.setBounds(110, 121, 766, 766);
 		alchemistImageLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/alchemist_square.png")));
 		contentPane.add(alchemistImageLabel);
-
 
 
 		LoginSignUpWindowFrame.setVisible(true);
