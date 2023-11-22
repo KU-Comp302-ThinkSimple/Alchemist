@@ -13,9 +13,6 @@ public class Molecule {
 		
 	}
 	
-	public Atom createAtom(int atomSize, int atomColor, int atomSign) {
-		return new Atom(atomSize, atomColor, atomSign);
-	}
 	
 	public void setAtom(Atom atom) {
 		if(atom.getAtomColor()==0) {

@@ -6,12 +6,15 @@ public class Atom {
 	int atomSign; //0 negative, 1 positive
 	
 	public Atom(int atomSize, int atomColor, int atomSign) {
-		super();
+		
 		this.atomSize = atomSize;
 		this.atomColor = atomColor;
 		this.atomSign = atomSign;
 	}
 
+	
+	
+	
 	public int getAtomSize() {
 		return atomSize;
 	}
