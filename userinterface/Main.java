@@ -1,4 +1,5 @@
 package userinterface;
+import techServices.UserInfoSaver;
 
 public class Main {
 	/**
@@ -7,7 +8,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		new LoginSignUpWindow();
+		//new LoginSignUpWindow();
+		UserInfoSaver.addToTxtFile("Mina","79776", "userinfo.txt");
 
 
 	}
