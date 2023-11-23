@@ -50,6 +50,8 @@ public class UserInfoSaver {
 			throw new Exception("Plater name already taken");
 		}
 		players.put(player.getPlayerId(), player);
+		//TODO: update the database object
+		System.out.println(players);
 	}
 	
 	public static Player getPlayer(String username, String password) throws Exception{
