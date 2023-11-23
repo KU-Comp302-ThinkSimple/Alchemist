@@ -13,21 +13,14 @@ public class PlayerToken {
 
 	int gold=0;
 	int reputation=0;
+	int playerHealth = 3;
+	int playerAction;
 	PlayerInventory playerInventory;
 	
 	public PlayerToken() {
 		
-		createInventory();
+		this.playerInventory= new PlayerInventory();
 	}
-	
-	
-	
-	public PlayerInventory createInventory() {
-		
-		return new PlayerInventory();
-	}
-	
-	
 	
 	
 	public void addGold(int gold) {
@@ -48,6 +41,22 @@ public class PlayerToken {
 		
 	}
 	
+
+	public void addHealth() {
+		if(this.playerHealth<3) {
+			this.playerHealth++;
+		}
+	}
+	
+	public void reduceHealth() {
+		if(this.playerHealth>0) {
+			this.playerHealth--;
+		}
+		if(this.playerHealth==0) {
+			this.playerHealth=3;
+			this.gold=0;
+		}
+	}
 	
 	
 	
@@ -90,7 +99,7 @@ public class PlayerToken {
 		playerInventory.playerHypothesesList.remove(hyp);
 	}
 	
-	public void removeAIngredientCard(IngredientCard ing) {
+	public void removeIngredientCard(IngredientCard ing) {
 		playerInventory.playerIngredientCardList.remove(ing);
 	}
 	

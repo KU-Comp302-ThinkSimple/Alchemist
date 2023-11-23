@@ -22,4 +22,37 @@ public class GameBoard extends Board {
     public GameBoard() {
         super();
     }
+
+	public Board getDeductionBoard() {
+		return deductionBoard;
+	}
+
+	public void setDeductionBoard(Board deductionBoard) {
+		this.deductionBoard = deductionBoard;
+	}
+
+	public Board getIngredientBoard() {
+		return ingredientBoard;
+	}
+
+	public void setIngredientBoard(Board ingredientBoard) {
+		this.ingredientBoard = ingredientBoard;
+	}
+
+	public Board getPublicationBoard() {
+		return publicationBoard;
+	}
+
+	public void setPublicationBoard(Board publicationBoard) {
+		this.publicationBoard = publicationBoard;
+	}
+
+	public Board getPotionBrewingBoard() {
+		return potionBrewingBoard;
+	}
+
+	public void setPotionBrewingBoard(Board potionBrewingBoard) {
+		this.potionBrewingBoard = potionBrewingBoard;
+	}
+    
 }

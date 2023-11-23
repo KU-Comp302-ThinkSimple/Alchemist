@@ -64,7 +64,7 @@ public class PlayerInventory {
 		this.playerHypothesesList.remove(hyp);
 	}
 	
-	public void removeAIngredientCard(IngredientCard ing) {
+	public void removeIngredientCard(IngredientCard ing) {
 		this.playerIngredientCardList.remove(ing);
 	}
 	

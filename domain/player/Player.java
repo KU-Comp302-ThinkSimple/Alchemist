@@ -1,32 +1,43 @@
 package domain.player;
 
-
 import java.util.ArrayList;
 
 import domain.cards.IngredientCard;
 import domain.potion.*;
 
-
 public class Player {
 
-	
 	final int playerId;
 	final String playerName;
-	final String password;
+	final String playerPassword;
 	int playerHealth;
-	PlayerToken token;
-	
-	
-	
+	PlayerToken playerToken;
+
 	public Player(int playerId, String playerName, String password) {
 		this.playerId = playerId;
 		this.playerName = playerName;
-		this.password = password;
-		this.playerHealth = 3;		
+		this.playerPassword = password;
+		this.playerHealth = 3;
 	}
-	
+
 	public void setPlayerToken(PlayerToken playerToken) {
-		this.token=playerToken;
+		this.playerToken = playerToken;
+	}
+
+	public String getPassword() {
+		return playerPassword;
+	}
+
+	public PlayerInventory getInventory() {
+		return this.playerToken.playerInventory;
+	}
+
+	public void addHealth() {
+		this.playerToken.addHealth();
+	}
+
+	public void reduceHealth() {
+		this.playerToken.reduceHealth();
 	}
 
 	public int getPlayerId() {
@@ -37,31 +48,34 @@ public class Player {
 		return playerName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPlayerPassword() {
+		return playerPassword;
 	}
-//
-//	public void transmuteIngredient(IngredientCard ingredient) {
-//		
-//	}
-//	
-//	public void publishTheory(IngredientCard ingredient) {
-//		
-//		
-//		
-//	}
-//	 
-//	public void makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2) {
-//		
-//	}
-	
-	
-//	
-//	public void sellAPotion(Potion potion, Boolean guarantee, Player customer) {
-//		
-//		
-//	}
-	
-	
-	
+
+	public PlayerToken getPlayerToken() {
+		return playerToken;
+	}
+
+	//
+	// public void transmuteIngredient(IngredientCard ingredient) {
+	//
+	// }
+	//
+	// public void publishTheory(IngredientCard ingredient) {
+	//
+	//
+	//
+	// }
+	//
+	// public void makeExperiment(IngredientCard ingredient1, IngredientCard
+	// ingredient2) {
+	//
+	// }
+
+	//
+	// public void sellAPotion(Potion potion, Boolean guarantee, Player customer) {
+	//
+	//
+	// }
+
 }
