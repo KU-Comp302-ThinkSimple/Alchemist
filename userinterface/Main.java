@@ -8,8 +8,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		//new LoginSignUpWindow();
-		UserInfoSaver.addToTxtFile("Mina","79776", "userinfo.txt");
+		new LoginSignUpWindow();
+		//UserInfoSaver.addToTxtFile("Mina","79776", "userinfo.txt");
 
 
 	}

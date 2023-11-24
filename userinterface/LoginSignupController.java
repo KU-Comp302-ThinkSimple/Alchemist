@@ -12,7 +12,7 @@ public class LoginSignupController {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public LoginSignupController getInstance() {
+	public static LoginSignupController getInstance() {
 		if (instance == null) {
 			instance = new LoginSignupController();
 		}
@@ -38,6 +38,10 @@ public class LoginSignupController {
 		try {
 			Player player = UserInfoSaver.getPlayer(username, password);
 			//TODO: add game controller logged in player logic
+			System.out.print("Logged in username: ");
+			System.out.print(player.getPlayerName());
+			System.out.print(" password: ");
+			System.out.println(player.getPassword());
 			//GameController.addToLoggedInPlayer(player);
 		} catch (Exception e) {
 			// TODO: add game controller message logic

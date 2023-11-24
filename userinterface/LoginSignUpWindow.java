@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.Cursor;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -16,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
+
+import userinterface.*;
 
 public class LoginSignUpWindow {
 
@@ -138,6 +141,8 @@ public class LoginSignUpWindow {
 			//TODO log in action
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
+			
+			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 		}
 				);
 		loginSignUpFormPanel.add(loginButton);
@@ -200,6 +205,7 @@ public class LoginSignUpWindow {
 			//TODO sign up action
 			String signUpUserNameInput = signUpUserNameInputTextField.getText();
 			char[] signUpPasswordInput = signUpPasswordField.getPassword();
+			LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
 		}
 				);
 		loginSignUpFormPanel.add(signUpButton);
