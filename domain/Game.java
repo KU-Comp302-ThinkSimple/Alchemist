@@ -12,12 +12,23 @@ public class Game {
 	Player currentPlayer;
 	Player[] activePlayers;
 	GameBoard board;
+	GameInventory gameInventory=GameInventory.getInstance();
 	
 	Game(){
 		currentRound=1;
 		activePlayers= new Player[2];
 		this.board = new GameBoard();
 	}
+	
+	
+	public void initializeIngredientCards() {
+		gameInventory.createAtom();
+		gameInventory.createMolecule();
+		gameInventory.createIngredientCard();
+	
+		//TODO Call the the function that fills the deck with these cards(See the corresponding comment in IngredientBoard class)
+	}
+	
 	
 	
 	public void chooseStartingPlayer() {
@@ -31,7 +42,7 @@ public class Game {
 		// board.getIngredientBoard().shuffle();
 		// board.getPublicationBoard().shuffle();
 		
-		//TO DO implement these, also need to find a way to represent artifact cards (maybe within the IngredientBoard?)
+		//TODO implement these, also need to find a way to represent artifact cards (maybe within the IngredientBoard?)
 	}	
 	
 	public void distibuteInitialCards() {
@@ -50,7 +61,11 @@ public class Game {
 			activePlayers[i].getPlayerToken().addGold(10);
 			}
 		}
+	
+	
+	
 	}
+	
 	
 	
 
