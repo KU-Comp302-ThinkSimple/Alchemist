@@ -52,6 +52,7 @@ public class GameController {
 		return activePlayers;
 	}
 
+	
 	public static void setActivePlayers(ArrayList<Player> activePlayers) {
 		GameController.activePlayers = activePlayers;
 	}
