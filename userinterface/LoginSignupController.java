@@ -1,5 +1,6 @@
 package userinterface;
 
+import domain.GameController;
 import domain.player.*;
 import techServices.UserInfoSaver;
 
@@ -42,7 +43,7 @@ public class LoginSignupController {
 			System.out.print(player.getPlayerName());
 			System.out.print(" password: ");
 			System.out.println(player.getPassword());
-			//GameController.addToLoggedInPlayer(player);
+			GameController.getActivePlayers().add(player);
 		} catch (Exception e) {
 			// TODO: add game controller message logic
 			//GameController.showErrorMessage(e.toString());
