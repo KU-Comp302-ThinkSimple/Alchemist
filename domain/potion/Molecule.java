@@ -31,6 +31,54 @@ public class Molecule {
 			this.blueAtom=atom;
 		}
 	}
+
+
+
+	public int getMoleculeId() {
+		return moleculeId;
+	}
+
+
+
+	public void setMoleculeId(int moleculeId) {
+		this.moleculeId = moleculeId;
+	}
+
+
+
+	public Atom getRedAtom() {
+		return redAtom;
+	}
+
+
+
+	public void setRedAtom(Atom redAtom) {
+		this.redAtom = redAtom;
+	}
+
+
+
+	public Atom getGreenAtom() {
+		return greenAtom;
+	}
+
+
+
+	public void setGreenAtom(Atom greenAtom) {
+		this.greenAtom = greenAtom;
+	}
+
+
+
+	public Atom getBlueAtom() {
+		return blueAtom;
+	}
+
+
+
+	public void setBlueAtom(Atom blueAtom) {
+		this.blueAtom = blueAtom;
+	}
 	
 	
 }
