@@ -1,14 +1,14 @@
 package domain.potion;
 
+import java.util.Objects;
+
 public class Molecule {
 	
 	int moleculeId;
 	Atom redAtom;
 	Atom greenAtom;
 	Atom blueAtom;
-	
-	
-	
+
 	public Molecule(int moleculeId, Atom redAtom, Atom greenAtom, Atom blueAtom) {
 		
 		this.moleculeId = moleculeId;
@@ -17,7 +17,25 @@ public class Molecule {
 		this.blueAtom = blueAtom;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(blueAtom, greenAtom, redAtom);
+	}
 
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Molecule other = (Molecule) obj;
+		return Objects.equals(blueAtom, other.blueAtom) && Objects.equals(greenAtom, other.greenAtom)
+				&& Objects.equals(redAtom, other.redAtom);
+	}
 
 	public void setAtom(Atom atom) {
 		
