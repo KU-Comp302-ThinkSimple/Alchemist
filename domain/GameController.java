@@ -17,19 +17,54 @@ public class GameController {
 	static GameInventory gameInventory=GameInventory.getInstance();
 	static InitializeGameHelper initalizeGameHelper;
 	
+	
 	GameController(){
 		
-		initializeGame();
 	}
 	
-	public void initializeGame() {
+	
+	public static void initializeGame() {
 		
-		//GameController waits until the activePlayers list has 2 players in it, and after that, initializes the game by creating a new instance of initializeGameHelper.
+		//GameController should initialize game when two player are present;
 		
-		while(activePlayers.size()<2) {
-			
+		if(activePlayers.size()<2) {
+			initalizeGameHelper=new InitializeGameHelper();
+		}else {
+			System.out.println("Not able to initialize");
 		}
-		initalizeGameHelper=new InitializeGameHelper();
+		
+	}
+	
+	
+	public static void changeRounds() {
+		currentRound++;
+		
+		for(int i=0;i<activePlayers.size();i++) {
+			activePlayers.get(i).getPlayerToken().setPlayerAction(3);
+		}
+	}
+	
+	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
+	public static Boolean shouldChangeRound(){
+		
+		int player1ActionsLeft= activePlayers.get(0).getPlayerToken().getPlayerAction();
+		int player2ActionsLeft= activePlayers.get(1).getPlayerToken().getPlayerAction();
+		
+		if(player1ActionsLeft==0 && player1ActionsLeft==0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	//Change the current player after an action using this function
+	public static void changeCurrentPlayer() {
+		
+		for(int i=0;i<activePlayers.size();i++) {
+			if(!activePlayers.get(i).equals(currentPlayer)) {
+				currentPlayer=activePlayers.get(i);
+			}
+		}
 	}
 
 	public static int getCurrentRound() {

@@ -110,4 +110,58 @@ public class PlayerToken {
 	public void removePublicationCard(PublicationCard pub) {
 		playerInventory.playerPublicationCardList.remove(pub);
 	}
+
+
+	public int getGold() {
+		return gold;
+	}
+
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+
+	public int getReputation() {
+		return reputation;
+	}
+
+
+	public void setReputation(int reputation) {
+		this.reputation = reputation;
+	}
+
+
+	public int getPlayerHealth() {
+		return playerHealth;
+	}
+
+
+	public void setPlayerHealth(int playerHealth) {
+		this.playerHealth = playerHealth;
+	}
+
+
+	public int getPlayerAction() {
+		return playerAction;
+	}
+
+
+	public void setPlayerAction(int playerAction) {
+		this.playerAction = playerAction;
+	}
+
+
+	public PlayerInventory getPlayerInventory() {
+		return playerInventory;
+	}
+
+
+	public void setPlayerInventory(PlayerInventory playerInventory) {
+		this.playerInventory = playerInventory;
+	}
+	
+	
+	
+	
 }
