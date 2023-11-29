@@ -1,5 +1,7 @@
 package domain.potion;
 
+import java.util.Objects;
+
 public class Atom {
 	int atomId;
 	int atomSize; //0 small, 1 big
@@ -15,7 +17,22 @@ public class Atom {
 	}
 
 	
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(atomColor, atomSign, atomSize);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Atom other = (Atom) obj;
+		return atomColor == other.atomColor && atomSign == other.atomSign && atomSize == other.atomSize;
+	}
 	
 	public int getAtomId() {
 		return atomId;
@@ -54,12 +71,4 @@ public class Atom {
 	public void setAtomSign(int atomSign) {
 		this.atomSign = atomSign;
 	}
-
-	
-	
-	
-
-	
-	
-	
 }
