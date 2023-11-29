@@ -14,6 +14,11 @@ public class Hypotheses {
 		this.ingredient = ingredient;
 		this.molecule = molecule;
 	}
+	
+	public boolean isValid() {
+		return ingredient.getMolecule().equals(molecule);
+	}
+	
 	public IngredientCard getIngredient() {
 		return ingredient;
 	}
