@@ -8,6 +8,8 @@ import java.awt.LayoutManager;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.border.SoftBevelBorder;
@@ -20,44 +22,35 @@ public class DeductionBoard extends JPanel {
 		this.setPreferredSize(new Dimension(704, 341));
 		this.setLayout(null);
 
-		JLabel deductionBoardLabel = new JLabel();
-		deductionBoardLabel.setBounds(0, 0, 704, 341);
-		deductionBoardLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
-		this.add(deductionBoardLabel);
-
-
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBounds(0, 0, 704, 341);
 		buttonsPanel.setLayout(null);
-		//buttonsPanel.back
-		//buttonsPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		//buttonsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//buttonsPanel.setLayout(new GridLayout(8, 8, 0, 0));
+
 
 		for (int j = 0; j < 8; j++) {
 			for (int i=0 ; i < 8; i++) {
 
 				JButton crossButton = new JButton();
-				crossButton.setOpaque(false);
-				crossButton.setContentAreaFilled(false);
-				crossButton.setBorderPainted(false);
+
 				crossButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/transparent_88x42.png")));
 				int x = (i) * 88;
 				int y = (j) * 42;
 				crossButton.setBounds(x, y, 88, 42);
 				crossButton.setPreferredSize(new Dimension(88, 42));
 
-
-
+				crossButton.setContentAreaFilled(false);
 				crossButton.addActionListener(e -> {
+					System.out.printf("týklama action\n");
 					JButton thisButton = (JButton) e.getSource();
 					if (!thisButton.isSelected()) {
 						thisButton.setSelected(true);
 						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/cross_88x42.png")));
+						System.out.printf("týklama if\n");
 					}
 					else {
 						thisButton.setSelected(false);
-						thisButton.setIcon(null);
+						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/transparent_88x42.png")));
+						System.out.printf("týklama else\n");
 					}
 				}
 						);
@@ -65,6 +58,12 @@ public class DeductionBoard extends JPanel {
 				buttonsPanel.add(crossButton);
 			}
 		}
+
+
+		JLabel deductionBoardLabel = new JLabel();
+		deductionBoardLabel.setBounds(0, 0, 704, 341);
+		deductionBoardLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
+		this.add(deductionBoardLabel);
 
 
 		//LayoutManager eightLayout = new GridLayout();
