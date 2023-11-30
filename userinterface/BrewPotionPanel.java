@@ -27,6 +27,11 @@ import javax.swing.JList;
 import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
 import java.awt.Choice;
+import java.awt.Component;
+import javax.swing.JTextPane;
+import java.awt.ComponentOrientation;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 
 
@@ -36,10 +41,57 @@ public class BrewPotionPanel extends JPanel {
     
 
     public BrewPotionPanel(){
-       setSize(GlobalDimensions.FULL_SCREEN);
+    	setAlignmentY(Component.BOTTOM_ALIGNMENT);
+    	setAlignmentX(Component.RIGHT_ALIGNMENT);
+    	setBackground(new Color(128, 0, 0));
+    	setAutoscrolls(true);
+         setSize(GlobalDimensions.FULL_SCREEN);
          setPreferredSize(GlobalDimensions.FULL_SCREEN);
-         JFrame j=new JFrame();
-         j.getContentPane().setBackground(new Color(128, 64, 64));
+         setLayout(null);
+         
+         JTextPane txtpnWelcomeToPotion = new JTextPane();
+         txtpnWelcomeToPotion.setFont(new Font("Rockwell Nova", Font.BOLD, 23));
+         txtpnWelcomeToPotion.setBackground(new Color(128, 0, 0));
+         txtpnWelcomeToPotion.setText("Welcome to Potion Brewing Area");
+         txtpnWelcomeToPotion.setBounds(596, 14, 461, 84);
+         add(txtpnWelcomeToPotion);
+         
+         JPanel panel = new JPanel();
+         panel.setBounds(775, 14, 1, 1);
+         panel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+         panel.setBackground(new Color(128, 64, 64));
+         add(panel);
+         panel.setLayout(null);
+         
+         JButton btnNewButton = new JButton("New button");
+         btnNewButton.setBounds(499, 490, 85, 21);
+         add(btnNewButton);
+         
+         JButton btnNewButton_1 = new JButton("New button");
+         btnNewButton_1.setBounds(1046, 490, 85, 21);
+         add(btnNewButton_1);
+         
+         JButton btnNewButton_2 = new JButton("New button");
+         btnNewButton_2.setBounds(773, 591, 85, 21);
+         add(btnNewButton_2);
+         
+         Choice choice = new Choice();
+         choice.setFont(new Font("Rockwell Nova", Font.BOLD, 17));
+         choice.setName("choice");
+         choice.setBounds(169, 298, 28, 18);
+         add(choice);
+         choice.add("raven’s feather");
+         choice.add("mandrake root");
+         
+         Choice choice_1 = new Choice();
+         choice_1.setFont(new Font("Rockwell Nova", Font.BOLD, 16));
+         choice.setName("choice2");
+         choice_1.setBounds(587, 298, 28, 18);
+         add(choice_1);
+         choice_1.add("mave");
+         
+       
+         /*j.getContentPane().setBackground(new Color(128, 64, 64));
          j.getContentPane().setForeground(new Color(128, 64, 64));
          j.getContentPane().setLayout(null);
          
@@ -129,7 +181,7 @@ public class BrewPotionPanel extends JPanel {
          JLabel label8 = new JLabel(scorpion);
          panelimg1.add(label8);
          JLabel label = new JLabel(birdclaw);
-         label.setBounds(-75, -40, 293, 251);
+         label.setBounds(-75, -47, 303, 258);
          panelimg1.add(label);
          
          
@@ -179,9 +231,9 @@ public class BrewPotionPanel extends JPanel {
          choice2.add("flower");
          choice2.add("scorpion");
          choice2.add("bird claw");
-         choice2.add("seedling");
- 		 j.setMaximumSize(new Dimension(1920, 1080));
- 		 j.setBounds(0, 0, 1920, 1080);
+         choice2.add("seedling");*/
+ 		 //j.setMaximumSize(new Dimension(1920, 1080));
+ 		 //j.setBounds(0, 0, 1920, 1080);
  		 /*j.setTitle("Welcome to Alchemists!");
  		 j.setResizable(false);*/
          // l1 = new Label("Welcome to Brew Potion Area");
