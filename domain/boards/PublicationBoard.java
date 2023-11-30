@@ -6,8 +6,10 @@ import domain.player.*;
 import domain.cards.*;
 import domain.potion.*;
 public class PublicationBoard extends Board{
-	ArrayList<Hypotheses> hypotheses;
-    public PublicationBoard(int size, String name) {
+	private ArrayList<Hypotheses> hypotheses;
+
+
+	public PublicationBoard(int size, String name) {
         super(size, name);
         this.hypotheses = new ArrayList<Hypotheses>();
     }
@@ -29,4 +31,8 @@ public class PublicationBoard extends Board{
     	hypotheses.add(hypothesis);
     	player.getPlayerToken().setGold(gold - 1);
     }
+    
+    public ArrayList<Hypotheses> getHypotheses() {
+		return hypotheses;
+	}
 }
