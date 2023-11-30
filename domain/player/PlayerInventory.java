@@ -8,14 +8,12 @@ import domain.theory.Hypotheses;
 
 public class PlayerInventory {
 
-	ArrayList<Recipe> playerRecipeList;
-	ArrayList<Potion> playerPotionList;
-	ArrayList<Hypotheses> playerHypothesesList;
-	ArrayList<IngredientCard> playerIngredientCardList;
-	ArrayList<ArtifactCard> playerArtifactCardList;
-	ArrayList<PublicationCard> playerPublicationCardList;
-	
-
+	final ArrayList<Recipe> playerRecipeList;
+	final ArrayList<Potion> playerPotionList;
+	final ArrayList<Hypotheses> playerHypothesesList;
+	final ArrayList<IngredientCard> playerIngredientCardList;
+	final ArrayList<ArtifactCard> playerArtifactCardList;
+	final ArrayList<PublicationCard> playerPublicationCardList;
 
 	public PlayerInventory() {
 		
@@ -27,6 +25,34 @@ public class PlayerInventory {
 		playerPublicationCardList = new ArrayList<PublicationCard>();
 	}
 	
+	public ArrayList<Recipe> getPlayerRecipeList() {
+		return playerRecipeList;
+	}
+
+
+	public ArrayList<Potion> getPlayerPotionList() {
+		return playerPotionList;
+	}
+
+
+	public ArrayList<Hypotheses> getPlayerHypothesesList() {
+		return playerHypothesesList;
+	}
+
+
+	public ArrayList<IngredientCard> getPlayerIngredientCardList() {
+		return playerIngredientCardList;
+	}
+
+
+	public ArrayList<ArtifactCard> getPlayerArtifactCardList() {
+		return playerArtifactCardList;
+	}
+
+
+	public ArrayList<PublicationCard> getPlayerPublicationCardList() {
+		return playerPublicationCardList;
+	}
 
 	public void addPotion(Potion potion) {
 		this.playerPotionList.add(potion);
