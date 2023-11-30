@@ -29,6 +29,7 @@ public class PublicationBoard extends Board{
     	Hypotheses hypothesis = new Hypotheses(player, ingredient, hypothesizedMolecule);
     	player.getInventory().addHypoteses(hypothesis);
     	hypotheses.add(hypothesis);
+    	player.getPlayerToken().setReputation(player.getPlayerToken().getReputation()+1);
     	player.getPlayerToken().setGold(gold - 1);
     }
     
