@@ -69,7 +69,7 @@ public class LoginSignUpWindow {
 		closeButton.setBorder(null);
 		closeButton.setBackground(GlobalColors.BUTTON_COLOR);
 		closeButton.setRequestFocusEnabled(false);
-		closeButton.setFont(GlobalFonts.DISPLAYFONT);
+		closeButton.setFont(GlobalFonts.DISPLAY);
 		closeButton.setBounds(1497, 141, 60, 39);
 		closeButton.addActionListener(e -> {
 			LoginSignUpWindowFrame.dispose();
@@ -87,7 +87,7 @@ public class LoginSignUpWindow {
 		loginHeaderText.setEditable(false);
 		loginHeaderText.setBorder(null);
 		loginHeaderText.setForeground(GlobalColors.TEXT_COLOR);
-		loginHeaderText.setFont(GlobalFonts.DISPLAY_HEADER_FONT);
+		loginHeaderText.setFont(GlobalFonts.DISPLAY_HEADER);
 		loginHeaderText.setOpaque(false);
 		loginHeaderText.setText("LOG IN");
 		loginSignUpFormPanel.add(loginHeaderText);
@@ -102,13 +102,13 @@ public class LoginSignUpWindow {
 		loginUserNameDisplay.setText("Username");
 		loginUserNameDisplay.setOpaque(false);
 		loginUserNameDisplay.setForeground(GlobalColors.TEXT_COLOR);
-		loginUserNameDisplay.setFont(GlobalFonts.DISPLAYFONT);
+		loginUserNameDisplay.setFont(GlobalFonts.DISPLAY);
 		loginUserNameDisplay.setColumns(10);
 		loginSignUpFormPanel.add(loginUserNameDisplay);
 
 		loginUserNameInputTextField = new JTextField();
 		loginUserNameInputTextField.setBorder(new EmptyBorder(0, 3, 0, 0));
-		loginUserNameInputTextField.setFont(GlobalFonts.INPUTFONT);
+		loginUserNameInputTextField.setFont(GlobalFonts.INPUT);
 		loginSignUpFormPanel.add(loginUserNameInputTextField);
 		loginUserNameInputTextField.setColumns(10);
 
@@ -118,13 +118,13 @@ public class LoginSignUpWindow {
 		loginPasswordDisplay.setText("Password");
 		loginPasswordDisplay.setOpaque(false);
 		loginPasswordDisplay.setForeground(GlobalColors.TEXT_COLOR);
-		loginPasswordDisplay.setFont(GlobalFonts.DISPLAYFONT);
+		loginPasswordDisplay.setFont(GlobalFonts.DISPLAY);
 		loginPasswordDisplay.setColumns(10);
 		loginSignUpFormPanel.add(loginPasswordDisplay);
 
 		loginPasswordField = new JPasswordField();
 		loginPasswordField.setBorder(new EmptyBorder(0, 3, 0, 0));
-		loginPasswordField.setFont(GlobalFonts.PASSWORDFONT);
+		loginPasswordField.setFont(GlobalFonts.PASSWORD);
 		loginSignUpFormPanel.add(loginPasswordField);
 
 		JLabel emptyLabel2 = new JLabel("");
@@ -136,7 +136,7 @@ public class LoginSignUpWindow {
 		loginButton.setBorder(null);
 		loginButton.setRequestFocusEnabled(false);
 		loginButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
-		loginButton.setFont(GlobalFonts.DISPLAYFONT);
+		loginButton.setFont(GlobalFonts.DISPLAY);
 		loginButton.addActionListener(e -> {
 			//TODO log in action
 			String loginUserNameInput = loginUserNameInputTextField.getText();
@@ -151,7 +151,7 @@ public class LoginSignUpWindow {
 		signUpHeaderText.setText("SIGN UP");
 		signUpHeaderText.setOpaque(false);
 		signUpHeaderText.setForeground(GlobalColors.TEXT_COLOR);
-		signUpHeaderText.setFont(GlobalFonts.DISPLAY_HEADER_FONT);
+		signUpHeaderText.setFont(GlobalFonts.DISPLAY_HEADER);
 		signUpHeaderText.setEditable(false);
 		signUpHeaderText.setColumns(10);
 		signUpHeaderText.setBorder(null);
@@ -164,7 +164,7 @@ public class LoginSignUpWindow {
 		signUpUserNameText.setText("Username");
 		signUpUserNameText.setOpaque(false);
 		signUpUserNameText.setForeground(GlobalColors.TEXT_COLOR);
-		signUpUserNameText.setFont(GlobalFonts.DISPLAYFONT);
+		signUpUserNameText.setFont(GlobalFonts.DISPLAY);
 		signUpUserNameText.setEditable(false);
 		signUpUserNameText.setColumns(10);
 		signUpUserNameText.setBorder(null);
@@ -172,7 +172,7 @@ public class LoginSignUpWindow {
 
 		signUpUserNameInputTextField = new JTextField();
 		signUpUserNameInputTextField.setBorder(new EmptyBorder(0, 3, 0, 0));
-		signUpUserNameInputTextField.setFont(GlobalFonts.INPUTFONT);
+		signUpUserNameInputTextField.setFont(GlobalFonts.INPUT);
 		signUpUserNameInputTextField.setColumns(10);
 		loginSignUpFormPanel.add(signUpUserNameInputTextField);
 
@@ -180,7 +180,7 @@ public class LoginSignUpWindow {
 		signUpPasswordDisplayText.setText("Password");
 		signUpPasswordDisplayText.setOpaque(false);
 		signUpPasswordDisplayText.setForeground(GlobalColors.TEXT_COLOR);
-		signUpPasswordDisplayText.setFont(GlobalFonts.DISPLAYFONT);
+		signUpPasswordDisplayText.setFont(GlobalFonts.DISPLAY);
 		signUpPasswordDisplayText.setEditable(false);
 		signUpPasswordDisplayText.setColumns(10);
 		signUpPasswordDisplayText.setBorder(null);
@@ -188,7 +188,7 @@ public class LoginSignUpWindow {
 
 		signUpPasswordField = new JPasswordField();
 		signUpPasswordField.setBorder(new EmptyBorder(0, 3, 0, 0));
-		signUpPasswordField.setFont(GlobalFonts.PASSWORDFONT);
+		signUpPasswordField.setFont(GlobalFonts.PASSWORD);
 		loginSignUpFormPanel.add(signUpPasswordField);
 
 		JLabel emptyLabel4 = new JLabel("");
@@ -200,7 +200,7 @@ public class LoginSignUpWindow {
 		signUpButton.setBorder(null);
 		signUpButton.setRequestFocusEnabled(false);
 		signUpButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
-		signUpButton.setFont(GlobalFonts.DISPLAYFONT);
+		signUpButton.setFont(GlobalFonts.DISPLAY);
 		signUpButton.addActionListener(e -> {
 			//TODO sign up action
 			String signUpUserNameInput = signUpUserNameInputTextField.getText();
