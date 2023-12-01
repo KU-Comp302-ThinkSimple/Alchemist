@@ -1,14 +1,11 @@
 package userinterface;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import techServices.UserInfoSaver;
+import userinterface.util.GlobalDimensions;
 
 public class Main {
 	/**
@@ -19,69 +16,23 @@ public class Main {
 
 		//new LoginSignUpWindow();
 		//UserInfoSaver.addToTxtFile("Mina","79776", "userinfo.txt");
-		JFrame testFrame = new JFrame();
+		JPanel brewpot=new BrewPotionPanel();
+		JFrame brewpotFrame = new JFrame();
+		brewpotFrame.setUndecorated(true);
+		brewpotFrame.setMaximumSize(new Dimension(1920, 1080));
+		brewpotFrame.setBounds(0, 0, 1920, 1080);
+		//LoginSignUpWindowFrame.setExtendedState(JFrame.NORMAL);
 
-		/*
-		JPanel buttonsPanel = new JPanel();
-		for (int i=0 ; i < 8; i++) {
+	    brewpotFrame.setTitle("Welcome to Alchemists!");
+		brewpotFrame.setResizable(false);
+	    brewpotFrame.setSize(GlobalDimensions.FULL_SCREEN);
+		brewpotFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
+		brewpotFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 
-			JButton crossButton = new JButton();
-			int x = 88;
-			int y = (i-1) * 42;
-			crossButton.setSize(88,42);
-			//crossButton.setOpaque(false);
-			crossButton.setContentAreaFilled(false);
-			crossButton.setBorderPainted(true);
-			crossButton.addActionListener(e -> {
-				JButton thisButton = (JButton) e.getSource();
-				if (!thisButton.isSelected()) {
-					thisButton.setSelected(true);
-					thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/cross_88x42.png")));
-				}
-				else {
-					thisButton.setSelected(false);
-					thisButton.setIcon(null);
-				}
-			}
-					);
 
-			buttonsPanel.add(crossButton);
-		}
-		buttonsPanel.setLayout(new GridLayout());
-		 */
-		/*
-		JPanel buttonsPanel = new JPanel();
-		for (int j = 0; j < 8; j++) {
-			for (int i=0 ; i < 8; i++) {
-
-				JButton crossButton = new JButton();
-				int x = i * 88;
-				int y = j * 42;
-				crossButton.setBounds(x, y, 88, 42);
-				crossButton.setPreferredSize(new Dimension(88, 42));
-				crossButton.setContentAreaFilled(false);
-				crossButton.setBorderPainted(true);
-				crossButton.addActionListener(e -> {
-					JButton thisButton = (JButton) e.getSource();
-					if (!thisButton.isSelected()) {
-						thisButton.setSelected(true);
-						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/cross_88x42.png")));
-					}
-					else {
-						thisButton.setSelected(false);
-						thisButton.setIcon(null);
-					}
-				}
-						);
-
-				buttonsPanel.add(crossButton);
-			}
-		}
-		 */
-
-		testFrame.add(new DeductionBoard());
-		testFrame.setVisible(true);
-
+		brewpotFrame.add(brewpot);
+		brewpotFrame.setVisible(true);
 
 
 	}

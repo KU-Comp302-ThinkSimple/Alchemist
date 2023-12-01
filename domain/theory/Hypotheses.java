@@ -2,15 +2,16 @@ package domain.theory;
 
 import domain.cards.IngredientCard;
 import domain.potion.Molecule;
+import domain.player.*;
 
 public class Hypotheses {
-	private IngredientCard ingredient;
-	private Molecule molecule;
-	public Hypotheses() {
+	private final Player owner;
+	private final IngredientCard ingredient;
+	private final Molecule molecule;
+
+	public Hypotheses(Player owner, IngredientCard ingredient, Molecule molecule) {
 		super();
-	}
-	public Hypotheses(IngredientCard ingredient, Molecule molecule) {
-		super();
+		this.owner = owner;
 		this.ingredient = ingredient;
 		this.molecule = molecule;
 	}
@@ -22,14 +23,12 @@ public class Hypotheses {
 	public IngredientCard getIngredient() {
 		return ingredient;
 	}
-	public void setIngredient(IngredientCard ingredient) {
-		this.ingredient = ingredient;
-	}
+
 	public Molecule getMolecule() {
 		return molecule;
 	}
-	public void setMolecule(Molecule molecule) {
-		this.molecule = molecule;
-	}
 	
+	public Player getOwner() {
+		return owner;
+	}
 }
