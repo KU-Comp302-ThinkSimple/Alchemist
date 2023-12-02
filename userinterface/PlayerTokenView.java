@@ -12,6 +12,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import domain.GameController;
 import domain.player.Player;
 import domain.potion.Potion;
 import net.miginfocom.swing.MigLayout;
@@ -20,38 +21,45 @@ public class PlayerTokenView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField nameField;
-	private JTextField goldFiels;
+	private JTextField goldField;
 	private JTextField repField;
 	private JTextField healthField;
 	private ArrayList<JPanel> potPanels=new  ArrayList<JPanel>();
 	private int id; //There will be two of this view so there should be an id attribute to separate them
-	private String playerName;
-	private String playerGold;
-	private String playerRep;
-	private String playerHealth;
-	private ArrayList<Potion> nameText;
+	private Player player;
+	
+	
 
 	/**
 	 * Create the panel.
 	 */
-	public PlayerTokenView() {
+	public PlayerTokenView(int id) {
+		this.id=id;
+		
+		
+		player=GameController.getActivePlayers().get(id);
+		
 		setLayout(new MigLayout("", "[130px,grow][][130px,grow][][][grow][][][grow][]", "[][26px][26px][grow][][][grow][grow][]"));
 		
 		nameField = new JTextField();
 		add(nameField, "cell 0 0,alignx center,aligny center");
 		nameField.setColumns(10);
+		nameField.setText(player.getPlayerName());
 		
 		healthField = new JTextField();
 		add(healthField, "cell 5 1,alignx leading");
 		healthField.setColumns(10);
+		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		
-		goldFiels = new JTextField();
-		add(goldFiels, "flowx,cell 8 1,alignx center,aligny top");
-		goldFiels.setColumns(10);
+		goldField = new JTextField();
+		add(goldField, "flowx,cell 8 1,alignx center,aligny top");
+		goldField.setColumns(10);
+		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
 		
 		repField = new JTextField();
 		add(repField, "cell 8 2,growx");
 		repField.setColumns(10);
+		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		
 		JPanel imagePanel = new JPanel();
 		add(imagePanel, "cell 0 1 1 3,grow");
@@ -90,6 +98,12 @@ public class PlayerTokenView extends JPanel {
 
 	}
 	
+	public void updatePlayerViewTokenController() {
+		nameField.setText(player.getPlayerName());
+		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
+		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
+		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
+	}
 	
 
 }
