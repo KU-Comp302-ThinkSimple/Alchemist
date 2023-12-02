@@ -8,7 +8,7 @@ import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
 import domain.potion.*;
 import domain.theory.Hypotheses;
-
+import java.lang.*;
 public class PlayerToken {
 
 	int gold=0;
@@ -150,8 +150,21 @@ public class PlayerToken {
 	public void setPlayerAction(int playerAction) {
 		this.playerAction = playerAction;
 	}
+	public boolean hasActionsLeft() {
+		return this.playerAction>0;
+	}
 
-
+	/**
+	 * Reduces the actions a player has by 1
+	 * @throws RuntimeException if the user has no more actions left
+	 */
+	public void reducePlayerAction() throws RuntimeException{
+		if(this.playerAction<=0) {
+			throw new RuntimeException("Tried to reduce user actions when the user had no actions left");
+		}
+		this.playerAction -= 1;
+	}
+	
 	public PlayerInventory getPlayerInventory() {
 		return playerInventory;
 	}
