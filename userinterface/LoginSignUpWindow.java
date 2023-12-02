@@ -141,7 +141,7 @@ public class LoginSignUpWindow {
 			//TODO log in action
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
-			
+
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 		}
 				);
@@ -216,6 +216,19 @@ public class LoginSignUpWindow {
 		alchemistImageLabel.setBounds(110, 121, 766, 766);
 		alchemistImageLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/alchemist_square.png")));
 		contentPane.add(alchemistImageLabel);
+
+		JPanel loggedinUserInfo = new JPanel();
+		loggedinUserInfo.setBounds(1497, 248, 290, 201);
+		loggedinUserInfo.setOpaque(false);
+
+
+		JLabel user1 = new JLabel("User 1");
+		loggedinUserInfo.add(user1);
+
+		JLabel user2 = new JLabel("User 2");
+		loggedinUserInfo.add(user2);
+
+		contentPane.add(loggedinUserInfo);
 
 
 		LoginSignUpWindowFrame.setVisible(true);
