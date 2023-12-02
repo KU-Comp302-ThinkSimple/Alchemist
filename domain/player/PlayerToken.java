@@ -17,6 +17,7 @@ public class PlayerToken {
 	int playerAction;
 	PlayerInventory playerInventory;
 	
+	
 	public PlayerToken() {
 		
 		this.playerInventory= new PlayerInventory();
