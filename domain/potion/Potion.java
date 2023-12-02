@@ -1,5 +1,7 @@
 package domain.potion;
 
+import domain.GameController;
+
 public class Potion {
 	
 	int pValue;
@@ -36,17 +38,44 @@ public class Potion {
 		}
 	}
 	
-	public void testPotion() {
+	public String testPotion() {
 		if(this.personToTest.equals("Self")) {
-			
-			//TODO implement the effects of potion in accordance with the potion type( You can use currentPlayer from Game class)
+			if (this.potionType == "Poison") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();;	 
+			}else if(this.potionType == "Health") {
+				//return "I feel renewed!";
+			}else if(this.potionType == "Slow") {
+				//GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();;	 	 
+			}else if(this.potionType == "Speed") {
+				//return "Faster than light!";
+			}else if(this.potionType == "Insanity") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractReputationPoint(1);;	 
+			}else if(this.potionType == "Wisdom") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractReputationPoint(1); 
+			}else {
+				//return "Nothing feels different...";
+			}
 			
 			
 		}else if (this.personToTest.equals("Student")) {
 			
-			//TODO implement the effects of potion in accordance with the potion type( You can use currentPlayer from Game class)
-			
+			if (this.potionType == "Poison") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+			}else if(this.potionType == "Health") {
+				return "I feel renewed!";
+			}else if(this.potionType == "Slow") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 	 
+			}else if(this.potionType == "Speed") {
+				return "Faster than light!";
+			}else if(this.potionType == "Insanity") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+			}else if(this.potionType == "Wisdom") {
+				return "Excellence is not a gift, but a skill that takes practice."; 
+			}else  {
+				return "Nothing feels different...";
+			}
 		}
+		return "";
 	}
 	
 
