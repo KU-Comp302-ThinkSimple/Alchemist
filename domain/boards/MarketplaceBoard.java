@@ -10,7 +10,7 @@ public class MarketplaceBoard extends Board {
 	}
 	
 	public void buyArtifact(Player player) throws UserErrorException{
-		if(player.getPlayerToken().getPlayerAction()<1) {
+		if(player.getPlayerToken().hasActionsLeft()) {
 			throw new UserErrorException("The user does not have any actions left!");
 		}
 		if(player.getPlayerToken().getGold() < 3) {
@@ -19,6 +19,7 @@ public class MarketplaceBoard extends Board {
 		ArtifactCard artifactCard = ArtifactDeck.getInstance().removeArtifact();
 		player.getPlayerToken().addArtifactCard(artifactCard);
 		player.getPlayerToken().subtractGold(3);
+		player.getPlayerToken().reducePlayerAction();
 		//TODO: Apply artifact effects
 		//artifactCard.apply();
 	}
