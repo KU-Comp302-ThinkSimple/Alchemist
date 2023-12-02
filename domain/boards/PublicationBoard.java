@@ -64,6 +64,10 @@ public class PublicationBoard extends Board{
     	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
     	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
     	
+    	//check if user has actions left
+    	if(!player.getPlayerToken().hasActionsLeft()) {
+    		throw new UserErrorException("The player has no more actions left!");
+    	}
     	//check if the hypothesis exists in the publication track
     	if(!hypotheses.contains(hypothesis)) {
     		throw new IllegalArgumentException("The given hypothesis does not exist within the publication track");
@@ -91,6 +95,7 @@ public class PublicationBoard extends Board{
 		provenIngredients.add(hypothesis.getIngredient());
     	hypotheses.remove(hypothesis);
     	hypothesis.getOwner().getInventory().removeHypoteses(hypothesis);
+    	player.getPlayerToken().reducePlayerAction();
     }
     
     public ArrayList<Hypotheses> getHypotheses() {
