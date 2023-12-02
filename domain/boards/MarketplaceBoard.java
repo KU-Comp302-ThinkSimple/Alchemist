@@ -11,7 +11,7 @@ public class MarketplaceBoard extends Board {
 	}
 
 	public void buyArtifact(Player player) throws UserErrorException {
-		if (player.getPlayerToken().hasActionsLeft()) {
+		if (!player.getPlayerToken().hasActionsLeft()) {
 			throw new UserErrorException("The user does not have any actions left!");
 		}
 		if (player.getPlayerToken().getGold() < 3) {
