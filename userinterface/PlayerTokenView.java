@@ -1,9 +1,12 @@
 package userinterface;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JTextField;
 import javax.swing.JSplitPane;
@@ -33,6 +36,7 @@ public class PlayerTokenView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
 	public PlayerTokenView(int id) {
 		this.id=id;
 		
@@ -63,6 +67,9 @@ public class PlayerTokenView extends JPanel {
 		
 		JPanel imagePanel = new JPanel();
 		add(imagePanel, "cell 0 1 1 3,grow");
+		
+		ImageIcon icon = new ImageIcon(player.getPlayerToken().getPlayerAvatar());
+		imagePanel.add(new JLabel(icon));
 		
 		JPanel potPanel0 = new JPanel();
 		add(potPanel0, "cell 0 5 2 2,grow");
@@ -95,14 +102,45 @@ public class PlayerTokenView extends JPanel {
 		JPanel potPanel7 = new JPanel();
 		add(potPanel7, "cell 8 7 1 2,grow");
 		potPanels.add(potPanel7);
+		
+		displayPlayerPotions();
 
 	}
+	
+	public void displayPlayerPotions() {
+		
+		for(int i=0;i<potPanels.size();i++) {
+			potPanels.get(i).removeAll();
+		}
+		
+		
+		for(int i=0;i<player.getInventory().getPlayerPotionList().size();i++) {
+	
+			
+			ImageIcon icon;
+			
+			if(player.getInventory().getPlayerPotionList().get(i).getNeutralityValue()==0) {
+				
+				 icon = new ImageIcon("negative image");
+				
+			}else if (player.getInventory().getPlayerPotionList().get(i).getNeutralityValue()==1) {
+				 icon = new ImageIcon("positive image");
+				
+			}else {
+				 icon = new ImageIcon("neutral image");
+			}
+			
+			potPanels.get(i).add(new JLabel(icon));
+		}
+	}
+
 	
 	public void updatePlayerViewTokenController() {
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
+		displayPlayerPotions();
 	}
 	
 

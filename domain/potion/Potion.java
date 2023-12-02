@@ -1,14 +1,19 @@
 package domain.potion;
 
+import java.util.Arrays;
+
 public class Potion {
 	
 	int pValue;
+	int neutralityValue; // 0 if negative, 1 if positive, 2 if neutral
 	String potionType;
 	String personToTest;
 	Recipe potionRecipe;
 	
 	public Potion(Recipe potionRecipe) {
 		this.potionRecipe=potionRecipe;
+		determinePotion();
+		determinePotionNeutrality();
 	}
 	
 	public void determinePotion() {
@@ -33,6 +38,18 @@ public class Potion {
 			this.potionType="Wisdom";
 		}else {
 			this.potionType="Neutral";
+		}
+	}
+	
+	public void determinePotionNeutrality() {
+		
+		if(Arrays.asList("Poison", "Slow", "Insanity").contains(this.potionType)) {
+			this.neutralityValue=0;
+		}else if(Arrays.asList("Health", "Slow", "Insanity").contains(this.potionType)) {
+			
+			this.neutralityValue=1;
+		}else {
+			this.neutralityValue=2;
 		}
 	}
 	
@@ -80,6 +97,14 @@ public class Potion {
 
 	public void setPotionRecipe(Recipe potionRecipe) {
 		this.potionRecipe = potionRecipe;
+	}
+
+	public int getNeutralityValue() {
+		return neutralityValue;
+	}
+
+	public void setNeutralityValue(int neutralityValue) {
+		this.neutralityValue = neutralityValue;
 	}
 	
 
