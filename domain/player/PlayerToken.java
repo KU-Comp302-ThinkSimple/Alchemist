@@ -15,6 +15,7 @@ public class PlayerToken {
 	int reputation=0;
 	int playerHealth = 3;
 	int playerAction;
+	String playerAvatar; // the directory of the playeravatar is kept in this as a string.
 	PlayerInventory playerInventory;
 	
 	
@@ -154,6 +155,16 @@ public class PlayerToken {
 	public boolean hasActionsLeft() {
 		return this.playerAction>0;
 	}
+
+	public String getPlayerAvatar() {
+		return playerAvatar;
+	}
+
+
+	public void setPlayerAvatar(String playerAvatar) {
+		this.playerAvatar = playerAvatar;
+	}
+
 
 	/**
 	 * Reduces the actions a player has by 1
