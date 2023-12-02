@@ -35,6 +35,9 @@ public class LoginSignUpWindow {
 	private JTextField signUpUserNameInputTextField;
 	private JPasswordField signUpPasswordField;
 	private JLabel alchemistImageLabel;
+	private JLabel user2info;
+
+	private int loggedinUserCount = 0;
 
 
 
@@ -143,6 +146,30 @@ public class LoginSignUpWindow {
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
+			//TODO return a boolean (success of log in action)
+			boolean loggedin = true;
+			if (loggedin) {
+				loggedinUserCount += 1;
+
+				if (loggedinUserCount == 2) {
+					//TODO start game button active
+					//TODO log in button deactivated
+					//TODO user2 info display
+				}
+
+				else {
+					//TODO user1 info display
+				}
+			}
+			else {
+				//TODO display message
+				//TODO return why unsuccesful
+				// 0 -> no user with the username
+				// 1 -> wrong password
+				//TODO error display'in textini burdan gelen sayýya göre update'le.
+
+
+			}
 		}
 				);
 		loginSignUpFormPanel.add(loginButton);
@@ -218,18 +245,34 @@ public class LoginSignUpWindow {
 		contentPane.add(alchemistImageLabel);
 
 		JPanel loggedinUserInfo = new JPanel();
-		loggedinUserInfo.setBounds(1497, 248, 290, 201);
+		loggedinUserInfo.setBounds(1497, 297, 290, 152);
 		loggedinUserInfo.setOpaque(false);
+		loggedinUserInfo.setLayout(new GridLayout(0, 2, 0, 0));
 
 
 		JLabel user1 = new JLabel("User 1");
+		user1.setForeground(GlobalColors.TEXT_COLOR);
+		user1.setFont(GlobalFonts.DISPLAY);
 		loggedinUserInfo.add(user1);
 
+		JLabel user1info = new JLabel();
+		user1info.setVisible(false);
+		user1info.setForeground(GlobalColors.TEXT_COLOR);
+		user1info.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user1info);
+
 		JLabel user2 = new JLabel("User 2");
+		user2.setForeground(GlobalColors.TEXT_COLOR);
+		user2.setFont(GlobalFonts.DISPLAY);
 		loggedinUserInfo.add(user2);
 
-		contentPane.add(loggedinUserInfo);
+		user2info = new JLabel();
+		user1info.setVisible(false);
+		user2info.setForeground(GlobalColors.TEXT_COLOR);
+		user2info.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user2info);
 
+		contentPane.add(loggedinUserInfo);
 
 		LoginSignUpWindowFrame.setVisible(true);
 	}
