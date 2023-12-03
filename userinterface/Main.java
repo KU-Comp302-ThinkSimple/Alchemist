@@ -1,12 +1,15 @@
 package userinterface;
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import techServices.UserInfoSaver;
 import userinterface.util.GlobalDimensions;
-
+import userinterface.DeductionBoard;
 public class Main {
 	/**
 	 * Launch the application.
@@ -14,27 +17,40 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		//new LoginSignUpWindow();
-		//UserInfoSaver.addToTxtFile("Mina","79776", "userinfo.txt");
-		JPanel brewpot=new BrewPotionPanel();
-		JFrame brewpotFrame = new JFrame();
-		brewpotFrame.setUndecorated(true);
-		brewpotFrame.setMaximumSize(new Dimension(1920, 1080));
-		brewpotFrame.setBounds(0, 0, 1920, 1080);
-		//LoginSignUpWindowFrame.setExtendedState(JFrame.NORMAL);
+		JPanel panel = new JPanel();
+		ResultsTriangle resultsTriangle = new ResultsTriangle();
 
-	    brewpotFrame.setTitle("Welcome to Alchemists!");
-		brewpotFrame.setResizable(false);
-	    brewpotFrame.setSize(GlobalDimensions.FULL_SCREEN);
-		brewpotFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
-		brewpotFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JComboBox potionSelector1;
+		JComboBox potionSelector2;
+		JComboBox iconSelector;
 		
+		String[] potions = {"0","1","2","3","4","5","6","7"};
+		String[] icons = {"rm", "gm", "bm", "rp", "gp", "bp", "empty"};
+		JButton button = new JButton();
+		potionSelector1 = new JComboBox(potions);
+		potionSelector2 = new JComboBox(potions);
+		iconSelector = new JComboBox(icons);
+		potionSelector1.setMaximumSize(new Dimension(200, 40));
+		potionSelector2.setMaximumSize(new Dimension(200, 40));
+		iconSelector.setMaximumSize(new Dimension(200, 40));
+		
+		button.addActionListener(e -> {
 
+			resultsTriangle.setCircleImage(potionSelector1.getSelectedIndex(), potionSelector2.getSelectedIndex(), iconSelector.getSelectedIndex());
 
-		brewpotFrame.add(brewpot);
-		brewpotFrame.setVisible(true);
-
-
+		});
+		
+		panel.add(resultsTriangle);
+		panel.add(potionSelector1);
+		panel.add(potionSelector2);
+		panel.add(iconSelector);
+		panel.add(button);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JFrame frame = new JFrame();
+		frame.add(panel);
+		frame.setVisible(true);
+		frame.setSize(900, 700);
 	}
 
 
