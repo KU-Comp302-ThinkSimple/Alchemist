@@ -41,7 +41,8 @@ public class LoginSignUpWindow {
 	private JLabel user2info;
 
 	private int loggedinUserCount = 0;
-	private JTextField errorMessageDisplay;
+	private JTextField loginMessageDisplay;
+	private JTextField signUpMessage;
 
 
 
@@ -93,7 +94,7 @@ public class LoginSignUpWindow {
 		startGameButton.setBounds(1497, 470, 232, 50);
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
-			//TODO Call the backend function with needed arguments
+			//TODO Call the backend function to start the game with needed arguments
 		}
 				);
 		contentPane.add(startGameButton);
@@ -180,15 +181,15 @@ public class LoginSignUpWindow {
 		loginPasswordField.setFont(GlobalFonts.PASSWORD);
 		loginSignUpFormPanel.add(loginPasswordField);
 
-		errorMessageDisplay = new JTextField();
-		errorMessageDisplay.setEditable(false);
-		errorMessageDisplay.setBorder(null);
-		errorMessageDisplay.setText("error");
-		errorMessageDisplay.setOpaque(false);
-		errorMessageDisplay.setForeground(GlobalColors.ERROR_MESSAGE);
-		errorMessageDisplay.setFont(GlobalFonts.ERROR_MESSAGE);
-		errorMessageDisplay.setColumns(10);
-		loginSignUpFormPanel.add(errorMessageDisplay);
+		loginMessageDisplay = new JTextField();
+		loginMessageDisplay.setEditable(false);
+		loginMessageDisplay.setBorder(null);
+		loginMessageDisplay.setText("error");
+		loginMessageDisplay.setOpaque(false);
+		loginMessageDisplay.setForeground(GlobalColors.ERROR_MESSAGE);
+		loginMessageDisplay.setFont(GlobalFonts.ERROR_MESSAGE);
+		loginMessageDisplay.setColumns(10);
+		loginSignUpFormPanel.add(loginMessageDisplay);
 
 
 		loginButton = new JButton("Log In");
@@ -202,14 +203,28 @@ public class LoginSignUpWindow {
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
+			//TODO clear log in panel texts.
+
 			//log in action
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
-			//TODO return a boolean (success of log in action)
-			boolean loggedin = true; //edit this
 
-			if (loggedin) {
+			//TODO please return me an error message.
+			//"Log in successful"
+			//"Wrong password."
+			//"There is no user with the username." etc.
+			String loginMessage = ""; //TODO edit this
+			String successMessage = "success."; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings.
+			if (loginMessage.equals(successMessage)) {
+
 				loggedinUserCount += 1;
-				errorMessageDisplay.setVisible(false);
+
+				loginMessageDisplay.setText(loginMessage);
+				loginMessageDisplay.setVisible(true);
+
+				//clear editables
+				loginUserNameInputTextField.setText(null);
+				loginPasswordField.setText(null);
+
 				if (loggedinUserCount == 2) {
 
 					//user2 info display
@@ -227,24 +242,9 @@ public class LoginSignUpWindow {
 					user1info.setText(loginUserNameInput);
 				}
 			}
+			//log in unsuccessful
 			else {
-				int loginError = -1;
-				//TODO return why unsuccesful
-				// 0 -> no user with the username
-				// 1 -> wrong password
-				if (loginError == 0) {
-					//edit error message
-					errorMessageDisplay.setText("No user with the username. You can sign up below.");
-					//make error message visible
-					errorMessageDisplay.setVisible(true);
-
-				}
-				else if (loginError == 1) {
-					//edit error message
-					errorMessageDisplay.setText("Wrong password. Please try again.");
-					//make error message visible
-					errorMessageDisplay.setVisible(true);
-				}
+				loginMessageDisplay.setText(loginMessage);
 			}
 		}
 				);
@@ -294,8 +294,16 @@ public class LoginSignUpWindow {
 		signUpPasswordField.setFont(GlobalFonts.PASSWORD);
 		loginSignUpFormPanel.add(signUpPasswordField);
 
-		JLabel emptyLabel4 = new JLabel("");
-		loginSignUpFormPanel.add(emptyLabel4);
+		signUpMessage = new JTextField();
+		signUpMessage.setEditable(false);
+		signUpMessage.setBorder(null);
+		signUpMessage.setText("error");
+		signUpMessage.setOpaque(false);
+		signUpMessage.setForeground(GlobalColors.ERROR_MESSAGE);
+		signUpMessage.setFont(GlobalFonts.ERROR_MESSAGE);
+		signUpMessage.setVisible(false);
+		loginSignUpFormPanel.add(signUpMessage);
+		signUpMessage.setColumns(10);
 
 		JButton signUpButton = new JButton("Sign Up");
 		signUpButton.setBackground(GlobalColors.BUTTON_COLOR);
@@ -305,10 +313,21 @@ public class LoginSignUpWindow {
 		signUpButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		signUpButton.setFont(GlobalFonts.DISPLAY);
 		signUpButton.addActionListener(e -> {
-			//TODO sign up action
+
+			//sign up action
 			String signUpUserNameInput = signUpUserNameInputTextField.getText();
 			char[] signUpPasswordInput = signUpPasswordField.getPassword();
 			LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
+
+			//TODO please return me a String
+			//Successful. or "There is already a user with the nickanme" ...
+			String signedUp = "" ; //TODO Edit this
+			signUpMessage.setText(signedUp);
+			signUpMessage.setVisible(true);
+
+			//clear editible textfields
+			signUpUserNameInputTextField.setText("");
+			signUpPasswordField.setText(null);
 		}
 				);
 		loginSignUpFormPanel.add(signUpButton);
