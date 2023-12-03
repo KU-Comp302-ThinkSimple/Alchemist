@@ -19,6 +19,9 @@ import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 
 import userinterface.*;
+import java.awt.SystemColor;
+import java.awt.Font;
+import java.awt.Color;
 
 public class LoginSignUpWindow {
 
@@ -38,6 +41,7 @@ public class LoginSignUpWindow {
 	private JLabel user2info;
 
 	private int loggedinUserCount = 0;
+	private JTextField errorMessageDisplay;
 
 
 
@@ -78,6 +82,52 @@ public class LoginSignUpWindow {
 			LoginSignUpWindowFrame.dispose();
 		}
 				);
+
+
+		JButton startGameButton = new JButton("Start Game");
+		startGameButton.setRequestFocusEnabled(false);
+		startGameButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
+		startGameButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		startGameButton.setBorder(null);
+		startGameButton.setBackground(GlobalColors.BUTTON_COLOR);
+		startGameButton.setBounds(1497, 470, 232, 50);
+		startGameButton.setVisible(false);
+		startGameButton.addActionListener(e -> {
+			//TODO Call the backend function with needed arguments
+		}
+				);
+		contentPane.add(startGameButton);
+
+
+		JPanel loggedinUserInfo = new JPanel();
+		loggedinUserInfo.setBounds(1497, 297, 290, 152);
+		loggedinUserInfo.setOpaque(false);
+		loggedinUserInfo.setLayout(new GridLayout(0, 2, 0, 0));
+
+
+		JLabel user1 = new JLabel("User 1");
+		user1.setForeground(GlobalColors.TEXT_COLOR);
+		user1.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user1);
+
+		JLabel user1info = new JLabel();
+		user1info.setVisible(false);
+		user1info.setForeground(GlobalColors.TEXT_COLOR);
+		user1info.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user1info);
+
+		JLabel user2 = new JLabel("User 2");
+		user2.setForeground(GlobalColors.TEXT_COLOR);
+		user2.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user2);
+
+		user2info = new JLabel();
+		user2info.setVisible(false);
+		user2info.setForeground(GlobalColors.TEXT_COLOR);
+		user2info.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user2info);
+
+		contentPane.add(loggedinUserInfo);
 
 		JPanel loginSignUpFormPanel = new JPanel();
 		loginSignUpFormPanel.setOpaque(false);
@@ -130,8 +180,16 @@ public class LoginSignUpWindow {
 		loginPasswordField.setFont(GlobalFonts.PASSWORD);
 		loginSignUpFormPanel.add(loginPasswordField);
 
-		JLabel emptyLabel2 = new JLabel("");
-		loginSignUpFormPanel.add(emptyLabel2);
+		errorMessageDisplay = new JTextField();
+		errorMessageDisplay.setEditable(false);
+		errorMessageDisplay.setBorder(null);
+		errorMessageDisplay.setText("error");
+		errorMessageDisplay.setOpaque(false);
+		errorMessageDisplay.setForeground(GlobalColors.ERROR_MESSAGE);
+		errorMessageDisplay.setFont(GlobalFonts.ERROR_MESSAGE);
+		errorMessageDisplay.setColumns(10);
+		loginSignUpFormPanel.add(errorMessageDisplay);
+
 
 		loginButton = new JButton("Log In");
 		loginButton.setBackground(GlobalColors.BUTTON_COLOR);
@@ -152,13 +210,21 @@ public class LoginSignUpWindow {
 				loggedinUserCount += 1;
 
 				if (loggedinUserCount == 2) {
-					//TODO start game button active
-					//TODO log in button deactivated
-					//TODO user2 info display
+
+					//user2 info display
+					user2info.setText(loginUserNameInput);
+
+					//start game button active
+					startGameButton.setVisible(true);
+
+					//log in button deactivated
+					loginButton.setVisible(false);
 				}
 
 				else {
-					//TODO user1 info display
+					//user1 info display
+					user1info.setText(loginUserNameInput);
+
 				}
 			}
 			else {
@@ -244,35 +310,9 @@ public class LoginSignUpWindow {
 		alchemistImageLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/alchemist_square.png")));
 		contentPane.add(alchemistImageLabel);
 
-		JPanel loggedinUserInfo = new JPanel();
-		loggedinUserInfo.setBounds(1497, 297, 290, 152);
-		loggedinUserInfo.setOpaque(false);
-		loggedinUserInfo.setLayout(new GridLayout(0, 2, 0, 0));
 
 
-		JLabel user1 = new JLabel("User 1");
-		user1.setForeground(GlobalColors.TEXT_COLOR);
-		user1.setFont(GlobalFonts.DISPLAY);
-		loggedinUserInfo.add(user1);
 
-		JLabel user1info = new JLabel();
-		user1info.setVisible(false);
-		user1info.setForeground(GlobalColors.TEXT_COLOR);
-		user1info.setFont(GlobalFonts.DISPLAY);
-		loggedinUserInfo.add(user1info);
-
-		JLabel user2 = new JLabel("User 2");
-		user2.setForeground(GlobalColors.TEXT_COLOR);
-		user2.setFont(GlobalFonts.DISPLAY);
-		loggedinUserInfo.add(user2);
-
-		user2info = new JLabel();
-		user1info.setVisible(false);
-		user2info.setForeground(GlobalColors.TEXT_COLOR);
-		user2info.setFont(GlobalFonts.DISPLAY);
-		loggedinUserInfo.add(user2info);
-
-		contentPane.add(loggedinUserInfo);
 
 		LoginSignUpWindowFrame.setVisible(true);
 	}
