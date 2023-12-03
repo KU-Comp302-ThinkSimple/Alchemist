@@ -199,16 +199,17 @@ public class LoginSignUpWindow {
 		loginButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		loginButton.setFont(GlobalFonts.DISPLAY);
 		loginButton.addActionListener(e -> {
-			//TODO log in action
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
+			//log in action
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 			//TODO return a boolean (success of log in action)
-			boolean loggedin = true;
+			boolean loggedin = true; //edit this
+
 			if (loggedin) {
 				loggedinUserCount += 1;
-
+				errorMessageDisplay.setVisible(false);
 				if (loggedinUserCount == 2) {
 
 					//user2 info display
@@ -224,17 +225,26 @@ public class LoginSignUpWindow {
 				else {
 					//user1 info display
 					user1info.setText(loginUserNameInput);
-
 				}
 			}
 			else {
-				//TODO display message
+				int loginError = -1;
 				//TODO return why unsuccesful
 				// 0 -> no user with the username
 				// 1 -> wrong password
-				//TODO error display'in textini burdan gelen sayýya göre update'le.
+				if (loginError == 0) {
+					//edit error message
+					errorMessageDisplay.setText("No user with the username. You can sign up below.");
+					//make error message visible
+					errorMessageDisplay.setVisible(true);
 
-
+				}
+				else if (loginError == 1) {
+					//edit error message
+					errorMessageDisplay.setText("Wrong password. Please try again.");
+					//make error message visible
+					errorMessageDisplay.setVisible(true);
+				}
 			}
 		}
 				);
