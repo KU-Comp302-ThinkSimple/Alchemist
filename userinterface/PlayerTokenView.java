@@ -18,7 +18,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import domain.GameController;
 import domain.player.Player;
 import domain.potion.Potion;
-import net.miginfocom.swing.MigLayout;
+
 
 public class PlayerTokenView extends JPanel {
 
