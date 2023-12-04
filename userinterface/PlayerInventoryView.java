@@ -3,7 +3,7 @@ package userinterface;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.GridLayout;
-import net.miginfocom.swing.MigLayout;
+
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
