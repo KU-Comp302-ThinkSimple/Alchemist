@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import domain.GameController;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -94,7 +95,8 @@ public class LoginSignUpWindow {
 		startGameButton.setBounds(1497, 470, 232, 50);
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
-			//TODO Call the backend function to start the game with needed arguments
+			//TODO Call the backend function to start the game with needed arguments *DONE
+			GameController.initializeGame();
 		}
 				);
 		contentPane.add(startGameButton);
@@ -203,17 +205,17 @@ public class LoginSignUpWindow {
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
-			//TODO clear log in panel texts.
+			//TODO clear log in panel texts. 
 
 			//log in action
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 
 			//TODO please return me an error message.
 			//"Log in successful"
-			//"Wrong password."
-			//"There is no user with the username." etc.
-			String loginMessage = ""; //TODO edit this
-			String successMessage = "success."; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings.
+			//"Wrong password."			
+			//"There is no user with the username." etc. *DONE
+			String loginMessage = LoginSignupController.getInstance().getLoginMessage(); //TODO edit this *DONE
+			String successMessage = "success."; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings. *DONE
 			if (loginMessage.equals(successMessage)) {
 
 				loggedinUserCount += 1;
@@ -320,8 +322,8 @@ public class LoginSignUpWindow {
 			LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
 
 			//TODO please return me a String
-			//Successful. or "There is already a user with the nickanme" ...
-			String signedUp = "" ; //TODO Edit this
+			//Successful. or "There is already a user with the nickanme" ... *DONE
+			String signedUp = LoginSignupController.getInstance().getSignUpMessage() ; //TODO Edit this *DONE
 			signUpMessage.setText(signedUp);
 			signUpMessage.setVisible(true);
 
