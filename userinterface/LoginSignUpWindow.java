@@ -14,7 +14,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import domain.GameController;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -96,9 +95,6 @@ public class LoginSignUpWindow {
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
 			//TODO Call the backend function to start the game with needed arguments
-			GameController.initializeGame();
-			//TODO move to the next screen
-			
 		}
 				);
 		contentPane.add(startGameButton);
@@ -216,8 +212,7 @@ public class LoginSignUpWindow {
 			//"Log in successful"
 			//"Wrong password."
 			//"There is no user with the username." etc.
-			
-			String loginMessage = LoginSignupController.getInstance().getLoginMessage(); //TODO edit this
+			String loginMessage = ""; //TODO edit this
 			String successMessage = "success."; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings.
 			if (loginMessage.equals(successMessage)) {
 
@@ -326,7 +321,7 @@ public class LoginSignUpWindow {
 
 			//TODO please return me a String
 			//Successful. or "There is already a user with the nickanme" ...
-			String signedUp = LoginSignupController.getInstance().getSignUpMessage()  ; //TODO Edit this
+			String signedUp = "" ; //TODO Edit this
 			signUpMessage.setText(signedUp);
 			signUpMessage.setVisible(true);
 
