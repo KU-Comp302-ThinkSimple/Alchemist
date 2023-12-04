@@ -24,4 +24,4 @@ replay_pid*
 /.project
 
 #classpath
-#.classpath
+.classpath
