@@ -42,65 +42,77 @@ public class PlayerTokenView extends JPanel {
 		
 		
 		player=GameController.getActivePlayers().get(id);
-		
-		setLayout(new MigLayout("", "[130px,grow][][130px,grow][][][grow][][][grow][]", "[][26px][26px][grow][][][grow][grow][]"));
+		setLayout(null);
 		
 		nameField = new JTextField();
-		add(nameField, "cell 0 0,alignx center,aligny center");
+		nameField.setBounds(16, 16, 95, 26);
+		add(nameField);
 		nameField.setColumns(10);
 		nameField.setText(player.getPlayerName());
 		
 		healthField = new JTextField();
-		add(healthField, "cell 5 1,alignx leading");
+		healthField.setBounds(227, 46, 95, 26);
+		add(healthField);
 		healthField.setColumns(10);
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		
 		goldField = new JTextField();
-		add(goldField, "flowx,cell 8 1,alignx center,aligny top");
+		goldField.setBounds(334, 46, 96, 26);
+		add(goldField);
 		goldField.setColumns(10);
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
 		
 		repField = new JTextField();
-		add(repField, "cell 8 2,growx");
+		repField.setBounds(334, 76, 96, 26);
+		add(repField);
 		repField.setColumns(10);
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		
 		JPanel imagePanel = new JPanel();
-		add(imagePanel, "cell 0 1 1 3,grow");
+		imagePanel.setBounds(16, 46, 95, 89);
+		add(imagePanel);
 		
 		ImageIcon icon = new ImageIcon(player.getPlayerToken().getPlayerAvatar());
 		imagePanel.add(new JLabel(icon));
 		
 		JPanel potPanel0 = new JPanel();
-		add(potPanel0, "cell 0 5 2 2,grow");
+		potPanel0.setBounds(16, 168, 95, 54);
+		add(potPanel0);
 		potPanels.add(potPanel0);
 		
 		JPanel potPanel1 = new JPanel();
-		add(potPanel1, "cell 2 5 1 2,grow");
+		potPanel1.setBounds(119, 168, 96, 54);
+		add(potPanel1);
 		potPanels.add(potPanel1);
 		
 		JPanel potPanel2 = new JPanel();
-		add(potPanel2, "cell 5 5 1 2,grow");
+		potPanel2.setBounds(227, 168, 95, 54);
+		add(potPanel2);
 		potPanels.add(potPanel2);
 		
 		JPanel potPanel3 = new JPanel();
-		add(potPanel3, "cell 8 6,grow");
+		potPanel3.setBounds(334, 172, 96, 50);
+		add(potPanel3);
 		potPanels.add(potPanel3);
 		
 		JPanel potPanel4 = new JPanel();
-		add(potPanel4, "cell 0 7 1 2,grow");
+		potPanel4.setBounds(16, 226, 95, 58);
+		add(potPanel4);
 		potPanels.add(potPanel4);
 		
 		JPanel potPanel5 = new JPanel();
-		add(potPanel5, "cell 2 7 1 2,grow");
+		potPanel5.setBounds(119, 226, 96, 58);
+		add(potPanel5);
 		potPanels.add(potPanel5);
 		
 		JPanel potPanel6 = new JPanel();
-		add(potPanel6, "cell 5 7 1 2,grow");
+		potPanel6.setBounds(227, 226, 95, 58);
+		add(potPanel6);
 		potPanels.add(potPanel6);
 		
 		JPanel potPanel7 = new JPanel();
-		add(potPanel7, "cell 8 7 1 2,grow");
+		potPanel7.setBounds(334, 226, 96, 58);
+		add(potPanel7);
 		potPanels.add(potPanel7);
 		
 		displayPlayerPotions();
