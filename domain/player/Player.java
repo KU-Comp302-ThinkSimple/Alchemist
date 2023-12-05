@@ -18,6 +18,7 @@ public class Player {
 		this.playerName = playerName;
 		this.playerPassword = password;
 		this.playerHealth = 3;
+		this.playerToken=new PlayerToken();
 	}
 
 	public void setPlayerToken(PlayerToken playerToken) {
