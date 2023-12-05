@@ -2,6 +2,8 @@ package domain.potion;
 
 import java.util.Arrays;
 
+import domain.*;
+
 public class Potion {
 	
 	int pValue;
@@ -55,14 +57,32 @@ public class Potion {
 	
 	public void testPotion() {
 		if(this.personToTest.equals("Self")) {
-			
-			//TODO implement the effects of potion in accordance with the potion type( You can use currentPlayer from Game class)
+			if (this.potionType == "Poison") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();	 
+			}else if(this.potionType == "Health") {
+				GameController.getCurrentPlayer().getPlayerToken().addHealth();
+			}else if(this.potionType == "Slow") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
+				GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();	 	 
+			}else if(this.potionType == "Speed") {
+				GameController.getCurrentPlayer().getPlayerToken().setPlayerAction(GameController.getCurrentPlayer().getPlayerToken().getPlayerAction()+1);; 
+			}else if(this.potionType == "Insanity") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
+				GameController.getCurrentPlayer().getPlayerToken().subtractReputationPoint(1); 	 
+			}else if(this.potionType == "Wisdom") {
+				GameController.getCurrentPlayer().getPlayerToken().addReputationPoint(1);
+			}
 			
 			
 		}else if (this.personToTest.equals("Student")) {
 			
-			//TODO implement the effects of potion in accordance with the potion type( You can use currentPlayer from Game class)
-			
+			if (this.potionType == "Poison") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+			}else if(this.potionType == "Slow") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 	 
+			}else if(this.potionType == "Insanity") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+			}
 		}
 	}
 	
