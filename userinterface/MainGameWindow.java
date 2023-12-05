@@ -13,10 +13,12 @@ import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.Font;
 import java.awt.Component;
+import java.awt.SystemColor;
 
 public class MainGameWindow {
 
