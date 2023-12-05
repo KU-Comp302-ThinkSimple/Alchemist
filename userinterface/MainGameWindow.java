@@ -139,6 +139,19 @@ public class MainGameWindow {
 		player2Inventory.setBounds(1049, 89, 437, 300);
 		contentPane.add(player2Inventory);
 
+		JButton infoButton = new JButton("i");
+		infoButton.setRequestFocusEnabled(false);
+		infoButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		infoButton.setBorder(null);
+		infoButton.setBackground(SystemColor.controlHighlight);
+		infoButton.setBounds(10, 61, 60, 39);
+		infoButton.addActionListener(e -> {
+			//TODO new information
+			JOptionPane.showMessageDialog(MainGameWindowFrame, "Taktik maktik yok bam bam bam.");
+		}
+				);
+		contentPane.add(infoButton);
+
 
 		MainGameWindowFrame.setVisible(true);
 	}
