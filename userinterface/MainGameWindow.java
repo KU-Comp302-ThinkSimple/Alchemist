@@ -22,7 +22,9 @@ public class MainGameWindow {
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
-	private ResultsTriangle resultsTriangle = new ResultsTriangle();
+	private JPanel resultsTriangle = new ResultsTriangle();
+	private JPanel player1Inventory = new PlayerInventory(0);
+	private JPanel player2Inventory = new PlayerInventory(1);
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -130,6 +132,11 @@ public class MainGameWindow {
 		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
 		resultsTriangle.setLocation(612, 89);
 		contentPane.add(resultsTriangle);
+
+
+		player1Inventory.setBounds(149, 89, 437, 300);
+		contentPane.add(player1Inventory);
+		contentPane.add(player2Inventory);
 
 
 		MainGameWindowFrame.setVisible(true);
