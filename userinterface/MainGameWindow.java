@@ -22,6 +22,7 @@ public class MainGameWindow {
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
+	private ResultsTriangle resultsTriangle = new ResultsTriangle();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -121,12 +122,14 @@ public class MainGameWindow {
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
-
-		deductionBoard.setLocation(525, 679);
+		deductionBoard.setLocation(514, 541);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 
+		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
+		resultsTriangle.setLocation(612, 89);
+		contentPane.add(resultsTriangle);
 
 
 		MainGameWindowFrame.setVisible(true);
