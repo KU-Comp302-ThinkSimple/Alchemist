@@ -1,0 +1,73 @@
+package userinterface;
+
+import java.awt.Cursor;
+import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import userinterface.util.GlobalColors;
+import userinterface.util.GlobalDimensions;
+import userinterface.util.GlobalFonts;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+public class MainGameWindow {
+
+	private JPanel contentPane;
+
+	public MainGameWindow() {
+		JFrame MainGameWindowFrame = new JFrame();
+		MainGameWindowFrame.setUndecorated(true);
+		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
+		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
+		//MainGameWindowFrame.setExtendedState(JFrame.NORMAL);
+
+		MainGameWindowFrame.setTitle("Alchemists");
+		MainGameWindowFrame.setResizable(false);
+		MainGameWindowFrame.setSize(GlobalDimensions.FULL_SCREEN);
+		MainGameWindowFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
+		MainGameWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
+
+		contentPane = new JPanel();
+		contentPane.setBackground(GlobalColors.BACKGROUND_COLOR);
+		contentPane.setSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setPreferredSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setMinimumSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setMaximumSize(GlobalDimensions.FULL_SCREEN);
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		MainGameWindowFrame.setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JButton closeButton = new JButton("X");
+		closeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		closeButton.setBorder(null);
+		closeButton.setBackground(GlobalColors.BUTTON_COLOR);
+		closeButton.setRequestFocusEnabled(false);
+		closeButton.setFont(GlobalFonts.DISPLAY);
+		closeButton.setBounds(10, 11, 60, 39);
+		closeButton.addActionListener(e -> {
+			MainGameWindowFrame.dispose();
+		}
+				);
+		contentPane.add(closeButton);
+
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setBounds(81, 147, 400, 270);
+		contentPane.add(buttonsPanel);
+		buttonsPanel.setLayout(null);
+
+		JButton sellingredientButton = new JButton("Sell Ingredient");
+		sellingredientButton.setBounds(0, 0, 228, 259);
+		sellingredientButton.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/flower_100x160.png")));
+		buttonsPanel.add(sellingredientButton);
+
+
+
+		MainGameWindowFrame.setVisible(true);
+	}
+}
