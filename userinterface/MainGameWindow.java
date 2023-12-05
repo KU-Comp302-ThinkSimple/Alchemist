@@ -21,6 +21,7 @@ import java.awt.Component;
 public class MainGameWindow {
 
 	private JPanel contentPane;
+	private JPanel deductionBoard = new DeductionBoard();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -120,6 +121,10 @@ public class MainGameWindow {
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
+
+		deductionBoard.setLocation(525, 679);
+		deductionBoard.setSize(deductionBoard.getPreferredSize());
+		contentPane.add(deductionBoard);
 
 
 
