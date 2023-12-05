@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class PlayerInventoryView extends JPanel {
+public class PlayerInventory extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private int id; //There will be two of this view so there should be an id attribute to separate them
@@ -29,7 +29,7 @@ public class PlayerInventoryView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PlayerInventoryView(int id) {
+	public PlayerInventory(int id) {
 		this.id=id;
 		
 		
