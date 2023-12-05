@@ -230,6 +230,7 @@ public class LoginSignUpWindow {
 
 					//user2 info display
 					user2info.setText(loginUserNameInput);
+					user2info.setVisible(true);
 
 					//start game button active
 					startGameButton.setVisible(true);
@@ -241,6 +242,7 @@ public class LoginSignUpWindow {
 				else {
 					//user1 info display
 					user1info.setText(loginUserNameInput);
+					user1info.setVisible(true);
 				}
 			}
 			//log in unsuccessful
