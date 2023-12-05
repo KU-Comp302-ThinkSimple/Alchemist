@@ -206,17 +206,17 @@ public class LoginSignUpWindow {
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
-			//TODO clear log in panel texts. 
+			//TODO clear log in panel texts.
 
 			//log in action
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 
 			//TODO please return me an error message.
 			//"Log in successful"
-			//"Wrong password."			
+			//"Wrong password."
 			//"There is no user with the username." etc. *DONE
 			String loginMessage = LoginSignupController.getInstance().getLoginMessage(); //TODO edit this *DONE
-			String successMessage = "success."; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings. *DONE
+			String successMessage = LoginSignupController.loginSuccessMessage; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings. *DONE
 			if (loginMessage.equals(successMessage)) {
 
 				loggedinUserCount += 1;
