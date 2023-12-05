@@ -101,9 +101,9 @@ public class LoginSignUpWindow {
 
 
 		JPanel loggedinUserInfo = new JPanel();
-		loggedinUserInfo.setBounds(1497, 297, 290, 152);
+		loggedinUserInfo.setBounds(1497, 242, 290, 207);
 		loggedinUserInfo.setOpaque(false);
-		loggedinUserInfo.setLayout(new GridLayout(0, 2, 0, 0));
+		loggedinUserInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
 
 		JLabel user1 = new JLabel("User 1");
@@ -188,6 +188,7 @@ public class LoginSignUpWindow {
 		loginMessageDisplay.setOpaque(false);
 		loginMessageDisplay.setForeground(GlobalColors.ERROR_MESSAGE);
 		loginMessageDisplay.setFont(GlobalFonts.ERROR_MESSAGE);
+		loginMessageDisplay.setVisible(false);
 		loginMessageDisplay.setColumns(10);
 		loginSignUpFormPanel.add(loginMessageDisplay);
 
