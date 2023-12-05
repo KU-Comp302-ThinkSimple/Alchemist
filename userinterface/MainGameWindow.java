@@ -136,6 +136,7 @@ public class MainGameWindow {
 
 		player1Inventory.setBounds(149, 89, 437, 300);
 		contentPane.add(player1Inventory);
+		player2Inventory.setBounds(1049, 89, 437, 300);
 		contentPane.add(player2Inventory);
 
 
