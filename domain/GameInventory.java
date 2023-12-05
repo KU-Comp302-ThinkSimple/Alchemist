@@ -97,6 +97,10 @@ public class GameInventory {
 			//TODO create publication cards manually
 	}
 	
+	public ArrayList<IngredientCard> getIngredientCards() {
+		return ingrCards;
+	}
+	
 	
 	
 	
