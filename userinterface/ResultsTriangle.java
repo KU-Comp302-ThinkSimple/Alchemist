@@ -111,7 +111,7 @@ public class ResultsTriangle extends JPanel {
 	/**
 	 * updates the triangle to reflect the active user's potions
 	 */
-	public void update() {
+	public void updateResultsTriangle() {
 		Player player = GameController.getCurrentPlayer();
 		updateTriangleUsingPotionList(player.getInventory().getPlayerPotionList());
 	}
