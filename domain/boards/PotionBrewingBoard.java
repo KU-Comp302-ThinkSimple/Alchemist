@@ -22,10 +22,10 @@ public class PotionBrewingBoard extends Board{
     	
     	//Check if player has these 2 ingredients
     	if(!(inv.getPlayerIngredientCardList().contains(ingredient1))) {
-    		throw new UserErrorException("User does not have these first ingredient");
+    		throw new UserErrorException("User does not have first ingredient");
     	}
     	if(!(inv.getPlayerIngredientCardList().contains(ingredient2))) {
-    		throw new UserErrorException("User does not have these second ingredient");
+    		throw new UserErrorException("User does not have second ingredient");
     	}
     		
     	//Create recipe and potion with given ingredients		
