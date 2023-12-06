@@ -15,11 +15,11 @@ import domain.potion.Recipe;
 
 public class GameInventory {
 
-	ArrayList<Atom> atoms=new ArrayList<Atom>();
-	ArrayList<Molecule> molecules=new ArrayList<Molecule>();
-	ArrayList<IngredientCard> ingrCards=new ArrayList<IngredientCard>();
-	ArrayList<PublicationCard> pubCards=new ArrayList<PublicationCard>();
-	ArrayList<ArtifactCard> artCards=new ArrayList<ArtifactCard>();
+	private final ArrayList<Atom> atoms=new ArrayList<Atom>();
+	private final ArrayList<Molecule> molecules=new ArrayList<Molecule>();
+	private final ArrayList<IngredientCard> ingrCards=new ArrayList<IngredientCard>();
+	private final ArrayList<PublicationCard> pubCards=new ArrayList<PublicationCard>();
+	private final ArrayList<ArtifactCard> artCards=new ArrayList<ArtifactCard>();
 
 	
 	AtomFactory atomFactory=AtomFactory.getInstance();
@@ -28,7 +28,7 @@ public class GameInventory {
 	
 	
 	private static GameInventory instance;
-	
+
 	private GameInventory() {}
 	
 	
@@ -101,7 +101,25 @@ public class GameInventory {
 		return ingrCards;
 	}
 	
-	
+
+	public ArrayList<Atom> getAtoms() {
+		return atoms;
+	}
+
+
+	public ArrayList<Molecule> getMolecules() {
+		return molecules;
+	}
+
+
+	public ArrayList<IngredientCard> getIngrCards() {
+		return ingrCards;
+	}
+
+
+	public ArrayList<ArtifactCard> getArtCards() {
+		return artCards;
+	}
 	
 	
 	
