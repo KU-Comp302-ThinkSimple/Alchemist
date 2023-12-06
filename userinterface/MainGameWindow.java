@@ -37,6 +37,7 @@ public class MainGameWindow {
 	private JPanel resultsTriangle = new ResultsTriangle();
 	private JPanel player1Inventory = new PlayerInventory(0);
 	private JPanel player2Inventory = new PlayerInventory(1);
+	private JPanel potionBrewingBoard = new BrewPotionPanel();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -235,6 +236,10 @@ public class MainGameWindow {
 			JOptionPane.showMessageDialog(MainGameWindowFrame, "Game paused. Close this window to continue.");
 		});
 		contentPane.add(pauseButton);
+
+		potionBrewingBoard.setLocation(1219, 402);
+		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
+		contentPane.add(potionBrewingBoard);
 
 
 		//TODO TEST

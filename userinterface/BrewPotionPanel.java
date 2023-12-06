@@ -39,6 +39,7 @@ import java.awt.ComponentOrientation;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.Icon;
+import java.awt.Rectangle;
 
 
 
@@ -48,11 +49,16 @@ public class BrewPotionPanel extends JPanel {
 
 
 	public BrewPotionPanel(){
+		setMinimumSize(new Dimension(691, 604));
+		setMaximumSize(new Dimension(691, 604));
+		setPreferredSize(new Dimension(691, 604));
+		setBounds(new Rectangle(0, 0, 691, 604));
 
 		setBackground(GlobalColors.BACKGROUND_COLOR);
 		//setOpaque(false);
 		setAutoscrolls(true);
 		setLayout(null);
+		setSize(691, 604);
 
 		JPanel drinkPotionPanel = new JPanel();
 		drinkPotionPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -71,14 +77,14 @@ public class BrewPotionPanel extends JPanel {
 
 
 		choice1.add("Please select an ingredient");
-		choice1.add("raven's feather");
-		choice1.add("mandrake root");
-		choice1.add("mushroom");
-		choice1.add("frog");
-		choice1.add("flower");
-		choice1.add("scorpion");
-		choice1.add("bird claw");
-		choice1.add("seedling");
+		choice1.add("Mushroom");
+		choice1.add("Seedling");
+		choice1.add("Frog");
+		choice1.add("Bird Claw");
+		choice1.add("Flower");
+		choice1.add("Mandrake Root");
+		choice1.add("Scorpion");
+		choice1.add("Raven's Feather");
 
 
 		Choice choice2 = new Choice();
@@ -90,14 +96,14 @@ public class BrewPotionPanel extends JPanel {
 
 
 		choice2.add("Please select an ingredient");
-		choice2.add("raven's feather");
-		choice2.add("mandrake root");
-		choice2.add("mushroom");
-		choice2.add("frog");
-		choice2.add("flower");
-		choice2.add("scorpion");
-		choice2.add("bird claw");
-		choice2.add("seedling");
+		choice2.add("Mushroom");
+		choice2.add("Seedling");
+		choice2.add("Frog");
+		choice2.add("Bird Claw");
+		choice2.add("Flower");
+		choice2.add("Mandrake Root");
+		choice2.add("Scorpion");
+		choice2.add("Raven's Feather");
 
 
 		//TODO get inventory items and add them to choice1 and choice 2
