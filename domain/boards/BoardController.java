@@ -51,7 +51,7 @@ public class BoardController {
     		if (ingredient.getName() == ingredient2) {
         		ingr2 = ingredient;}
     	}
-		return potBoard.makeExperiment(ingr1, ingr2, onStu);
+		return potBoard.makeExperiment(GameController.getCurrentPlayer(), ingr1, ingr2, onStu);
   }
 
 
