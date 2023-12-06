@@ -97,6 +97,8 @@ public class LoginSignUpWindow {
 		startGameButton.addActionListener(e -> {
 			//TODO Call the backend function to start the game with needed arguments *DONE
 			GameController.initializeGame();
+			LoginSignUpWindowFrame.dispose();
+			new MainGameWindow();
 		}
 				);
 		contentPane.add(startGameButton);

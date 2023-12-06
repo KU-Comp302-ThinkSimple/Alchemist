@@ -7,8 +7,8 @@ import domain.potion.*;
 import exception.*;
 
 public class PotionBrewingBoard extends Board{
-    public PotionBrewingBoard(int size, String name) {
-        super(size, name);
+    public PotionBrewingBoard() {
+ 
     }
     
     
