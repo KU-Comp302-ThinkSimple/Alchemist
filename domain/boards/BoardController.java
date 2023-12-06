@@ -19,8 +19,8 @@ public class BoardController {
 		ingrBoard.transmuteIngredient(ingr);
 	}
 	
-	public static IngredientCard forageForIngredient() throws UserErrorException{
-		return ingrBoard.forageForIngredient();
+	public static void forageForIngredient() throws UserErrorException{
+		 ingrBoard.forageForIngredient();
 	}
 	
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{

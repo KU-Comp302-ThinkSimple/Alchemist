@@ -14,6 +14,7 @@ public class IngredientBoard extends Board{
     public IngredientBoard() {
 
         ingredientList = new ArrayList<IngredientCard>();
+        initializeIngredientList();
     }
     
    // Function creates deck for ingredient cards 
