@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import domain.GameController;
+import domain.boards.BoardController;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -125,7 +126,7 @@ public class BrewPotionPanel extends JPanel {
 		drinkPotionButton.setFont(GlobalFonts.BREW_BUTTON);
 		drinkPotionButton.addActionListener(e -> {
 			try {
-				String message = GameController.getBoard().getPotionBrewingBoard().makeExperiment(choice1.getSelectedItem(), choice2.getSelectedItem(), false);
+				String message = BoardController.brewPotion(choice1.getSelectedItem(), choice2.getSelectedItem(), false);
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
 			}
 			catch (Exception error) {
