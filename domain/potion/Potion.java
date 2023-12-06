@@ -1,14 +1,21 @@
 package domain.potion;
 
+import java.util.Arrays;
+
+import domain.*;
+
 public class Potion {
 	
 	int pValue;
+	int neutralityValue; // 0 if negative, 1 if positive, 2 if neutral
 	String potionType;
 	String personToTest;
 	Recipe potionRecipe;
 	
 	public Potion(Recipe potionRecipe) {
 		this.potionRecipe=potionRecipe;
+		determinePotion();
+		determinePotionNeutrality();
 	}
 	
 	public void determinePotion() {
@@ -36,16 +43,46 @@ public class Potion {
 		}
 	}
 	
+	public void determinePotionNeutrality() {
+		
+		if(Arrays.asList("Poison", "Slow", "Insanity").contains(this.potionType)) {
+			this.neutralityValue=0;
+		}else if(Arrays.asList("Health", "Slow", "Insanity").contains(this.potionType)) {
+			
+			this.neutralityValue=1;
+		}else {
+			this.neutralityValue=2;
+		}
+	}
+	
 	public void testPotion() {
 		if(this.personToTest.equals("Self")) {
-			
-			//TODO implement the effects of potion in accordance with the potion type( You can use currentPlayer from Game class)
+			if (this.potionType == "Poison") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();	 
+			}else if(this.potionType == "Health") {
+				GameController.getCurrentPlayer().getPlayerToken().addHealth();
+			}else if(this.potionType == "Slow") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
+				GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();	 	 
+			}else if(this.potionType == "Speed") {
+				GameController.getCurrentPlayer().getPlayerToken().setPlayerAction(GameController.getCurrentPlayer().getPlayerToken().getPlayerAction()+1);; 
+			}else if(this.potionType == "Insanity") {
+				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
+				GameController.getCurrentPlayer().getPlayerToken().subtractReputationPoint(1); 	 
+			}else if(this.potionType == "Wisdom") {
+				GameController.getCurrentPlayer().getPlayerToken().addReputationPoint(1);
+			}
 			
 			
 		}else if (this.personToTest.equals("Student")) {
 			
-			//TODO implement the effects of potion in accordance with the potion type( You can use currentPlayer from Game class)
-			
+			if (this.potionType == "Poison") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+			}else if(this.potionType == "Slow") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 	 
+			}else if(this.potionType == "Insanity") {
+				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+			}
 		}
 	}
 	
@@ -80,6 +117,14 @@ public class Potion {
 
 	public void setPotionRecipe(Recipe potionRecipe) {
 		this.potionRecipe = potionRecipe;
+	}
+
+	public int getNeutralityValue() {
+		return neutralityValue;
+	}
+
+	public void setNeutralityValue(int neutralityValue) {
+		this.neutralityValue = neutralityValue;
 	}
 	
 

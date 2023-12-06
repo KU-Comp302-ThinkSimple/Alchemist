@@ -40,17 +40,17 @@ public class DeductionBoard extends JPanel {
 
 				crossButton.setContentAreaFilled(false);
 				crossButton.addActionListener(e -> {
-					System.out.printf("týklama action\n");
+					System.out.printf("tiklama action\n");
 					JButton thisButton = (JButton) e.getSource();
 					if (!thisButton.isSelected()) {
 						thisButton.setSelected(true);
 						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/cross_88x42.png")));
-						System.out.printf("týklama if\n");
+						System.out.printf("tiklama if\n");
 					}
 					else {
 						thisButton.setSelected(false);
 						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/transparent_88x42.png")));
-						System.out.printf("týklama else\n");
+						System.out.printf("tiklama else\n");
 					}
 				}
 						);
@@ -63,7 +63,7 @@ public class DeductionBoard extends JPanel {
 		JLabel deductionBoardLabel = new JLabel();
 		deductionBoardLabel.setBounds(0, 0, 704, 341);
 		deductionBoardLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
-		this.add(deductionBoardLabel);
+		buttonsPanel.add(deductionBoardLabel);
 
 
 		//LayoutManager eightLayout = new GridLayout();
