@@ -19,7 +19,7 @@ public class IngredientBoard extends Board{
 
 	// Function creates deck for ingredient cards
 	public void initializeIngredientList(){
-		ArrayList<IngredientCard> ingrs = GameController.getGameInventory().getIngredientCards();
+		ArrayList<IngredientCard> ingrs = new ArrayList<IngredientCard>(GameController.getGameInventory().getIngredientCards());
 		while (ingredientList.size() < 3) {
 			Collections.shuffle(ingrs);
 			ingredientList.add(ingrs.get(0));
@@ -33,15 +33,13 @@ public class IngredientBoard extends Board{
 			throw new UserErrorException("The player has no more actions left!");
 		}
 
-		IngredientCard ingr = ingredientList.get(0);
+		IngredientCard ingr = popIngredient();
 		GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
-		initializeIngredientList();
-
 	}
 
 
 	public IngredientCard popIngredient() {
-		IngredientCard ingr = ingredientList.get(0);
+		IngredientCard ingr = ingredientList.remove(0);
 		initializeIngredientList();
 		return ingr;
 
