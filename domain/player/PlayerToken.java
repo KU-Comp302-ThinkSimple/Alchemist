@@ -15,7 +15,7 @@ public class PlayerToken {
 	int gold=0;
 	int reputation=0;
 	int playerHealth = 3;
-	int playerAction=0;
+	int playerAction=3;
 	String playerAvatar; // the directory of the playeravatar is kept in this as a string.
 	PlayerInventory playerInventory;
 	
