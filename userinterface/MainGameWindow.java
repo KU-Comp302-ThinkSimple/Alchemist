@@ -9,7 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import domain.GameController;
+import domain.boards.IngredientBoard;
 import domain.boards.PotionBrewingBoard;
+import domain.cards.IngredientCard;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -22,6 +25,10 @@ import java.awt.Component;
 import java.awt.SystemColor;
 import java.awt.List;
 import javax.swing.JMenu;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JComboBox;
 
 public class MainGameWindow {
 
@@ -78,20 +85,46 @@ public class MainGameWindow {
 		buttonsPanel.add(transmuteIngredientPanel);
 		transmuteIngredientPanel.setLayout(null);
 
-		JButton sellIngredientButton = new JButton("Transmute Ingredient");
-		sellIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
-		sellIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		sellIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-		sellIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
-		sellIngredientButton.setBounds(transmuteIngredientPanel.getBounds());
-		sellIngredientButton.setContentAreaFilled(false); //TODO make it transparent
-		transmuteIngredientPanel.add(sellIngredientButton);
+		JButton transmuteIngredientButton = new JButton("Transmute Ingredient");
+		transmuteIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		transmuteIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
+		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
+		transmuteIngredientButton.setBounds(transmuteIngredientPanel.getBounds());
+		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
-		JLabel sellIngredientLabel = new JLabel();
-		sellIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
-		sellIngredientLabel.setBounds(transmuteIngredientPanel.getBounds());
-		sellIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/flower_100x160.png")));
-		transmuteIngredientPanel.add(sellIngredientLabel);
+
+		/* GONNA BE IMPLEMENTED AFTER UPDATE OF SOME FUNCTIONS (Ingr card name -> Ingr card item function)
+		//get an array of ingredients of active player
+		ArrayList<IngredientCard> ingredientsList = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		String[] ingrs = new String[ingredientsList.size()];
+		for (int i = 0; i < ingredientsList.size(); i++) {
+			ingrs[i] = ingredientsList.get(i).getName();
+		}
+
+		//TODO make a jcombobox
+		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
+		transmuteIngredientComboBox.setBounds(0, 0, 105, 22);
+
+
+		//TODO action listener for transmute ingredient button
+		transmuteIngredientButton.addActionListener(e -> {
+			if (transmuteIngredientComboBox.getSelectedItem() == null) {
+				JOptionPane.showMessageDialog(MainGameWindowFrame, "Select an ingredient first to sell it for 1 gold.");
+			}
+			else GameController.getBoard().getIngredientBoard().transmuteIngredient();
+
+			//IngredientBoard.forageForIngredient();
+		});
+		 */
+		transmuteIngredientPanel.add(transmuteIngredientButton);
+		//transmuteIngredientPanel.add(transmuteIngredientComboBox);
+
+		JLabel transmuteIngredientLabel = new JLabel();
+		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
+		transmuteIngredientLabel.setBounds(transmuteIngredientPanel.getBounds());
+		transmuteIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/flower_100x160.png")));
+		transmuteIngredientPanel.add(transmuteIngredientLabel);
 
 		JPanel buyArtifactPanel = new JPanel();
 		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, 105, 174);
@@ -122,6 +155,14 @@ public class MainGameWindow {
 		forageForIngredientButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		forageForIngredientButton.setContentAreaFilled(false);
 		forageForIngredientButton.setBounds(0, 0, 105, 174);
+		forageForIngredientButton.addActionListener(e -> {
+			try {
+				GameController.getBoard().getIngredientBoard().forageForIngredient();
+			}
+			catch (Exception a) {
+				//TODO what now?
+			}
+		});
 		forageForIngredientPanel.add(forageForIngredientButton);
 
 		JLabel forageForIngredientLabel = new JLabel();
@@ -166,7 +207,11 @@ public class MainGameWindow {
 
 		//TODO FOR TESTING PURPOSES
 		JButton changeDeduction = new JButton("New button");
-		changeDeduction.setBounds(10, 125, 89, 23);
+		/*
+		changeDeduction.addActionListener(new ActionListener() {
+		});
+		 */
+		changeDeduction.setBounds(10, 190, 89, 23);
 		changeDeduction.addActionListener(e ->{
 
 			//Deduction Board Changer
@@ -179,11 +224,17 @@ public class MainGameWindow {
 		});
 		contentPane.add(changeDeduction);
 
-		JMenu mnNewMenu = new JMenu("Select card...");
-		mnNewMenu.setBounds(164, 418, 113, 27);
-		mnNewMenu.add("card1");
-		mnNewMenu.add("card2");
-		contentPane.add(mnNewMenu);
+
+		JButton pauseButton = new JButton("P");
+		pauseButton.setRequestFocusEnabled(false);
+		pauseButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		pauseButton.setBorder(null);
+		pauseButton.setBackground(SystemColor.controlHighlight);
+		pauseButton.setBounds(10, 111, 60, 39);
+		pauseButton.addActionListener(e -> {
+			JOptionPane.showMessageDialog(MainGameWindowFrame, "Game paused. Close this window to continue.");
+		});
+		contentPane.add(pauseButton);
 
 
 		//TODO TEST
