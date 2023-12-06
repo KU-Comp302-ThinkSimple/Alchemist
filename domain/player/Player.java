@@ -7,17 +7,14 @@ import domain.potion.*;
 
 public class Player {
 
-	final int playerId;
 	final String playerName;
 	final String playerPassword;
-	int playerHealth;
 	PlayerToken playerToken;
 
-	public Player(int playerId, String playerName, String password) {
-		this.playerId = playerId;
+	public Player(String playerName, String password) {
+
 		this.playerName = playerName;
 		this.playerPassword = password;
-		this.playerHealth = 3;
 		this.playerToken=new PlayerToken();
 	}
 
@@ -41,9 +38,6 @@ public class Player {
 		this.playerToken.reduceHealth();
 	}
 
-	public int getPlayerId() {
-		return playerId;
-	}
 
 	public String getPlayerName() {
 		return playerName;
