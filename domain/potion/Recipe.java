@@ -4,12 +4,21 @@ import domain.cards.IngredientCard;
 
 public class Recipe {
 	
-	IngredientCard ingredient1;
-	IngredientCard ingredient2;
+	final private IngredientCard ingredient1;
+	final private IngredientCard ingredient2;
 	
 	public Recipe(IngredientCard ingredient1, IngredientCard ingredient2) {
-		this.ingredient1 = ingredient1;
-		this.ingredient2 = ingredient2;
+		//keep the id's of the recipes sorted so that the ingredients being swapped doesn't
+		//represent a new recipe
+		if(ingredient1.getId() > ingredient2.getId()) {
+			this.ingredient1 = ingredient2;
+			this.ingredient2 = ingredient1;
+		}
+		else {
+			this.ingredient1 = ingredient1;
+			this.ingredient2 = ingredient2;
+		}
+		
 	}
 	
 	public int checkRedMatch() { //0 if matches and negative, 1 if matches and positive, 2 if does not match
@@ -46,6 +55,14 @@ public class Recipe {
 		}else {
 			return 2;
 		}
+	}
+
+	public IngredientCard getIngredient1() {
+		return ingredient1;
+	}
+
+	public IngredientCard getIngredient2() {
+		return ingredient2;
 	}
 	
 	

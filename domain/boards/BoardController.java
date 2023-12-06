@@ -7,13 +7,14 @@ import domain.theory.Hypotheses;
 import exception.UserErrorException;
 
 public class BoardController {
-	
+
 	static GameBoard board = GameController.getBoard();
-	static PotionBrewingBoard potBoard =(PotionBrewingBoard) board.getPotionBrewingBoard();
-	static PublicationBoard pubBoard = (PublicationBoard) board.getPublicationBoard();
-	static IngredientBoard ingrBoard = (IngredientBoard) board.getIngredientBoard();
-	
+	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
+	static PublicationBoard pubBoard = board.getPublicationBoard();
+	static IngredientBoard ingrBoard = board.getIngredientBoard();
+
 	BoardController(){}
+
 	
 	public static void transmuteIngredient(String ingredient) throws UserErrorException {
 		//Finding proper Ingredient with given name
@@ -23,25 +24,26 @@ public class BoardController {
     		if (ingr_1.getName() == ingredient) {
     			ingr = ingr_1;}
     	}
-		
+
 		ingrBoard.transmuteIngredient(ingr);
 	}
-	
-	public static IngredientCard forageForIngredient() throws UserErrorException{
-		return ingrBoard.forageForIngredient();
+
+	public static void forageForIngredient() throws UserErrorException{
+		ingrBoard.forageForIngredient();
 	}
-	
+
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
 		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
 	}
-	
+
 	public static void debunkTheory(Hypotheses hypothesis) throws UserErrorException {
 		pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis);
 	}
+
 	
 	public static String brewPotion(String ingredient1, String ingredient2, boolean onStu) throws UserErrorException{
 		//Find ingredients with given names  	
-       	IngredientCard ingr1 = null;
+    IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;
 		for (IngredientCard ingredient : GameController.getGameInventory().getIngredientCards()){
     		if (ingredient.getName() == ingredient1) {
@@ -50,7 +52,8 @@ public class BoardController {
         		ingr2 = ingredient;}
     	}
 		return potBoard.makeExperiment(ingr1, ingr2, onStu);
-	}
+  }
+
 
 }
 
