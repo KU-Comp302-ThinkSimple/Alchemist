@@ -15,8 +15,9 @@ public class MoleculeFactory {
 	
 	
 	public Molecule createMolecule(Atom redAtom, Atom greenAtom, Atom blueAtom) {
-		return new Molecule(id, redAtom, greenAtom, blueAtom);
+		Molecule ret =  new Molecule(id, redAtom, greenAtom, blueAtom);
 		id++;
+		return ret;
 	}
 	
 
