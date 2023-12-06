@@ -1,5 +1,6 @@
 package domain.boards;
 import java.util.*;
+import exception.*;
 
 import domain.theory.*;
 import domain.player.*;
@@ -15,7 +16,7 @@ public class PublicationBoard extends Board{
     
         this.hypotheses = new ArrayList<Hypotheses>();
     }
-    
+
     /**
      * @param player: The player who initiated the publishing action
      * @param ingredient: The ingredient being theorized on
@@ -23,12 +24,16 @@ public class PublicationBoard extends Board{
      * @throws UserErrorException: Thrown if user has insufficient gold, rounds are incorrect, the player doesnt have said ingredient.
      */
     public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
-    	PlayerInventory inv = player.getInventory();
+      PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	
     	//check if we are in round 2 or 3
     	if(GameController.getCurrentRound()<2) {
     		throw new UserErrorException("Theories can only be published in rounds 2 and 3.");
+    	}
+  
+      if(!player.getPlayerToken().hasActionsLeft()) {
+    		throw new UserErrorException("The user has no more actions left!");
     	}
     	
     	//check if user indeed owns this ingredient
@@ -49,10 +54,8 @@ public class PublicationBoard extends Board{
     	Hypotheses hypothesis = new Hypotheses(player, ingredient, hypothesizedMolecule);
     	player.getInventory().addHypoteses(hypothesis);
     	hypotheses.add(hypothesis);
-    	
-    	//add reputation and remove gold
-    	player.getPlayerToken().setReputation(player.getPlayerToken().getReputation()+1);
-    	player.getPlayerToken().setGold(gold - 1);
+    	player.getPlayerToken().addReputationPoint(1);
+    	player.getPlayerToken().subtractGold(1);
     }
     
     /**

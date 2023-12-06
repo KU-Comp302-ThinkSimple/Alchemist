@@ -12,15 +12,21 @@ public class PotionBrewingBoard extends Board{
     }
     
     
-    public String makeExperiment(Player player, IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
+    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
     	
     	//Get current player and needed informations
-    	 
+    	Player player = GameController.getCurrentPlayer(); 
     	PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	int health = player.getPlayerToken().getPlayerHealth();
     	
-    	
+    	//Check if player has these 2 ingredients
+    	if(!(inv.getPlayerIngredientCardList().contains(ingredient1))) {
+    		throw new UserErrorException("User does not have first ingredient");
+    	}
+    	if(!(inv.getPlayerIngredientCardList().contains(ingredient2))) {
+    		throw new UserErrorException("User does not have second ingredient");
+    	}
     		
     	//Create recipe and potion with given ingredients		
 		Recipe rec = new Recipe(ingredient1, ingredient2);
