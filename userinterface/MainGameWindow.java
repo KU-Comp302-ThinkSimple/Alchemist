@@ -228,8 +228,10 @@ public class MainGameWindow {
 			player1Inventory.setVisible(!player1Inventory.isVisible());
 			player2Inventory.setVisible(!player2Inventory.isVisible());
 
-			//TODO Results Triangle Changer
-			//resultsTriangle.update();
+			//Results Triangle Changer
+			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+
 		});
 		contentPane.add(changeRoundButton);
 
