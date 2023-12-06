@@ -40,17 +40,17 @@ public class DeductionBoard extends JPanel {
 
 				crossButton.setContentAreaFilled(false);
 				crossButton.addActionListener(e -> {
-					System.out.printf("tiklama action\n");
+
 					JButton thisButton = (JButton) e.getSource();
 					if (!thisButton.isSelected()) {
 						thisButton.setSelected(true);
 						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/cross_88x42.png")));
-						System.out.printf("tiklama if\n");
+
 					}
 					else {
 						thisButton.setSelected(false);
 						thisButton.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/transparent_88x42.png")));
-						System.out.printf("tiklama else\n");
+
 					}
 				}
 						);
