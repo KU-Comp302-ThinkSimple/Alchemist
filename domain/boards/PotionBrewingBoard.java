@@ -12,27 +12,18 @@ public class PotionBrewingBoard extends Board{
     }
     
     
-    public String makeExperiment(String ingredient1, String ingredient2, Boolean testOnStu) throws UserErrorException {
+    public String makeExperiment(Player player, IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
     	
     	//Get current player and needed informations
-    	
-    	Player player = GameController.getCurrentPlayer(); 
+    	 
     	PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	int health = player.getPlayerToken().getPlayerHealth();
     	
-    	//Find ingredients with given names  	
-       	IngredientCard ingr1 = null;
-		IngredientCard ingr2 = null;
-		for (IngredientCard ingredient : inv.getPlayerIngredientCardList()){
-    		if (ingredient.getName() == ingredient1) {
-    			ingr1 = ingredient;}
-    		if (ingredient.getName() == ingredient2) {
-        		ingr2 = ingredient;}
-    	}
+    	
     		
     	//Create recipe and potion with given ingredients		
-		Recipe rec = new Recipe(ingr1, ingr2);
+		Recipe rec = new Recipe(ingredient1, ingredient2);
     	Potion pot = new Potion(rec);
     	
     	//Check if user already owns this recipe
@@ -63,8 +54,8 @@ public class PotionBrewingBoard extends Board{
     	
     	
     	//Remove ingredients from players ingredient list
-    	inv.removeIngredientCard(ingr1);
-    	inv.removeIngredientCard(ingr2);
+    	inv.removeIngredientCard(ingredient1);
+    	inv.removeIngredientCard(ingredient2);
 
     	
     	//Add potion and recipe to the players inventory
