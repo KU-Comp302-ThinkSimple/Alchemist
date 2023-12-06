@@ -10,9 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import domain.GameController;
+import domain.boards.BoardController;
 import domain.boards.IngredientBoard;
 import domain.boards.PotionBrewingBoard;
 import domain.cards.IngredientCard;
+import exception.UserErrorException;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -37,6 +39,7 @@ public class MainGameWindow {
 	private JPanel resultsTriangle = new ResultsTriangle();
 	private JPanel player1Inventory = new PlayerInventory(0);
 	private JPanel player2Inventory = new PlayerInventory(1);
+	private JPanel potionBrewingBoard = new BrewPotionPanel();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -94,7 +97,7 @@ public class MainGameWindow {
 		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
 
-		/* GONNA BE IMPLEMENTED AFTER UPDATE OF SOME FUNCTIONS (Ingr card name -> Ingr card item function)
+		//GONNA BE IMPLEMENTED AFTER UPDATE OF SOME FUNCTIONS (Ingr card name -> Ingr card item function)
 		//get an array of ingredients of active player
 		ArrayList<IngredientCard> ingredientsList = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrs = new String[ingredientsList.size()];
@@ -112,11 +115,18 @@ public class MainGameWindow {
 			if (transmuteIngredientComboBox.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(MainGameWindowFrame, "Select an ingredient first to sell it for 1 gold.");
 			}
-			else GameController.getBoard().getIngredientBoard().transmuteIngredient();
+			else {
+				try{
+					BoardController.transmuteIngredient((String)transmuteIngredientComboBox.getSelectedItem());
+				}
+				catch (UserErrorException a) {
+					JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
+				}
+			}
 
 			//IngredientBoard.forageForIngredient();
 		});
-		 */
+
 		transmuteIngredientPanel.add(transmuteIngredientButton);
 		//transmuteIngredientPanel.add(transmuteIngredientComboBox);
 
@@ -206,13 +216,9 @@ public class MainGameWindow {
 		contentPane.add(deductionBoard2);
 
 		//TODO FOR TESTING PURPOSES
-		JButton changeDeduction = new JButton("New button");
-		/*
-		changeDeduction.addActionListener(new ActionListener() {
-		});
-		 */
-		changeDeduction.setBounds(10, 190, 89, 23);
-		changeDeduction.addActionListener(e ->{
+		JButton changeRoundButton = new JButton("Change Round");
+		changeRoundButton.setBounds(10, 190, 89, 23);
+		changeRoundButton.addActionListener(e ->{
 
 			//Deduction Board Changer
 			deductionBoard.setVisible(!deductionBoard.isVisible());
@@ -221,8 +227,11 @@ public class MainGameWindow {
 			//Game Inventory Changer
 			player1Inventory.setVisible(!player1Inventory.isVisible());
 			player2Inventory.setVisible(!player2Inventory.isVisible());
+
+			//TODO Results Triangle Changer
+			//resultsTriangle.update();
 		});
-		contentPane.add(changeDeduction);
+		contentPane.add(changeRoundButton);
 
 
 		JButton pauseButton = new JButton("P");
@@ -235,6 +244,10 @@ public class MainGameWindow {
 			JOptionPane.showMessageDialog(MainGameWindowFrame, "Game paused. Close this window to continue.");
 		});
 		contentPane.add(pauseButton);
+
+		potionBrewingBoard.setLocation(1219, 402);
+		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
+		contentPane.add(potionBrewingBoard);
 
 
 		//TODO TEST
