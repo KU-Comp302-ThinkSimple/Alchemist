@@ -13,6 +13,7 @@ import domain.cards.IngredientCard;
 import domain.player.Player;
 import domain.potion.*;
 import exception.UserErrorException;
+import test.TestGameInitializer;
 public class PublishTheoryPanel extends JPanel implements ActionListener{
 	private final JComboBox<IngredientCardComboBoxItem> ingredientComboBox;
 	private final JComboBox<MoleculeComboBoxItem> moleculeComboBox;
@@ -56,12 +57,14 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 	} 
 	
 	public static void main(String[] args) {
+		TestGameInitializer.initializeTestGame();
 		JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(new PublishTheoryPanel());
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 	}
+	
 	public PublishTheoryPanel() {
 		setLayout(null);
 		setBorder(BorderFactory.createLineBorder(Color.black));
