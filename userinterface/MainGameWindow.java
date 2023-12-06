@@ -167,10 +167,10 @@ public class MainGameWindow {
 		forageForIngredientButton.setBounds(0, 0, 105, 174);
 		forageForIngredientButton.addActionListener(e -> {
 			try {
-				GameController.getBoard().getIngredientBoard().forageForIngredient();
+				BoardController.forageForIngredient();
 			}
 			catch (Exception a) {
-				//TODO what now?
+				JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
 			}
 		});
 		forageForIngredientPanel.add(forageForIngredientButton);
