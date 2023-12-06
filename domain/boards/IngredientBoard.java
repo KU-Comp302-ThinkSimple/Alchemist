@@ -11,8 +11,8 @@ import exception.*;
 public class IngredientBoard extends Board{
 	private ArrayList<IngredientCard> ingredientList;
 
-    public IngredientBoard(int size, String name) {
-        super(size, name);
+    public IngredientBoard() {
+
         ingredientList = new ArrayList<IngredientCard>();
     }
     
@@ -26,14 +26,24 @@ public class IngredientBoard extends Board{
    }
     
    //Returns top element in deck and add new element for ensuring that deck is endless
-   public IngredientCard forageForIngredient() throws UserErrorException {
-	   if(!GameController.getCurrentPlayer().getPlayerToken().hasActionsLeft()) {
+   public void forageForIngredient() throws UserErrorException {
+	  
+	   if (!GameController.getCurrentPlayer().getPlayerToken().hasActionsLeft()) {
 	   		throw new UserErrorException("The player has no more actions left!");
 	   	   }
 	   
 	   IngredientCard ingr = ingredientList.get(0);
+	   GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
+	   initializeIngredientList();
+	  
+   }
+   
+   
+   public IngredientCard popIngredient() {
+	   IngredientCard ingr = ingredientList.get(0);
 	   initializeIngredientList();
 	   return ingr;
+	  
    }
    
    

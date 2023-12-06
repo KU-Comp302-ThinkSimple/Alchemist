@@ -14,6 +14,7 @@ public class InitializeGameHelper {
 		
 		
 	}
+	
 
 	public void initializeIngredientCards() {
 		GameController.gameInventory.createAtom();
@@ -43,7 +44,7 @@ public class InitializeGameHelper {
 		
 		for(int i=0;i<2;i++) {
 			for(int j=0;j<2;j++) {
-				//activePlayers[i].getInventory().addAIngredientCard(board.getIngredientBoard().popIngredient());
+				GameController.activePlayers.get(i).getInventory().addAIngredientCard(GameController.board.getIngredientBoard().popIngredient());
 				
 			}
 		}
