@@ -30,7 +30,7 @@ public class LoginSignupController {
 		while(!UserInfoSaver.isPlayerIDAvailable(id)) {
 			id = rand.nextInt();
 		}
-		Player player = new Player(id, username, password);
+		Player player = new Player(username, password);
 		try {
 			UserInfoSaver.savePlayer(player);
 			signUpMessage= signUpSuccessMessage;
