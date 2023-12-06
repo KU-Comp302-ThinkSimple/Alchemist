@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import domain.potion.*;
 
 public class ResultsTriangle extends JPanel {
 	final private static ImageIcon TRANSPARENT = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/transparent_88x42.png"));
@@ -103,15 +104,72 @@ public class ResultsTriangle extends JPanel {
 	}
 	
 	/**
-	 * set the icon of the circle corresponding to the combination of potion 1 and potion 2
-	 * @param potion1Idx index of the first potion
-	 * @param potion2Idx index of the second potion
+	 * set the icon of the circle corresponding to the combination of ingredient 1 and ingredient 2
+	 * @param ingredient1Idx index of the first ingredient
+	 * @param ingredient2Idx index of the second ingredient
 	 * @param iconIdx index of the icon to set the circle to
 	 */
-	public void setCircleImage(int potion1Idx, int potion2Idx, int iconIdx) {
-		int idx = potionIdxToListIdx(potion1Idx, potion2Idx);
+	public void setCircleImage(int ingredient1Idx, int ingredient2Idx, int iconIdx) {
+		setCircleImage(ingredient1Idx, ingredient2Idx, iconIdxtoImageIcon(iconIdx));
+	}
+	
+	/**
+	 * set the icon of the circle corresponding to the combination of ingredient 1 and ingredient 2
+	 * @param ingredient1Idx index of the first ingredient
+	 * @param ingredient2Idx index of the second ingredient
+	 * @param ImageIcon to set the circle to
+	 */
+	public void setCircleImage(int ingredient1Idx, int ingredient2Idx, ImageIcon icon) {
+		int idx = ingredientIdxToListIdx(ingredient1Idx, ingredient2Idx);
 		ResizableImage img = circleImages.get(idx);
-		img.setImage(iconIdxtoImageIcon(iconIdx));
+		img.setImage(icon);
+	}
+	
+	/**
+	 * clears triangle then updates the contents in accordance with the potions in the iterable.
+	 * @param potions to update the triangle by
+	 */
+	public void updateTriangleUsingPotionList(Iterable<Potion> potions) {
+		clearTriangle();
+		for (Potion potion : potions) {
+			potion.determinePotion();
+			Recipe recipe = potion.getPotionRecipe();
+			int ingredient1Idx = recipe.getIngredient1().getId();
+			int ingredient2Idx = recipe.getIngredient2().getId();
+			ImageIcon iconToSet = TRANSPARENT;
+			if(recipe.checkRedMatch()==0) {
+				iconToSet = RED_MINUS;
+				
+			}else if(recipe.checkRedMatch()==1) {
+				
+				iconToSet = RED_PLUS;
+			}else if(recipe.checkGreenMatch()==0) {
+				
+				iconToSet = GREEN_MINUS;
+				
+			}else if(recipe.checkGreenMatch()==1) {
+				iconToSet = GREEN_PLUS;
+			
+			}else if(recipe.checkBlueMatch()==0) {
+				iconToSet = BLUE_MINUS;
+				
+			}else if(recipe.checkBlueMatch()==1) {
+				iconToSet = BLUE_PLUS;
+			}else {
+				iconToSet = TRANSPARENT;
+//				throw new RuntimeException("Neutral potion icon missing");
+			}
+			setCircleImage(ingredient1Idx, ingredient2Idx, iconToSet);
+		}
+	}
+	
+	/**
+	 * clears the triangle
+	 */
+	public void clearTriangle() {
+		for (ResizableImage resizableImage : circleImages) {
+			resizableImage.setImage(TRANSPARENT);
+		}
 	}
 	
 	/**
@@ -168,7 +226,7 @@ public class ResultsTriangle extends JPanel {
 	 */
 	private Point upperTriangularToRowCol(Point p) throws RuntimeException{
 		//the triangle can be represented as an upper triangular matrix of size (CIRCLE_DEPTH,CIRCLE_DEPTH)
-		//this way the potion index (with minor changes) corresponds to the matrix's columns and rows.
+		//this way the ingredient index (with minor changes) corresponds to the matrix's columns and rows.
 		//The rows of the triangle increase in the -x direction of the parameter p
 		//and the columns of the triangle increase in the [1,1] vector direction of p
 		//with some linear algebra, the two repr. can be coverted to eachother
@@ -181,34 +239,34 @@ public class ResultsTriangle extends JPanel {
 	}
 	
 	/**
-	 * converts the potion indexes of the deduction board to the circle image arraylist idx.
-	 * @param potionIdx1
-	 * @param potionIdx2
+	 * converts the ingredient indexes of the deduction board to the circle image arraylist idx.
+	 * @param ingredientIdx1
+	 * @param ingredientIdx2
 	 * @return
-	 * @throws RuntimeException if the potion indexes are out of bounds
+	 * @throws RuntimeException if the ingredient indexes are out of bounds
 	 */
-	private int potionIdxToListIdx(int potionIdx1, int potionIdx2) throws RuntimeException{
-		//check potion indices
-		if(potionIdx1>CIRCLE_DEPTH || potionIdx1<0) {
-			throw new RuntimeException("potionIdx1 is out of bounds");
+	private int ingredientIdxToListIdx(int ingredientIdx1, int ingredientIdx2) throws RuntimeException{
+		//check ingredient indices
+		if(ingredientIdx1>CIRCLE_DEPTH || ingredientIdx1<0) {
+			throw new RuntimeException("ingredientIdx1 is out of bounds");
 		}
 		
-		if(potionIdx2>CIRCLE_DEPTH || potionIdx2<0) {
-			throw new RuntimeException("potionIdx2 is out of bounds");
+		if(ingredientIdx2>CIRCLE_DEPTH || ingredientIdx2<0) {
+			throw new RuntimeException("ingredientIdx2 is out of bounds");
 		}
 		
-		//sort the potion indices
+		//sort the ingredient indices
 		int upperTriangleX,upperTriangleY;
-		if(potionIdx1>potionIdx2) {
-			upperTriangleX = potionIdx1;
-			upperTriangleY = potionIdx2;
+		if(ingredientIdx1>ingredientIdx2) {
+			upperTriangleX = ingredientIdx1;
+			upperTriangleY = ingredientIdx2;
 		}
 		else {
-			upperTriangleX = potionIdx2;
-			upperTriangleY = potionIdx1;
+			upperTriangleX = ingredientIdx2;
+			upperTriangleY = ingredientIdx1;
 		}
 		
-		upperTriangleX -= 1; // go from potion idx to upper triangular idx
+		upperTriangleX -= 1; // go from ingredient idx to upper triangular idx
 		Point rowCol = upperTriangularToRowCol(new Point(upperTriangleX, upperTriangleY));
 		return rowColToListIdx(rowCol.x, rowCol.y);
 	}
