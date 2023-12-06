@@ -2,20 +2,23 @@ package domain.player;
 
 import java.util.ArrayList;
 
+import domain.GameController;
 import domain.boards.Board;
 import domain.cards.ArtifactCard;
 import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
 import domain.potion.*;
 import domain.theory.Hypotheses;
-
+import java.lang.*;
 public class PlayerToken {
 
 	int gold=0;
 	int reputation=0;
 	int playerHealth = 3;
-	int playerAction;
+	int playerAction=0;
+	String playerAvatar; // the directory of the playeravatar is kept in this as a string.
 	PlayerInventory playerInventory;
+	
 	
 	public PlayerToken() {
 		
@@ -150,8 +153,35 @@ public class PlayerToken {
 	public void setPlayerAction(int playerAction) {
 		this.playerAction = playerAction;
 	}
+	public boolean hasActionsLeft() {
+		return this.playerAction>0;
+	}
+
+	public String getPlayerAvatar() {
+		return playerAvatar;
+	}
 
 
+	public void setPlayerAvatar(String playerAvatar) {
+		this.playerAvatar = playerAvatar;
+	}
+
+
+	/**
+	 * Reduces the actions a player has by 1
+	 * @throws RuntimeException if the user has no more actions left
+	 */
+	public void reducePlayerAction() throws RuntimeException{
+		if(this.playerAction<=0) {
+			throw new RuntimeException("Tried to reduce user actions when the user had no actions left");
+		}
+		this.playerAction -= 1;
+		
+		if(GameController.shouldChangeRound()) {
+			GameController.changeRounds();
+		}
+	}
+	
 	public PlayerInventory getPlayerInventory() {
 		return playerInventory;
 	}

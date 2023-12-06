@@ -7,5 +7,6 @@ public class GlobalColors {
 	public static Color BUTTON_TEXT_COLOR = new Color(56, 32, 38); //violet
 	public static Color TEXT_COLOR = new Color(227, 227, 227);
 	public static Color BACKGROUND_COLOR = new Color(56, 32, 38);
+	public static Color ERROR_MESSAGE = new Color(238, 219, 5); //yellow
 
 }

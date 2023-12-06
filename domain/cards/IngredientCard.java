@@ -1,35 +1,48 @@
 package domain.cards;
 
+import java.util.Objects;
+
 import domain.potion.Molecule;
 
 public class IngredientCard extends Card{
 	
-
-	String name;
-	Molecule molecule;
+	final int id;
+	final String name;
+	final Molecule molecule;
 	
-	public IngredientCard(String name, Molecule molecule) {
-		
+	public IngredientCard(int id, String name, Molecule molecule) {
+		this.id = id;
 		this.name = name;
 		this.molecule=molecule;
-	}
-
-	public void setMolecule(Molecule mol) {
-		this.molecule=mol;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Molecule getMolecule() {
 		return molecule;
 	}
-	
-	
+
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, molecule, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IngredientCard other = (IngredientCard) obj;
+		return id == other.id && Objects.equals(molecule, other.molecule) && Objects.equals(name, other.name);
+	}
 	
 }
