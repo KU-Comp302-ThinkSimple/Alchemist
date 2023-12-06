@@ -159,7 +159,7 @@ public class BrewPotionPanel extends JPanel {
 		testOnStudentButton.setFont(GlobalFonts.BREW_BUTTON);
 		testOnStudentButton.addActionListener(e -> {
 			try {
-				String message = GameController.getBoard().getPotionBrewingBoard().makeExperiment(choice1.getSelectedItem(), choice2.getSelectedItem(), true);
+				String message = BoardController.brewPotion(choice1.getSelectedItem(), choice2.getSelectedItem(), true);
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
 			}
 			catch (Exception error) {
