@@ -33,7 +33,7 @@ public class PotionBrewingBoard extends Board{
     	Potion pot = new Potion(rec);
     	
     	//Check if user already owns this recipe
-    	if (inv.getPlayerPotionList().contains(rec)) {
+    	if (inv.getPlayerPotionList().contains(pot)) {
     		throw new UserErrorException("The user have this recipe already!");
     	}
     	
