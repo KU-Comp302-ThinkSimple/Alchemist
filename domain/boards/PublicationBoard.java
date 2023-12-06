@@ -4,6 +4,7 @@ import exception.*;
 
 import domain.theory.*;
 import domain.player.*;
+import domain.GameController;
 import domain.cards.*;
 import domain.potion.*;
 public class PublicationBoard extends Board{
@@ -15,7 +16,11 @@ public class PublicationBoard extends Board{
         this.hypotheses = new ArrayList<Hypotheses>();
     }
     
-    public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
+    public void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
+    	Player player = GameController.getCurrentPlayer();
+    	if(player == null) {
+    		throw new RuntimeException("No current player found");
+    	}    	
     	PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	if(!player.getPlayerToken().hasActionsLeft()) {
