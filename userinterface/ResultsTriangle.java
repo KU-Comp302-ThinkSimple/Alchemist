@@ -18,7 +18,11 @@ import javax.swing.JComboBox;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import domain.GameController;
 import domain.potion.*;
+import domain.*;
+import domain.player.*;
 
 public class ResultsTriangle extends JPanel {
 	final private static ImageIcon TRANSPARENT = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/transparent_88x42.png"));
@@ -101,6 +105,14 @@ public class ResultsTriangle extends JPanel {
 				circleImages.add(circleImage);
 			}
 		}
+	}
+	
+	/**
+	 * updates the triangle to reflect the active user's potions
+	 */
+	public void update() {
+		Player player = GameController.getCurrentPlayer();
+		updateTriangleUsingPotionList(player.getInventory().getPlayerPotionList());
 	}
 	
 	/**
