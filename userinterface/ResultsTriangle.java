@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import domain.potion.*;
 
 public class ResultsTriangle extends JPanel {
 	final private static ImageIcon TRANSPARENT = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/transparent_88x42.png"));
@@ -112,6 +113,21 @@ public class ResultsTriangle extends JPanel {
 		int idx = potionIdxToListIdx(potion1Idx, potion2Idx);
 		ResizableImage img = circleImages.get(idx);
 		img.setImage(iconIdxtoImageIcon(iconIdx));
+	}
+	
+	public void setTriangleUsingPotionList(Iterable<Potion> potions) {
+		for (Potion potion : potions) {
+			Recipe recipe = potion.getPotionRecipe();
+		}
+	}
+	
+	/**
+	 * clears the triangle
+	 */
+	public void clearTriangle() {
+		for (ResizableImage resizableImage : circleImages) {
+			resizableImage.setImage(TRANSPARENT);
+		}
 	}
 	
 	/**
