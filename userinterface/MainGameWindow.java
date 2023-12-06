@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import domain.boards.PotionBrewingBoard;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -19,6 +20,8 @@ import java.awt.Rectangle;
 import java.awt.Font;
 import java.awt.Component;
 import java.awt.SystemColor;
+import java.awt.List;
+import javax.swing.JMenu;
 
 public class MainGameWindow {
 
@@ -136,9 +139,10 @@ public class MainGameWindow {
 		contentPane.add(resultsTriangle);
 
 
-		player1Inventory.setBounds(149, 89, 437, 300);
+		player1Inventory.setBounds(1049, 89, 437, 300);
 		contentPane.add(player1Inventory);
 		player2Inventory.setBounds(1049, 89, 437, 300);
+		player2Inventory.setVisible(false);
 		contentPane.add(player2Inventory);
 
 		JButton infoButton = new JButton("i");
@@ -154,7 +158,31 @@ public class MainGameWindow {
 				);
 		contentPane.add(infoButton);
 
+		DeductionBoard deductionBoard2 = new DeductionBoard();
+		deductionBoard2.setSize(new Dimension(704, 341));
+		deductionBoard2.setBounds(514, 541, 704, 341);
+		deductionBoard2.setVisible(false);
+		contentPane.add(deductionBoard2);
 
+		//TODO FOR TESTING PURPOSES
+		JButton changeDeduction = new JButton("New button");
+		changeDeduction.setBounds(10, 125, 89, 23);
+		changeDeduction.addActionListener(e ->{
+
+			//Deduction Board Changer
+			deductionBoard.setVisible(!deductionBoard.isVisible());
+			deductionBoard2.setVisible(!deductionBoard2.isVisible());
+
+			//Game Inventory Changer
+			player1Inventory.setVisible(!player1Inventory.isVisible());
+			player2Inventory.setVisible(!player2Inventory.isVisible());
+		});
+		contentPane.add(changeDeduction);
+
+
+
+		//TODO TEST
+		//contentPane.add(new BrewPotionPanel());
 		MainGameWindowFrame.setVisible(true);
 	}
 }
