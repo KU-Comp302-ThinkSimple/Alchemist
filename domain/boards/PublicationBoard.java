@@ -11,8 +11,8 @@ public class PublicationBoard extends Board{
 	private ArrayList<Hypotheses> hypotheses;
 	private ArrayList<IngredientCard> provenIngredients;
 
-	public PublicationBoard(int size, String name) {
-        super(size, name);
+	public PublicationBoard() {
+    
         this.hypotheses = new ArrayList<Hypotheses>();
     }
     
