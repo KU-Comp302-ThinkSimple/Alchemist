@@ -23,12 +23,7 @@ public class PublicationBoard extends Board{
      * @param hypothesizedMolecule: The molecule that is theorized to make up said ingredient
      * @throws UserErrorException: Thrown if user has insufficient gold, rounds are incorrect, the player doesnt have said ingredient.
      */
-    public void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
-    	Player player = GameController.getCurrentPlayer();
-    	if(player == null) {
-    		throw new RuntimeException("No current player found");
-    	}
-  
+    public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
       PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	
