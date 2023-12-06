@@ -76,14 +76,14 @@ public class GameInventory {
 		//Shuffles the molecule list and creates ingrCards using those molecules and add them to the list.
 		Collections.shuffle(molecules);
 		
-		ingrCards.add(new IngredientCard("Mushroom",molecules.get(0)));
-		ingrCards.add(new IngredientCard("Seedling",molecules.get(1)));
-		ingrCards.add(new IngredientCard("Frog",molecules.get(2)));
-		ingrCards.add(new IngredientCard("Bird Claw",molecules.get(3)));
-		ingrCards.add(new IngredientCard("Flower",molecules.get(4)));
-		ingrCards.add(new IngredientCard("Mandrake Root",molecules.get(5)));
-		ingrCards.add(new IngredientCard("Scorpion",molecules.get(6)));
-		ingrCards.add(new IngredientCard("Raven's Feather",molecules.get(7)));
+		ingrCards.add(new IngredientCard(0, "Mushroom",molecules.get(0)));
+		ingrCards.add(new IngredientCard(1, "Seedling",molecules.get(1)));
+		ingrCards.add(new IngredientCard(2, "Frog",molecules.get(2)));
+		ingrCards.add(new IngredientCard(3, "Bird Claw",molecules.get(3)));
+		ingrCards.add(new IngredientCard(4, "Flower",molecules.get(4)));
+		ingrCards.add(new IngredientCard(5, "Mandrake Root",molecules.get(5)));
+		ingrCards.add(new IngredientCard(6, "Scorpion",molecules.get(6)));
+		ingrCards.add(new IngredientCard(7, "Raven's Feather",molecules.get(7)));
 		
 	}
 	public void createArtifactCard() {

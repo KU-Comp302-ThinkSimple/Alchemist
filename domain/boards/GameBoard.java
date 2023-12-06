@@ -1,57 +1,49 @@
 package domain.boards;
 
 public class GameBoard extends Board {
-    private Board deductionBoard;
-    private Board ingredientBoard;
-    private Board publicationBoard;
-    private Board potionBrewingBoard;
+    private DeductionBoard deductionBoard;
+    private IngredientBoard ingredientBoard;
+    private PublicationBoard publicationBoard;
+    private PotionBrewingBoard potionBrewingBoard;
 
-    public GameBoard(int size, String name) {
-        super(size, name);
-    }
-
-    public GameBoard(int size, String name, DeductionBoard deductionBoard, IngredientBoard ingredientBoard,
-                     PublicationBoard publicationBoard, PotionBrewingBoard potionBrewingBoard) {
-        super(size, name);
-        this.deductionBoard = deductionBoard;
-        this.ingredientBoard = ingredientBoard;
-        this.publicationBoard = publicationBoard;
-        this.potionBrewingBoard = potionBrewingBoard;
-    }
 
     public GameBoard() {
-        super();
+        this.deductionBoard=new DeductionBoard();
+        this.ingredientBoard=new IngredientBoard();
+        this.publicationBoard=new PublicationBoard();
+        this.potionBrewingBoard=new PotionBrewingBoard();
+        
     }
 
-	public Board getDeductionBoard() {
-		return deductionBoard;
+	public DeductionBoard getDeductionBoard() {
+		return (DeductionBoard) deductionBoard;
 	}
 
-	public void setDeductionBoard(Board deductionBoard) {
+	public void setDeductionBoard(DeductionBoard deductionBoard) {
 		this.deductionBoard = deductionBoard;
 	}
 
-	public Board getIngredientBoard() {
+	public IngredientBoard getIngredientBoard() {
 		return ingredientBoard;
 	}
 
-	public void setIngredientBoard(Board ingredientBoard) {
+	public void setIngredientBoard(IngredientBoard ingredientBoard) {
 		this.ingredientBoard = ingredientBoard;
 	}
 
-	public Board getPublicationBoard() {
+	public PublicationBoard getPublicationBoard() {
 		return publicationBoard;
 	}
 
-	public void setPublicationBoard(Board publicationBoard) {
+	public void setPublicationBoard(PublicationBoard publicationBoard) {
 		this.publicationBoard = publicationBoard;
 	}
 
-	public Board getPotionBrewingBoard() {
+	public PotionBrewingBoard getPotionBrewingBoard() {
 		return potionBrewingBoard;
 	}
 
-	public void setPotionBrewingBoard(Board potionBrewingBoard) {
+	public void setPotionBrewingBoard(PotionBrewingBoard potionBrewingBoard) {
 		this.potionBrewingBoard = potionBrewingBoard;
 	}
     

@@ -13,7 +13,7 @@ public class GameController {
 	static int currentRound=1; //1 2 and 3
 	static Player currentPlayer;
 	static ArrayList<Player> activePlayers=new ArrayList<Player>();
-	static GameBoard board= new GameBoard();
+	static GameBoard board = new GameBoard();
 	static GameInventory gameInventory=GameInventory.getInstance();
 	static InitializeGameHelper initalizeGameHelper;
 
@@ -30,7 +30,8 @@ public class GameController {
 		if(activePlayers.size() == 2) {
 			System.out.println("Game initialized");
 			initalizeGameHelper=new InitializeGameHelper();
-		}else {
+		}
+		else {
 			System.out.println("Not able to initialize");
 		}
 
