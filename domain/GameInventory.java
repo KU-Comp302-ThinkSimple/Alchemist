@@ -77,13 +77,13 @@ public class GameInventory {
 		Collections.shuffle(molecules);
 		
 		ingrCards.add(new IngredientCard("Mushroom",molecules.get(0)));
-		ingrCards.add(new IngredientCard("Toad",molecules.get(1)));
-		ingrCards.add(new IngredientCard("Feather",molecules.get(2)));
-		ingrCards.add(new IngredientCard("Ash",molecules.get(3)));
-		ingrCards.add(new IngredientCard("Scorpion",molecules.get(4)));
-		ingrCards.add(new IngredientCard("Bird Claw",molecules.get(5)));
-		ingrCards.add(new IngredientCard("Mermaid Tear",molecules.get(6)));
-		ingrCards.add(new IngredientCard("Snail Shell",molecules.get(7)));
+		ingrCards.add(new IngredientCard("Seedling",molecules.get(1)));
+		ingrCards.add(new IngredientCard("Frog",molecules.get(2)));
+		ingrCards.add(new IngredientCard("Bird Claw",molecules.get(3)));
+		ingrCards.add(new IngredientCard("Flower",molecules.get(4)));
+		ingrCards.add(new IngredientCard("Mandrake Root",molecules.get(5)));
+		ingrCards.add(new IngredientCard("Scorpion",molecules.get(6)));
+		ingrCards.add(new IngredientCard("Raven's Feather",molecules.get(7)));
 		
 	}
 	public void createArtifactCard() {
