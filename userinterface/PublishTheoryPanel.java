@@ -1,8 +1,10 @@
 package userinterface;
 
 import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 
 import javax.swing.*;
 
@@ -14,6 +16,7 @@ import domain.player.Player;
 import domain.potion.*;
 import exception.UserErrorException;
 import test.TestGameInitializer;
+import java.util.*;
 public class PublishTheoryPanel extends JPanel implements ActionListener{
 	private final JComboBox<IngredientCardComboBoxItem> ingredientComboBox;
 	private final JComboBox<MoleculeComboBoxItem> moleculeComboBox;
@@ -75,7 +78,9 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		add(ingredientComboBox);
 		
 		moleculeComboBox = new JComboBox<MoleculeComboBoxItem>();
-		for (Molecule molecule : GameController.getGameInventory().getMolecules()) {
+		ArrayList<Molecule> moleculesCopy = GameController.getGameInventory().getMolecules();
+		moleculesCopy.sort((o1, o2) -> Integer.valueOf(o1.getMoleculeId()).compareTo(Integer.valueOf(o2.getMoleculeId())));
+		for (Molecule molecule : moleculesCopy) {
 			moleculeComboBox.addItem(new MoleculeComboBoxItem(molecule));
 		}
 		moleculeComboBox.setBounds(140, 30, 120, 25);
@@ -91,6 +96,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		
 		JButton publishTheoryButton = new JButton("Publish Theory");
 		publishTheoryButton.setBounds(10, 65, 120, 25);
+		publishTheoryButton.addActionListener(this);
 		add(publishTheoryButton);
 		
 		update();
