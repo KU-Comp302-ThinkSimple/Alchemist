@@ -65,6 +65,7 @@ public class GameController {
 		for(int i=0;i<activePlayers.size();i++) {
 			if(!activePlayers.get(i).equals(currentPlayer)) {
 				currentPlayer=activePlayers.get(i);
+				break;
 			}
 		}
 	}
