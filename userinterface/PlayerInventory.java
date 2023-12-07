@@ -24,6 +24,7 @@ public class PlayerInventory extends JPanel {
 	private static final long serialVersionUID = 1L;
 	//private int id; //There will be two of this view so there should be an id attribute to separate them
 	private Player player;
+	private JPanel viewPort;
 
 
 
@@ -38,18 +39,18 @@ public class PlayerInventory extends JPanel {
 		setLayout(null);
 
 		JScrollPane ingredientCardsScrollPanel = new JScrollPane();
-		ingredientCardsScrollPanel.setBounds(47, 5, 365, 124);
+		ingredientCardsScrollPanel.setBounds(10, 5, 430, 142);
 		add(ingredientCardsScrollPanel);
 
-		JPanel viewPort = new JPanel();
+		viewPort = new JPanel();
 		ingredientCardsScrollPanel.setViewportView(viewPort);
-		viewPort.setLayout(null);
+		viewPort.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JLabel ingredientCardLabel = new JLabel("IngredientCard");
 		ingredientCardsScrollPanel.setColumnHeaderView(ingredientCardLabel);
 
 		JScrollPane artifactCardsScrollPanel = new JScrollPane();
-		artifactCardsScrollPanel.setBounds(47, 158, 365, 124);
+		artifactCardsScrollPanel.setBounds(10, 158, 430, 124);
 		add(artifactCardsScrollPanel);
 
 		JPanel viewPort_1 = new JPanel();
@@ -78,5 +79,21 @@ public class PlayerInventory extends JPanel {
 		//
 		//		}
 
+	}
+
+	public void updatePlayerInventory() {
+		viewPort.removeAll();
+		player = GameController.getCurrentPlayer();
+
+		for(int i=0;i<player.getInventory().getPlayerIngredientCardList().size();i++) {
+
+			ImageIcon icon = GlobalIcons.getCardImage(player.getInventory().getPlayerIngredientCardList().get(i).getName());
+			JPanel panel = new JPanel();
+			panel.setSize(100,130);
+			panel.add(new JLabel(icon));
+			viewPort.add(panel);
+		}
+
+		//TODO same for artifact cards
 	}
 }

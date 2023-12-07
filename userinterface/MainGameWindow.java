@@ -37,7 +37,7 @@ public class MainGameWindow {
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
 	private JPanel resultsTriangle = new ResultsTriangle();
-	private JPanel player1Inventory = new PlayerInventory();
+	private JPanel playerInventory = new PlayerInventory();
 	//private JPanel player2Inventory = new PlayerInventory(1);
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
 
@@ -190,8 +190,8 @@ public class MainGameWindow {
 		contentPane.add(resultsTriangle);
 
 
-		player1Inventory.setBounds(1049, 89, 437, 300);
-		contentPane.add(player1Inventory);
+		playerInventory.setBounds(1049, 89, 437, 300);
+		contentPane.add(playerInventory);
 		//player2Inventory.setBounds(1049, 89, 437, 300);
 		//player2Inventory.setVisible(false);
 		//contentPane.add(player2Inventory);
@@ -215,37 +215,6 @@ public class MainGameWindow {
 		deductionBoard2.setVisible(false);
 		contentPane.add(deductionBoard2);
 
-		//TODO FOR TESTING PURPOSES
-		JButton changeRoundButton = new JButton("Change Round");
-		changeRoundButton.setBounds(10, 190, 89, 23);
-		changeRoundButton.addActionListener(e ->{
-
-			//Deduction Board Changer
-			deductionBoard.setVisible(!deductionBoard.isVisible());
-			deductionBoard2.setVisible(!deductionBoard2.isVisible());
-
-			//Game Inventory Changer
-			player1Inventory.setVisible(!player1Inventory.isVisible());
-			//player2Inventory.setVisible(!player2Inventory.isVisible());
-
-			//Results Triangle Changer
-			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
-
-			//Transmute Ingredient ComboBoxChanger
-			transmuteIngredientComboBox.removeAll();
-			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
-			String[] ingrss = new String[ingredientsListt.size()];
-			for (int i = 0; i < ingredientsListt.size(); i++) {
-				ingrss[i] = ingredientsListt.get(i).getName();
-				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
-			}
-
-
-
-
-		});
-		contentPane.add(changeRoundButton);
-
 
 		JButton pauseButton = new JButton("P");
 		pauseButton.setRequestFocusEnabled(false);
@@ -262,7 +231,47 @@ public class MainGameWindow {
 		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
 		contentPane.add(potionBrewingBoard);
 
+		JPanel roundInfoPanel = new JPanel();
+		roundInfoPanel.setBounds(224, 89, 286, 235);
+		contentPane.add(roundInfoPanel);
 
+		JLabel currentPlayerText = new JLabel("Current Player: " + GameController.getCurrentPlayer().getPlayerName());
+		roundInfoPanel.add(currentPlayerText);
+
+		JLabel movesLeftLabel = new JLabel("Moves Left: " + GameController.getCurrentRound());
+		roundInfoPanel.add(movesLeftLabel);
+
+		//TODO FOR TESTING PURPOSES
+		JButton changeRoundButton = new JButton("Change Round");
+		changeRoundButton.setBounds(10, 190, 89, 23);
+		changeRoundButton.addActionListener(e ->{
+
+			//Deduction Board Changer
+			deductionBoard.setVisible(!deductionBoard.isVisible());
+			deductionBoard2.setVisible(!deductionBoard2.isVisible());
+
+			//Player Inventory Changer
+			((PlayerInventory)playerInventory).updatePlayerInventory();
+
+			//Results Triangle Changer
+			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+			//Transmute Ingredient ComboBoxChanger
+			transmuteIngredientComboBox.removeAll();
+			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+			String[] ingrss = new String[ingredientsListt.size()];
+			for (int i = 0; i < ingredientsListt.size(); i++) {
+				ingrss[i] = ingredientsListt.get(i).getName();
+				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+			}
+
+			//Current Player and Rounds Changer
+			currentPlayerText.setText("Current Player: " + GameController.getCurrentPlayer().getPlayerName());
+			movesLeftLabel.setText("Moves Left: " + GameController.getCurrentRound());
+
+
+		});
+		contentPane.add(changeRoundButton);
 		//TODO TEST
 		//contentPane.add(new BrewPotionPanel());
 		MainGameWindowFrame.setVisible(true);
