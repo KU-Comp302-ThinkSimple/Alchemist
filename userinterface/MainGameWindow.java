@@ -40,9 +40,9 @@ public class MainGameWindow {
 	private JPanel deductionBoard = new DeductionBoard();
 	private JPanel resultsTriangle = new ResultsTriangle(1);
 	private JPanel playerInventory = new PlayerInventory();
-	//private JPanel player2Inventory = new PlayerInventory(1);
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
 	private JPanel playerTokenView = new PlayerTokenView();
+	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -236,6 +236,10 @@ public class MainGameWindow {
 		potionBrewingBoard.setLocation(1219, 477);
 		potionBrewingBoard.setSize(new Dimension(690, 555));
 		contentPane.add(potionBrewingBoard);
+
+		publishTheoryPanel.setLocation(134, 636);
+		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
+		contentPane.add(publishTheoryPanel);
 
 		//TODO FOR TESTING PURPOSES
 		JButton updateButton = new JButton("Update");
