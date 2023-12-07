@@ -21,7 +21,7 @@ public class InitializeGameHelper {
 		GameController.gameInventory.createAtom();
 		GameController.gameInventory.createMolecule();
 		GameController.gameInventory.createIngredientCard();
-
+		GameController.gameInventory.createArtifactCard();
 		//TODO Call the the function that fills the deck with these cards(See the corresponding comment in IngredientBoard class)
 	}
 
