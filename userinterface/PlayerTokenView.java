@@ -31,6 +31,11 @@ public class PlayerTokenView extends JPanel {
 	private ArrayList<JPanel> potPanels=new  ArrayList<JPanel>();
 	//private int id; //There will be two of this view so there should be an id attribute to separate them
 	private Player player;
+	private JTextField actionField;
+	private JTextField nameText;
+	private JTextField goldText;
+	private JTextField repText;
+	private JTextField actionText;
 
 
 
@@ -47,30 +52,37 @@ public class PlayerTokenView extends JPanel {
 		nameField = new JTextField();
 		nameField.setEditable(false);
 		nameField.setBounds(16, 16, 95, 26);
-		add(nameField);
 		nameField.setColumns(10);
 		nameField.setText(player.getPlayerName());
+		add(nameField);
 
 		healthField = new JTextField();
 		healthField.setEditable(false);
-		healthField.setBounds(227, 46, 95, 26);
-		add(healthField);
+		healthField.setBounds(335, 16, 95, 26);
 		healthField.setColumns(10);
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
+		add(healthField);
 
 		goldField = new JTextField();
 		goldField.setEditable(false);
 		goldField.setBounds(334, 46, 96, 26);
-		add(goldField);
 		goldField.setColumns(10);
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
+		add(goldField);
 
 		repField = new JTextField();
 		repField.setEditable(false);
 		repField.setBounds(334, 76, 96, 26);
-		add(repField);
 		repField.setColumns(10);
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
+		add(repField);
+
+		actionField = new JTextField();
+		actionField.setEditable(false);
+		actionField.setColumns(10);
+		actionField.setBounds(334, 109, 96, 26);
+		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
+		add(actionField);
 
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBounds(16, 46, 95, 89);
@@ -119,6 +131,34 @@ public class PlayerTokenView extends JPanel {
 		add(potPanel7);
 		potPanels.add(potPanel7);
 
+		nameText = new JTextField();
+		nameText.setText("Name:");
+		nameText.setEditable(false);
+		nameText.setColumns(10);
+		nameText.setBounds(230, 16, 95, 26);
+		add(nameText);
+
+		goldText = new JTextField();
+		goldText.setText("Golds:");
+		goldText.setEditable(false);
+		goldText.setColumns(10);
+		goldText.setBounds(230, 46, 95, 26);
+		add(goldText);
+
+		repText = new JTextField();
+		repText.setText("Reputation:");
+		repText.setEditable(false);
+		repText.setColumns(10);
+		repText.setBounds(230, 76, 95, 26);
+		add(repText);
+
+		actionText = new JTextField();
+		actionText.setText("Actions Left:");
+		actionText.setEditable(false);
+		actionText.setColumns(10);
+		actionText.setBounds(230, 106, 95, 26);
+		add(actionText);
+
 		displayPlayerPotions();
 
 	}
@@ -158,6 +198,4 @@ public class PlayerTokenView extends JPanel {
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		displayPlayerPotions();
 	}
-
-
 }
