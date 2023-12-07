@@ -3,6 +3,7 @@ package domain.player;
 import java.util.ArrayList;
 
 import domain.cards.*;
+import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.*;
 import domain.theory.Hypotheses;
 

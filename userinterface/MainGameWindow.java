@@ -15,6 +15,7 @@ import domain.boards.IngredientBoard;
 import domain.boards.PotionBrewingBoard;
 import domain.cards.IngredientCard;
 import exception.UserErrorException;
+import test.TestGameInitializer;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -35,6 +36,39 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 
 public class MainGameWindow {
+	private static String infoText = """
+Welcome to Alchemy Lab Game!
+
+In this game, you take on the role of an alchemist conducting experiments in the lab. Your goal is to brew potions, contribute to publications, and form theories about ingredient properties. Here's a quick guide to get you started:
+
+Game Phases:
+
+First Round:
+Forage for Ingredients: Draw ingredients from the deck.
+Transmute Ingredient: Discard an ingredient for gold.
+Buy Artifacts: Purchase artifacts with gold.
+Make Experiments: Mix ingredients, test potions, and gain results.
+Second Round:
+Sell a Potion: Offer potions to adventurers for gold.
+Publish a Theory: Share your knowledge about ingredients for reputation points.
+Final Round:
+Debunk or Endorse Theories: Prove or disprove published theories for reputation points.
+Game Elements:
+
+Player Tokens: Represent your unique avatar. Track your position, resources, and scores.
+Ingredients: Various types with unique properties. Store them in the Ingredient Storage.
+Potions: Brew potions with specific recipes and point values.
+Publication Cards: Contribute to theories for reputation points.
+Artifact Cards: Purchase for unique game advantages.
+Alchemy Markers: Form theories on the Deduction Board.
+Winning the Game:
+
+Accumulate reputation points and gold.
+Exchange leftover artifacts for gold.
+Score one-third of a point for each gold piece.
+The player with the most score points wins!
+Good luck, alchemist! May your potions be potent and your theories groundbreaking!
+""";
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
@@ -43,8 +77,15 @@ public class MainGameWindow {
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
 	private JPanel playerTokenView = new PlayerTokenView();
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
-
+	private JPanel debunkTheoryView = new DebunkTheoryView();
+	private JComboBox transmuteIngredientComboBox;
+	
+	public static void main(String[] args) {
+		TestGameInitializer.initializeTestGame();
+		new MainGameWindow();
+	}
 	public MainGameWindow() {
+//		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
@@ -113,8 +154,7 @@ public class MainGameWindow {
 			ingrs[i] = ingredientsList.get(i).getName();
 		}
 
-		//TODO make a jcombobox
-		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
+		transmuteIngredientComboBox = new JComboBox(ingrs);
 		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
 
 
@@ -210,7 +250,7 @@ public class MainGameWindow {
 		infoButton.setBounds(10, 61, 60, 39);
 		infoButton.addActionListener(e -> {
 			//TODO new information
-			JOptionPane.showMessageDialog(MainGameWindowFrame, "Taktik maktik yok bam bam bam.");
+			JOptionPane.showMessageDialog(MainGameWindowFrame, infoText);
 		}
 				);
 		contentPane.add(infoButton);
@@ -234,35 +274,47 @@ public class MainGameWindow {
 		publishTheoryPanel.setLocation(134, 636);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
+		
+		debunkTheoryView.setLocation(134, 776);
+		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
+		contentPane.add(debunkTheoryView);
 
 		//TODO FOR TESTING PURPOSES
 		JButton updateButton = new JButton("Update");
 		updateButton.setBounds(80, 11, 89, 23);
 		updateButton.addActionListener(e ->{
-
-			//Deduction Board Changer
-			((DeductionBoard)deductionBoard).updateDeductionBoard();
-
-			//Player Inventory Changer
-			((PlayerInventory)playerInventory).updatePlayerInventory();
-
-			//Results Triangle Changer
-			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
-
-			//Transmute Ingredient ComboBoxChanger
-			transmuteIngredientComboBox.removeAllItems();
-			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
-			String[] ingrss = new String[ingredientsListt.size()];
-			for (int i = 0; i < ingredientsListt.size(); i++) {
-				ingrss[i] = ingredientsListt.get(i).getName();
-				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
-			}
-
-			//Player Token View Changer
-			((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+			updateMainGameWindow();
 
 		});
 		contentPane.add(updateButton);
 		MainGameWindowFrame.setVisible(true);
+	}
+	public void updateMainGameWindow() {
+		//Deduction Board Changer
+		((DeductionBoard)deductionBoard).updateDeductionBoard();
+
+		//Player Inventory Changer
+		((PlayerInventory)playerInventory).updatePlayerInventory();
+
+		//Results Triangle Changer
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+		//Transmute Ingredient ComboBoxChanger
+		transmuteIngredientComboBox.removeAllItems();
+		ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		String[] ingrss = new String[ingredientsListt.size()];
+		for (int i = 0; i < ingredientsListt.size(); i++) {
+			ingrss[i] = ingredientsListt.get(i).getName();
+			transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+		}
+
+		//Player Token View Changer
+		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+		
+		//Publish theory update
+		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
+		
+		//Debunk theory update
+		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
 	}
 }

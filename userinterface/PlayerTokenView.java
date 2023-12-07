@@ -210,6 +210,7 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
+		player = GameController.getCurrentPlayer();
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));

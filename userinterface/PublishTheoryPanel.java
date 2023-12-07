@@ -1,7 +1,7 @@
 package userinterface;
 
 import java.awt.Color;
-
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
@@ -72,7 +72,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		setLayout(null);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setSize(274,107);
-		setPreferedSize(247,107);
+		setPreferredSize(new Dimension(247,107));
 
 		ingredientComboBox = new JComboBox<IngredientCardComboBoxItem>();
 		ingredientComboBox.setBounds(10, 30, 120, 25);
@@ -106,7 +106,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 	public void updatePublishTheoryPanel() {
 		Player player = GameController.getCurrentPlayer();
 		ingredientComboBox.removeAllItems();
-		for (IngredientCard ingredientCard : player.getInventory().getPlayerIngredientCardList()) {
+		for (IngredientCard ingredientCard : GameController.getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
 		}
 	}

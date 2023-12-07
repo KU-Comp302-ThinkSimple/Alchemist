@@ -32,14 +32,11 @@ public class PublicationBoard extends Board{
     		throw new UserErrorException("Theories can only be published in rounds 2 and 3.");
     	}
   
-      if(!player.getPlayerToken().hasActionsLeft()) {
-    		throw new UserErrorException("The user has no more actions left!");
-    	}
     	
-    	//check if user indeed owns this ingredient
-    	if(!inv.getPlayerIngredientCardList().contains(ingredient)) {
-    		throw new UserErrorException("The user does not own this ingredient!");
-    	}
+//    	//check if user indeed owns this ingredient
+//    	if(!inv.getPlayerIngredientCardList().contains(ingredient)) {
+//    		throw new UserErrorException("The user does not own this ingredient!");
+//    	}
     	
     	//check if user has sufficient gold
     	if(gold < 1) {
@@ -72,10 +69,6 @@ public class PublicationBoard extends Board{
     	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
     	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
     	
-    	//check if user has actions left
-    	if(!player.getPlayerToken().hasActionsLeft()) {
-    		throw new UserErrorException("The player has no more actions left!");
-    	}
     	//check if the hypothesis exists in the publication track
     	if(!hypotheses.contains(hypothesis)) {
     		throw new IllegalArgumentException("The given hypothesis does not exist within the publication track");
@@ -85,14 +78,17 @@ public class PublicationBoard extends Board{
     	if(GameController.getCurrentRound()<3) {
     		throw new UserErrorException("Theories can only be debunked in the third round.");
     	}
+    	String out;
     	
     	if(hypothesis.isValid(atomColorId)) {
     		//if the hypothesis is valid, punish the debunker
     		player.getPlayerToken().addReputationPoint(-1);
+    		out=" Hypothesis proven correct.";
     	}
     	else {
     		//if the hypothesis is incorrect, reward the debunker
     		player.getPlayerToken().addReputationPoint(2);
+    		out=" Hypothesis proven false.";
     	}
     	//Since either way the true nature of the ingredient is revealed, put it into the provenIngredients list
     	//and remove the hypothesis from everywhere
@@ -109,10 +105,10 @@ public class PublicationBoard extends Board{
     	//return the true nature of the ingredient
     	switch (hypothesis.getIngredient().getMolecule().getAtomByColor(atomColorId).getAtomSign()) {
 		case 0: {
-			return "Negative";
+			return "Negative" + out;
 		}
-		case 2: {
-			return "Positive";
+		case 1: {
+			return "Positive" + out;
 		}
 		default:
 			throw new IllegalArgumentException("Invalid atom sign");
