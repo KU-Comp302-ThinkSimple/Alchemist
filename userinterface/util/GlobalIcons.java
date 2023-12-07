@@ -32,5 +32,29 @@ public class GlobalIcons {
 		}
 	}
 
+	//POTIONS 40X60
+	public static ImageIcon littlehealth = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/healthpotion_40x60.png")); //red plus
+	public static ImageIcon littlepoison = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/poisonpotion_40x60.png")); //red minus
+	public static ImageIcon littlespeed = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/speedpotion_40x60.png")); //green plus
+	public static ImageIcon littleslow = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/slowpotion_40x60.png")); //green minus
+	public static ImageIcon littlewisdom = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/wisdompotion_40x60.png")); //blue plus
+	public static ImageIcon littleinsanity = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/insanitypotion_40x60.png")); //blue minus
+	public static ImageIcon littleneutral = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/neutralpotion_40x60.png")); //gray neutral
+	public static ImageIcon littleunknown = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/unknownpotion_40x60.png")); //unknown potion
+
+	public static ImageIcon getLittlePotionImage(String name) {
+		switch (name) {
+		case "Health": return littlehealth;
+		case "Poison": return littlepoison;
+		case "Speed": return littlespeed;
+		case "Slow": return littleslow;
+		case "Wisdom": return littlewisdom;
+		case "Insanity": return littleinsanity;
+		case "Neutral" : return littleneutral;
+		case "Unknown" : return littleunknown;
+		default : return littleunknown;
+		}
+	}
+
 
 }

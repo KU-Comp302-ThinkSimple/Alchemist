@@ -21,6 +21,7 @@ import domain.GameController;
 import domain.player.Player;
 import domain.potion.Potion;
 import userinterface.util.GlobalFonts;
+import userinterface.util.GlobalIcons;
 
 
 public class PlayerTokenView extends JPanel {
@@ -104,42 +105,42 @@ public class PlayerTokenView extends JPanel {
 		imagePanel.add(new JLabel(icon));
 
 		JPanel potPanel0 = new JPanel();
-		potPanel0.setBounds(16, 168, 95, 54);
+		potPanel0.setBounds(16, 168, 40, 60);
 		add(potPanel0);
 		potPanels.add(potPanel0);
 
 		JPanel potPanel1 = new JPanel();
-		potPanel1.setBounds(119, 168, 96, 54);
+		potPanel1.setBounds(119, 168, 40, 60);
 		add(potPanel1);
 		potPanels.add(potPanel1);
 
 		JPanel potPanel2 = new JPanel();
-		potPanel2.setBounds(227, 168, 95, 54);
+		potPanel2.setBounds(227, 168, 40, 60);
 		add(potPanel2);
 		potPanels.add(potPanel2);
 
 		JPanel potPanel3 = new JPanel();
-		potPanel3.setBounds(334, 172, 96, 50);
+		potPanel3.setBounds(334, 168, 40, 60);
 		add(potPanel3);
 		potPanels.add(potPanel3);
 
 		JPanel potPanel4 = new JPanel();
-		potPanel4.setBounds(16, 226, 95, 58);
+		potPanel4.setBounds(16, 238, 40, 60);
 		add(potPanel4);
 		potPanels.add(potPanel4);
 
 		JPanel potPanel5 = new JPanel();
-		potPanel5.setBounds(119, 226, 96, 58);
+		potPanel5.setBounds(119, 238, 40, 60);
 		add(potPanel5);
 		potPanels.add(potPanel5);
 
 		JPanel potPanel6 = new JPanel();
-		potPanel6.setBounds(227, 226, 95, 58);
+		potPanel6.setBounds(227, 238, 40, 60);
 		add(potPanel6);
 		potPanels.add(potPanel6);
 
 		JPanel potPanel7 = new JPanel();
-		potPanel7.setBounds(334, 226, 96, 58);
+		potPanel7.setBounds(334, 238, 40, 60);
 		add(potPanel7);
 		potPanels.add(potPanel7);
 
@@ -201,6 +202,9 @@ public class PlayerTokenView extends JPanel {
 			}else {
 				icon = new ImageIcon("neutral image");
 			}
+
+			String potname = player.getInventory().getPlayerPotionList().get(i).getPotionType();
+			icon = GlobalIcons.getLittlePotionImage(potname);
 
 			potPanels.get(i).add(new JLabel(icon));
 		}
