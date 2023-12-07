@@ -64,11 +64,11 @@ public class PublicationBoard extends Board{
     /**
      * @param player: The player performing the debunking
      * @param hypothesis: The hypothesis to be debunked
-     * @param atomId: id of atom to debunk
+     * @param atomColorId: color id of atom to debunk
      * @return the true sign of the atom
      * @throws UserErrorException: Thrown if round isnt or hypothesis isn't in publication track
      */
-    public String debunkTheory(Player player, Hypotheses hypothesis, int atomId) throws UserErrorException{
+    public String debunkTheory(Player player, Hypotheses hypothesis, int atomColorId) throws UserErrorException{
     	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
     	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
     	
@@ -86,7 +86,7 @@ public class PublicationBoard extends Board{
     		throw new UserErrorException("Theories can only be debunked in the third round.");
     	}
     	
-    	if(hypothesis.isValid(atomId)) {
+    	if(hypothesis.isValid(atomColorId)) {
     		//if the hypothesis is valid, punish the debunker
     		player.getPlayerToken().addReputationPoint(-1);
     	}
@@ -99,7 +99,7 @@ public class PublicationBoard extends Board{
     	if(!provenIngredientAtoms.containsKey(hypothesis.getIngredient())) {
     		provenIngredientAtoms.put(hypothesis.getIngredient(), new HashSet<Integer>());
     	}
-    	provenIngredientAtoms.get(hypothesis.getIngredient()).add(atomId);
+    	provenIngredientAtoms.get(hypothesis.getIngredient()).add(atomColorId);
     	hypotheses.remove(hypothesis);
     	hypothesis.getOwner().getInventory().removeHypoteses(hypothesis);
     	
@@ -107,7 +107,7 @@ public class PublicationBoard extends Board{
     	player.getPlayerToken().reducePlayerAction();
     	
     	//return the true nature of the ingredient
-    	switch (hypothesis.getIngredient().getMolecule().getAtom(atomId).getAtomSign()) {
+    	switch (hypothesis.getIngredient().getMolecule().getAtomByColor(atomColorId).getAtomSign()) {
 		case 0: {
 			return "Negative";
 		}
