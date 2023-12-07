@@ -102,7 +102,7 @@ public class PublicationBoard extends Board{
     	provenIngredientAtoms.get(hypothesis.getIngredient()).add(atomId);
     	hypotheses.remove(hypothesis);
     	hypothesis.getOwner().getInventory().removeHypoteses(hypothesis);
-    	player.getPlayerToken().reducePlayerAction();
+    	
     	//Reduce Player Actions
     	player.getPlayerToken().reducePlayerAction();
     	
