@@ -33,10 +33,10 @@ public class PublicationBoard extends Board{
     	}
   
     	
-    	//check if user indeed owns this ingredient
-    	if(!inv.getPlayerIngredientCardList().contains(ingredient)) {
-    		throw new UserErrorException("The user does not own this ingredient!");
-    	}
+//    	//check if user indeed owns this ingredient
+//    	if(!inv.getPlayerIngredientCardList().contains(ingredient)) {
+//    		throw new UserErrorException("The user does not own this ingredient!");
+//    	}
     	
     	//check if user has sufficient gold
     	if(gold < 1) {
@@ -78,14 +78,17 @@ public class PublicationBoard extends Board{
     	if(GameController.getCurrentRound()<3) {
     		throw new UserErrorException("Theories can only be debunked in the third round.");
     	}
+    	String out;
     	
     	if(hypothesis.isValid(atomColorId)) {
     		//if the hypothesis is valid, punish the debunker
     		player.getPlayerToken().addReputationPoint(-1);
+    		out=" Hypothesis proven correct.";
     	}
     	else {
     		//if the hypothesis is incorrect, reward the debunker
     		player.getPlayerToken().addReputationPoint(2);
+    		out=" Hypothesis proven false.";
     	}
     	//Since either way the true nature of the ingredient is revealed, put it into the provenIngredients list
     	//and remove the hypothesis from everywhere
@@ -102,10 +105,10 @@ public class PublicationBoard extends Board{
     	//return the true nature of the ingredient
     	switch (hypothesis.getIngredient().getMolecule().getAtomByColor(atomColorId).getAtomSign()) {
 		case 0: {
-			return "Negative";
+			return "Negative" + out;
 		}
 		case 1: {
-			return "Positive";
+			return "Positive" + out;
 		}
 		default:
 			throw new IllegalArgumentException("Invalid atom sign");

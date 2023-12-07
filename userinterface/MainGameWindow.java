@@ -79,6 +79,7 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 	private JPanel debunkTheoryView = new DebunkTheoryView();
 	private JComboBox transmuteIngredientComboBox;
+	
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
 		new MainGameWindow();

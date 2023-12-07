@@ -106,7 +106,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 	public void updatePublishTheoryPanel() {
 		Player player = GameController.getCurrentPlayer();
 		ingredientComboBox.removeAllItems();
-		for (IngredientCard ingredientCard : player.getInventory().getPlayerIngredientCardList()) {
+		for (IngredientCard ingredientCard : GameController.getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
 		}
 	}
