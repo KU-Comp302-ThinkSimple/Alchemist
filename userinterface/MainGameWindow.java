@@ -15,6 +15,7 @@ import domain.boards.IngredientBoard;
 import domain.boards.PotionBrewingBoard;
 import domain.cards.IngredientCard;
 import exception.UserErrorException;
+import test.TestGameInitializer;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -43,8 +44,14 @@ public class MainGameWindow {
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
 	private JPanel playerTokenView = new PlayerTokenView();
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
-
+	private JPanel debunkTheoryView = new DebunkTheoryView();
+	private JComboBox transmuteIngredientComboBox;
+	public static void main(String[] args) {
+		TestGameInitializer.initializeTestGame();
+		new MainGameWindow();
+	}
 	public MainGameWindow() {
+		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
@@ -113,8 +120,7 @@ public class MainGameWindow {
 			ingrs[i] = ingredientsList.get(i).getName();
 		}
 
-		//TODO make a jcombobox
-		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
+		transmuteIngredientComboBox = new JComboBox(ingrs);
 		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
 
 
@@ -234,35 +240,47 @@ public class MainGameWindow {
 		publishTheoryPanel.setLocation(134, 636);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
+		
+		debunkTheoryView.setLocation(134, 776);
+		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
+		contentPane.add(debunkTheoryView);
 
 		//TODO FOR TESTING PURPOSES
 		JButton updateButton = new JButton("Update");
 		updateButton.setBounds(80, 11, 89, 23);
 		updateButton.addActionListener(e ->{
-
-			//Deduction Board Changer
-			((DeductionBoard)deductionBoard).updateDeductionBoard();
-
-			//Player Inventory Changer
-			((PlayerInventory)playerInventory).updatePlayerInventory();
-
-			//Results Triangle Changer
-			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
-
-			//Transmute Ingredient ComboBoxChanger
-			transmuteIngredientComboBox.removeAllItems();
-			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
-			String[] ingrss = new String[ingredientsListt.size()];
-			for (int i = 0; i < ingredientsListt.size(); i++) {
-				ingrss[i] = ingredientsListt.get(i).getName();
-				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
-			}
-
-			//Player Token View Changer
-			((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+			updateMainGameWindow();
 
 		});
 		contentPane.add(updateButton);
 		MainGameWindowFrame.setVisible(true);
+	}
+	public void updateMainGameWindow() {
+		//Deduction Board Changer
+		((DeductionBoard)deductionBoard).updateDeductionBoard();
+
+		//Player Inventory Changer
+		((PlayerInventory)playerInventory).updatePlayerInventory();
+
+		//Results Triangle Changer
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+		//Transmute Ingredient ComboBoxChanger
+		transmuteIngredientComboBox.removeAllItems();
+		ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		String[] ingrss = new String[ingredientsListt.size()];
+		for (int i = 0; i < ingredientsListt.size(); i++) {
+			ingrss[i] = ingredientsListt.get(i).getName();
+			transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+		}
+
+		//Player Token View Changer
+		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+		
+		//Publish theory update
+		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
+		
+		//Debunk theory update
+		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
 	}
 }
