@@ -104,7 +104,7 @@ public class PublicationBoard extends Board{
 		case 0: {
 			return "Negative";
 		}
-		case 2: {
+		case 1: {
 			return "Positive";
 		}
 		default:
