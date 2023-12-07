@@ -13,8 +13,8 @@ public class PublicationBoard extends Board{
 	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
 
 	public PublicationBoard() {
-    
         this.hypotheses = new ArrayList<Hypotheses>();
+        this.provenIngredientAtoms = new HashMap<IngredientCard, HashSet<Integer>>();
     }
 
     /**
