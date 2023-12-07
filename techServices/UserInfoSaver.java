@@ -20,6 +20,7 @@ public class UserInfoSaver {
     public static void readExistingData() {
         Random rand = new Random();
         try (BufferedReader reader = new BufferedReader(new FileReader("userinfo.json"))) {
+        	players.clear();
             String fileContent = reader.readLine();
             if (fileContent != null && !fileContent.isEmpty()){
                 JSONArray jsonArray= new JSONArray(fileContent);
@@ -35,7 +36,9 @@ public class UserInfoSaver {
             }
         } catch (IOException e) {
             //TODO: Related Exception Handling
+        	System.out.println(e.getMessage());	
         }
+        printPlayers();
     }
 
     public static void saveIntoJSONFile(HashMap<Integer, Player> players){
@@ -47,7 +50,7 @@ public class UserInfoSaver {
             writer.write(jsonArray.toString());
         } catch (IOException e) {
             //TODO: Related Exception Handling
-
+        	System.out.println(e.getMessage());
         }
     }
 
@@ -83,10 +86,12 @@ public class UserInfoSaver {
             throw new Exception("Plater name already taken");
         }
         players.put(player.getPlayerId(), player);
+        saveIntoJSONFile(players);
         System.out.println(players);
     }
 
     public static Player getPlayer(String username, String password) throws Exception {
+    	readExistingData();
         for (Player player : players.values()) {
             if (player.getPlayerName().equals(username)) {
                 if (player.getPassword().equals(password)) {
@@ -105,5 +110,11 @@ public class UserInfoSaver {
 
     public static boolean isPlayerNameAvailable(String name) {
         return !players.values().stream().filter(t -> t.getPlayerName().equals(name)).findAny().isPresent();
+    }
+    
+    private static void printPlayers() {
+    	for (Player player : players.values()) {
+			System.out.println(player.getPlayerName() + " " + player.getPassword());
+		}
     }
 }
