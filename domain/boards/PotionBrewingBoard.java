@@ -12,13 +12,20 @@ public class PotionBrewingBoard extends Board{
     }
     
     
-    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
+    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException, RuntimeException {
     	
     	//Get current player and needed informations
     	Player player = GameController.getCurrentPlayer(); 
     	PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	int health = player.getPlayerToken().getPlayerHealth();
+    	
+    	//Check if ingredients are same
+    	if (ingredient1.equals(ingredient2)) {
+    		throw new UserErrorException("For creating potion 2 DIFFERENT ingredients are needed!");
+    	}
+    	
+    	
     	
     	//Check if player has these 2 ingredients
     	if(!(inv.getPlayerIngredientCardList().contains(ingredient1))) {
@@ -33,7 +40,7 @@ public class PotionBrewingBoard extends Board{
     	Potion pot = new Potion(rec);
     	
     	//Check if user already owns this recipe
-    	if (inv.getPlayerPotionList().contains(rec)) {
+    	if (inv.getPlayerPotionList().contains(pot)) {
     		throw new UserErrorException("The user have this recipe already!");
     	}
     	
@@ -67,6 +74,9 @@ public class PotionBrewingBoard extends Board{
     	//Add potion and recipe to the players inventory
     	inv.addPotion(pot);
     	inv.addRecipe(rec);
+    	
+    	//Reduce Player Action
+    	player.getPlayerToken().reducePlayerAction();
     	
     	return pot.getPotionType();
     }

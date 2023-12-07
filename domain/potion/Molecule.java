@@ -49,7 +49,23 @@ public class Molecule {
 			this.blueAtom=atom;
 		}
 	}
-
+	
+	public Atom getAtomByColor(int atomColorId) {
+		if(redAtom.getAtomColor() == atomColorId) {
+			return redAtom;
+		}
+		
+		else if(greenAtom.getAtomColor() == atomColorId) {
+			return greenAtom;
+		}
+		
+		else if(blueAtom.getAtomColor() == atomColorId) {
+			return blueAtom;
+		}
+		else {
+			throw new RuntimeException("Invalid atomColorId");
+		}
+	}
 
 
 	public int getMoleculeId() {

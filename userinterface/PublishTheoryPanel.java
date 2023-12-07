@@ -20,15 +20,15 @@ import java.util.*;
 public class PublishTheoryPanel extends JPanel implements ActionListener{
 	private final JComboBox<IngredientCardComboBoxItem> ingredientComboBox;
 	private final JComboBox<MoleculeComboBoxItem> moleculeComboBox;
-	
+
 	private class IngredientCardComboBoxItem{
 		private final IngredientCard ingredientCard;
-		
+
 		public IngredientCardComboBoxItem(IngredientCard ingredientCard) {
 			super();
 			this.ingredientCard = ingredientCard;
 		}
-		
+
 		public IngredientCard getIngredientCard() {
 			return ingredientCard;
 		}
@@ -38,7 +38,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 			return ingredientCard.getName();
 		}
 	}
-	
+
 	private class MoleculeComboBoxItem{
 
 
@@ -52,13 +52,13 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		}
 
 		private final Molecule molecule;
-		
+
 		@Override
 		public String toString() {
 			return Integer.toString(molecule.getMoleculeId());
 		}
-	} 
-	
+	}
+
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
 		JFrame frame = new JFrame();
@@ -67,16 +67,17 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 	}
-	
+
 	public PublishTheoryPanel() {
 		setLayout(null);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setSize(274,107);
-		
+		setPreferedSize(247,107);
+
 		ingredientComboBox = new JComboBox<IngredientCardComboBoxItem>();
 		ingredientComboBox.setBounds(10, 30, 120, 25);
 		add(ingredientComboBox);
-		
+
 		moleculeComboBox = new JComboBox<MoleculeComboBoxItem>();
 		ArrayList<Molecule> moleculesCopy = GameController.getGameInventory().getMolecules();
 		moleculesCopy.sort((o1, o2) -> Integer.valueOf(o1.getMoleculeId()).compareTo(Integer.valueOf(o2.getMoleculeId())));
@@ -85,15 +86,15 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		}
 		moleculeComboBox.setBounds(140, 30, 120, 25);
 		add(moleculeComboBox);
-		
+
 		JLabel lblNewLabel = new JLabel("Select ingredient");
 		lblNewLabel.setBounds(10, 10, 120, 13);
 		add(lblNewLabel);
-		
+
 		JLabel lblSelectMolecule = new JLabel("Select molecule");
 		lblSelectMolecule.setBounds(140, 10, 120, 13);
 		add(lblSelectMolecule);
-		
+
 		JButton publishTheoryButton = new JButton("Publish Theory");
 		publishTheoryButton.setBounds(10, 65, 120, 25);
 		publishTheoryButton.addActionListener(this);
@@ -107,9 +108,9 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		ingredientComboBox.removeAllItems();
 		for (IngredientCard ingredientCard : player.getInventory().getPlayerIngredientCardList()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
-		}		
+		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		IngredientCard ingredientCard = ((IngredientCardComboBoxItem)ingredientComboBox.getSelectedItem()).getIngredientCard();

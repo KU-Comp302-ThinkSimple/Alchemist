@@ -16,8 +16,8 @@ public class Hypotheses {
 		this.molecule = molecule;
 	}
 	
-	public boolean isValid() {
-		return ingredient.getMolecule().equals(molecule);
+	public boolean isValid(int atomColorId) {
+		return ingredient.getMolecule().getAtomByColor(atomColorId).equals(molecule.getAtomByColor(atomColorId));		
 	}
 	
 	public IngredientCard getIngredient() {

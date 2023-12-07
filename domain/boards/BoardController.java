@@ -16,42 +16,43 @@ public class BoardController {
 	BoardController(){}
 
 	
-	public static void transmuteIngredient(String ingredient) throws UserErrorException {
+	public static void transmuteIngredient(String ingredient) throws UserErrorException, RuntimeException {
 		//Finding proper Ingredient with given name
 		
 		IngredientCard ingr = null;
 		for (IngredientCard ingr_1 : GameController.getGameInventory().getIngredientCards()){
-    		if (ingr_1.getName() == ingredient) {
+    		if (ingr_1.getName().equals(ingredient)) {
     			ingr = ingr_1;}
     	}
 
 		ingrBoard.transmuteIngredient(ingr);
 	}
 
-	public static void forageForIngredient() throws UserErrorException{
+	public static void forageForIngredient() throws UserErrorException, RuntimeException{
 		ingrBoard.forageForIngredient();
 	}
 
-	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
+	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
 		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
 	}
 
-	public static void debunkTheory(Hypotheses hypothesis) throws UserErrorException {
-		pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis);
+	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
+		return pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis, atomId);
 	}
 
 	
-	public static String brewPotion(String ingredient1, String ingredient2, boolean onStu) throws UserErrorException{
+	public static String brewPotion(String ingredient1, String ingredient2, boolean onStu) throws UserErrorException, RuntimeException{
 		//Find ingredients with given names  	
-    IngredientCard ingr1 = null;
+		IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;
 		for (IngredientCard ingredient : GameController.getGameInventory().getIngredientCards()){
-    		if (ingredient.getName() == ingredient1) {
+    		if (ingredient.getName().equals(ingredient1)) {
     			ingr1 = ingredient;}
-    		if (ingredient.getName() == ingredient2) {
+    		if (ingredient.getName().equals(ingredient2)) {
         		ingr2 = ingredient;}
     	}
 		return potBoard.makeExperiment(ingr1, ingr2, onStu);
+		
   }
 
 
