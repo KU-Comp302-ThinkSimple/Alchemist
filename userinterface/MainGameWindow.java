@@ -51,7 +51,7 @@ public class MainGameWindow {
 		new MainGameWindow();
 	}
 	public MainGameWindow() {
-		
+		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
