@@ -21,27 +21,30 @@ public class BoardController {
 		
 		IngredientCard ingr = null;
 		for (IngredientCard ingr_1 : GameController.getGameInventory().getIngredientCards()){
-    		if (ingr_1.getName() == ingredient) {
+    		if (ingr_1.getName().equals(ingredient)) {
     			ingr = ingr_1;}
     	}
 
 		ingrBoard.transmuteIngredient(ingr);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+//		GameController.getMainGameWindow().updateMainGameWindow();
 	}
 
 	public static void forageForIngredient() throws UserErrorException, RuntimeException{
 		ingrBoard.forageForIngredient();
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+//		GameController.getMainGameWindow().updateMainGameWindow();
+
 	}
 
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
 		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+//		GameController.getMainGameWindow().updateMainGameWindow();
+
 	}
 
-	public static void debunkTheory(Hypotheses hypothesis) throws UserErrorException, RuntimeException {
-		pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
+		String ret = pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis, atomId);
+//		GameController.getMainGameWindow().updateMainGameWindow();
+		return ret;
 	}
 
 	
@@ -50,14 +53,14 @@ public class BoardController {
 		IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;
 		for (IngredientCard ingredient : GameController.getGameInventory().getIngredientCards()){
-    		if (ingredient.getName() == ingredient1) {
+    		if (ingredient.getName().equals(ingredient1)) {
     			ingr1 = ingredient;}
-    		if (ingredient.getName() == ingredient2) {
+    		if (ingredient.getName().equals(ingredient2)) {
         		ingr2 = ingredient;}
     	}
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
-		return potBoard.makeExperiment(ingr1, ingr2, onStu);
-		
+		String ret = potBoard.makeExperiment(ingr1, ingr2, onStu);
+//		GameController.getMainGameWindow().updateMainGameWindow();
+		return ret;
   }
 
 

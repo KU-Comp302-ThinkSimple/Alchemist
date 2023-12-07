@@ -1,6 +1,7 @@
 package domain.player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import domain.cards.IngredientCard;
 import domain.potion.*;
@@ -12,6 +13,7 @@ public class Player {
 	final String playerPassword;
 	int playerHealth;
 	PlayerToken playerToken;
+	final int[][] deductionSelection;
 
 	public Player(int playerId, String playerName, String password) {
 		this.playerId = playerId;
@@ -19,6 +21,7 @@ public class Player {
 		this.playerPassword = password;
 		this.playerHealth = 3;
 		this.playerToken=new PlayerToken();
+		deductionSelection = new int[8][8];
 	}
 
 	public void setPlayerToken(PlayerToken playerToken) {
@@ -57,6 +60,10 @@ public class Player {
 		return playerToken;
 	}
 
+	public int[][] getDeductionSelection(){
+		return deductionSelection;
+	}
+
 	//
 	// public void transmuteIngredient(IngredientCard ingredient) {
 	//
@@ -78,5 +85,10 @@ public class Player {
 	//
 	//
 	// }
+
+	public boolean equals(Player p2) {
+		if (p2.getPlayerName().equals(this.playerName)) return true;
+		else return false;
+	}
 
 }

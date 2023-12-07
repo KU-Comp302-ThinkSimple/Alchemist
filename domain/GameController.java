@@ -7,6 +7,7 @@ import domain.boards.Board;
 import domain.boards.GameBoard;
 import domain.player.Player;
 import domain.potion.Atom;
+import userinterface.MainGameWindow;
 
 public class GameController {
 
@@ -16,6 +17,8 @@ public class GameController {
 	static GameBoard board = new GameBoard();
 	static GameInventory gameInventory=GameInventory.getInstance();
 	static InitializeGameHelper initalizeGameHelper;
+	static MainGameWindow mainGameWindow;
+
 
 
 	GameController(){
@@ -65,6 +68,7 @@ public class GameController {
 		for(int i=0;i<activePlayers.size();i++) {
 			if(!activePlayers.get(i).equals(currentPlayer)) {
 				currentPlayer=activePlayers.get(i);
+				break;
 			}
 		}
 	}
@@ -120,8 +124,14 @@ public class GameController {
 
 
 
+	public static MainGameWindow getMainGameWindow() {
+		return mainGameWindow;
+	}
 
 
+	public static void setMainGameWindow(MainGameWindow mainGameWindow) {
+		GameController.mainGameWindow = mainGameWindow;
+	}
 }
 
 
