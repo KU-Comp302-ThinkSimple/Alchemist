@@ -182,31 +182,27 @@ public class PlayerTokenView extends JPanel {
 	//TODO potion images
 	public void displayPlayerPotions() {
 
+		//Clear panels first
 		for(int i=0;i<potPanels.size();i++) {
 			potPanels.get(i).removeAll();
 		}
 
+		//ADD POTION IMAGES
+
+		//If player has 2 different recipes for a potion, the same image won't be shown twice.
+		ArrayList<String> addedPotions = new ArrayList<String>();
 
 		for(int i=0;i<player.getInventory().getPlayerPotionList().size();i++) {
 
-
-			ImageIcon icon;
-
-			if(player.getInventory().getPlayerPotionList().get(i).getNeutralityValue()==0) {
-
-				icon = new ImageIcon("negative image");
-
-			}else if (player.getInventory().getPlayerPotionList().get(i).getNeutralityValue()==1) {
-				icon = new ImageIcon("positive image");
-
-			}else {
-				icon = new ImageIcon("neutral image");
-			}
-
 			String potname = player.getInventory().getPlayerPotionList().get(i).getPotionType();
-			icon = GlobalIcons.getLittlePotionImage(potname);
+			ImageIcon icon = GlobalIcons.getLittlePotionImage(potname);
 
+			//if icon is already displayed before don't display it again
+			if (addedPotions.contains(potname)) continue;
 			potPanels.get(i).add(new JLabel(icon));
+
+			//after the icon is added, add it to the ArrayList
+			addedPotions.add(potname);
 		}
 	}
 
