@@ -84,7 +84,7 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 		new MainGameWindow();
 	}
 	public MainGameWindow() {
-		GameController.setMainGameWindow(this);
+//		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
