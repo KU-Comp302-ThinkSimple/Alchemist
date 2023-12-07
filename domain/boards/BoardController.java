@@ -36,8 +36,8 @@ public class BoardController {
 		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
 	}
 
-	public static void debunkTheory(Hypotheses hypothesis) throws UserErrorException, RuntimeException {
-		pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis);
+	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
+		return pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis, atomId);
 	}
 
 	
