@@ -23,7 +23,7 @@ public class PublicationBoard extends Board{
      * @param hypothesizedMolecule: The molecule that is theorized to make up said ingredient
      * @throws UserErrorException: Thrown if user has insufficient gold, rounds are incorrect, the player doesnt have said ingredient.
      */
-    public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
+    public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
       PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	
@@ -56,6 +56,9 @@ public class PublicationBoard extends Board{
     	hypotheses.add(hypothesis);
     	player.getPlayerToken().addReputationPoint(1);
     	player.getPlayerToken().subtractGold(1);
+    	
+    	//Reduce Player Actions
+    	player.getPlayerToken().reducePlayerAction();
     }
     
     /**
@@ -63,7 +66,7 @@ public class PublicationBoard extends Board{
      * @param hypothesis: The hypothesis to be debunked
      * @throws UserErrorException: Thrown if round isnt or hypothesis isn't in publication track
      */
-    public void debunkTheory(Player player, Hypotheses hypothesis) throws UserErrorException{
+    public void debunkTheory(Player player, Hypotheses hypothesis) throws UserErrorException, RuntimeException{
     	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
     	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
     	
@@ -98,6 +101,9 @@ public class PublicationBoard extends Board{
 		provenIngredients.add(hypothesis.getIngredient());
     	hypotheses.remove(hypothesis);
     	hypothesis.getOwner().getInventory().removeHypoteses(hypothesis);
+    	player.getPlayerToken().reducePlayerAction();
+    	
+    	//Reduce Player Actions
     	player.getPlayerToken().reducePlayerAction();
     }
     

@@ -26,22 +26,18 @@ public class BoardController {
     	}
 
 		ingrBoard.transmuteIngredient(ingr);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
 	public static void forageForIngredient() throws UserErrorException, RuntimeException{
 		ingrBoard.forageForIngredient();
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
 		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
 	public static void debunkTheory(Hypotheses hypothesis) throws UserErrorException, RuntimeException {
 		pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
 	
@@ -55,7 +51,6 @@ public class BoardController {
     		if (ingredient.getName().equals(ingredient2)) {
         		ingr2 = ingredient;}
     	}
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 		return potBoard.makeExperiment(ingr1, ingr2, onStu);
 		
   }

@@ -12,7 +12,7 @@ public class PotionBrewingBoard extends Board{
     }
     
     
-    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
+    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException, RuntimeException {
     	
     	//Get current player and needed informations
     	Player player = GameController.getCurrentPlayer(); 
@@ -74,6 +74,9 @@ public class PotionBrewingBoard extends Board{
     	//Add potion and recipe to the players inventory
     	inv.addPotion(pot);
     	inv.addRecipe(rec);
+    	
+    	//Reduce Player Action
+    	player.getPlayerToken().reducePlayerAction();
     	
     	return pot.getPotionType();
     }
