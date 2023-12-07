@@ -18,6 +18,8 @@ import exception.UserErrorException;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
+import userinterface.util.GlobalIcons;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -78,27 +80,28 @@ public class MainGameWindow {
 		}
 				);
 		playerTokenView.setLocation(134, 89);
-		playerTokenView.setSize(450, 300);
+		//playerTokenView.setSize(playerTokenView.getPreferredSize().getSize());
+		playerTokenView.setSize(325, 300); //TODO for testing purposes, dont show in windowbuilder otherwise
 
 		contentPane.add(playerTokenView);
 		contentPane.add(closeButton);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(79, 555, 315, 174);
+		buttonsPanel.setBounds(134, 426, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
 		JPanel transmuteIngredientPanel = new JPanel();
-		transmuteIngredientPanel.setBounds(0, 0, 105, 174);
+		transmuteIngredientPanel.setBounds(0, 0, (buttonsPanel.getSize().width/3), buttonsPanel.getSize().height);
 		buttonsPanel.add(transmuteIngredientPanel);
 		transmuteIngredientPanel.setLayout(null);
 
-		JButton transmuteIngredientButton = new JButton("Transmute Ingredient");
+		JButton transmuteIngredientButton = new JButton("<html>Transmute<br />Ingredient</html>");
 		transmuteIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		transmuteIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
-		transmuteIngredientButton.setBounds(new Rectangle(0, 22, 105, 152));
+		transmuteIngredientButton.setBounds(0, 0, transmuteIngredientPanel.getWidth(), transmuteIngredientPanel.getHeight());
 		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
 
@@ -112,7 +115,7 @@ public class MainGameWindow {
 
 		//TODO make a jcombobox
 		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
-		transmuteIngredientComboBox.setBounds(0, 0, 105, 22);
+		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
 
 
 		//TODO action listener for transmute ingredient button
@@ -142,11 +145,11 @@ public class MainGameWindow {
 		transmuteIngredientPanel.add(transmuteIngredientLabel);
 
 		JPanel buyArtifactPanel = new JPanel();
-		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, 105, 174);
+		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, buttonsPanel.getSize().width/3, buttonsPanel.getSize().height);
 		buttonsPanel.add(buyArtifactPanel);
 		buyArtifactPanel.setLayout(null);
 
-		JButton buyArtifactButton = new JButton("Buy Artifact Card");
+		JButton buyArtifactButton = new JButton("<html>Buy<br />Artifact<br />Card</html>");
 		buyArtifactButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		buyArtifactButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		buyArtifactButton.setFont(GlobalFonts.ACTION_BUTTON);
@@ -161,15 +164,15 @@ public class MainGameWindow {
 
 		JPanel forageForIngredientPanel = new JPanel();
 		forageForIngredientPanel.setLayout(null);
-		forageForIngredientPanel.setBounds(buyArtifactPanel.getX()+buyArtifactPanel.getWidth(), 0, 105, 174);
+		forageForIngredientPanel.setBounds(buyArtifactPanel.getX()+buyArtifactPanel.getWidth(), 0, buttonsPanel.getSize().width/3, buttonsPanel.getSize().height);
 		buttonsPanel.add(forageForIngredientPanel);
 
-		JButton forageForIngredientButton = new JButton("Forage For Ingredient");
+		JButton forageForIngredientButton = new JButton("<html>Forage For<br />Ingredient</html>");
 		forageForIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		forageForIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		forageForIngredientButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		forageForIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
 		forageForIngredientButton.setContentAreaFilled(false);
-		forageForIngredientButton.setBounds(0, 0, 105, 174);
+		forageForIngredientButton.setBounds(0, 0, forageForIngredientPanel.getWidth(), forageForIngredientPanel.getHeight());
 		forageForIngredientButton.addActionListener(e -> {
 			try {
 				BoardController.forageForIngredient();
@@ -183,6 +186,7 @@ public class MainGameWindow {
 		JLabel forageForIngredientLabel = new JLabel();
 		forageForIngredientLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
+		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/forageforing_100x160.png")));
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
 		deductionBoard.setLocation(514, 740);
