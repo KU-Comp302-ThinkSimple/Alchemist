@@ -1,25 +1,39 @@
 package userinterface;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
 import javax.swing.*;
 
 import test.TestGameInitializer;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-
 import domain.GameController;
+import domain.boards.BoardController;
+import domain.boards.PublicationBoard;
 import domain.cards.IngredientCard;
 import domain.theory.*;
+import exception.UserErrorException;
+
 import java.util.*;
-public class DebunkTheoryView extends JPanel{
-	public static void main(String[] args) {
+import java.util.concurrent.atomic.AtomicStampedReference;
+import domain.player.*;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+public class DebunkTheoryView extends JPanel implements ActionListener{
+	private JComboBox<HypothesisComboBoxItem> hypothesisComboBox;
+	private JComboBox<AtomComboBoxItem> atomComboBox;
+
+	public static void main(String[] args) throws UserErrorException, RuntimeException {
 		TestGameInitializer.initializeTestGame();
-		Hypotheses hyp = new Hypotheses(GameController.getCurrentPlayer(), GameController.getGameInventory().getIngrCards().get(0), GameController.getGameInventory().getMolecules().get(0));
+		GameController.setCurrentRound(3);
+		Player player = GameController.getCurrentPlayer();
+		System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getRedAtom().getAtomSign());
+		System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getGreenAtom().getAtomSign());
+		System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getBlueAtom().getAtomSign());
+
+		BoardController.publishTheory(player.getInventory().getPlayerIngredientCardList().get(0), GameController.getGameInventory().getMolecules().get(0));
+//		Hypotheses hyp = new Hypotheses(GameController.getCurrentPlayer(), GameController.getGameInventory().getIngrCards().get(0), GameController.getGameInventory().getMolecules().get(0));
 		JFrame frame = new JFrame();
 		DebunkTheoryView dbk = new DebunkTheoryView();
 		frame.getContentPane().add(dbk);
@@ -46,20 +60,20 @@ public class DebunkTheoryView extends JPanel{
 	}
 	
 	private class AtomComboBoxItem{
-		private final int atomId;
+		private final int atomColorId;
 
-		public AtomComboBoxItem(int moleculeId) {
+		public AtomComboBoxItem(int atomColorId) {
 			super();
-			this.atomId = moleculeId;
+			this.atomColorId = atomColorId;
 		}
 
-		public int getMoleculeId() {
-			return atomId;
+		public int getAtomColorId() {
+			return atomColorId;
 		}
 		
 		@Override
 		public String toString() {
-			switch (atomId) {
+			switch (atomColorId) {
 			case 0: {
 				return "Red";
 			}
@@ -70,33 +84,88 @@ public class DebunkTheoryView extends JPanel{
 				return "Blue";
 			}
 			default:
-				throw new IllegalArgumentException("Unexpected atom color id: " + atomId);
+				throw new IllegalArgumentException("Unexpected atom color id: " + atomColorId);
 			}
 		}
 	}
 	
 	public DebunkTheoryView() {
 		setBorder(BorderFactory.createLineBorder(Color.black));
-		setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Choose Hypothesis");
-		lblNewLabel.setBounds(10, 10, 99, 13);
-		add(lblNewLabel);
-		
-		JComboBox hypothesisComboBox = new JComboBox();
-		hypothesisComboBox.setBounds(10, 33, 99, 21);
-		add(hypothesisComboBox);
-		
-		JLabel lblNewLabel_1 = new JLabel("Atom to Debunk");
-		lblNewLabel_1.setBounds(119, 10, 83, 13);
-		add(lblNewLabel_1);
-		
-		JComboBox atomComboBox = new JComboBox();
-		atomComboBox.setBounds(119, 33, 99, 21);
-		add(atomComboBox);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{99, 99, 0};
+		gridBagLayout.rowHeights = new int[]{13, 21, 21, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
 		
 		JButton debunkButton = new JButton("Debunk");
-		debunkButton.setBounds(10, 64, 85, 21);
-		add(debunkButton);
+		debunkButton.addActionListener(this);
+		
+		JLabel lblNewLabel = new JLabel("Choose Hypothesis");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
+		gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 0;
+		add(lblNewLabel, gbc_lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Atom to Debunk");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_1.gridx = 1;
+		gbc_lblNewLabel_1.gridy = 0;
+		add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		hypothesisComboBox = new JComboBox<HypothesisComboBoxItem>();
+		GridBagConstraints gbc_hypothesisComboBox = new GridBagConstraints();
+		gbc_hypothesisComboBox.anchor = GridBagConstraints.NORTH;
+		gbc_hypothesisComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_hypothesisComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_hypothesisComboBox.gridx = 0;
+		gbc_hypothesisComboBox.gridy = 1;
+		add(hypothesisComboBox, gbc_hypothesisComboBox);
+		
+		atomComboBox = new JComboBox<AtomComboBoxItem>();
+		atomComboBox.addItem(new AtomComboBoxItem(0));
+		atomComboBox.addItem(new AtomComboBoxItem(1));
+		atomComboBox.addItem(new AtomComboBoxItem(2));
+		GridBagConstraints gbc_atomComboBox = new GridBagConstraints();
+		gbc_atomComboBox.anchor = GridBagConstraints.NORTH;
+		gbc_atomComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_atomComboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_atomComboBox.gridx = 1;
+		gbc_atomComboBox.gridy = 1;
+		add(atomComboBox, gbc_atomComboBox);
+		GridBagConstraints gbc_debunkButton = new GridBagConstraints();
+		gbc_debunkButton.anchor = GridBagConstraints.NORTH;
+		gbc_debunkButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_debunkButton.insets = new Insets(0, 0, 0, 5);
+		gbc_debunkButton.gridx = 0;
+		gbc_debunkButton.gridy = 2;
+		add(debunkButton, gbc_debunkButton);
+		
+		updateDebunkTheoryPanel();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Hypotheses hypothesis = ((HypothesisComboBoxItem)hypothesisComboBox.getSelectedItem()).getHypothesis();
+		int atomColorId = ((AtomComboBoxItem)atomComboBox.getSelectedItem()).getAtomColorId();
+		try {
+			String trueSign = BoardController.debunkTheory(hypothesis, atomColorId);
+			JOptionPane.showMessageDialog(this, "The true sign of " + hypothesis.getIngredient().getName() + "'s " + atomComboBox.getSelectedItem() + " atom is " + trueSign + "!");
+
+		} catch (UserErrorException exc) {
+			JOptionPane.showMessageDialog(this, exc.getMessage());
+		}
+	}
+	
+	public void updateDebunkTheoryPanel() {
+		hypothesisComboBox.removeAllItems();
+		for (Hypotheses hypothesis: GameController.getBoard().getPublicationBoard().getHypotheses()) {
+			hypothesisComboBox.addItem(new HypothesisComboBoxItem(hypothesis));
+		}
 	}
 }
