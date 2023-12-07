@@ -20,6 +20,13 @@ public class PotionBrewingBoard extends Board{
     	int gold = player.getPlayerToken().getGold();
     	int health = player.getPlayerToken().getPlayerHealth();
     	
+    	//Check if ingredients are same
+    	if (ingredient1.equals(ingredient2)) {
+    		throw new UserErrorException("For creating potion 2 DIFFERENT ingredients are needed!");
+    	}
+    	
+    	
+    	
     	//Check if player has these 2 ingredients
     	if(!(inv.getPlayerIngredientCardList().contains(ingredient1))) {
     		throw new UserErrorException("User does not have first ingredient");
@@ -33,7 +40,7 @@ public class PotionBrewingBoard extends Board{
     	Potion pot = new Potion(rec);
     	
     	//Check if user already owns this recipe
-    	if (inv.getPlayerPotionList().contains(rec)) {
+    	if (inv.getPlayerPotionList().contains(pot)) {
     		throw new UserErrorException("The user have this recipe already!");
     	}
     	
