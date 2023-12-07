@@ -10,7 +10,7 @@ import domain.potion.*;
 import exception.*;
 public class PublicationBoard extends Board{
 	private ArrayList<Hypotheses> hypotheses;
-	private ArrayList<IngredientCard> provenIngredients;
+	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
 
 	public PublicationBoard() {
     
@@ -61,9 +61,11 @@ public class PublicationBoard extends Board{
     /**
      * @param player: The player performing the debunking
      * @param hypothesis: The hypothesis to be debunked
+     * @param atomId: id of atom to debunk
+     * @return the true sign of the atom
      * @throws UserErrorException: Thrown if round isnt or hypothesis isn't in publication track
      */
-    public void debunkTheory(Player player, Hypotheses hypothesis) throws UserErrorException{
+    public String debunkTheory(Player player, Hypotheses hypothesis, int atomId) throws UserErrorException{
     	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
     	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
     	
@@ -81,24 +83,33 @@ public class PublicationBoard extends Board{
     		throw new UserErrorException("Theories can only be debunked in the third round.");
     	}
     	
-    	if(hypothesis.isValid()) {
+    	if(hypothesis.isValid(atomId)) {
     		//if the hypothesis is valid, punish the debunker
-    		player.getPlayerToken().setReputation(player.getPlayerToken().getReputation() - 1);
+    		player.getPlayerToken().addReputationPoint(-1);
     	}
     	else {
     		//if the hypothesis is incorrect, reward the debunker
-    		player.getPlayerToken().setReputation(player.getPlayerToken().getReputation() + 2);
-    		
-    		//TODO: will the hypothesis owner lose points?
-    		//Player hypothesisOwner = hypothesis.getOwner();
-    		//hypothesisOwner.getPlayerToken().setReputation(hypothesisOwner.getPlayerToken().getReputation() - 1);
+    		player.getPlayerToken().addReputationPoint(2);
     	}
     	//Since either way the true nature of the ingredient is revealed, put it into the provenIngredients list
     	//and remove the hypothesis from everywhere
-		provenIngredients.add(hypothesis.getIngredient());
+    	if(!provenIngredientAtoms.containsKey(hypothesis.getIngredient())) {
+    		provenIngredientAtoms.put(hypothesis.getIngredient(), new HashSet<Integer>());
+    	}
+    	provenIngredientAtoms.get(hypothesis.getIngredient()).add(atomId);
     	hypotheses.remove(hypothesis);
     	hypothesis.getOwner().getInventory().removeHypoteses(hypothesis);
     	player.getPlayerToken().reducePlayerAction();
+    	switch (hypothesis.getIngredient().getMolecule().getAtom(atomId).getAtomSign()) {
+		case 0: {
+			return "Negative";
+		}
+		case 2: {
+			return "Positive";
+		}
+		default:
+			throw new IllegalArgumentException("Invalid atom sign");
+		}
     }
     
     public ArrayList<Hypotheses> getHypotheses() {

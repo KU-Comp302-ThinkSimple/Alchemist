@@ -39,9 +39,8 @@ public class BoardController {
 		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
-	public static void debunkTheory(Hypotheses hypothesis) throws UserErrorException, RuntimeException {
-		pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
+		return pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis, atomId);
 	}
 
 	
