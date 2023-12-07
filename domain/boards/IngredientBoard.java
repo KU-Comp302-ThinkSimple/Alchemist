@@ -27,7 +27,7 @@ public class IngredientBoard extends Board{
 	}
 
 	//Returns top element in deck and add new element for ensuring that deck is endless
-	public void forageForIngredient() throws UserErrorException {
+	public void forageForIngredient() throws UserErrorException, RuntimeException {
 
 		if (!GameController.getCurrentPlayer().getPlayerToken().hasActionsLeft()) {
 			throw new UserErrorException("The player has no more actions left!");
@@ -35,6 +35,9 @@ public class IngredientBoard extends Board{
 
 		IngredientCard ingr = popIngredient();
 		GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
+		
+		//Reduce Player Actions
+		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
 
@@ -47,7 +50,7 @@ public class IngredientBoard extends Board{
 
 
 	//Sells 1 ingredient card for 1 gold
-	public void transmuteIngredient(IngredientCard ingredientCard) throws UserErrorException {
+	public void transmuteIngredient(IngredientCard ingredientCard) throws UserErrorException, RuntimeException {
 		Player player = GameController.getCurrentPlayer();
 		PlayerInventory inv = player.getInventory();
 		PlayerToken token = player.getPlayerToken();
@@ -61,6 +64,9 @@ public class IngredientBoard extends Board{
 
 		inv.removeIngredientCard(ingredientCard);
 		token.addGold(1);
+		
+		//Reduce Player Action
+		token.reducePlayerAction();
 	}
 
 

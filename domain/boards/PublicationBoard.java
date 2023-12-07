@@ -23,7 +23,7 @@ public class PublicationBoard extends Board{
      * @param hypothesizedMolecule: The molecule that is theorized to make up said ingredient
      * @throws UserErrorException: Thrown if user has insufficient gold, rounds are incorrect, the player doesnt have said ingredient.
      */
-    public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException{
+    public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
       PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	
@@ -56,6 +56,9 @@ public class PublicationBoard extends Board{
     	hypotheses.add(hypothesis);
     	player.getPlayerToken().addReputationPoint(1);
     	player.getPlayerToken().subtractGold(1);
+    	
+    	//Reduce Player Actions
+    	player.getPlayerToken().reducePlayerAction();
     }
     
     /**
@@ -110,6 +113,9 @@ public class PublicationBoard extends Board{
 		default:
 			throw new IllegalArgumentException("Invalid atom sign");
 		}
+    	
+    	//Reduce Player Actions
+    	player.getPlayerToken().reducePlayerAction();
     }
     
     public ArrayList<Hypotheses> getHypotheses() {
