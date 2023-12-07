@@ -49,10 +49,10 @@ public class BrewPotionPanel extends JPanel {
 
 
 	public BrewPotionPanel(){
-		setMinimumSize(new Dimension(691, 604));
-		setMaximumSize(new Dimension(691, 604));
-		setPreferredSize(new Dimension(691, 604));
-		setBounds(new Rectangle(0, 0, 691, 604));
+		setMinimumSize(new Dimension(690, 555));
+		setMaximumSize(new Dimension(690, 555));
+		setPreferredSize(new Dimension(690, 555));
+		setBounds(new Rectangle(0, 0, 690, 555));
 
 		setBackground(GlobalColors.BACKGROUND_COLOR);
 		//setOpaque(false);
@@ -63,24 +63,24 @@ public class BrewPotionPanel extends JPanel {
 
 		//CARD IMAGES AND SELECTION TOOL
 		JLabel card1Label = new JLabel(GlobalIcons.getCardImage("Unknown"));
-		card1Label.setBounds(57, 49, 100, 160);
+		card1Label.setBounds(57, 11, 100, 160);
 		add(card1Label);
 
 		JLabel card2Label = new JLabel(GlobalIcons.getCardImage("Unknown"));
-		card2Label.setBounds(328, 49, 100, 160);
+		card2Label.setBounds(328, 11, 100, 160);
 		add(card2Label);
 
 		String[] ingredientNames = {"Mushroom", "Seedling", "Frog", "Bird Claw", "Flower", "Mandrake Root", "Scorpion", "Raven's Feather"};
 
 		JComboBox ingrSelect1 = new JComboBox(ingredientNames);
-		ingrSelect1.setBounds(10, 234, 230, 20);
+		ingrSelect1.setBounds(10, 196, 230, 20);
 		ingrSelect1.addActionListener(e -> {
 			card1Label.setIcon(GlobalIcons.getCardImage((String)ingrSelect1.getSelectedItem()));
 		});
 		add(ingrSelect1);
 
 		JComboBox ingrSelect2 = new JComboBox(ingredientNames);
-		ingrSelect2.setBounds(266, 234, 230, 20);
+		ingrSelect2.setBounds(266, 196, 230, 20);
 		ingrSelect2.addActionListener(e -> {
 			card2Label.setIcon(GlobalIcons.getCardImage((String)ingrSelect2.getSelectedItem()));
 		});
@@ -90,7 +90,7 @@ public class BrewPotionPanel extends JPanel {
 		//DRINK POTION PANEL
 		JPanel drinkPotionPanel = new JPanel();
 		drinkPotionPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		drinkPotionPanel.setBounds(10, 261, 247, 311);
+		drinkPotionPanel.setBounds(10, 223, 247, 311);
 		drinkPotionPanel.setOpaque(false);
 		add(drinkPotionPanel);
 		drinkPotionPanel.setLayout(null);
@@ -120,7 +120,7 @@ public class BrewPotionPanel extends JPanel {
 
 		//TEST ON STUDENT PANEL
 		JPanel testOnStudentPanel = new JPanel();
-		testOnStudentPanel.setBounds(225, 261, 247, 311);
+		testOnStudentPanel.setBounds(225, 223, 247, 311);
 		testOnStudentPanel.setBorder(new EmptyBorder(0,0,0,0));
 		testOnStudentPanel.setOpaque(false);
 		add(testOnStudentPanel);
@@ -151,7 +151,7 @@ public class BrewPotionPanel extends JPanel {
 
 		//SELL A POTION PANEL
 		JPanel sellAPotionPanel = new JPanel();
-		sellAPotionPanel.setBounds(446, 261, 247, 311);
+		sellAPotionPanel.setBounds(446, 223, 247, 311);
 		sellAPotionPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		sellAPotionPanel.setOpaque(false);
 		add(sellAPotionPanel);
@@ -176,7 +176,7 @@ public class BrewPotionPanel extends JPanel {
 
 		//POTION LABEL
 		JLabel potionLabel=new JLabel(new ImageIcon(BrewPotionPanel.class.getResource("/userinterface/images/unknownPotion_103x151.png")));
-		potionLabel.setBounds(537, 72, 103, 151);
+		potionLabel.setBounds(537, 34, 103, 151);
 		add(potionLabel);
 
 

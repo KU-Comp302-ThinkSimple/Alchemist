@@ -36,7 +36,7 @@ public class MainGameWindow {
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
-	private JPanel resultsTriangle = new ResultsTriangle();
+	private JPanel resultsTriangle = new ResultsTriangle(1);
 	private JPanel playerInventory = new PlayerInventory();
 	//private JPanel player2Inventory = new PlayerInventory(1);
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
@@ -84,7 +84,7 @@ public class MainGameWindow {
 		contentPane.add(closeButton);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(81, 500, 315, 174);
+		buttonsPanel.setBounds(79, 555, 315, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
@@ -185,17 +185,17 @@ public class MainGameWindow {
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
-		deductionBoard.setLocation(514, 541);
+		deductionBoard.setLocation(514, 740);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 
 		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(612, 89);
+		resultsTriangle.setLocation(514, 98);
 		contentPane.add(resultsTriangle);
 
 
-		playerInventory.setBounds(1049, 89, 437, 300);
+		playerInventory.setBounds(1219, 89, 437, 300);
 		contentPane.add(playerInventory);
 
 		JButton infoButton = new JButton("i");
@@ -213,7 +213,7 @@ public class MainGameWindow {
 
 		DeductionBoard deductionBoard2 = new DeductionBoard();
 		deductionBoard2.setSize(new Dimension(704, 341));
-		deductionBoard2.setBounds(514, 541, 704, 341);
+		deductionBoard2.setBounds(514, 740, 704, 341);
 		deductionBoard2.setVisible(false);
 		contentPane.add(deductionBoard2);
 
@@ -229,13 +229,13 @@ public class MainGameWindow {
 		});
 		contentPane.add(pauseButton);
 
-		potionBrewingBoard.setLocation(1219, 402);
-		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
+		potionBrewingBoard.setLocation(1219, 477);
+		potionBrewingBoard.setSize(new Dimension(690, 555));
 		contentPane.add(potionBrewingBoard);
 
 		//TODO FOR TESTING PURPOSES
 		JButton updateButton = new JButton("Update");
-		updateButton.setBounds(10, 190, 89, 23);
+		updateButton.setBounds(80, 11, 89, 23);
 		updateButton.addActionListener(e ->{
 
 			//Deduction Board Changer
