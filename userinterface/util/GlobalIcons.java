@@ -27,6 +27,7 @@ public class GlobalIcons {
 		case "Mandrake Root": return mandrakeroot;
 		case "Mushroom" : return mushroom;
 		case "Scorpion" : return scorpion;
+		case "Unknown" : return unknowncard;
 		default : return unknowncard;
 		}
 	}
