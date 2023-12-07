@@ -37,8 +37,8 @@ public class MainGameWindow {
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
 	private JPanel resultsTriangle = new ResultsTriangle();
-	private JPanel player1Inventory = new PlayerInventory(0);
-	private JPanel player2Inventory = new PlayerInventory(1);
+	private JPanel player1Inventory = new PlayerInventory();
+	//private JPanel player2Inventory = new PlayerInventory(1);
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
 
 	public MainGameWindow() {
@@ -93,7 +93,7 @@ public class MainGameWindow {
 		transmuteIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
-		transmuteIngredientButton.setBounds(transmuteIngredientPanel.getBounds());
+		transmuteIngredientButton.setBounds(new Rectangle(0, 22, 105, 152));
 		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
 
@@ -128,7 +128,7 @@ public class MainGameWindow {
 		});
 
 		transmuteIngredientPanel.add(transmuteIngredientButton);
-		//transmuteIngredientPanel.add(transmuteIngredientComboBox);
+		transmuteIngredientPanel.add(transmuteIngredientComboBox);
 
 		JLabel transmuteIngredientLabel = new JLabel();
 		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -192,9 +192,9 @@ public class MainGameWindow {
 
 		player1Inventory.setBounds(1049, 89, 437, 300);
 		contentPane.add(player1Inventory);
-		player2Inventory.setBounds(1049, 89, 437, 300);
-		player2Inventory.setVisible(false);
-		contentPane.add(player2Inventory);
+		//player2Inventory.setBounds(1049, 89, 437, 300);
+		//player2Inventory.setVisible(false);
+		//contentPane.add(player2Inventory);
 
 		JButton infoButton = new JButton("i");
 		infoButton.setRequestFocusEnabled(false);
@@ -226,10 +226,21 @@ public class MainGameWindow {
 
 			//Game Inventory Changer
 			player1Inventory.setVisible(!player1Inventory.isVisible());
-			player2Inventory.setVisible(!player2Inventory.isVisible());
+			//player2Inventory.setVisible(!player2Inventory.isVisible());
 
 			//Results Triangle Changer
 			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+			//Transmute Ingredient ComboBoxChanger
+			transmuteIngredientComboBox.removeAll();
+			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+			String[] ingrss = new String[ingredientsListt.size()];
+			for (int i = 0; i < ingredientsListt.size(); i++) {
+				ingrss[i] = ingredientsListt.get(i).getName();
+				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+			}
+
+
 
 
 		});
