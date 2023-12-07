@@ -29,10 +29,6 @@ public class IngredientBoard extends Board{
 	//Returns top element in deck and add new element for ensuring that deck is endless
 	public void forageForIngredient() throws UserErrorException, RuntimeException {
 
-		if (!GameController.getCurrentPlayer().getPlayerToken().hasActionsLeft()) {
-			throw new UserErrorException("The player has no more actions left!");
-		}
-
 		IngredientCard ingr = popIngredient();
 		GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
 		
@@ -55,9 +51,6 @@ public class IngredientBoard extends Board{
 		PlayerInventory inv = player.getInventory();
 		PlayerToken token = player.getPlayerToken();
 
-		if(!token.hasActionsLeft()) {
-			throw new UserErrorException("The player has no more actions left!");
-		}
 		if(!inv.getPlayerIngredientCardList().contains(ingredientCard)) {
 			throw new UserErrorException("TThe user does not own this ingredient!");
 		}
