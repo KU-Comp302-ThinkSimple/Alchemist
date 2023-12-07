@@ -13,4 +13,6 @@ public class GlobalFonts {
 	public static Font ERROR_MESSAGE = new Font(TAHOMA, Font.PLAIN, 19);
 	public static Font ACTION_BUTTON = new Font(TAHOMA, Font.PLAIN, 10);
 	public static Font BREW_BUTTON = new Font(TAHOMA, Font.BOLD, 15);
+	public static Font PLAYER_TOKEN_HEADER = new Font(TAHOMA, Font.BOLD, 15);
+	public static Font PLAYER_TOKEN_TEXT = new Font(TAHOMA, Font.PLAIN, 15);
 }

@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,6 +20,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import domain.GameController;
 import domain.player.Player;
 import domain.potion.Potion;
+import userinterface.util.GlobalFonts;
 
 
 public class PlayerTokenView extends JPanel {
@@ -32,10 +34,12 @@ public class PlayerTokenView extends JPanel {
 	//private int id; //There will be two of this view so there should be an id attribute to separate them
 	private Player player;
 	private JTextField actionField;
-	private JTextField nameText;
-	private JTextField goldText;
-	private JTextField repText;
-	private JTextField actionText;
+	private JTextField healthHeader;
+	private JTextField goldHeader;
+	private JTextField reputationHeader;
+	private JTextField actionHeader;
+	private Font panelFontHeader;
+	private Font panelFontText;
 
 
 
@@ -46,6 +50,9 @@ public class PlayerTokenView extends JPanel {
 	public PlayerTokenView() {
 
 		player=GameController.getCurrentPlayer();
+		panelFontHeader = GlobalFonts.PLAYER_TOKEN_HEADER;
+		panelFontText = GlobalFonts.PLAYER_TOKEN_TEXT;
+
 		setLayout(null);
 		this.setPreferredSize(new Dimension(450, 300));
 
@@ -54,6 +61,7 @@ public class PlayerTokenView extends JPanel {
 		nameField.setBounds(16, 16, 95, 26);
 		nameField.setColumns(10);
 		nameField.setText(player.getPlayerName());
+		nameField.setFont(panelFontText);
 		add(nameField);
 
 		healthField = new JTextField();
@@ -61,6 +69,7 @@ public class PlayerTokenView extends JPanel {
 		healthField.setBounds(335, 16, 95, 26);
 		healthField.setColumns(10);
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
+		healthField.setFont(panelFontText);
 		add(healthField);
 
 		goldField = new JTextField();
@@ -68,6 +77,7 @@ public class PlayerTokenView extends JPanel {
 		goldField.setBounds(334, 46, 96, 26);
 		goldField.setColumns(10);
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
+		goldField.setFont(panelFontText);
 		add(goldField);
 
 		repField = new JTextField();
@@ -75,6 +85,7 @@ public class PlayerTokenView extends JPanel {
 		repField.setBounds(334, 76, 96, 26);
 		repField.setColumns(10);
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
+		repField.setFont(panelFontText);
 		add(repField);
 
 		actionField = new JTextField();
@@ -82,6 +93,7 @@ public class PlayerTokenView extends JPanel {
 		actionField.setColumns(10);
 		actionField.setBounds(334, 109, 96, 26);
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
+		actionField.setFont(panelFontText);
 		add(actionField);
 
 		JPanel imagePanel = new JPanel();
@@ -131,38 +143,42 @@ public class PlayerTokenView extends JPanel {
 		add(potPanel7);
 		potPanels.add(potPanel7);
 
-		nameText = new JTextField();
-		nameText.setText("Name:");
-		nameText.setEditable(false);
-		nameText.setColumns(10);
-		nameText.setBounds(230, 16, 95, 26);
-		add(nameText);
+		healthHeader = new JTextField();
+		healthHeader.setText("Health:");
+		healthHeader.setEditable(false);
+		healthHeader.setColumns(10);
+		healthHeader.setBounds(201, 16, 124, 26);
+		healthHeader.setFont(panelFontHeader);
+		add(healthHeader);
 
-		goldText = new JTextField();
-		goldText.setText("Golds:");
-		goldText.setEditable(false);
-		goldText.setColumns(10);
-		goldText.setBounds(230, 46, 95, 26);
-		add(goldText);
+		goldHeader = new JTextField();
+		goldHeader.setText("Golds:");
+		goldHeader.setEditable(false);
+		goldHeader.setColumns(10);
+		goldHeader.setBounds(201, 46, 124, 26);
+		goldHeader.setFont(panelFontHeader);
+		add(goldHeader);
 
-		repText = new JTextField();
-		repText.setText("Reputation:");
-		repText.setEditable(false);
-		repText.setColumns(10);
-		repText.setBounds(230, 76, 95, 26);
-		add(repText);
+		reputationHeader = new JTextField();
+		reputationHeader.setText("Reputation:");
+		reputationHeader.setEditable(false);
+		reputationHeader.setColumns(10);
+		reputationHeader.setBounds(201, 76, 124, 26);
+		reputationHeader.setFont(panelFontHeader);
+		add(reputationHeader);
 
-		actionText = new JTextField();
-		actionText.setText("Actions Left:");
-		actionText.setEditable(false);
-		actionText.setColumns(10);
-		actionText.setBounds(230, 106, 95, 26);
-		add(actionText);
+		actionHeader = new JTextField();
+		actionHeader.setText("Actions Left:");
+		actionHeader.setEditable(false);
+		actionHeader.setColumns(10);
+		actionHeader.setBounds(201, 106, 124, 26);
+		actionHeader.setFont(panelFontHeader);
+		add(actionHeader);
 
 		displayPlayerPotions();
 
 	}
-
+	//TODO potion images
 	public void displayPlayerPotions() {
 
 		for(int i=0;i<potPanels.size();i++) {
