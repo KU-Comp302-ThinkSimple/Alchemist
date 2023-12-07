@@ -99,16 +99,11 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		publishTheoryButton.setBounds(10, 65, 120, 25);
 		publishTheoryButton.addActionListener(this);
 		add(publishTheoryButton);
-
-		update();
+		
+		updatePublishTheoryPanel();
 	}
-
-	private void setPreferedSize(int i, int j) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void update() {
+	
+	public void updatePublishTheoryPanel() {
 		Player player = GameController.getCurrentPlayer();
 		ingredientComboBox.removeAllItems();
 		for (IngredientCard ingredientCard : player.getInventory().getPlayerIngredientCardList()) {
