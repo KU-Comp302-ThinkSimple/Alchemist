@@ -249,7 +249,7 @@ public class MainGameWindow {
 			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
 
 			//Transmute Ingredient ComboBoxChanger
-			transmuteIngredientComboBox.removeAll();
+			transmuteIngredientComboBox.removeAllItems();
 			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 			String[] ingrss = new String[ingredientsListt.size()];
 			for (int i = 0; i < ingredientsListt.size(); i++) {
@@ -259,7 +259,6 @@ public class MainGameWindow {
 
 			//Player Token View Changer
 			((PlayerTokenView)playerTokenView).updatePlayerTokenView();
-
 
 		});
 		contentPane.add(updateButton);
