@@ -56,5 +56,31 @@ public class GlobalIcons {
 		}
 	}
 
+	//MOLECULES 100X100
+	public static ImageIcon mol0 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol1_100x100.png"));
+	public static ImageIcon mol1 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol2_100x100.png"));
+	public static ImageIcon mol2 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol3_100x100.png"));
+	public static ImageIcon mol3 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol4_100x100.png"));
+	public static ImageIcon mol4 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol5_100x100.png"));
+	public static ImageIcon mol5 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol6_100x100.png"));
+	public static ImageIcon mol6 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol7_100x100.png"));
+	public static ImageIcon mol7 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/mol8_100x100.png"));
+
+	public static ImageIcon getMoleculeImage(String id) {
+		switch (id) {
+		case "0": return mol0;
+		case "1": return mol1;
+		case "2": return mol2;
+		case "3": return mol3;
+		case "4": return mol4;
+		case "5": return mol5;
+		case "6": return mol6;
+		case "7": return mol7;
+		default : return mol0; //TODO unknown molecule
+		}
+	}
+
+
+
 
 }

@@ -16,6 +16,8 @@ import domain.player.Player;
 import domain.potion.*;
 import exception.UserErrorException;
 import test.TestGameInitializer;
+import userinterface.util.GlobalIcons;
+
 import java.util.*;
 public class PublishTheoryPanel extends JPanel implements ActionListener{
 	private final JComboBox<IngredientCardComboBoxItem> ingredientComboBox;
@@ -72,10 +74,26 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		setLayout(null);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setSize(274,107);
-		setPreferredSize(new Dimension(247,107));
+		setPreferredSize(new Dimension(272, 284));
+
+		JLabel moleculeLabel = new JLabel();
+		moleculeLabel.setBounds(150, 107, 100, 100);
+		//moleculeLabel.setIcon(); //TODO unknown molecule
+		add(moleculeLabel);
+
+		JLabel ingredientLabel = new JLabel();
+		ingredientLabel.setBounds(25, 77, 100, 160);
+		ingredientLabel.setIcon(GlobalIcons.getCardImage("Unknown"));
+		add(ingredientLabel);
 
 		ingredientComboBox = new JComboBox<IngredientCardComboBoxItem>();
 		ingredientComboBox.setBounds(10, 30, 120, 25);
+		ingredientComboBox.addActionListener(e -> {
+			if (ingredientComboBox.getSelectedItem() != null) {
+				String ingr = ingredientComboBox.getSelectedItem().toString();
+				ingredientLabel.setIcon(GlobalIcons.getCardImage(ingr));
+			}
+		});
 		add(ingredientComboBox);
 
 		moleculeComboBox = new JComboBox<MoleculeComboBoxItem>();
@@ -85,6 +103,12 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 			moleculeComboBox.addItem(new MoleculeComboBoxItem(molecule));
 		}
 		moleculeComboBox.setBounds(140, 30, 120, 25);
+		moleculeComboBox.addActionListener(e -> {
+			if (moleculeComboBox.getSelectedItem() != null) {
+				String moleculeid = moleculeComboBox.getSelectedItem().toString();
+				moleculeLabel.setIcon(GlobalIcons.getMoleculeImage(moleculeid));
+			}
+		});
 		add(moleculeComboBox);
 
 		JLabel lblNewLabel = new JLabel("Select ingredient");
@@ -96,13 +120,13 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		add(lblSelectMolecule);
 
 		JButton publishTheoryButton = new JButton("Publish Theory");
-		publishTheoryButton.setBounds(10, 65, 120, 25);
+		publishTheoryButton.setBounds(73, 248, 120, 25);
 		publishTheoryButton.addActionListener(this);
 		add(publishTheoryButton);
-		
+
 		updatePublishTheoryPanel();
 	}
-	
+
 	public void updatePublishTheoryPanel() {
 		Player player = GameController.getCurrentPlayer();
 		ingredientComboBox.removeAllItems();
