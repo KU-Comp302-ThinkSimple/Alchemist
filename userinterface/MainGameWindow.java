@@ -40,6 +40,7 @@ public class MainGameWindow {
 	private JPanel playerInventory = new PlayerInventory();
 	//private JPanel player2Inventory = new PlayerInventory(1);
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
+	private JPanel playerTokenView = new PlayerTokenView();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -76,6 +77,10 @@ public class MainGameWindow {
 			MainGameWindowFrame.dispose();
 		}
 				);
+		playerTokenView.setLocation(134, 89);
+		playerTokenView.setSize(450, 300);
+
+		contentPane.add(playerTokenView);
 		contentPane.add(closeButton);
 
 		JPanel buttonsPanel = new JPanel();
@@ -192,9 +197,6 @@ public class MainGameWindow {
 
 		playerInventory.setBounds(1049, 89, 437, 300);
 		contentPane.add(playerInventory);
-		//player2Inventory.setBounds(1049, 89, 437, 300);
-		//player2Inventory.setVisible(false);
-		//contentPane.add(player2Inventory);
 
 		JButton infoButton = new JButton("i");
 		infoButton.setRequestFocusEnabled(false);
@@ -231,20 +233,10 @@ public class MainGameWindow {
 		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
 		contentPane.add(potionBrewingBoard);
 
-		JPanel roundInfoPanel = new JPanel();
-		roundInfoPanel.setBounds(224, 89, 286, 235);
-		contentPane.add(roundInfoPanel);
-
-		JLabel currentPlayerText = new JLabel("Current Player: " + GameController.getCurrentPlayer().getPlayerName());
-		roundInfoPanel.add(currentPlayerText);
-
-		JLabel movesLeftLabel = new JLabel("Moves Left: " + GameController.getCurrentRound());
-		roundInfoPanel.add(movesLeftLabel);
-
 		//TODO FOR TESTING PURPOSES
-		JButton changeRoundButton = new JButton("Change Round");
-		changeRoundButton.setBounds(10, 190, 89, 23);
-		changeRoundButton.addActionListener(e ->{
+		JButton updateButton = new JButton("Update");
+		updateButton.setBounds(10, 190, 89, 23);
+		updateButton.addActionListener(e ->{
 
 			//Deduction Board Changer
 			deductionBoard.setVisible(!deductionBoard.isVisible());
@@ -265,15 +257,12 @@ public class MainGameWindow {
 				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
 			}
 
-			//Current Player and Rounds Changer
-			currentPlayerText.setText("Current Player: " + GameController.getCurrentPlayer().getPlayerName());
-			movesLeftLabel.setText("Moves Left: " + GameController.getCurrentRound());
+			//Player Token View Changer
+			((PlayerTokenView)playerTokenView).updatePlayerTokenView();
 
 
 		});
-		contentPane.add(changeRoundButton);
-		//TODO TEST
-		//contentPane.add(new BrewPotionPanel());
+		contentPane.add(updateButton);
 		MainGameWindowFrame.setVisible(true);
 	}
 }
