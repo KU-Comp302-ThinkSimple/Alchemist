@@ -37,38 +37,38 @@ import javax.swing.JComboBox;
 
 public class MainGameWindow {
 	private static String infoText = """
-Welcome to Alchemy Lab Game!
+			Welcome to Alchemy Lab Game!
 
-In this game, you take on the role of an alchemist conducting experiments in the lab. Your goal is to brew potions, contribute to publications, and form theories about ingredient properties. Here's a quick guide to get you started:
+			In this game, you take on the role of an alchemist conducting experiments in the lab. Your goal is to brew potions, contribute to publications, and form theories about ingredient properties. Here's a quick guide to get you started:
 
-Game Phases:
+			Game Phases:
 
-First Round:
-Forage for Ingredients: Draw ingredients from the deck.
-Transmute Ingredient: Discard an ingredient for gold.
-Buy Artifacts: Purchase artifacts with gold.
-Make Experiments: Mix ingredients, test potions, and gain results.
-Second Round:
-Sell a Potion: Offer potions to adventurers for gold.
-Publish a Theory: Share your knowledge about ingredients for reputation points.
-Final Round:
-Debunk or Endorse Theories: Prove or disprove published theories for reputation points.
-Game Elements:
+			First Round:
+			Forage for Ingredients: Draw ingredients from the deck.
+			Transmute Ingredient: Discard an ingredient for gold.
+			Buy Artifacts: Purchase artifacts with gold.
+			Make Experiments: Mix ingredients, test potions, and gain results.
+			Second Round:
+			Sell a Potion: Offer potions to adventurers for gold.
+			Publish a Theory: Share your knowledge about ingredients for reputation points.
+			Final Round:
+			Debunk or Endorse Theories: Prove or disprove published theories for reputation points.
+			Game Elements:
 
-Player Tokens: Represent your unique avatar. Track your position, resources, and scores.
-Ingredients: Various types with unique properties. Store them in the Ingredient Storage.
-Potions: Brew potions with specific recipes and point values.
-Publication Cards: Contribute to theories for reputation points.
-Artifact Cards: Purchase for unique game advantages.
-Alchemy Markers: Form theories on the Deduction Board.
-Winning the Game:
+			Player Tokens: Represent your unique avatar. Track your position, resources, and scores.
+			Ingredients: Various types with unique properties. Store them in the Ingredient Storage.
+			Potions: Brew potions with specific recipes and point values.
+			Publication Cards: Contribute to theories for reputation points.
+			Artifact Cards: Purchase for unique game advantages.
+			Alchemy Markers: Form theories on the Deduction Board.
+			Winning the Game:
 
-Accumulate reputation points and gold.
-Exchange leftover artifacts for gold.
-Score one-third of a point for each gold piece.
-The player with the most score points wins!
-Good luck, alchemist! May your potions be potent and your theories groundbreaking!
-""";
+			Accumulate reputation points and gold.
+			Exchange leftover artifacts for gold.
+			Score one-third of a point for each gold piece.
+			The player with the most score points wins!
+			Good luck, alchemist! May your potions be potent and your theories groundbreaking!
+			""";
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
@@ -79,13 +79,13 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 	private JPanel debunkTheoryView = new DebunkTheoryView();
 	private JComboBox transmuteIngredientComboBox;
-	
+
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
 		new MainGameWindow();
 	}
 	public MainGameWindow() {
-//		GameController.setMainGameWindow(this);
+		//		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
@@ -120,7 +120,7 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 			MainGameWindowFrame.dispose();
 		}
 				);
-		playerTokenView.setLocation(134, 89);
+		playerTokenView.setLocation(134, 45);
 		//playerTokenView.setSize(playerTokenView.getPreferredSize().getSize());
 		playerTokenView.setSize(325, 300); //TODO for testing purposes, dont show in windowbuilder otherwise
 
@@ -128,25 +128,30 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 		contentPane.add(closeButton);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(134, 426, 325, 174);
+		buttonsPanel.setBounds(134, 370, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
+
 
 		JPanel transmuteIngredientPanel = new JPanel();
 		transmuteIngredientPanel.setBounds(0, 0, (buttonsPanel.getSize().width/3), buttonsPanel.getSize().height);
 		buttonsPanel.add(transmuteIngredientPanel);
 		transmuteIngredientPanel.setLayout(null);
 
+		JLabel transmuteIngredientLabel = new JLabel();
+		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
+		transmuteIngredientLabel.setBounds(transmuteIngredientPanel.getBounds());
+		transmuteIngredientLabel.setIcon(GlobalIcons.getCardImage("Unknown"));
+
 		JButton transmuteIngredientButton = new JButton("<html>Transmute<br />Ingredient</html>");
 		transmuteIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		transmuteIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
-		transmuteIngredientButton.setBounds(0, 0, transmuteIngredientPanel.getWidth(), transmuteIngredientPanel.getHeight());
+		transmuteIngredientButton.setBounds(0, 22, 108, 152);
 		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
 
-		//GONNA BE IMPLEMENTED AFTER UPDATE OF SOME FUNCTIONS (Ingr card name -> Ingr card item function)
 		//get an array of ingredients of active player
 		ArrayList<IngredientCard> ingredientsList = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrs = new String[ingredientsList.size()];
@@ -156,6 +161,12 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 
 		transmuteIngredientComboBox = new JComboBox(ingrs);
 		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
+		transmuteIngredientComboBox.addActionListener(e -> {
+			if (transmuteIngredientComboBox.getSelectedItem() != null) {
+				String selected = (String)transmuteIngredientComboBox.getSelectedItem();
+				transmuteIngredientLabel.setIcon(GlobalIcons.getCardImage(selected));
+			}
+		});
 
 
 		//TODO action listener for transmute ingredient button
@@ -175,13 +186,8 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 			//IngredientBoard.forageForIngredient();
 		});
 
-		transmuteIngredientPanel.add(transmuteIngredientButton);
 		transmuteIngredientPanel.add(transmuteIngredientComboBox);
-
-		JLabel transmuteIngredientLabel = new JLabel();
-		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
-		transmuteIngredientLabel.setBounds(transmuteIngredientPanel.getBounds());
-		transmuteIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/flower_100x160.png")));
+		transmuteIngredientPanel.add(transmuteIngredientButton);
 		transmuteIngredientPanel.add(transmuteIngredientLabel);
 
 		JPanel buyArtifactPanel = new JPanel();
@@ -271,11 +277,11 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 		potionBrewingBoard.setSize(new Dimension(690, 555));
 		contentPane.add(potionBrewingBoard);
 
-		publishTheoryPanel.setLocation(134, 636);
+		publishTheoryPanel.setLocation(134, 566);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
-		
-		debunkTheoryView.setLocation(134, 776);
+
+		debunkTheoryView.setLocation(134, 888);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
 
@@ -310,10 +316,10 @@ Good luck, alchemist! May your potions be potent and your theories groundbreakin
 
 		//Player Token View Changer
 		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
-		
+
 		//Publish theory update
 		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
-		
+
 		//Debunk theory update
 		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
 	}
