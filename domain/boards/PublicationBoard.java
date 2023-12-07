@@ -103,6 +103,10 @@ public class PublicationBoard extends Board{
     	hypotheses.remove(hypothesis);
     	hypothesis.getOwner().getInventory().removeHypoteses(hypothesis);
     	player.getPlayerToken().reducePlayerAction();
+    	//Reduce Player Actions
+    	player.getPlayerToken().reducePlayerAction();
+    	
+    	//return the true nature of the ingredient
     	switch (hypothesis.getIngredient().getMolecule().getAtom(atomId).getAtomSign()) {
 		case 0: {
 			return "Negative";
@@ -113,9 +117,6 @@ public class PublicationBoard extends Board{
 		default:
 			throw new IllegalArgumentException("Invalid atom sign");
 		}
-    	
-    	//Reduce Player Actions
-    	player.getPlayerToken().reducePlayerAction();
     }
     
     public ArrayList<Hypotheses> getHypotheses() {
