@@ -1,6 +1,10 @@
 package domain.boards;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import domain.GameController;
+import domain.cards.ArtifactCard;
 import domain.cards.IngredientCard;
 import domain.potion.Molecule;
 import domain.theory.Hypotheses;
@@ -61,6 +65,19 @@ public class BoardController {
 		String ret = potBoard.makeExperiment(ingr1, ingr2, onStu);
 //		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
+	}	
+	public static ArtifactCard buyArtifact() {
+		ArrayList<ArtifactCard> artCards = GameController.getGameInventory().getArtCards();
+		
+		//get random element from artifact Cards
+		Collections.shuffle(artCards);
+		ArtifactCard card = artCards.get(0); 
+		
+		//remove card from deck
+		GameController.getGameInventory().getArtCards().remove(card);
+		
+		return card;
+	
   }
 
 
