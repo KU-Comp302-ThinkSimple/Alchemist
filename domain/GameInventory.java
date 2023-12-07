@@ -3,16 +3,17 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import domain.cards.ArtifactCard;
 import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
+import domain.cards.artifactCards.ArtifactCard;
+import domain.cards.artifactCards.ElixirOfInsightEffect;
 import domain.potion.Atom;
 import domain.potion.AtomFactory;
 import domain.potion.Molecule;
 import domain.potion.MoleculeFactory;
 import domain.potion.Potion;
 import domain.potion.Recipe;
-
+import domain.*;
 public class GameInventory {
 
 	private final ArrayList<Atom> atoms=new ArrayList<Atom>();
@@ -89,6 +90,7 @@ public class GameInventory {
 	public void createArtifactCard() {
 		
 		//TODO create artifact cards manually
+		artCards.add(new ArtifactCard( new ElixirOfInsightEffect(), "Elixir Of Insight" ));
 }
 
 	
