@@ -13,8 +13,8 @@ public class PublicationBoard extends Board{
 	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
 
 	public PublicationBoard() {
-    
         this.hypotheses = new ArrayList<Hypotheses>();
+        this.provenIngredientAtoms = new HashMap<IngredientCard, HashSet<Integer>>();
     }
 
     /**
@@ -32,9 +32,6 @@ public class PublicationBoard extends Board{
     		throw new UserErrorException("Theories can only be published in rounds 2 and 3.");
     	}
   
-      if(!player.getPlayerToken().hasActionsLeft()) {
-    		throw new UserErrorException("The user has no more actions left!");
-    	}
     	
     	//check if user indeed owns this ingredient
     	if(!inv.getPlayerIngredientCardList().contains(ingredient)) {
@@ -72,10 +69,6 @@ public class PublicationBoard extends Board{
     	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
     	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
     	
-    	//check if user has actions left
-    	if(!player.getPlayerToken().hasActionsLeft()) {
-    		throw new UserErrorException("The player has no more actions left!");
-    	}
     	//check if the hypothesis exists in the publication track
     	if(!hypotheses.contains(hypothesis)) {
     		throw new IllegalArgumentException("The given hypothesis does not exist within the publication track");
@@ -111,7 +104,7 @@ public class PublicationBoard extends Board{
 		case 0: {
 			return "Negative";
 		}
-		case 2: {
+		case 1: {
 			return "Positive";
 		}
 		default:

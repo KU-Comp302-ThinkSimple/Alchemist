@@ -15,9 +15,12 @@ import domain.boards.IngredientBoard;
 import domain.boards.PotionBrewingBoard;
 import domain.cards.IngredientCard;
 import exception.UserErrorException;
+import test.TestGameInitializer;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
+import userinterface.util.GlobalIcons;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -33,15 +36,55 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 
 public class MainGameWindow {
+	private static String infoText = """
+Welcome to Alchemy Lab Game!
+
+In this game, you take on the role of an alchemist conducting experiments in the lab. Your goal is to brew potions, contribute to publications, and form theories about ingredient properties. Here's a quick guide to get you started:
+
+Game Phases:
+
+First Round:
+Forage for Ingredients: Draw ingredients from the deck.
+Transmute Ingredient: Discard an ingredient for gold.
+Buy Artifacts: Purchase artifacts with gold.
+Make Experiments: Mix ingredients, test potions, and gain results.
+Second Round:
+Sell a Potion: Offer potions to adventurers for gold.
+Publish a Theory: Share your knowledge about ingredients for reputation points.
+Final Round:
+Debunk or Endorse Theories: Prove or disprove published theories for reputation points.
+Game Elements:
+
+Player Tokens: Represent your unique avatar. Track your position, resources, and scores.
+Ingredients: Various types with unique properties. Store them in the Ingredient Storage.
+Potions: Brew potions with specific recipes and point values.
+Publication Cards: Contribute to theories for reputation points.
+Artifact Cards: Purchase for unique game advantages.
+Alchemy Markers: Form theories on the Deduction Board.
+Winning the Game:
+
+Accumulate reputation points and gold.
+Exchange leftover artifacts for gold.
+Score one-third of a point for each gold piece.
+The player with the most score points wins!
+Good luck, alchemist! May your potions be potent and your theories groundbreaking!
+""";
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
-	private JPanel resultsTriangle = new ResultsTriangle();
-	private JPanel player1Inventory = new PlayerInventory(0);
-	private JPanel player2Inventory = new PlayerInventory(1);
+	private JPanel resultsTriangle = new ResultsTriangle(1);
+	private JPanel playerInventory = new PlayerInventory();
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
-
+	private JPanel playerTokenView = new PlayerTokenView();
+	private JPanel publishTheoryPanel = new PublishTheoryPanel();
+	private JPanel debunkTheoryView = new DebunkTheoryView();
+	private JComboBox transmuteIngredientComboBox;
+	public static void main(String[] args) {
+		TestGameInitializer.initializeTestGame();
+		new MainGameWindow();
+	}
 	public MainGameWindow() {
+//		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
@@ -76,24 +119,29 @@ public class MainGameWindow {
 			MainGameWindowFrame.dispose();
 		}
 				);
+		playerTokenView.setLocation(134, 89);
+		//playerTokenView.setSize(playerTokenView.getPreferredSize().getSize());
+		playerTokenView.setSize(325, 300); //TODO for testing purposes, dont show in windowbuilder otherwise
+
+		contentPane.add(playerTokenView);
 		contentPane.add(closeButton);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(81, 500, 315, 174);
+		buttonsPanel.setBounds(134, 426, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
 		JPanel transmuteIngredientPanel = new JPanel();
-		transmuteIngredientPanel.setBounds(0, 0, 105, 174);
+		transmuteIngredientPanel.setBounds(0, 0, (buttonsPanel.getSize().width/3), buttonsPanel.getSize().height);
 		buttonsPanel.add(transmuteIngredientPanel);
 		transmuteIngredientPanel.setLayout(null);
 
-		JButton transmuteIngredientButton = new JButton("Transmute Ingredient");
+		JButton transmuteIngredientButton = new JButton("<html>Transmute<br />Ingredient</html>");
 		transmuteIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		transmuteIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
-		transmuteIngredientButton.setBounds(transmuteIngredientPanel.getBounds());
+		transmuteIngredientButton.setBounds(0, 0, transmuteIngredientPanel.getWidth(), transmuteIngredientPanel.getHeight());
 		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
 
@@ -105,9 +153,8 @@ public class MainGameWindow {
 			ingrs[i] = ingredientsList.get(i).getName();
 		}
 
-		//TODO make a jcombobox
-		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
-		transmuteIngredientComboBox.setBounds(0, 0, 105, 22);
+		transmuteIngredientComboBox = new JComboBox(ingrs);
+		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
 
 
 		//TODO action listener for transmute ingredient button
@@ -128,7 +175,7 @@ public class MainGameWindow {
 		});
 
 		transmuteIngredientPanel.add(transmuteIngredientButton);
-		//transmuteIngredientPanel.add(transmuteIngredientComboBox);
+		transmuteIngredientPanel.add(transmuteIngredientComboBox);
 
 		JLabel transmuteIngredientLabel = new JLabel();
 		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -137,11 +184,11 @@ public class MainGameWindow {
 		transmuteIngredientPanel.add(transmuteIngredientLabel);
 
 		JPanel buyArtifactPanel = new JPanel();
-		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, 105, 174);
+		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, buttonsPanel.getSize().width/3, buttonsPanel.getSize().height);
 		buttonsPanel.add(buyArtifactPanel);
 		buyArtifactPanel.setLayout(null);
 
-		JButton buyArtifactButton = new JButton("Buy Artifact Card");
+		JButton buyArtifactButton = new JButton("<html>Buy<br />Artifact<br />Card</html>");
 		buyArtifactButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		buyArtifactButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		buyArtifactButton.setFont(GlobalFonts.ACTION_BUTTON);
@@ -156,21 +203,21 @@ public class MainGameWindow {
 
 		JPanel forageForIngredientPanel = new JPanel();
 		forageForIngredientPanel.setLayout(null);
-		forageForIngredientPanel.setBounds(buyArtifactPanel.getX()+buyArtifactPanel.getWidth(), 0, 105, 174);
+		forageForIngredientPanel.setBounds(buyArtifactPanel.getX()+buyArtifactPanel.getWidth(), 0, buttonsPanel.getSize().width/3, buttonsPanel.getSize().height);
 		buttonsPanel.add(forageForIngredientPanel);
 
-		JButton forageForIngredientButton = new JButton("Forage For Ingredient");
+		JButton forageForIngredientButton = new JButton("<html>Forage For<br />Ingredient</html>");
 		forageForIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		forageForIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		forageForIngredientButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		forageForIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
 		forageForIngredientButton.setContentAreaFilled(false);
-		forageForIngredientButton.setBounds(0, 0, 105, 174);
+		forageForIngredientButton.setBounds(0, 0, forageForIngredientPanel.getWidth(), forageForIngredientPanel.getHeight());
 		forageForIngredientButton.addActionListener(e -> {
 			try {
-				GameController.getBoard().getIngredientBoard().forageForIngredient();
+				BoardController.forageForIngredient();
 			}
 			catch (Exception a) {
-				//TODO what now?
+				JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
 			}
 		});
 		forageForIngredientPanel.add(forageForIngredientButton);
@@ -178,23 +225,21 @@ public class MainGameWindow {
 		JLabel forageForIngredientLabel = new JLabel();
 		forageForIngredientLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
+		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/forageforing_100x160.png")));
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
-		deductionBoard.setLocation(514, 541);
+		deductionBoard.setLocation(514, 740);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 
 		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(612, 89);
+		resultsTriangle.setLocation(514, 98);
 		contentPane.add(resultsTriangle);
 
 
-		player1Inventory.setBounds(1049, 89, 437, 300);
-		contentPane.add(player1Inventory);
-		player2Inventory.setBounds(1049, 89, 437, 300);
-		player2Inventory.setVisible(false);
-		contentPane.add(player2Inventory);
+		playerInventory.setBounds(1219, 89, 437, 300);
+		contentPane.add(playerInventory);
 
 		JButton infoButton = new JButton("i");
 		infoButton.setRequestFocusEnabled(false);
@@ -204,34 +249,10 @@ public class MainGameWindow {
 		infoButton.setBounds(10, 61, 60, 39);
 		infoButton.addActionListener(e -> {
 			//TODO new information
-			JOptionPane.showMessageDialog(MainGameWindowFrame, "Taktik maktik yok bam bam bam.");
+			JOptionPane.showMessageDialog(MainGameWindowFrame, infoText);
 		}
 				);
 		contentPane.add(infoButton);
-
-		DeductionBoard deductionBoard2 = new DeductionBoard();
-		deductionBoard2.setSize(new Dimension(704, 341));
-		deductionBoard2.setBounds(514, 541, 704, 341);
-		deductionBoard2.setVisible(false);
-		contentPane.add(deductionBoard2);
-
-		//TODO FOR TESTING PURPOSES
-		JButton changeRoundButton = new JButton("Change Round");
-		changeRoundButton.setBounds(10, 190, 89, 23);
-		changeRoundButton.addActionListener(e ->{
-
-			//Deduction Board Changer
-			deductionBoard.setVisible(!deductionBoard.isVisible());
-			deductionBoard2.setVisible(!deductionBoard2.isVisible());
-
-			//Game Inventory Changer
-			player1Inventory.setVisible(!player1Inventory.isVisible());
-			player2Inventory.setVisible(!player2Inventory.isVisible());
-
-			//TODO Results Triangle Changer
-			//resultsTriangle.update();
-		});
-		contentPane.add(changeRoundButton);
 
 
 		JButton pauseButton = new JButton("P");
@@ -245,13 +266,54 @@ public class MainGameWindow {
 		});
 		contentPane.add(pauseButton);
 
-		potionBrewingBoard.setLocation(1219, 402);
-		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
+		potionBrewingBoard.setLocation(1219, 477);
+		potionBrewingBoard.setSize(new Dimension(690, 555));
 		contentPane.add(potionBrewingBoard);
 
+		publishTheoryPanel.setLocation(134, 636);
+		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
+		contentPane.add(publishTheoryPanel);
+		
+		debunkTheoryView.setLocation(134, 776);
+		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
+		contentPane.add(debunkTheoryView);
 
-		//TODO TEST
-		//contentPane.add(new BrewPotionPanel());
+		//TODO FOR TESTING PURPOSES
+		JButton updateButton = new JButton("Update");
+		updateButton.setBounds(80, 11, 89, 23);
+		updateButton.addActionListener(e ->{
+			updateMainGameWindow();
+
+		});
+		contentPane.add(updateButton);
 		MainGameWindowFrame.setVisible(true);
+	}
+	public void updateMainGameWindow() {
+		//Deduction Board Changer
+		((DeductionBoard)deductionBoard).updateDeductionBoard();
+
+		//Player Inventory Changer
+		((PlayerInventory)playerInventory).updatePlayerInventory();
+
+		//Results Triangle Changer
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+		//Transmute Ingredient ComboBoxChanger
+		transmuteIngredientComboBox.removeAllItems();
+		ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		String[] ingrss = new String[ingredientsListt.size()];
+		for (int i = 0; i < ingredientsListt.size(); i++) {
+			ingrss[i] = ingredientsListt.get(i).getName();
+			transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+		}
+
+		//Player Token View Changer
+		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+		
+		//Publish theory update
+		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
+		
+		//Debunk theory update
+		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
 	}
 }
