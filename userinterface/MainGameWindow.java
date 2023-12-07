@@ -215,12 +215,6 @@ public class MainGameWindow {
 				);
 		contentPane.add(infoButton);
 
-		DeductionBoard deductionBoard2 = new DeductionBoard();
-		deductionBoard2.setSize(new Dimension(704, 341));
-		deductionBoard2.setBounds(514, 740, 704, 341);
-		deductionBoard2.setVisible(false);
-		contentPane.add(deductionBoard2);
-
 
 		JButton pauseButton = new JButton("P");
 		pauseButton.setRequestFocusEnabled(false);
@@ -247,8 +241,7 @@ public class MainGameWindow {
 		updateButton.addActionListener(e ->{
 
 			//Deduction Board Changer
-			deductionBoard.setVisible(!deductionBoard.isVisible());
-			deductionBoard2.setVisible(!deductionBoard2.isVisible());
+			((DeductionBoard)deductionBoard).updateDeductionBoard();
 
 			//Player Inventory Changer
 			((PlayerInventory)playerInventory).updatePlayerInventory();
