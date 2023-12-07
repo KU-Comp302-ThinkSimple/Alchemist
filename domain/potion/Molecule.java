@@ -50,20 +50,20 @@ public class Molecule {
 		}
 	}
 	
-	public Atom getAtom(int atomId) {
-		if(redAtom.getAtomId() == atomId) {
+	public Atom getAtomByColor(int atomColorId) {
+		if(redAtom.getAtomColor() == atomColorId) {
 			return redAtom;
 		}
 		
-		else if(greenAtom.getAtomId() == atomId) {
+		else if(greenAtom.getAtomColor() == atomColorId) {
 			return greenAtom;
 		}
 		
-		else if(blueAtom.getAtomId() == atomId) {
+		else if(blueAtom.getAtomColor() == atomColorId) {
 			return blueAtom;
 		}
 		else {
-			throw new RuntimeException("Invalid atomId");
+			throw new RuntimeException("Invalid atomColorId");
 		}
 	}
 
