@@ -26,24 +26,24 @@ public class BoardController {
     	}
 
 		ingrBoard.transmuteIngredient(ingr);
-		GameController.getMainGameWindow().updateMainGameWindow();
+//		GameController.getMainGameWindow().updateMainGameWindow();
 	}
 
 	public static void forageForIngredient() throws UserErrorException, RuntimeException{
 		ingrBoard.forageForIngredient();
-		GameController.getMainGameWindow().updateMainGameWindow();
+//		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
 		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
-		GameController.getMainGameWindow().updateMainGameWindow();
+//		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
 		String ret = pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis, atomId);
-		GameController.getMainGameWindow().updateMainGameWindow();
+//		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
 	}
 
@@ -59,7 +59,7 @@ public class BoardController {
         		ingr2 = ingredient;}
     	}
 		String ret = potBoard.makeExperiment(ingr1, ingr2, onStu);
-		GameController.getMainGameWindow().updateMainGameWindow();
+//		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
   }
 
