@@ -18,6 +18,8 @@ import exception.UserErrorException;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
+import userinterface.util.GlobalIcons;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -36,10 +38,11 @@ public class MainGameWindow {
 
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
-	private JPanel resultsTriangle = new ResultsTriangle();
-	private JPanel player1Inventory = new PlayerInventory(0);
-	private JPanel player2Inventory = new PlayerInventory(1);
+	private JPanel resultsTriangle = new ResultsTriangle(1);
+	private JPanel playerInventory = new PlayerInventory();
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
+	private JPanel playerTokenView = new PlayerTokenView();
+	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 
 	public MainGameWindow() {
 		JFrame MainGameWindowFrame = new JFrame();
@@ -76,24 +79,29 @@ public class MainGameWindow {
 			MainGameWindowFrame.dispose();
 		}
 				);
+		playerTokenView.setLocation(134, 89);
+		//playerTokenView.setSize(playerTokenView.getPreferredSize().getSize());
+		playerTokenView.setSize(325, 300); //TODO for testing purposes, dont show in windowbuilder otherwise
+
+		contentPane.add(playerTokenView);
 		contentPane.add(closeButton);
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(81, 500, 315, 174);
+		buttonsPanel.setBounds(134, 426, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
 		JPanel transmuteIngredientPanel = new JPanel();
-		transmuteIngredientPanel.setBounds(0, 0, 105, 174);
+		transmuteIngredientPanel.setBounds(0, 0, (buttonsPanel.getSize().width/3), buttonsPanel.getSize().height);
 		buttonsPanel.add(transmuteIngredientPanel);
 		transmuteIngredientPanel.setLayout(null);
 
-		JButton transmuteIngredientButton = new JButton("Transmute Ingredient");
+		JButton transmuteIngredientButton = new JButton("<html>Transmute<br />Ingredient</html>");
 		transmuteIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		transmuteIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
-		transmuteIngredientButton.setBounds(transmuteIngredientPanel.getBounds());
+		transmuteIngredientButton.setBounds(0, 0, transmuteIngredientPanel.getWidth(), transmuteIngredientPanel.getHeight());
 		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
 
 
@@ -107,7 +115,7 @@ public class MainGameWindow {
 
 		//TODO make a jcombobox
 		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
-		transmuteIngredientComboBox.setBounds(0, 0, 105, 22);
+		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
 
 
 		//TODO action listener for transmute ingredient button
@@ -128,7 +136,7 @@ public class MainGameWindow {
 		});
 
 		transmuteIngredientPanel.add(transmuteIngredientButton);
-		//transmuteIngredientPanel.add(transmuteIngredientComboBox);
+		transmuteIngredientPanel.add(transmuteIngredientComboBox);
 
 		JLabel transmuteIngredientLabel = new JLabel();
 		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -137,11 +145,11 @@ public class MainGameWindow {
 		transmuteIngredientPanel.add(transmuteIngredientLabel);
 
 		JPanel buyArtifactPanel = new JPanel();
-		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, 105, 174);
+		buyArtifactPanel.setBounds(transmuteIngredientPanel.getX()+transmuteIngredientPanel.getWidth(), 0, buttonsPanel.getSize().width/3, buttonsPanel.getSize().height);
 		buttonsPanel.add(buyArtifactPanel);
 		buyArtifactPanel.setLayout(null);
 
-		JButton buyArtifactButton = new JButton("Buy Artifact Card");
+		JButton buyArtifactButton = new JButton("<html>Buy<br />Artifact<br />Card</html>");
 		buyArtifactButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		buyArtifactButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		buyArtifactButton.setFont(GlobalFonts.ACTION_BUTTON);
@@ -156,21 +164,21 @@ public class MainGameWindow {
 
 		JPanel forageForIngredientPanel = new JPanel();
 		forageForIngredientPanel.setLayout(null);
-		forageForIngredientPanel.setBounds(buyArtifactPanel.getX()+buyArtifactPanel.getWidth(), 0, 105, 174);
+		forageForIngredientPanel.setBounds(buyArtifactPanel.getX()+buyArtifactPanel.getWidth(), 0, buttonsPanel.getSize().width/3, buttonsPanel.getSize().height);
 		buttonsPanel.add(forageForIngredientPanel);
 
-		JButton forageForIngredientButton = new JButton("Forage For Ingredient");
+		JButton forageForIngredientButton = new JButton("<html>Forage For<br />Ingredient</html>");
 		forageForIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		forageForIngredientButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		forageForIngredientButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		forageForIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
 		forageForIngredientButton.setContentAreaFilled(false);
-		forageForIngredientButton.setBounds(0, 0, 105, 174);
+		forageForIngredientButton.setBounds(0, 0, forageForIngredientPanel.getWidth(), forageForIngredientPanel.getHeight());
 		forageForIngredientButton.addActionListener(e -> {
 			try {
-				GameController.getBoard().getIngredientBoard().forageForIngredient();
+				BoardController.forageForIngredient();
 			}
 			catch (Exception a) {
-				//TODO what now?
+				JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
 			}
 		});
 		forageForIngredientPanel.add(forageForIngredientButton);
@@ -178,23 +186,21 @@ public class MainGameWindow {
 		JLabel forageForIngredientLabel = new JLabel();
 		forageForIngredientLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
+		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/forageforing_100x160.png")));
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
-		deductionBoard.setLocation(514, 541);
+		deductionBoard.setLocation(514, 740);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 
 		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(612, 89);
+		resultsTriangle.setLocation(514, 98);
 		contentPane.add(resultsTriangle);
 
 
-		player1Inventory.setBounds(1049, 89, 437, 300);
-		contentPane.add(player1Inventory);
-		player2Inventory.setBounds(1049, 89, 437, 300);
-		player2Inventory.setVisible(false);
-		contentPane.add(player2Inventory);
+		playerInventory.setBounds(1219, 89, 437, 300);
+		contentPane.add(playerInventory);
 
 		JButton infoButton = new JButton("i");
 		infoButton.setRequestFocusEnabled(false);
@@ -209,30 +215,6 @@ public class MainGameWindow {
 				);
 		contentPane.add(infoButton);
 
-		DeductionBoard deductionBoard2 = new DeductionBoard();
-		deductionBoard2.setSize(new Dimension(704, 341));
-		deductionBoard2.setBounds(514, 541, 704, 341);
-		deductionBoard2.setVisible(false);
-		contentPane.add(deductionBoard2);
-
-		//TODO FOR TESTING PURPOSES
-		JButton changeRoundButton = new JButton("Change Round");
-		changeRoundButton.setBounds(10, 190, 89, 23);
-		changeRoundButton.addActionListener(e ->{
-
-			//Deduction Board Changer
-			deductionBoard.setVisible(!deductionBoard.isVisible());
-			deductionBoard2.setVisible(!deductionBoard2.isVisible());
-
-			//Game Inventory Changer
-			player1Inventory.setVisible(!player1Inventory.isVisible());
-			player2Inventory.setVisible(!player2Inventory.isVisible());
-
-			//TODO Results Triangle Changer
-			//resultsTriangle.update();
-		});
-		contentPane.add(changeRoundButton);
-
 
 		JButton pauseButton = new JButton("P");
 		pauseButton.setRequestFocusEnabled(false);
@@ -245,13 +227,42 @@ public class MainGameWindow {
 		});
 		contentPane.add(pauseButton);
 
-		potionBrewingBoard.setLocation(1219, 402);
-		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
+		potionBrewingBoard.setLocation(1219, 477);
+		potionBrewingBoard.setSize(new Dimension(690, 555));
 		contentPane.add(potionBrewingBoard);
 
+		publishTheoryPanel.setLocation(134, 636);
+		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
+		contentPane.add(publishTheoryPanel);
 
-		//TODO TEST
-		//contentPane.add(new BrewPotionPanel());
+		//TODO FOR TESTING PURPOSES
+		JButton updateButton = new JButton("Update");
+		updateButton.setBounds(80, 11, 89, 23);
+		updateButton.addActionListener(e ->{
+
+			//Deduction Board Changer
+			((DeductionBoard)deductionBoard).updateDeductionBoard();
+
+			//Player Inventory Changer
+			((PlayerInventory)playerInventory).updatePlayerInventory();
+
+			//Results Triangle Changer
+			((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+			//Transmute Ingredient ComboBoxChanger
+			transmuteIngredientComboBox.removeAllItems();
+			ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+			String[] ingrss = new String[ingredientsListt.size()];
+			for (int i = 0; i < ingredientsListt.size(); i++) {
+				ingrss[i] = ingredientsListt.get(i).getName();
+				transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+			}
+
+			//Player Token View Changer
+			((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+
+		});
+		contentPane.add(updateButton);
 		MainGameWindowFrame.setVisible(true);
 	}
 }

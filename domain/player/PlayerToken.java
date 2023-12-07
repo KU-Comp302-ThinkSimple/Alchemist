@@ -173,13 +173,22 @@ public class PlayerToken {
 	 */
 	public void reducePlayerAction() throws RuntimeException{
 		if(this.playerAction<=0) {
+			GameController.changeCurrentPlayer();
+			
+			if(GameController.shouldChangeRound()) {
+				GameController.changeRounds();
+			}
+			
 			throw new RuntimeException("Tried to reduce user actions when the user had no actions left");
+			
 		}
 		this.playerAction -= 1;
 		
-		if(GameController.shouldChangeRound()) {
-			GameController.changeRounds();
-		}
+		//GameController.changeCurrentPlayer();
+	
+	
+		
+		
 	}
 	
 	public PlayerInventory getPlayerInventory() {
