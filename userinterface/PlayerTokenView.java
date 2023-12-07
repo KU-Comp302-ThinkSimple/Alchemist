@@ -30,14 +30,14 @@ public class PlayerTokenView extends JPanel {
 	private JTextField goldField;
 	private JTextField repField;
 	private JTextField healthField;
-	private ArrayList<JPanel> potPanels=new  ArrayList<JPanel>();
-	//private int id; //There will be two of this view so there should be an id attribute to separate them
-	private Player player;
 	private JTextField actionField;
 	private JTextField healthHeader;
 	private JTextField goldHeader;
 	private JTextField reputationHeader;
 	private JTextField actionHeader;
+	private ArrayList<JPanel> potPanels=new  ArrayList<JPanel>();
+	//private int id; //There will be two of this view so there should be an id attribute to separate them
+	private Player player;
 	private Font panelFontHeader;
 	private Font panelFontText;
 
@@ -212,6 +212,7 @@ public class PlayerTokenView extends JPanel {
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
+		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
 		displayPlayerPotions();
 	}
 }

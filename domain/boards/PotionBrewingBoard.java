@@ -7,75 +7,75 @@ import domain.potion.*;
 import exception.*;
 
 public class PotionBrewingBoard extends Board{
-    public PotionBrewingBoard() {
- 
-    }
-    
-    
-    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
-    	
-    	//Get current player and needed informations
-    	Player player = GameController.getCurrentPlayer(); 
-    	PlayerInventory inv = player.getInventory();
-    	int gold = player.getPlayerToken().getGold();
-    	int health = player.getPlayerToken().getPlayerHealth();
-    	
-    	//Check if ingredients are same
-    	if (ingredient1.equals(ingredient2)) {
-    		throw new UserErrorException("For creating potion 2 DIFFERENT ingredients are needed!");
-    	}
-    	
-    	
-    	
-    	//Check if player has these 2 ingredients
-    	if(!(inv.getPlayerIngredientCardList().contains(ingredient1))) {
-    		throw new UserErrorException("User does not have first ingredient");
-    	}
-    	if(!(inv.getPlayerIngredientCardList().contains(ingredient2))) {
-    		throw new UserErrorException("User does not have second ingredient");
-    	}
-    		
-    	//Create recipe and potion with given ingredients		
-		Recipe rec = new Recipe(ingredient1, ingredient2);
-    	Potion pot = new Potion(rec);
-    	
-    	//Check if user already owns this recipe
-    	if (inv.getPlayerPotionList().contains(pot)) {
-    		throw new UserErrorException("The user have this recipe already!");
-    	}
-    	
-    	
-    	//Determine type of new potion
-    	pot.determinePotion();
-    	
-    	//test potion on student or player own
-    	if (testOnStu) {
-    		pot.setPersonToTest("Student");
-    		//check if user has sufficient gold for needed situations
-        	if(gold < 1) {
-        		throw new UserErrorException("The user does not have enough gold!");
-        	}
-    	}
-    	else {
-    		pot.setPersonToTest("Self");
-    		//check if user has sufficient health for needed situations
-    		if(health < 1) {
-        		throw new UserErrorException("The user does not have enough health!");
-        	}	
-    	}
-    	pot.testPotion();
-    	
-    	
-    	//Remove ingredients from players ingredient list
-    	inv.removeIngredientCard(ingredient1);
-    	inv.removeIngredientCard(ingredient2);
+	public PotionBrewingBoard() {
 
-    	
-    	//Add potion and recipe to the players inventory
-    	inv.addPotion(pot);
-    	inv.addRecipe(rec);
-    	
-    	return pot.getPotionType();
-    }
+	}
+
+
+	public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException {
+
+		//Get current player and needed informations
+		Player player = GameController.getCurrentPlayer();
+		PlayerInventory inv = player.getInventory();
+		int gold = player.getPlayerToken().getGold();
+		int health = player.getPlayerToken().getPlayerHealth();
+
+		//Check if ingredients are same
+		if (ingredient1.equals(ingredient2)) {
+			throw new UserErrorException("For creating potion 2 different ingredients are needed!");
+		}
+
+
+
+		//Check if player has these 2 ingredients
+		if(!(inv.getPlayerIngredientCardList().contains(ingredient1))) {
+			throw new UserErrorException("User does not have first ingredient");
+		}
+		if(!(inv.getPlayerIngredientCardList().contains(ingredient2))) {
+			throw new UserErrorException("User does not have second ingredient");
+		}
+
+		//Create recipe and potion with given ingredients
+		Recipe rec = new Recipe(ingredient1, ingredient2);
+		Potion pot = new Potion(rec);
+
+		//Check if user already owns this recipe
+		if (inv.getPlayerPotionList().contains(pot)) {
+			throw new UserErrorException("The user have this recipe already!");
+		}
+
+
+		//Determine type of new potion
+		pot.determinePotion();
+
+		//test potion on student or player own
+		if (testOnStu) {
+			pot.setPersonToTest("Student");
+			//check if user has sufficient gold for needed situations
+			if(gold < 1) {
+				throw new UserErrorException("The user does not have enough gold!");
+			}
+		}
+		else {
+			pot.setPersonToTest("Self");
+			//check if user has sufficient health for needed situations
+			if(health < 1) {
+				throw new UserErrorException("The user does not have enough health!");
+			}
+		}
+		pot.testPotion();
+
+
+		//Remove ingredients from players ingredient list
+		inv.removeIngredientCard(ingredient1);
+		inv.removeIngredientCard(ingredient2);
+
+
+		//Add potion and recipe to the players inventory
+		inv.addPotion(pot);
+		inv.addRecipe(rec);
+
+		return pot.getPotionType();
+	}
 }
 
