@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import domain.GameController;
 import domain.boards.Board;
-import domain.cards.ArtifactCard;
 import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
+import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.*;
 import domain.theory.Hypotheses;
 import java.lang.*;
@@ -173,11 +173,7 @@ public class PlayerToken {
 	 */
 	public void reducePlayerAction() throws RuntimeException{
 		if(this.playerAction<=0) {
-			GameController.changeCurrentPlayer();
 			
-			if(GameController.shouldChangeRound()) {
-				GameController.changeRounds();
-			}
 			
 			throw new RuntimeException("Tried to reduce user actions when the user had no actions left");
 			
@@ -185,8 +181,14 @@ public class PlayerToken {
 		this.playerAction -= 1;
 		
 		//GameController.changeCurrentPlayer();
-	
-	
+		if(this.playerAction ==0) {
+			GameController.changeCurrentPlayer();
+		}
+		
+		
+		if(GameController.shouldChangeRound()) {
+			GameController.changeRounds();
+		}
 		
 		
 	}
