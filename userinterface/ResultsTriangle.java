@@ -34,9 +34,9 @@ public class ResultsTriangle extends JPanel {
 	final private static ImageIcon BLUE_MINUS = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/blueminus_67x67.png"));
 	final private static ImageIcon RED_MINUS = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/redminus_67x67.png"));
 	final private static ImageIcon GREEN_MINUS = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/greenminus_67x67.png"));
-	
-	final private static ImageIcon WHITE_CIRCLE = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/white_circle.jpg"));
-	
+
+	final private static ImageIcon NEUTRAL = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/grayneutral_67x67.png"));
+
 	final private static ImageIcon BACKGROUND = new ImageIcon(ResultsTriangle.class.getResource("/userinterface/images/resultsTriangle_706x631.png"));
 
 	final static private int CIRCLE_DEPTH=7; //how many circles each side of the triangle will have. 7 as there are 8 potions
@@ -171,7 +171,7 @@ public class ResultsTriangle extends JPanel {
 			}else if(recipe.checkBlueMatch()==1) {
 				iconToSet = BLUE_PLUS;
 			}else {
-				iconToSet = WHITE_CIRCLE;
+				iconToSet = NEUTRAL;
 				//				throw new RuntimeException("Neutral potion icon missing");
 			}
 
