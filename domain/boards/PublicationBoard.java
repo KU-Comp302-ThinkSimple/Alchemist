@@ -1,13 +1,16 @@
 package domain.boards;
-import java.util.*;
-import exception.*;
 
-import domain.theory.*;
-import domain.player.*;
 import domain.GameController;
-import domain.cards.*;
-import domain.potion.*;
-import exception.*;
+import domain.cards.IngredientCard;
+import domain.player.Player;
+import domain.player.PlayerInventory;
+import domain.potion.Molecule;
+import domain.theory.Hypotheses;
+import exception.UserErrorException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 public class PublicationBoard extends Board{
 	private ArrayList<Hypotheses> hypotheses;
 	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
@@ -66,9 +69,7 @@ public class PublicationBoard extends Board{
      * @throws UserErrorException: Thrown if round isnt or hypothesis isn't in publication track
      */
     public String debunkTheory(Player player, Hypotheses hypothesis, int atomColorId) throws UserErrorException{
-    	//TODO: Is the implementation correct? The ingredients whose molecule have been uncovered get put in the 
-    	//provenIngredients list, and the hypothesis gets removed everywhere (so it doesnt get debunked again)
-    	
+
     	//check if the hypothesis exists in the publication track
     	if(!hypotheses.contains(hypothesis)) {
     		throw new IllegalArgumentException("The given hypothesis does not exist within the publication track");

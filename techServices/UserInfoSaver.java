@@ -35,8 +35,7 @@ public class UserInfoSaver {
                 }
             }
         } catch (IOException e) {
-            //TODO: Related Exception Handling
-        	System.out.println(e.getMessage());	
+        	System.out.println(e.getMessage());
         }
         printPlayers();
     }
@@ -49,7 +48,6 @@ public class UserInfoSaver {
             }
             writer.write(jsonArray.toString());
         } catch (IOException e) {
-            //TODO: Related Exception Handling
         	System.out.println(e.getMessage());
         }
     }
