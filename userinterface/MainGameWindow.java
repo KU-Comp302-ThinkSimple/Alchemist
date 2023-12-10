@@ -67,7 +67,7 @@ public class MainGameWindow {
 			Exchange leftover artifacts for gold.
 			Score one-third of a point for each gold piece.
 			The player with the most score points wins!
-			Good luck, alchemist! May your potions be potent and your theories groundbreaking!
+			Good luck, alchemist! May your potions be potent and your theoriesï¿½groundbreaking!
 			""";
 
 	private JPanel contentPane;
@@ -202,6 +202,11 @@ public class MainGameWindow {
 		buyArtifactButton.setContentAreaFilled(false);
 		buyArtifactButton.setBounds(0, 0, buyArtifactPanel.getWidth(), buyArtifactPanel.getHeight());
 		buyArtifactPanel.add(buyArtifactButton);
+		
+		buyArtifactButton.addActionListener(e -> {
+			
+			BoardController.buyArtifactCard();
+		});
 
 		JLabel buyArtifactLabel = new JLabel();
 		buyArtifactLabel.setVerticalAlignment(SwingConstants.BOTTOM);

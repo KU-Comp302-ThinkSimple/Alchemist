@@ -1,8 +1,8 @@
 package domain.potion;
 
-import java.util.Arrays;
+import domain.GameController;
 
-import domain.*;
+import java.util.Arrays;
 
 public class Potion {
 	
@@ -58,7 +58,12 @@ public class Potion {
 	public void testPotion() {
 		if(this.personToTest.equals("Self")) {
 			if (this.potionType == "Poison") {
-				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();	 
+				if (!GameController.getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getGameInventory().getArtCards().get(1))){ //Vaccine card controller
+					GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
+				}
+				else {
+					GameController.getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(GameController.getGameInventory().getArtCards().get(1)); //Vaccine card remover
+				}
 			}else if(this.potionType == "Health") {
 				GameController.getCurrentPlayer().getPlayerToken().addHealth();
 			}else if(this.potionType == "Slow") {

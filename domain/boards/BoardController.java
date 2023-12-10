@@ -1,7 +1,10 @@
 package domain.boards;
 
+import java.util.Random;
+
 import domain.GameController;
 import domain.cards.IngredientCard;
+import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.Molecule;
 import domain.theory.Hypotheses;
 import exception.UserErrorException;
@@ -27,6 +30,15 @@ public class BoardController {
 
 		ingrBoard.transmuteIngredient(ingr);
 //		GameController.getMainGameWindow().updateMainGameWindow();
+	}
+	public static void buyArtifactCard() {
+		
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(GameController.getGameInventory().getArtCards().size());
+		ArtifactCard card= GameController.getGameInventory().getArtCards().get(randomIndex);
+		GameController.getCurrentPlayer().getInventory().addArtifactCard(card);
+		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+
 	}
 
 	public static void forageForIngredient() throws UserErrorException, RuntimeException{
