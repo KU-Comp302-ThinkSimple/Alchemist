@@ -16,7 +16,7 @@ public class InitializeGameHelper {
 
 	}
 
-
+// This func initializes the ingr cards.
 	public void initializeIngredientCards() {
 		GameController.gameInventory.createAtom();
 		GameController.gameInventory.createMolecule();
@@ -26,13 +26,14 @@ public class InitializeGameHelper {
 	}
 
 
-
+	// This func chooses the starting player.
 	public void chooseStartingPlayer() {
 		Random rand = new Random();
 		int num = rand.nextInt(2);
 		GameController.currentPlayer=GameController.activePlayers.get(num);
 	}
 
+	// This func shuffles cards
 	public void shuffleCards(){
 
 		// board.getIngredientBoard().shuffleIngredientCards();
@@ -41,6 +42,7 @@ public class InitializeGameHelper {
 		//TODO implement these, also need to find a way to represent artifact cards (maybe within the IngredientBoard?)
 	}
 
+	// This func distributes the ingr cards.
 	public void distributeInitialCards() {
 
 		for(int i=0;i<2;i++) {
@@ -51,6 +53,7 @@ public class InitializeGameHelper {
 		}
 	}
 
+	// This func distributes the gold.
 	public void distributeGold() {
 
 		for(int i=0;i<2;i++) {

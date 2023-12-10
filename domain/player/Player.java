@@ -15,6 +15,7 @@ public class Player {
 	PlayerToken playerToken;
 	final int[][] deductionSelection;
 
+	//Constructor of player object
 	public Player(int playerId, String playerName, String password) {
 		this.playerId = playerId;
 		this.playerName = playerName;
@@ -64,27 +65,6 @@ public class Player {
 		return deductionSelection;
 	}
 
-	//
-	// public void transmuteIngredient(IngredientCard ingredient) {
-	//
-	// }
-	//
-	// public void publishTheory(IngredientCard ingredient) {
-	//
-	//
-	//
-	// }
-	//
-	// public void makeExperiment(IngredientCard ingredient1, IngredientCard
-	// ingredient2) {
-	//
-	// }
-
-	//
-	// public void sellAPotion(Potion potion, Boolean guarantee, Player customer) {
-	//
-	//
-	// }
 
 	public boolean equals(Player p2) {
 		if (p2.getPlayerName().equals(this.playerName)) return true;

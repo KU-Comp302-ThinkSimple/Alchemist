@@ -3,6 +3,7 @@ package domain;
 import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
 import domain.cards.artifactCards.ArtifactCard;
+import domain.cards.artifactCards.ElixirOfInsight;
 import domain.cards.artifactCards.ElixirOfInsightEffect;
 import domain.cards.artifactCards.Vaccine;
 import domain.potion.Atom;
@@ -25,7 +26,7 @@ public class GameInventory {
 	MoleculeFactory molFactory=MoleculeFactory.getInstance();
 	
 	
-	
+	// This is a singleton gameInventroy class that stores all the cards and objects of the game
 	private static GameInventory instance;
 
 	private GameInventory() {}
@@ -38,6 +39,7 @@ public class GameInventory {
 		return instance;
 	}
 	
+	//this func creates atoms using factory and adds them to the list
 	public void createAtom() {
 		
 		atoms.add(atomFactory.createAtom(0, 0, 0)); // small red negative index 0
@@ -56,7 +58,7 @@ public class GameInventory {
 		atoms.add(atomFactory.createAtom(1, 3, 1)); // big blue positive index 11
 	}
 	
-	
+	//this func creates molecules using factory and adds them to the list
 	public void createMolecule() {
 		
 		molecules.add(molFactory.createMolecule(atoms.get(0), atoms.get(6), atoms.get(9))); 
@@ -69,7 +71,7 @@ public class GameInventory {
 		molecules.add(molFactory.createMolecule(atoms.get(3), atoms.get(7), atoms.get(11)));
 	}
 	
-	
+	//this func creates ingrs and adds them to the list
 	public void createIngredientCard() {
 		
 		//Shuffles the molecule list and creates ingrCards using those molecules and add them to the list.
@@ -85,10 +87,11 @@ public class GameInventory {
 		ingrCards.add(new IngredientCard(7, "Raven's Feather",molecules.get(7)));
 		
 	}
+	//this func creates artifact cards and adds them to the list
 	public void createArtifactCard() {
 		
 		//TODO create artifact cards manually
-		artCards.add(new ArtifactCard( new ElixirOfInsightEffect(), "Elixir Of Insight" ));
+		artCards.add(new ElixirOfInsight( new ElixirOfInsightEffect(), "Elixir Of Insight" ));
 		artCards.add(new ArtifactCard(new Vaccine(),"Vaccine"));
 }
 
