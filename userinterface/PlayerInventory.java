@@ -3,13 +3,14 @@ package userinterface;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.GridLayout;
-
+import java.util.ArrayList;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
 
 import domain.GameController;
 import domain.boards.BoardController;
+import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.player.Player;
 import userinterface.util.GlobalIcons;
@@ -19,6 +20,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 
 public class PlayerInventory extends JPanel {
@@ -114,6 +116,15 @@ public class PlayerInventory extends JPanel {
 			button.addActionListener(e -> {
 				currentCard.useCard();
 				System.out.println("Used card named "+ currentCard.getName());
+				if(currentCard.getName().equals("Elixir of Insight")) {
+					ArrayList<IngredientCard> cards=  currentCard.useCard();
+					String s="The top 3 cards are: ";
+					for(int j=0;j<3;j++) {
+						s+=j+". ";
+						s+=(cards.get(j).getName());
+					}
+					JOptionPane.showInputDialog(s);
+				}
 				
 				
 			});
