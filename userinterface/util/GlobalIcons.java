@@ -7,6 +7,8 @@ import userinterface.BrewPotionPanel;
 public class GlobalIcons {
 
 	//CARDS
+
+	//Ingredient Cards
 	public static ImageIcon flower = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/flower_100x160.png"));
 	public static ImageIcon birdclaw = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/birdclaw_100x160.png"));
 	public static ImageIcon feather = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/feather_100x160.png"));
@@ -17,7 +19,7 @@ public class GlobalIcons {
 	public static ImageIcon scorpion = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/scorpion_100x160.png"));
 	public static ImageIcon unknowncard = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/unknownCard_100x160.png"));
 
-	public static ImageIcon getCardImage(String name) {
+	public static ImageIcon getIngredientCardImage(String name) {
 		switch (name) {
 		case "Flower": return flower;
 		case "Bird Claw": return birdclaw;
@@ -29,6 +31,20 @@ public class GlobalIcons {
 		case "Scorpion" : return scorpion;
 		case "Unknown" : return unknowncard;
 		default : return unknowncard;
+		}
+	}
+
+	//Artifact Cards
+	public static ImageIcon elixirofinsight = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/elixirofinsight_100x160.png"));
+	public static ImageIcon vaccine = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/vaccine_100x160.png"));
+	public static ImageIcon unknownArtifact = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/unknownArtifactCard_100x160.png"));
+
+	public static ImageIcon getArtifactCardImage(String name) {
+		switch (name) {
+		case "Elixir Of Insight": return elixirofinsight;
+		case "Vaccine": return vaccine;
+		case "Unknown" : return unknownArtifact;
+		default : return unknownArtifact;
 		}
 	}
 

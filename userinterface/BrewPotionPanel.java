@@ -62,11 +62,11 @@ public class BrewPotionPanel extends JPanel {
 
 
 		//CARD IMAGES AND SELECTION TOOL
-		JLabel card1Label = new JLabel(GlobalIcons.getCardImage("Unknown"));
+		JLabel card1Label = new JLabel(GlobalIcons.getIngredientCardImage("Unknown"));
 		card1Label.setBounds(57, 11, 100, 160);
 		add(card1Label);
 
-		JLabel card2Label = new JLabel(GlobalIcons.getCardImage("Unknown"));
+		JLabel card2Label = new JLabel(GlobalIcons.getIngredientCardImage("Unknown"));
 		card2Label.setBounds(328, 11, 100, 160);
 		add(card2Label);
 
@@ -75,14 +75,14 @@ public class BrewPotionPanel extends JPanel {
 		JComboBox ingrSelect1 = new JComboBox(ingredientNames);
 		ingrSelect1.setBounds(10, 196, 230, 20);
 		ingrSelect1.addActionListener(e -> {
-			card1Label.setIcon(GlobalIcons.getCardImage((String)ingrSelect1.getSelectedItem()));
+			card1Label.setIcon(GlobalIcons.getIngredientCardImage((String)ingrSelect1.getSelectedItem()));
 		});
 		add(ingrSelect1);
 
 		JComboBox ingrSelect2 = new JComboBox(ingredientNames);
 		ingrSelect2.setBounds(266, 196, 230, 20);
 		ingrSelect2.addActionListener(e -> {
-			card2Label.setIcon(GlobalIcons.getCardImage((String)ingrSelect2.getSelectedItem()));
+			card2Label.setIcon(GlobalIcons.getIngredientCardImage((String)ingrSelect2.getSelectedItem()));
 		});
 		add(ingrSelect2);
 

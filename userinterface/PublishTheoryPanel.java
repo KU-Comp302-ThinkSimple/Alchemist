@@ -83,7 +83,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 
 		JLabel ingredientLabel = new JLabel();
 		ingredientLabel.setBounds(25, 77, 100, 160);
-		ingredientLabel.setIcon(GlobalIcons.getCardImage("Unknown"));
+		ingredientLabel.setIcon(GlobalIcons.getIngredientCardImage("Unknown"));
 		add(ingredientLabel);
 
 		ingredientComboBox = new JComboBox<IngredientCardComboBoxItem>();
@@ -91,7 +91,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		ingredientComboBox.addActionListener(e -> {
 			if (ingredientComboBox.getSelectedItem() != null) {
 				String ingr = ingredientComboBox.getSelectedItem().toString();
-				ingredientLabel.setIcon(GlobalIcons.getCardImage(ingr));
+				ingredientLabel.setIcon(GlobalIcons.getIngredientCardImage(ingr));
 			}
 		});
 		add(ingredientComboBox);
