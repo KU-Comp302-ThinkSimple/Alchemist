@@ -15,9 +15,9 @@ public class ElixirOfInsight extends ArtifactCard{
 
 	public static ArrayList<IngredientCard> shuffle(ArrayList<IngredientCard> cards, int[] order){
 		ArrayList<IngredientCard> newCards = new ArrayList<IngredientCard>();
-		newCards.add(cards.get(order[0]));
-		newCards.add(cards.get(order[1]));
-		newCards.add(cards.get(order[2]));
+		newCards.add(cards.get(order[0]-1));
+		newCards.add(cards.get(order[1]-1));
+		newCards.add(cards.get(order[2]-1));
 		return newCards;
 	}
 

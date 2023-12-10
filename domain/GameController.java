@@ -20,12 +20,14 @@ public class GameController {
 	static MainGameWindow mainGameWindow;
 
 
+	// This is the main game controller, it holds various states and attributes of the game
 
 	GameController(){
 
 	}
 
 
+	//This func initializes the game by calling creating a new instance of initliazegamehelper
 	public static void initializeGame() {
 
 		//GameController should initialize game when two player are present;
@@ -40,7 +42,7 @@ public class GameController {
 
 	}
 
-
+//This func changes rounds
 	public static void changeRounds() {
 		currentRound++;
 

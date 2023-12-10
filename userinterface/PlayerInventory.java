@@ -14,10 +14,13 @@ import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
+import domain.cards.artifactCards.ElixirOfInsight;
 import domain.player.Player;
 import userinterface.util.GlobalIcons;
 
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+
 import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
@@ -101,7 +104,7 @@ public class PlayerInventory extends JPanel {
 		}
 
 	}
-
+//This func updtaes this component
 	public void updatePlayerInventory() {
 		viewPort.removeAll();
 		viewPort.repaint();
@@ -134,18 +137,47 @@ public class PlayerInventory extends JPanel {
 			button.addActionListener(e -> {
 				currentCard.useCard();
 				System.out.println("Used card named "+ currentCard.getName());
-				if(currentCard.getName().equals("Elixir of Insight")) {
-					ArrayList<IngredientCard> cards=  currentCard.useCard();
-					String s="The top 3 cards are: ";
-					for(int j=0;j<3;j++) {
-						s+=j+". ";
-						s+=(cards.get(j).getName());
-					}
-					JOptionPane.showInputDialog(s);
-				}
 				
+	// This area is to create the process if the card is the elixir of insight.			
+				
+				
+				if(currentCard.getName().equals("Elixir Of Insight")) {
+					
+					ArrayList<IngredientCard> cards=  currentCard.useCard();
+					String s="The top 3 cards are: \n";
+					for(int j=0;j<3;j++) {
+						s+=(j+1)+".";
+						s+=(cards.get(j).getName());
+						s+="\n";
+					}
+					s+="Please write the new order of cards, separated by comma";
+					
+					JTextArea jta = new JTextArea(10, 30);
+		            jta.setText(s);
+		            jta.setEditable(false);
+		            JScrollPane jsp = new JScrollPane(jta);
+					String order= JOptionPane.showInputDialog(null, jsp);
+					
+					try {
+						String[] numString = order.split(",");
+						int[] arr = new int[numString.length];
+						for (int j = 0; j < numString.length; j++) {
+					            arr[j] = Integer.valueOf(numString[j]);
+						}
+						ElixirOfInsight elixCard= (ElixirOfInsight) currentCard;
+						elixCard.changeCards(arr);
+						
+						
+					}catch(Exception exc) {
+						System.out.println("Something went wrong");
+					}
+
+				}
+				GameController.getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
+				GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
 				
 			});
+			
 			viewPort_1.add(button);
 
 		}
