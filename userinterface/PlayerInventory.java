@@ -9,6 +9,8 @@ import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
 
 import domain.GameController;
+import domain.boards.BoardController;
+import domain.cards.artifactCards.ArtifactCard;
 import domain.player.Player;
 import userinterface.util.GlobalIcons;
 
@@ -72,10 +74,18 @@ public class PlayerInventory extends JPanel {
 
 		for(int i=0;i<player.getInventory().getPlayerArtifactCardList().size();i++) {
 		
-				ImageIcon icon = GlobalIcons.getCardImage(player.getInventory().getPlayerArtifactCardList().get(i).getName());
-				JPanel panel = new JPanel();
-				panel.add(new JLabel(icon));
-				viewPort_1.add(panel);
+			ImageIcon icon = GlobalIcons.getCardImage(player.getInventory().getPlayerArtifactCardList().get(i).getName());
+			JButton button = new JButton();
+			button.add(new JLabel(icon));
+			ArtifactCard currentCard=player.getInventory().getPlayerArtifactCardList().get(i);
+			button.addActionListener(e -> {
+				currentCard.useCard();
+				System.out.println("Used card named "+ currentCard.getName());
+				
+			
+			});
+			
+			viewPort_1.add(button);
 				}
 
 	}
@@ -94,12 +104,20 @@ public class PlayerInventory extends JPanel {
 			viewPort.add(panel);
 		}
 		
+		
 		for(int i=0;i<player.getInventory().getPlayerArtifactCardList().size();i++) {
 			
 			ImageIcon icon = GlobalIcons.getCardImage(player.getInventory().getPlayerArtifactCardList().get(i).getName());
-			JPanel panel = new JPanel();
-			panel.add(new JLabel(icon));
-			viewPort_1.add(panel);
+			JButton button = new JButton();
+			button.add(new JLabel(icon));
+			ArtifactCard currentCard=player.getInventory().getPlayerArtifactCardList().get(i);
+			button.addActionListener(e -> {
+				currentCard.useCard();
+				System.out.println("Used card named "+ currentCard.getName());
+				
+				
+			});
+			viewPort_1.add(button);
 
 		}
 
