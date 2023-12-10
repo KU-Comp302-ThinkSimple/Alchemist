@@ -141,7 +141,7 @@ public class MainGameWindow {
 		JLabel transmuteIngredientLabel = new JLabel();
 		transmuteIngredientLabel.setVerticalAlignment(SwingConstants.TOP);
 		transmuteIngredientLabel.setBounds(transmuteIngredientPanel.getBounds());
-		transmuteIngredientLabel.setIcon(GlobalIcons.getCardImage("Unknown"));
+		transmuteIngredientLabel.setIcon(GlobalIcons.getIngredientCardImage("Unknown"));
 
 		JButton transmuteIngredientButton = new JButton("<html>Transmute<br />Ingredient</html>");
 		transmuteIngredientButton.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -164,7 +164,7 @@ public class MainGameWindow {
 		transmuteIngredientComboBox.addActionListener(e -> {
 			if (transmuteIngredientComboBox.getSelectedItem() != null) {
 				String selected = (String)transmuteIngredientComboBox.getSelectedItem();
-				transmuteIngredientLabel.setIcon(GlobalIcons.getCardImage(selected));
+				transmuteIngredientLabel.setIcon(GlobalIcons.getIngredientCardImage(selected));
 			}
 		});
 
@@ -202,9 +202,9 @@ public class MainGameWindow {
 		buyArtifactButton.setContentAreaFilled(false);
 		buyArtifactButton.setBounds(0, 0, buyArtifactPanel.getWidth(), buyArtifactPanel.getHeight());
 		buyArtifactPanel.add(buyArtifactButton);
-		
+
 		buyArtifactButton.addActionListener(e -> {
-			
+
 			BoardController.buyArtifactCard();
 		});
 
@@ -250,7 +250,7 @@ public class MainGameWindow {
 		contentPane.add(resultsTriangle);
 
 
-		playerInventory.setBounds(1219, 89, 437, 300);
+		playerInventory.setBounds(1219, 89, 450, 415);
 		contentPane.add(playerInventory);
 
 		JButton infoButton = new JButton("i");
