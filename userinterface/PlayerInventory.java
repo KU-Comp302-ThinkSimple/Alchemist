@@ -70,14 +70,14 @@ public class PlayerInventory extends JPanel {
 
 		}
 
-		//		for(int i=0;i<player.getInventory().getPlayerArtifactCardList().size();i++) {
-		//
-		//			ImageIcon icon = new ImageIcon(player.getInventory().getPlayerArtifactCardList().get(i).getName());
-		//			JPanel panel = new JPanel();
-		//			panel.add(new JLabel(icon));
-		//			viewPort.add(panel);
-		//
-		//		}
+				for(int i=0;i<player.getInventory().getPlayerArtifactCardList().size();i++) {
+		
+					ImageIcon icon = GlobalIcons.getCardImage(player.getInventory().getPlayerArtifactCardList().get(i).getName());
+					JPanel panel = new JPanel();
+					panel.add(new JLabel(icon));
+					viewPort.add(panel);
+		
+				}
 
 	}
 

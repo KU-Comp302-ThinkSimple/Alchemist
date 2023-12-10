@@ -17,5 +17,21 @@ public class ArtifactCard extends Card  {
 		
 		return this.effect.use();
 	}
+
+	public ArtifactEffectBehavior getEffect() {
+		return effect;
+	}
+
+	public void setEffect(ArtifactEffectBehavior effect) {
+		this.effect = effect;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }
