@@ -11,7 +11,7 @@ import exception.UserErrorException;
 
 public class BoardController {
 
-	static GameBoard board = GameController.getBoard();
+	static GameBoard board = GameController.getInstance().getBoard();
 	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
 	static PublicationBoard pubBoard = board.getPublicationBoard();
 	static IngredientBoard ingrBoard = board.getIngredientBoard();
@@ -23,7 +23,7 @@ public class BoardController {
 		//Finding proper Ingredient with given name
 		
 		IngredientCard ingr = null;
-		for (IngredientCard ingr_1 : GameController.getGameInventory().getIngredientCards()){
+		for (IngredientCard ingr_1 : GameController.getInstance().getGameInventory().getIngredientCards()){
     		if (ingr_1.getName().equals(ingredient)) {
     			ingr = ingr_1;}
     	}
@@ -34,10 +34,10 @@ public class BoardController {
 	public static void buyArtifactCard() {
 		
 		Random rand = new Random();
-		int randomIndex = rand.nextInt(GameController.getGameInventory().getArtCards().size());
-		ArtifactCard card= GameController.getGameInventory().getArtCards().get(randomIndex);
-		GameController.getCurrentPlayer().getInventory().addArtifactCard(card);
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+		int randomIndex = rand.nextInt(GameController.getInstance().getGameInventory().getArtCards().size());
+		ArtifactCard card= GameController.getInstance().getGameInventory().getArtCards().get(randomIndex);
+		GameController.getInstance().getCurrentPlayer().getInventory().addArtifactCard(card);
+		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 
 	}
 
@@ -48,13 +48,13 @@ public class BoardController {
 	}
 
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
-		pubBoard.publishTheory(GameController.getCurrentPlayer(), ingredient, hypothesizedMolecule);
+		pubBoard.publishTheory(GameController.getInstance().getCurrentPlayer(), ingredient, hypothesizedMolecule);
 //		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
-		String ret = pubBoard.debunkTheory(GameController.getCurrentPlayer(), hypothesis, atomId);
+		String ret = pubBoard.debunkTheory(GameController.getInstance().getCurrentPlayer(), hypothesis, atomId);
 //		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
 	}
@@ -64,7 +64,7 @@ public class BoardController {
 		//Find ingredients with given names  	
 		IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;
-		for (IngredientCard ingredient : GameController.getGameInventory().getIngredientCards()){
+		for (IngredientCard ingredient : GameController.getInstance().getGameInventory().getIngredientCards()){
     		if (ingredient.getName().equals(ingredient1)) {
     			ingr1 = ingredient;}
     		if (ingredient.getName().equals(ingredient2)) {

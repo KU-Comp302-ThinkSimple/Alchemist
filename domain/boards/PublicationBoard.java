@@ -31,7 +31,7 @@ public class PublicationBoard extends Board{
     	int gold = player.getPlayerToken().getGold();
     	
     	//check if we are in round 2 or 3
-    	if(GameController.getCurrentRound()<2) {
+    	if(GameController.getInstance().getCurrentRound()<2) {
     		throw new UserErrorException("Theories can only be published in rounds 2 and 3.");
     	}
   
@@ -76,7 +76,7 @@ public class PublicationBoard extends Board{
     	}
     	
     	//check if we are in round 3
-    	if(GameController.getCurrentRound()<3) {
+    	if(GameController.getInstance().getCurrentRound()<3) {
     		throw new UserErrorException("Theories can only be debunked in the third round.");
     	}
     	String out;

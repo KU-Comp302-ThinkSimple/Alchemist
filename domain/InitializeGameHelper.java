@@ -8,7 +8,7 @@ public class InitializeGameHelper {
 		// This class calls a various functions to initialize the game within its constructor.
 		initializeIngredientCards();
 		shuffleCards();
-		GameController.board.getIngredientBoard().initializeIngredientList();
+		GameController.getInstance().getBoard().getIngredientBoard().initializeIngredientList();
 		distributeInitialCards();
 		distributeGold();
 		chooseStartingPlayer();
@@ -18,10 +18,10 @@ public class InitializeGameHelper {
 
 // This func initializes the ingr cards.
 	public void initializeIngredientCards() {
-		GameController.gameInventory.createAtom();
-		GameController.gameInventory.createMolecule();
-		GameController.gameInventory.createIngredientCard();
-		GameController.gameInventory.createArtifactCard();
+		GameController.getInstance().getGameInventory().createAtom();
+		GameController.getInstance().getGameInventory().createMolecule();
+		GameController.getInstance().getGameInventory().createIngredientCard();
+		GameController.getInstance().getGameInventory().createArtifactCard();
 		//TODO Call the the function that fills the deck with these cards(See the corresponding comment in IngredientBoard class)
 	}
 
@@ -29,8 +29,8 @@ public class InitializeGameHelper {
 	// This func chooses the starting player.
 	public void chooseStartingPlayer() {
 		Random rand = new Random();
-		int num = rand.nextInt(2);
-		GameController.currentPlayer=GameController.activePlayers.get(num);
+		int num = rand.nextInt(GameController.getInstance().getActivePlayers().size());
+		GameController.getInstance().setCurrentPlayer(GameController.getInstance().getActivePlayers().get(num));;
 	}
 
 	// This func shuffles cards
@@ -47,7 +47,7 @@ public class InitializeGameHelper {
 
 		for(int i=0;i<2;i++) {
 			for(int j=0;j<2;j++) {
-				GameController.activePlayers.get(i).getInventory().addAIngredientCard(GameController.board.getIngredientBoard().popIngredient());
+				GameController.getInstance().getActivePlayers().get(i).getInventory().addAIngredientCard(GameController.getInstance().getBoard().getIngredientBoard().popIngredient());
 
 			}
 		}
@@ -57,7 +57,7 @@ public class InitializeGameHelper {
 	public void distributeGold() {
 
 		for(int i=0;i<2;i++) {
-			GameController.activePlayers.get(i).getPlayerToken().addGold(10);
+			GameController.getInstance().getActivePlayers().get(i).getPlayerToken().addGold(10);
 		}
 	}
 

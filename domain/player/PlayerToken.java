@@ -182,12 +182,12 @@ public class PlayerToken {
 		
 		//GameController.changeCurrentPlayer();
 		if(this.playerAction ==0) {
-			GameController.changeCurrentPlayer();
+			GameController.getInstance().changeCurrentPlayer();
 		}
 		
 		
-		if(GameController.shouldChangeRound()) {
-			GameController.changeRounds();
+		if(GameController.getInstance().shouldChangeRound()) {
+			GameController.getInstance().changeRounds();
 		}
 		
 		

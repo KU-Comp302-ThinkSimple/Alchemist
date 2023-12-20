@@ -58,35 +58,35 @@ public class Potion {
 	public void testPotion() {
 		if(this.personToTest.equals("Self")) {
 			if (this.potionType == "Poison") {
-				if (!GameController.getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getGameInventory().getArtCards().get(1))){ //Vaccine card controller
-					GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
+				if (!GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(1))){ //Vaccine card controller
+					GameController.getInstance().getCurrentPlayer().getPlayerToken().reduceHealth();
 				}
 				else {
-					GameController.getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(GameController.getGameInventory().getArtCards().get(1)); //Vaccine card remover
+					GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(GameController.getInstance().getGameInventory().getArtCards().get(1)); //Vaccine card remover
 				}
 			}else if(this.potionType == "Health") {
-				GameController.getCurrentPlayer().getPlayerToken().addHealth();
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().addHealth();
 			}else if(this.potionType == "Slow") {
-				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
-				GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();	 	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().reduceHealth();
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();	 	 
 			}else if(this.potionType == "Speed") {
-				GameController.getCurrentPlayer().getPlayerToken().setPlayerAction(GameController.getCurrentPlayer().getPlayerToken().getPlayerAction()+1);; 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().setPlayerAction(GameController.getInstance().getCurrentPlayer().getPlayerToken().getPlayerAction()+1);; 
 			}else if(this.potionType == "Insanity") {
-				GameController.getCurrentPlayer().getPlayerToken().reduceHealth();
-				GameController.getCurrentPlayer().getPlayerToken().subtractReputationPoint(1); 	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().reduceHealth();
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractReputationPoint(1); 	 
 			}else if(this.potionType == "Wisdom") {
-				GameController.getCurrentPlayer().getPlayerToken().addReputationPoint(1);
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().addReputationPoint(1);
 			}
 			
 			
 		}else if (this.personToTest.equals("Student")) {
 			
 			if (this.potionType == "Poison") {
-				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 
 			}else if(this.potionType == "Slow") {
-				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 	 
 			}else if(this.potionType == "Insanity") {
-				GameController.getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 
 			}
 		}
 	}

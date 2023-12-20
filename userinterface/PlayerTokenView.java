@@ -50,7 +50,7 @@ public class PlayerTokenView extends JPanel {
 
 	public PlayerTokenView() {
 
-		player=GameController.getCurrentPlayer();
+		player=GameController.getInstance().getCurrentPlayer();
 		panelFontHeader = GlobalFonts.PLAYER_TOKEN_HEADER;
 		panelFontText = GlobalFonts.PLAYER_TOKEN_TEXT;
 
@@ -210,7 +210,7 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
-		player = GameController.getCurrentPlayer();
+		player = GameController.getInstance().getCurrentPlayer();
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));

@@ -48,7 +48,7 @@ public class PlayerInventory extends JPanel {
 		this.setMinimumSize(getPreferredSize());
 		this.setMaximumSize(getPreferredSize());
 
-		player = GameController.getCurrentPlayer();
+		player = GameController.getInstance().getCurrentPlayer();
 		setLayout(null);
 
 		JScrollPane ingredientCardsScrollPanel = new JScrollPane();
@@ -111,7 +111,7 @@ public class PlayerInventory extends JPanel {
 		viewPort_1.removeAll();
 		viewPort_1.repaint();
 
-		player = GameController.getCurrentPlayer();
+		player = GameController.getInstance().getCurrentPlayer();
 
 		for(int i=0;i<player.getInventory().getPlayerIngredientCardList().size();i++) {
 
@@ -173,8 +173,8 @@ public class PlayerInventory extends JPanel {
 					}
 
 				}
-				GameController.getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
-				GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+				GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 				
 			});
 			
