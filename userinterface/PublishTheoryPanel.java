@@ -97,7 +97,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		add(ingredientComboBox);
 
 		moleculeComboBox = new JComboBox<MoleculeComboBoxItem>();
-		ArrayList<Molecule> moleculesCopy = GameController.getGameInventory().getMolecules();
+		ArrayList<Molecule> moleculesCopy = GameController.getInstance().getGameInventory().getMolecules();
 		moleculesCopy.sort((o1, o2) -> Integer.valueOf(o1.getMoleculeId()).compareTo(Integer.valueOf(o2.getMoleculeId())));
 		for (Molecule molecule : moleculesCopy) {
 			moleculeComboBox.addItem(new MoleculeComboBoxItem(molecule));
@@ -128,9 +128,9 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 	}
 
 	public void updatePublishTheoryPanel() {
-		Player player = GameController.getCurrentPlayer();
+		Player player = GameController.getInstance().getCurrentPlayer();
 		ingredientComboBox.removeAllItems();
-		for (IngredientCard ingredientCard : GameController.getGameInventory().getIngrCards()) {
+		for (IngredientCard ingredientCard : GameController.getInstance().getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
 		}
 	}

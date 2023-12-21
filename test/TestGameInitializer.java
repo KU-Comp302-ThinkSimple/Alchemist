@@ -16,6 +16,6 @@ public class TestGameInitializer {
 		LoginSignupController.getInstance().login("user_1", "user_1");
 		LoginSignupController.getInstance().login("user_2", "user_2");
 		
-		GameController.initializeGame();
+		GameController.getInstance().initializeGame();
 	}
 }

@@ -28,7 +28,7 @@ public class DeductionBoard extends JPanel {
 
 	public DeductionBoard() {
 
-		player = GameController.getCurrentPlayer();
+		player = GameController.getInstance().getCurrentPlayer();
 		buttonSelect = player.getDeductionSelection();
 		this.setPreferredSize(new Dimension(704, 341));
 		this.setLayout(null);
@@ -83,7 +83,7 @@ public class DeductionBoard extends JPanel {
 	}
 
 	public void updateDeductionBoard() {
-		player = GameController.getCurrentPlayer();
+		player = GameController.getInstance().getCurrentPlayer();
 		buttonSelect = player.getDeductionSelection();
 
 		for (int y = 0; y < 8; y++) {

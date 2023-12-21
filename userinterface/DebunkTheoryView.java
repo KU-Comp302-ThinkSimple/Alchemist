@@ -26,13 +26,13 @@ public class DebunkTheoryView extends JPanel implements ActionListener{
 
 	public static void main(String[] args) throws UserErrorException, RuntimeException {
 		TestGameInitializer.initializeTestGame();
-		GameController.setCurrentRound(3);
-		Player player = GameController.getCurrentPlayer();
+		GameController.getInstance().setCurrentRound(3);
+		Player player = GameController.getInstance().getCurrentPlayer();
 		System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getRedAtom().getAtomSign());
 		System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getGreenAtom().getAtomSign());
 		System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getBlueAtom().getAtomSign());
 
-		BoardController.publishTheory(player.getInventory().getPlayerIngredientCardList().get(0), GameController.getGameInventory().getMolecules().get(0));
+		BoardController.publishTheory(player.getInventory().getPlayerIngredientCardList().get(0), GameController.getInstance().getGameInventory().getMolecules().get(0));
 //		Hypotheses hyp = new Hypotheses(GameController.getCurrentPlayer(), GameController.getGameInventory().getIngrCards().get(0), GameController.getGameInventory().getMolecules().get(0));
 		JFrame frame = new JFrame();
 		DebunkTheoryView dbk = new DebunkTheoryView();
@@ -164,7 +164,7 @@ public class DebunkTheoryView extends JPanel implements ActionListener{
 	
 	public void updateDebunkTheoryPanel() {
 		hypothesisComboBox.removeAllItems();
-		for (Hypotheses hypothesis: GameController.getBoard().getPublicationBoard().getHypotheses()) {
+		for (Hypotheses hypothesis: GameController.getInstance().getBoard().getPublicationBoard().getHypotheses()) {
 			hypothesisComboBox.addItem(new HypothesisComboBoxItem(hypothesis));
 		}
 	}

@@ -10,25 +10,36 @@ import domain.potion.Atom;
 import userinterface.MainGameWindow;
 
 public class GameController {
+	
+	private static GameController instance;
 
-	static int currentRound=1; //1 2 and 3
-	static Player currentPlayer;
-	static ArrayList<Player> activePlayers=new ArrayList<Player>();
-	static GameBoard board = new GameBoard();
-	static GameInventory gameInventory=GameInventory.getInstance();
-	static InitializeGameHelper initalizeGameHelper;
-	static MainGameWindow mainGameWindow;
+	int currentRound=1; //1 2 and 3
+	private Player currentPlayer;
+	private ArrayList<Player> activePlayers;
+	private GameBoard board;
+	private GameInventory gameInventory;
+	private InitializeGameHelper initalizeGameHelper;
+	private MainGameWindow mainGameWindow;
 
 
 	// This is the main game controller, it holds various states and attributes of the game
 
 	GameController(){
-
+		this.activePlayers = new ArrayList<Player>();
+		this.board = new GameBoard();
+		this.gameInventory = GameInventory.getInstance();
+	}
+	
+	public static GameController getInstance() {
+		if(instance == null) {
+			instance = new GameController();
+		}
+		return instance;
 	}
 
 
 	//This func initializes the game by calling creating a new instance of initliazegamehelper
-	public static void initializeGame() {
+	public void initializeGame() {
 
 		//GameController should initialize game when two player are present;
 
@@ -43,7 +54,7 @@ public class GameController {
 	}
 
 //This func changes rounds
-	public static void changeRounds() {
+	public void changeRounds() {
 		currentRound++;
 
 		for(int i=0;i<activePlayers.size();i++) {
@@ -52,7 +63,7 @@ public class GameController {
 	}
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
-	public static Boolean shouldChangeRound(){
+	public Boolean shouldChangeRound(){
 
 		int player1ActionsLeft= activePlayers.get(0).getPlayerToken().getPlayerAction();
 		int player2ActionsLeft= activePlayers.get(1).getPlayerToken().getPlayerAction();
@@ -65,7 +76,7 @@ public class GameController {
 	}
 
 	//Change the current player after an action using this function
-	public static void changeCurrentPlayer() {
+	public void changeCurrentPlayer() {
 
 		for(int i=0;i<activePlayers.size();i++) {
 			if(!activePlayers.get(i).equals(currentPlayer)) {
@@ -75,65 +86,66 @@ public class GameController {
 		}
 	}
 
-	public static int getCurrentRound() {
+	public int getCurrentRound() {
 		return currentRound;
 	}
 
-	public static void setCurrentRound(int currentRound) {
-		GameController.currentRound = currentRound;
+	public void setCurrentRound(int currentRound) {
+		this.currentRound = currentRound;
 	}
 
-	public static Player getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 
-	public static void setCurrentPlayer(Player currentPlayer) {
-		GameController.currentPlayer = currentPlayer;
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
-	public static ArrayList<Player> getActivePlayers() {
+	public ArrayList<Player> getActivePlayers() {
 		return activePlayers;
 	}
 
 
-	public static void setActivePlayers(ArrayList<Player> activePlayers) {
-		GameController.activePlayers = activePlayers;
+	public void setActivePlayers(ArrayList<Player> activePlayers) {
+		this.activePlayers = activePlayers;
 	}
 
-	public static GameBoard getBoard() {
+	public GameBoard getBoard() {
 		return board;
 	}
 
-	public static void setBoard(GameBoard board) {
-		GameController.board = board;
+	public void setBoard(GameBoard board) {
+		this.board = board;
 	}
 
-	public static GameInventory getGameInventory() {
+	public GameInventory getGameInventory() {
 		return gameInventory;
 	}
 
-	public static void setGameInventory(GameInventory gameInventory) {
-		GameController.gameInventory = gameInventory;
+	public void setGameInventory(GameInventory gameInventory) {
+		this.gameInventory = gameInventory;
 	}
 
-	public static InitializeGameHelper getInitalizeGameHelper() {
+	public InitializeGameHelper getInitalizeGameHelper() {
 		return initalizeGameHelper;
 	}
 
-	public static void setInitalizeGameHelper(InitializeGameHelper initalizeGameHelper) {
-		GameController.initalizeGameHelper = initalizeGameHelper;
+	public void setInitalizeGameHelper(InitializeGameHelper initalizeGameHelper) {
+		this.initalizeGameHelper = initalizeGameHelper;
 	}
 
 
 
-	public static MainGameWindow getMainGameWindow() {
+	public MainGameWindow getMainGameWindow() {
 		return mainGameWindow;
 	}
 
 
-	public static void setMainGameWindow(MainGameWindow mainGameWindow) {
-		GameController.mainGameWindow = mainGameWindow;
+	public void setMainGameWindow(MainGameWindow mainGameWindow) {
+		this.mainGameWindow = mainGameWindow;
 	}
+	
 }
 
 

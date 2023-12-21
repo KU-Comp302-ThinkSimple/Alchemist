@@ -28,7 +28,7 @@ public class ElixirOfInsight extends ArtifactCard{
 		ArrayList<IngredientCard> newTopThreeCards = shuffle(topThreeCards, order);
 
 		for (int i = 0; i<3; i++){
-			GameController.getBoard().getIngredientBoard().getIngredientList().set(i, newTopThreeCards.get(i));
+			GameController.getInstance().getBoard().getIngredientBoard().getIngredientList().set(i, newTopThreeCards.get(i));
 		}
 
 		return newTopThreeCards;

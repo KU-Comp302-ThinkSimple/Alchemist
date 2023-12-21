@@ -153,7 +153,7 @@ public class MainGameWindow {
 
 
 		//get an array of ingredients of active player
-		ArrayList<IngredientCard> ingredientsList = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		ArrayList<IngredientCard> ingredientsList = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrs = new String[ingredientsList.size()];
 		for (int i = 0; i < ingredientsList.size(); i++) {
 			ingrs[i] = ingredientsList.get(i).getName();
@@ -312,7 +312,7 @@ public class MainGameWindow {
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();
-		ArrayList<IngredientCard> ingredientsListt = GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		ArrayList<IngredientCard> ingredientsListt = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrss = new String[ingredientsListt.size()];
 		for (int i = 0; i < ingredientsListt.size(); i++) {
 			ingrss[i] = ingredientsListt.get(i).getName();

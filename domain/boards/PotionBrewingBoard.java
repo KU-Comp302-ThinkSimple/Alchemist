@@ -15,7 +15,7 @@ public class PotionBrewingBoard extends Board{
     public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException, RuntimeException {
     	
     	//Get current player and needed informations
-    	Player player = GameController.getCurrentPlayer(); 
+    	Player player = GameController.getInstance().getCurrentPlayer(); 
     	PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	int health = player.getPlayerToken().getPlayerHealth();

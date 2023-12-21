@@ -19,7 +19,7 @@ public class IngredientBoard extends Board{
 
 	// Function creates deck for ingredient cards
 	public void initializeIngredientList(){
-		ArrayList<IngredientCard> ingrs = new ArrayList<IngredientCard>(GameController.getGameInventory().getIngredientCards());
+		ArrayList<IngredientCard> ingrs = new ArrayList<IngredientCard>(GameController.getInstance().getGameInventory().getIngredientCards());
 		while (ingredientList.size() < 3) {
 			Collections.shuffle(ingrs);
 			ingredientList.add(ingrs.get(0));
@@ -30,10 +30,10 @@ public class IngredientBoard extends Board{
 	public void forageForIngredient() throws UserErrorException, RuntimeException {
 
 		IngredientCard ingr = popIngredient();
-		GameController.getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
+		GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
 		
 		//Reduce Player Actions
-		GameController.getCurrentPlayer().getPlayerToken().reducePlayerAction();
+		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
 
 
@@ -47,7 +47,7 @@ public class IngredientBoard extends Board{
 
 	//Sells 1 ingredient card for 1 gold
 	public void transmuteIngredient(IngredientCard ingredientCard) throws UserErrorException, RuntimeException {
-		Player player = GameController.getCurrentPlayer();
+		Player player = GameController.getInstance().getCurrentPlayer();
 		PlayerInventory inv = player.getInventory();
 		PlayerToken token = player.getPlayerToken();
 

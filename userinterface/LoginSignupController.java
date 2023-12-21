@@ -44,7 +44,7 @@ public class LoginSignupController {
 	public void login(String username, String password) {
 		try {
 			Player player = UserInfoSaver.getPlayer(username, password);
-			if (GameController.getActivePlayers().contains(player)) {
+			if (GameController.getInstance().getActivePlayers().contains(player)) {
 				loginMessage = "This user is already logged in.";
 				return;
 			}
@@ -53,7 +53,7 @@ public class LoginSignupController {
 			System.out.print(player.getPlayerName());
 			System.out.print(" password: ");
 			System.out.println(player.getPassword());
-			GameController.getActivePlayers().add(player);
+			GameController.getInstance().getActivePlayers().add(player);
 			loginMessage= loginSuccessMessage;
 		} catch (Exception e) {
 			loginMessage="Username or password does not match.";

@@ -96,7 +96,7 @@ public class LoginSignUpWindow {
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
 			//TODO Call the backend function to start the game with needed arguments *DONE
-			GameController.initializeGame();
+			GameController.getInstance().initializeGame();
 			LoginSignUpWindowFrame.dispose();
 			new MainGameWindow();
 		}
