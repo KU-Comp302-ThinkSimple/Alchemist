@@ -143,7 +143,7 @@ public class PlayerInventory extends JPanel {
 				
 				if(currentCard.getName().equals("Elixir Of Insight")) {
 					
-					ArrayList<IngredientCard> cards=  currentCard.useCard();
+					ArrayList<IngredientCard> cards= (ArrayList<IngredientCard>) currentCard.useCard();
 					String s="The top 3 cards are: \n";
 					for(int j=0;j<3;j++) {
 						s+=(j+1)+".";

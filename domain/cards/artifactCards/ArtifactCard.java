@@ -1,28 +1,29 @@
 package domain.cards.artifactCards;
 
 import domain.cards.Card;
+import domain.cards.artifactCards.behaviors.ArtifactCardBehavior;
 
-public class ArtifactCard extends Card  {
+public abstract class ArtifactCard<R> extends Card  {
 	
-	private ArtifactEffectBehavior effect;
+	protected ArtifactCardBehavior<R> effect;
 	private String name;
 	
-	public ArtifactCard(ArtifactEffectBehavior effect, String name) {
+	public ArtifactCard(ArtifactCardBehavior effect, String name) {
 		super();
 		this.effect = effect;
 		this.name = name;
 	}
 	
-	public  <T> T useCard() {
+	public  R useCard() {
 		
 		return this.effect.use();
 	}
 
-	public ArtifactEffectBehavior getEffect() {
+	public ArtifactCardBehavior getEffect() {
 		return effect;
 	}
 
-	public void setEffect(ArtifactEffectBehavior effect) {
+	public void setEffect(ArtifactCardBehavior effect) {
 		this.effect = effect;
 	}
 

@@ -4,8 +4,7 @@ import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.cards.artifactCards.ElixirOfInsight;
-import domain.cards.artifactCards.ElixirOfInsightEffect;
-import domain.cards.artifactCards.Vaccine;
+import domain.cards.artifactCards.behaviors.ElixirOfInsightBehavior;
 import domain.potion.Atom;
 import domain.potion.AtomFactory;
 import domain.potion.Molecule;
@@ -91,8 +90,8 @@ public class GameInventory {
 	public void createArtifactCard() {
 		
 		//TODO create artifact cards manually
-		artCards.add(new ElixirOfInsight( new ElixirOfInsightEffect(), "Elixir Of Insight" ));
-		artCards.add(new ArtifactCard(new Vaccine(),"Vaccine"));
+		artCards.add(new ElixirOfInsight( new ElixirOfInsightBehavior(), "Elixir Of Insight" ));
+		//artCards.add(new Vaccine(new Vaccine(),"Vaccine"));
 }
 
 	
