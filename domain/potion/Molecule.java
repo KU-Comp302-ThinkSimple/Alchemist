@@ -3,14 +3,14 @@ package domain.potion;
 import java.util.Objects;
 
 public class Molecule {
-	
+
 	int moleculeId;
 	Atom redAtom;
 	Atom greenAtom;
 	Atom blueAtom;
 
 	public Molecule(int moleculeId, Atom redAtom, Atom greenAtom, Atom blueAtom) {
-		
+
 		this.moleculeId = moleculeId;
 		this.redAtom = redAtom;
 		this.greenAtom = greenAtom;
@@ -38,27 +38,27 @@ public class Molecule {
 	}
 
 	public void setAtom(Atom atom) {
-		
+
 		if(atom.getAtomColor()==0) {
 			this.redAtom=atom;
 		}else if(atom.getAtomColor()==1) {
-			
+
 			this.greenAtom=atom;
 		}else if(atom.getAtomColor()==2) {
-			
+
 			this.blueAtom=atom;
 		}
 	}
-	
+
 	public Atom getAtomByColor(int atomColorId) {
 		if(redAtom.getAtomColor() == atomColorId) {
 			return redAtom;
 		}
-		
+
 		else if(greenAtom.getAtomColor() == atomColorId) {
 			return greenAtom;
 		}
-		
+
 		else if(blueAtom.getAtomColor() == atomColorId) {
 			return blueAtom;
 		}
@@ -113,6 +113,27 @@ public class Molecule {
 	public void setBlueAtom(Atom blueAtom) {
 		this.blueAtom = blueAtom;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+
+		Atom redAtom = this.getRedAtom();
+		String redAtomSize = (redAtom.getAtomSize() == 1? "Big" : "Small");
+		String redAtomSign = (redAtom.getAtomSign() == 0? "Negative" : "Positive");
+
+		Atom blueAtom = this.getBlueAtom();
+		String blueAtomSize = (blueAtom.getAtomSize() == 1? "Big" : "Small");
+		String blueAtomSign = (blueAtom.getAtomSign() == 0? "Negative" : "Positive");
+
+		Atom greenAtom = this.getGreenAtom();
+		String greenAtomSize = (greenAtom.getAtomSize() == 1? "Big" : "Small");
+		String greenAtomSign = (greenAtom.getAtomSign() == 0? "Negative" : "Positive");
+
+		String str = "Red: " + redAtomSize + " " + redAtomSign;
+		str += "\nBlue: " + blueAtomSize + " " + blueAtomSign;
+		str += "\nGreen: " + greenAtomSize + " " + greenAtomSign;
+
+		return str;
+	}
+
 }
