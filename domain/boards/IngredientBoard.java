@@ -47,6 +47,15 @@ public class IngredientBoard extends Board{
 
 	//Sells 1 ingredient card for 1 gold
 	public void transmuteIngredient(IngredientCard ingredientCard) throws UserErrorException, RuntimeException {
+		/* Method: transmuteIngredient
+		 * Requires: Ingredient card must be provided. Current player should have ingredientCard.
+		 * Modifies: Player's inventory.
+		 *           Player's token
+		 * Effects: Throws UserErrorException if the player does not own ingredientCard
+		 *          Transmute 1 ingredientCard to a gold.
+		 *          Reduces player action by 1. 
+		 */
+		
 		Player player = GameController.getCurrentPlayer();
 		PlayerInventory inv = player.getInventory();
 		PlayerToken token = player.getPlayerToken();
