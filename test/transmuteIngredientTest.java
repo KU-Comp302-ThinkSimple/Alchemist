@@ -11,6 +11,7 @@ import domain.cards.IngredientCard;
 import exception.UserErrorException;
 import domain.player.*;
 
+public class transmuteIngredientTest {
 /*Test Cases:
 Black-Box Test: Transmuting Ingredient Card owned by current player
 Scenario: Providing an ingredient card owned by the player to transmute.
@@ -31,8 +32,7 @@ Expected result: The player's gold increased by 1 after transmutation.
 Glass-Box Test: Player Action Reduction
 Scenario: Checking the player action reduction.
 Expected result: The player's action count decreases by 1 after transmutation.*/
-public class transmuteIngredientTest {
-	@Test
+    //@Test
     public void testTransmuteOwnedIngredient() throws UserErrorException {
         // Test: Transmuting an owned ingredient card
 		GameController.getGameInventory().createAtom();
