@@ -71,4 +71,10 @@ public class Player {
 		else return false;
 	}
 
+	@Override
+	public String toString() {
+
+		String str = playerName + playerToken;
+		return str;
+	}
 }
