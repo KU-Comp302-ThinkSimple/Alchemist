@@ -48,7 +48,7 @@ public class GameController {
 			initalizeGameHelper=new InitializeGameHelper();
 		}
 		else {
-			System.out.println("Not able to initialize");
+			System.out.println("Not able to initialize, have " + activePlayers.size() + "players, need 2");
 		}
 
 	}
