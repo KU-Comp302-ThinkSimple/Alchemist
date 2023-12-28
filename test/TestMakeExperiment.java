@@ -17,8 +17,8 @@ public class TestMakeExperiment {
 	ArrayList<IngredientCard> ingredientCards;
 
 	public static void main(String[] args) {
-		testExperiment();
-		System.out.print(controller.getCurrentPlayer());
+		//testExperiment();
+		//System.out.print(controller.getCurrentPlayer());
 	}
 
 	public void testExperiment() {
