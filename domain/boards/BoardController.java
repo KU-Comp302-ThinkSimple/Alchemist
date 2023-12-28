@@ -40,8 +40,18 @@ public class BoardController {
 		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 
 	}
-
+	
+	/**
+	 * @throws UserErrorException if the user doesn't have any actions
+	 * @throws RuntimeException if the ingredient list returned no ingredient
+	 */
 	public static void forageForIngredient() throws UserErrorException, RuntimeException{
+		//REQUIRES: A current player is present in the game controller
+		//EFFECTS: Pops an ingredient card from the list and adds it to the inventory
+		//of the current player. The ingr. list automatically adds a new random 
+		//ingredient card to itself (so that it is always full). The curr player
+		//loses 1 action. If they have no action left the player is changed 
+		//(rounds updated) automatically
 		ingrBoard.forageForIngredient();
 //		GameController.getMainGameWindow().updateMainGameWindow();
 
