@@ -27,14 +27,33 @@ public class IngredientBoard extends Board{
 	}
 
 	//Returns top element in deck and add new element for ensuring that deck is endless
-	public void forageForIngredient() throws UserErrorException, RuntimeException {
+	
+	
+	/**
+	 * @throws UserErrorException if the user doesn't have any actions
+	 * @throws RuntimeException if the ingredient list returned no ingredient
+	 */
+	public void forageForIngredient() throws UserErrorException, RuntimeException { 
+		//REQUIRES: A current plaper is present in the game controller
+		//EFFECTS: Pops an ingredient card from the list and adds it to the inventory
+		//of the current player. The ingr. list automatically adds a new random 
+		//ingredient card to itself (so that it is always full). The curr player
+		//loses 1 action
+		Player currentPlayer = GameController.getInstance().getCurrentPlayer();
+		if(!currentPlayer.getPlayerToken().hasActionsLeft()) {
+			throw new UserErrorException("The user has no more actions left!");
+		}
 
-		IngredientCard ingr = popIngredient();
-		GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList().add(ingr);
+		IngredientCard ingr = popIngredient(); //get the first element in the ingr list
+		if(ingr == null) {
+			throw new RuntimeException("No more ingredients in the ingredient list");
+		}
+		currentPlayer.getInventory().getPlayerIngredientCardList().add(ingr);
 		
 		//Reduce Player Actions
 		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 	}
+
 
 
 	public IngredientCard popIngredient() {
