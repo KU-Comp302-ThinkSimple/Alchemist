@@ -36,6 +36,9 @@ public class GameController {
 		}
 		return instance;
 	}
+	public static void clearInstance() {
+		instance = null;
+	}
 
 
 	//This func initializes the game by calling creating a new instance of initliazegamehelper
@@ -48,10 +51,12 @@ public class GameController {
 			initalizeGameHelper=new InitializeGameHelper();
 		}
 		else {
-			System.out.println("Not able to initialize");
+			System.out.println("Not able to initialize, have " + activePlayers.size() + "players, need 2");
 		}
 
 	}
+	
+
 
 //This func changes rounds
 	public void changeRounds() {
