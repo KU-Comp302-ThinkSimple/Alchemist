@@ -73,8 +73,9 @@ public class TestForageForIngredient {
 	@Test
 	public void allSuccessNoActionsLeft() {
 		Player firstPlayer = GameController.getInstance().getCurrentPlayer();
-		assertEquals(2, firstPlayer.getPlayerToken().getPlayerAction());
+		assertEquals(3, firstPlayer.getPlayerToken().getPlayerAction());
 		int firstPlayerSize = firstPlayer.getInventory().getPlayerIngredientCardList().size();
+		assertDoesNotThrow(() -> BoardController.forageForIngredient());
 		assertDoesNotThrow(() -> BoardController.forageForIngredient());
 		assertDoesNotThrow(() -> BoardController.forageForIngredient());//exhaust actions
 

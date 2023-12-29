@@ -36,6 +36,9 @@ public class GameController {
 		}
 		return instance;
 	}
+	public static void clearInstance() {
+		instance = null;
+	}
 
 
 	//This func initializes the game by calling creating a new instance of initliazegamehelper
@@ -52,6 +55,8 @@ public class GameController {
 		}
 
 	}
+	
+
 
 //This func changes rounds
 	public void changeRounds() {

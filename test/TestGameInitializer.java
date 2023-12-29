@@ -10,6 +10,7 @@ public class TestGameInitializer {
 	}
 	
 	public static void initializeTestGame() {
+		GameController.clearInstance();
 		LoginSignupController.getInstance().signup("user_1", "user_1");
 		LoginSignupController.getInstance().signup("user_2", "user_2");
 		
