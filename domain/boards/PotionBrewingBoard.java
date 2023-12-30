@@ -175,6 +175,9 @@ public class PotionBrewingBoard extends Board{
     	//Remove ingredients from players ingredient list
     	inv.removeIngredientCard(ingr1);
     	inv.removeIngredientCard(ingr2);
+    	
+    	//Reduce Player Action
+    	player.getPlayerToken().reducePlayerAction();
     }
 }
 
