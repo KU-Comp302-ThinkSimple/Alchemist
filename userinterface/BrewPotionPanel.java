@@ -171,8 +171,8 @@ public class BrewPotionPanel extends JPanel {
 		sellAPotionButton.setFont(GlobalFonts.BREW_BUTTON);
 		sellAPotionButton.addActionListener(e -> {
 			try {
-				BoardController.sellPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), guaranteeComboBox.getSelectedIndex());
-//				JOptionPane.showMessageDialog(this, "You brew: " + message);
+				String message = BoardController.sellPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), guaranteeComboBox.getSelectedIndex());
+				JOptionPane.showMessageDialog(this, message);
 			}
 			catch (Exception error) {
 				JOptionPane.showMessageDialog(this, error.getMessage());
