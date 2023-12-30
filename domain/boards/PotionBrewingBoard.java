@@ -138,6 +138,11 @@ public class PotionBrewingBoard extends Board{
     	Player player = GameController.getInstance().getCurrentPlayer(); 
     	PlayerInventory inv = player.getInventory();
     	
+    	//check if we are in round 2 or 3
+    	if(GameController.getInstance().getCurrentRound()<2) {
+    		throw new UserErrorException("Potions can only be sold in rounds 2 and 3.");
+    	}
+    	
     	//Check if ingredients are same
     	if (ingr1.equals(ingr2)) {
     		throw new UserErrorException("For creating potion 2 DIFFERENT ingredients are needed!");
