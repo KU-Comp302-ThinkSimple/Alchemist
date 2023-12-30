@@ -85,7 +85,7 @@ public class BoardController {
 		return ret;
   }
 	
-	public static void sellPotion(String ingredient1, String ingredient2, int guarantee) throws UserErrorException{
+	public static String sellPotion(String ingredient1, String ingredient2, int guarantee) throws UserErrorException{
 		//Find ingredients with given names  	
 		IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;
@@ -96,7 +96,7 @@ public class BoardController {
 	       		ingr2 = ingredient;}
 	   	}
 		
-		potBoard.sellPotion(ingr1, ingr2, guarantee);
+		return potBoard.sellPotion(ingr1, ingr2, guarantee);
 		
 	}
 

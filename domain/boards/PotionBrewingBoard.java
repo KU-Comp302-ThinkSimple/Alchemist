@@ -133,10 +133,15 @@ public class PotionBrewingBoard extends Board{
     
     //brew and sell new potion by giving some guarantee
     //0 guarantee means can be anything, 1 guarantee means not negative, 2 guarantee means only positive
-    public void sellPotion(IngredientCard ingr1, IngredientCard ingr2, int guarantee) throws UserErrorException {
+    public String sellPotion(IngredientCard ingr1, IngredientCard ingr2, int guarantee) throws UserErrorException {
     	//Get current player and needed informations
     	Player player = GameController.getInstance().getCurrentPlayer(); 
     	PlayerInventory inv = player.getInventory();
+    	
+    	//check if we are in round 2 or 3
+    	if(GameController.getInstance().getCurrentRound()<2) {
+    		throw new UserErrorException("Potions can only be sold in rounds 2 and 3.");
+    	}
     	
     	//Check if ingredients are same
     	if (ingr1.equals(ingr2)) {
@@ -160,24 +165,39 @@ public class PotionBrewingBoard extends Board{
     	pot.determinePotion();
     	int neuVal = pot.getNeutralityValue();
     	
-    	
-    	//Change related features by guarantee degree
-    	if (guarantee == 2) {
-    		if (neuVal == 1) {player.getPlayerToken().addGold(3);}
-    		else {player.getPlayerToken().subtractReputationPoint(2);}
-    	}
-    	else if (guarantee == 1) {
-    		if (neuVal == 2) {player.getPlayerToken().subtractReputationPoint(1);}
-    		else {player.getPlayerToken().addGold(2);}
-    	}	
-    	else {player.getPlayerToken().addGold(1);}
-    	
     	//Remove ingredients from players ingredient list
     	inv.removeIngredientCard(ingr1);
     	inv.removeIngredientCard(ingr2);
     	
     	//Reduce Player Action
     	player.getPlayerToken().reducePlayerAction();
+    	//Change related features by guarantee degree
+    	if (guarantee == 2) {
+    		if (neuVal == 1) {
+    			player.getPlayerToken().addGold(3);
+    			return "The potion was positive, guarantee met! Gained 3 gold.";
+			}
+    		else {
+    			player.getPlayerToken().subtractReputationPoint(2);
+    			return "The potion was not positive, guarantee not met! Lost 2 reputation.";
+    		}
+    	}
+    	else if (guarantee == 1) {
+    		if (neuVal == 2) {
+    			player.getPlayerToken().subtractReputationPoint(1);
+    			return "The potion was negative, guarantee not met! Lost 1 reputation.";
+    		}
+    		else {
+    			player.getPlayerToken().addGold(2);
+    			return "The potion was not negative, guarantee met! Gained 2 gold.";
+			}
+    	}	
+    	else {
+    		player.getPlayerToken().addGold(1);
+    		return "No guarantee. Gained 1 gold.";
+    	}
+    	
+
     }
 }
 
