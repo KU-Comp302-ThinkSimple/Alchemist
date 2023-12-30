@@ -84,6 +84,21 @@ public class BoardController {
 //		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
   }
+	
+	public static void sellPotion(String ingredient1, String ingredient2, int guarantee) throws UserErrorException{
+		//Find ingredients with given names  	
+		IngredientCard ingr1 = null;
+		IngredientCard ingr2 = null;
+		for (IngredientCard ingredient : GameController.getInstance().getGameInventory().getIngredientCards()){
+			if (ingredient.getName().equals(ingredient1)) {
+	   			ingr1 = ingredient;}
+	   		if (ingredient.getName().equals(ingredient2)) {
+	       		ingr2 = ingredient;}
+	   	}
+		
+		potBoard.sellPotion(ingr1, ingr2, guarantee);
+		
+	}
 
 
 }
