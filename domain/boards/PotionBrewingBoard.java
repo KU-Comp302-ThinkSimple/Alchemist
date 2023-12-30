@@ -131,9 +131,46 @@ public class PotionBrewingBoard extends Board{
         
     }
     
-    
-    public void sellPotion(IngredientCard ingr1, IngredientCard ingr2) {
+    //brew and sell new potion by giving some guarantee
+    //0 guarantee means can be anything, 1 guarantee means not negative, 2 guarantee means only positive
+    public void sellPotion(IngredientCard ingr1, IngredientCard ingr2, int guarantee) throws UserErrorException {
+    	//Get current player and needed informations
+    	Player player = GameController.getInstance().getCurrentPlayer(); 
+    	PlayerInventory inv = player.getInventory();
     	
+    	//Check if ingredients are same
+    	if (ingr1.equals(ingr2)) {
+    		throw new UserErrorException("For creating potion 2 DIFFERENT ingredients are needed!");
+    	}
+    	
+    	//Check if player has these 2 ingredients
+    	if(!(inv.getPlayerIngredientCardList().contains(ingr1))) {
+    		throw new UserErrorException("User does not have first ingredient");
+    	}
+    	if(!(inv.getPlayerIngredientCardList().contains(ingr2))) {
+    		throw new UserErrorException("User does not have second ingredient");
+    	}
+    		
+    	//Create recipe and potion with given ingredients		
+		Recipe rec = new Recipe(ingr1, ingr2);
+    	Potion pot = new Potion(rec);
+    	
+
+    	//Determine type and neuturality value of new potion
+    	pot.determinePotion();
+    	int neuVal = pot.getNeutralityValue();
+    	
+    	
+    	//Change related features by guarantee degree
+    	if (guarantee == 2) {
+    		if (neuVal == 1) {player.getPlayerToken().addGold(3);}
+    		else {player.getPlayerToken().subtractReputationPoint(2);}
+    	}
+    	else if (guarantee == 1) {
+    		if (neuVal == 2) {player.getPlayerToken().subtractReputationPoint(1);}
+    		else {player.getPlayerToken().addGold(2);}
+    	}	
+    	else {player.getPlayerToken().addGold(1);}	
     }
 }
 
