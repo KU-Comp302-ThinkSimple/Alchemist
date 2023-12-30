@@ -170,7 +170,11 @@ public class PotionBrewingBoard extends Board{
     		if (neuVal == 2) {player.getPlayerToken().subtractReputationPoint(1);}
     		else {player.getPlayerToken().addGold(2);}
     	}	
-    	else {player.getPlayerToken().addGold(1);}	
+    	else {player.getPlayerToken().addGold(1);}
+    	
+    	//Remove ingredients from players ingredient list
+    	inv.removeIngredientCard(ingr1);
+    	inv.removeIngredientCard(ingr2);
     }
 }
 
