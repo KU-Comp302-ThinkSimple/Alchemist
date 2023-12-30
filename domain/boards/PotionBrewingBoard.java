@@ -12,13 +12,11 @@ public class PotionBrewingBoard extends Board{
     }
     
     
-    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, Boolean testOnStu) throws UserErrorException, RuntimeException {
+    public String makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, boolean onStu) throws UserErrorException, RuntimeException {
     	
     	//Get current player and needed informations
     	Player player = GameController.getInstance().getCurrentPlayer(); 
     	PlayerInventory inv = player.getInventory();
-    	int gold = player.getPlayerToken().getGold();
-    	int health = player.getPlayerToken().getPlayerHealth();
     	
     	//Check if ingredients are same
     	if (ingredient1.equals(ingredient2)) {
@@ -48,23 +46,15 @@ public class PotionBrewingBoard extends Board{
     	//Determine type of new potion
     	pot.determinePotion();
     	
-    	//test potion on student or player own
-    	if (testOnStu) {
-    		pot.setPersonToTest("Student");
-    		//check if user has sufficient gold for needed situations
-        	if(gold < 1) {
-        		throw new UserErrorException("The user does not have enough gold!");
-        	}
+    	
+    	//Drink potion or test on student
+    	if(onStu) {
+    		this.testOnStu(pot);
     	}
     	else {
-    		pot.setPersonToTest("Self");
-    		//check if user has sufficient health for needed situations
-    		if(health < 1) {
-        		throw new UserErrorException("The user does not have enough health!");
-        	}	
+    		this.drinkPoiton(pot);
     	}
-    	pot.testPotion();
-    	
+    	   	   	
     	
     	//Remove ingredients from players ingredient list
     	inv.removeIngredientCard(ingredient1);
@@ -79,6 +69,71 @@ public class PotionBrewingBoard extends Board{
     	player.getPlayerToken().reducePlayerAction();
     	
     	return pot.getPotionType();
+    }
+    
+    
+    //Helper function for makeExperiment which makes needed changes on features if player drink potion
+    
+    public void drinkPoiton(Potion pot) throws UserErrorException {
+    	Player player = GameController.getInstance().getCurrentPlayer(); 
+    	PlayerInventory inv = player.getInventory();
+    	int health = player.getPlayerToken().getPlayerHealth();
+    	
+    	//check if user has sufficient health for needed situations
+    	if(health < 1) {
+        	throw new UserErrorException("The user does not have enough health!");
+    	}
+
+    	//Test potion and change needed features
+    	if (pot.getPotionType() == "Poison") {
+			if (!inv.getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(1))){ //Vaccine card controller
+				player.getPlayerToken().reduceHealth();
+			}
+			else {
+				inv.getPlayerArtifactCardList().remove(GameController.getInstance().getGameInventory().getArtCards().get(1)); //Vaccine card remover
+			}
+		}else if(pot.getPotionType() == "Health") {
+			player.getPlayerToken().addHealth();
+		}else if(pot.getPotionType() == "Slow") {
+			player.getPlayerToken().reduceHealth();
+			player.getPlayerToken().reducePlayerAction();	 	 
+		}else if(pot.getPotionType() == "Speed") {
+			player.getPlayerToken().setPlayerAction(GameController.getInstance().getCurrentPlayer().getPlayerToken().getPlayerAction()+1);; 
+		}else if(pot.getPotionType() == "Insanity") {
+			player.getPlayerToken().reduceHealth();
+			player.getPlayerToken().subtractReputationPoint(1); 	 
+		}else if(pot.getPotionType() == "Wisdom") {
+			player.getPlayerToken().addReputationPoint(1);
+		}
+    }
+    
+    
+    // Helper function for makeExperiment if player test potion on Student
+    
+    public void testOnStu(Potion pot) throws UserErrorException{
+    	Player player = GameController.getInstance().getCurrentPlayer(); 
+    	PlayerInventory inv = player.getInventory();
+    	int gold = player.getPlayerToken().getGold();
+    	
+    	//check if user has sufficient gold for needed situations
+        if(gold < 1) {
+        	throw new UserErrorException("The user does not have enough gold!");
+        }
+    	
+      //Test potion and change needed features
+    	if (pot.getPotionType() == "Poison") {
+			player.getPlayerToken().subtractGold(1);	 
+		}else if(pot.getPotionType() == "Slow") {
+			player.getPlayerToken().subtractGold(1);	 	 
+		}else if(pot.getPotionType() == "Insanity") {
+			player.getPlayerToken().subtractGold(1);	 
+		}
+        
+    }
+    
+    
+    public void sellPotion(IngredientCard ingr1, IngredientCard ingr2) {
+    	
     }
 }
 

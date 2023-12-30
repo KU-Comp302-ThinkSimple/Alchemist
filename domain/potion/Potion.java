@@ -9,7 +9,7 @@ public class Potion {
 	int pValue;
 	int neutralityValue; // 0 if negative, 1 if positive, 2 if neutral
 	String potionType;
-	String personToTest;
+	//String personToTest;
 	Recipe potionRecipe;
 	
 	public Potion(Recipe potionRecipe) {
@@ -55,7 +55,7 @@ public class Potion {
 		}
 	}
 	
-	public void testPotion() {
+	/*public void testPotion() {
 		if(this.personToTest.equals("Self")) {
 			if (this.potionType == "Poison") {
 				if (!GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(1))){ //Vaccine card controller
@@ -89,7 +89,7 @@ public class Potion {
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 
 			}
 		}
-	}
+	}*/
 	
 
 	public int getpValue() {
@@ -108,13 +108,13 @@ public class Potion {
 		this.potionType = potionType;
 	}
 
-	public String getPersonToTest() {
+	/*public String getPersonToTest() {
 		return personToTest;
 	}
 
 	public void setPersonToTest(String personToTest) {
 		this.personToTest = personToTest;
-	}
+	}*/
 
 	public Recipe getPotionRecipe() {
 		return potionRecipe;
