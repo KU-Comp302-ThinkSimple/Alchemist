@@ -114,10 +114,10 @@ class SellAPotionTest {
 		player.getInventory().getPlayerIngredientCardList().add(ingr0);
 		player.getInventory().getPlayerIngredientCardList().add(ingr3);
 
-		//Player's gold and card stats before selling a potion
+		//Player's gold, card and reputation stats before selling a potion
 		int moneyBeforeSell = player.getPlayerToken().getGold();
-		System.out.println(moneyBeforeSell); //TODO
 		ArrayList<IngredientCard> cardsBeforeSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		int reputationBeforeSell = player.getPlayerToken().getReputation();
 
 		//Sell potion with ingr0, ingr3, 2 (positive guaranteed)
 		try {
@@ -134,10 +134,14 @@ class SellAPotionTest {
 		cardsBeforeSell.remove(ingr3);
 		Assertions.assertEquals(cardsBeforeSell, cardsAfterSell);
 
-		//Check money before and after
+		//Check money before and after (should increase by 3)
 		int moneyAfterSell = player.getPlayerToken().getGold();
-		System.out.println(moneyAfterSell);
 		Assertions.assertEquals(moneyBeforeSell + 3, moneyAfterSell);
+
+		//Check reputtaion points before and after (should stay the same)
+		int reputationAfterSell = player.getPlayerToken().getReputation();
+		Assertions.assertEquals(reputationBeforeSell, reputationAfterSell);
+
 
 		//TODO This test passed because I fixed the bug in Recipe's checkRedMatch(), checkGreenMatch() and checkBlueMatch()
 	}
@@ -145,13 +149,189 @@ class SellAPotionTest {
 	@Test
 	void positiveGuaranteeNotFulfilled() {
 
+		//Molecules 1 and 2 create a Slow Potion (Green -)
+		//Mol 1 = sR+ sG- bB+ (Molecule of ingr(1))
+		//Mol 2 = sR+ bG- sB- (Molecule of ingr(2))
+
+		ArrayList<IngredientCard> ingrs = GameController.getInstance().getGameInventory().getIngrCards();
+		IngredientCard ingr1 = ingrs.get(1);
+		IngredientCard ingr2 = ingrs.get(2);
+
+		//Double check corresponding molecules create Green - pot
+		Assertions.assertEquals(new Recipe(ingr1, ingr2).checkGreenMatch(), 0);
+
+		//Add cards to player's inventory
+		player.getInventory().getPlayerIngredientCardList().add(ingr1);
+		player.getInventory().getPlayerIngredientCardList().add(ingr2);
+
+		//Player's gold, card and reputation stats before selling a potion
+		int moneyBeforeSell = player.getPlayerToken().getGold();
+		ArrayList<IngredientCard> cardsBeforeSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		int reputationBeforeSell = player.getPlayerToken().getReputation();
+
+		//Sell potion with ingr1, ingr2, 2 (positive guaranteed)
+		try {
+			GameController.getInstance().getBoard().getPotionBrewingBoard().sellPotion(ingr1, ingr2, 2);
+		}
+		catch (UserErrorException e) {
+			Assert.fail("sellPotion method threw UserErrorException with message: \n" + e.getMessage());
+		}
+
+
+		//Check ingr card inventory before and after
+		ArrayList<IngredientCard> cardsAfterSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		cardsBeforeSell.remove(ingr1);
+		cardsBeforeSell.remove(ingr2);
+		Assertions.assertEquals(cardsBeforeSell, cardsAfterSell);
+
+		//Check money before and after (should stay the same)
+		int moneyAfterSell = player.getPlayerToken().getGold();
+		Assertions.assertEquals(moneyBeforeSell, moneyAfterSell);
+
+		//Check reputtaion points before and after (should reduce by 2)
+		int reputationAfterSell = player.getPlayerToken().getReputation();
+		Assertions.assertEquals(reputationBeforeSell - 2, reputationAfterSell);
+
 	}
 
 	@Test
-	void noGuarantee() {
+	void noGuaranteeWithNegativePotion() {
 
+		//Molecules 1 and 2 create a Slow Potion (Green -)
+		//Mol 1 = sR+ sG- bB+ (Molecule of ingr(1))
+		//Mol 2 = sR+ bG- sB- (Molecule of ingr(2))
+
+		ArrayList<IngredientCard> ingrs = GameController.getInstance().getGameInventory().getIngrCards();
+		IngredientCard ingr1 = ingrs.get(1);
+		IngredientCard ingr2 = ingrs.get(2);
+
+		//Double check corresponding molecules create Green - pot
+		Assertions.assertEquals(new Recipe(ingr1, ingr2).checkGreenMatch(), 0);
+
+		//Add cards to player's inventory
+		player.getInventory().getPlayerIngredientCardList().add(ingr1);
+		player.getInventory().getPlayerIngredientCardList().add(ingr2);
+
+		//Player's gold, card and reputation stats before selling a potion
+		int moneyBeforeSell = player.getPlayerToken().getGold();
+		ArrayList<IngredientCard> cardsBeforeSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		int reputationBeforeSell = player.getPlayerToken().getReputation();
+
+		//Sell potion with ingr1, ingr2, 0 (no guarantee)
+		try {
+			GameController.getInstance().getBoard().getPotionBrewingBoard().sellPotion(ingr1, ingr2, 0);
+		}
+		catch (UserErrorException e) {
+			Assert.fail("sellPotion method threw UserErrorException with message: \n" + e.getMessage());
+		}
+
+		//Check ingr card inventory before and after
+		ArrayList<IngredientCard> cardsAfterSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		cardsBeforeSell.remove(ingr1);
+		cardsBeforeSell.remove(ingr2);
+		Assertions.assertEquals(cardsBeforeSell, cardsAfterSell);
+
+		//Check money before and after (should increase by 1)
+		int moneyAfterSell = player.getPlayerToken().getGold();
+		Assertions.assertEquals(moneyBeforeSell + 1, moneyAfterSell);
+
+		//Check reputtaion points before and after (should stay the same)
+		int reputationAfterSell = player.getPlayerToken().getReputation();
+		Assertions.assertEquals(reputationBeforeSell, reputationAfterSell);
 	}
 
+	@Test
+	void noGuaranteeWithPositivePotion() {
 
+		//Molecules 0 and 3 create a Speed Potion (Green +)
+		//Mol 0 = sR- sG+ bB- (Molecule of ingr(0))
+		//Mol 3 = sR- bG+ sB+ (Molecule of ingr(1))
+
+		ArrayList<IngredientCard> ingrs = GameController.getInstance().getGameInventory().getIngrCards();
+		IngredientCard ingr0 = ingrs.get(0);
+		IngredientCard ingr3 = ingrs.get(3);
+
+		//Double check corresponding molecules create Green + pot
+		Assertions.assertEquals(new Recipe(ingr0, ingr3).checkGreenMatch(), 1);
+
+		//Add cards to player's inventory
+		player.getInventory().getPlayerIngredientCardList().add(ingr0);
+		player.getInventory().getPlayerIngredientCardList().add(ingr3);
+
+		//Player's gold, card and reputation stats before selling a potion
+		int moneyBeforeSell = player.getPlayerToken().getGold();
+		ArrayList<IngredientCard> cardsBeforeSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		int reputationBeforeSell = player.getPlayerToken().getReputation();
+
+		//Sell potion with ingr0, ingr3, 0 (no guarantee)
+		try {
+			GameController.getInstance().getBoard().getPotionBrewingBoard().sellPotion(ingr0, ingr3, 0);
+		}
+		catch (UserErrorException e) {
+			Assert.fail("sellPotion method threw UserErrorException with message: \n" + e.getMessage());
+		}
+
+
+		//Check ingr card inventory before and after
+		ArrayList<IngredientCard> cardsAfterSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		cardsBeforeSell.remove(ingr0);
+		cardsBeforeSell.remove(ingr3);
+		Assertions.assertEquals(cardsBeforeSell, cardsAfterSell);
+
+		//Check money before and after (should increase by 1)
+		int moneyAfterSell = player.getPlayerToken().getGold();
+		Assertions.assertEquals(moneyBeforeSell + 1, moneyAfterSell);
+
+		//Check reputtaion points before and after (should stay the same)
+		int reputationAfterSell = player.getPlayerToken().getReputation();
+		Assertions.assertEquals(reputationBeforeSell, reputationAfterSell);
+	}
+
+	@Test
+	void noNegativeGuaranteeWithPositivePotion() {
+
+		//Molecules 0 and 3 create a Speed Potion (Green +)
+		//Mol 0 = sR- sG+ bB- (Molecule of ingr(0))
+		//Mol 3 = sR- bG+ sB+ (Molecule of ingr(1))
+
+		ArrayList<IngredientCard> ingrs = GameController.getInstance().getGameInventory().getIngrCards();
+		IngredientCard ingr0 = ingrs.get(0);
+		IngredientCard ingr3 = ingrs.get(3);
+
+		//Double check corresponding molecules create Green + pot
+		Assertions.assertEquals(new Recipe(ingr0, ingr3).checkGreenMatch(), 1);
+
+		//Add cards to player's inventory
+		player.getInventory().getPlayerIngredientCardList().add(ingr0);
+		player.getInventory().getPlayerIngredientCardList().add(ingr3);
+
+		//Player's gold, card and reputation stats before selling a potion
+		int moneyBeforeSell = player.getPlayerToken().getGold();
+		ArrayList<IngredientCard> cardsBeforeSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		int reputationBeforeSell = player.getPlayerToken().getReputation();
+
+		//Sell potion with ingr0, ingr3, 1 (no negative guarantee)
+		try {
+			GameController.getInstance().getBoard().getPotionBrewingBoard().sellPotion(ingr0, ingr3, 1);
+		}
+		catch (UserErrorException e) {
+			Assert.fail("sellPotion method threw UserErrorException with message: \n" + e.getMessage());
+		}
+
+
+		//Check ingr card inventory before and after
+		ArrayList<IngredientCard> cardsAfterSell = player.getPlayerToken().getPlayerInventory().getPlayerIngredientCardList();
+		cardsBeforeSell.remove(ingr0);
+		cardsBeforeSell.remove(ingr3);
+		Assertions.assertEquals(cardsBeforeSell, cardsAfterSell);
+
+		//Check money before and after (should increase by 2)
+		int moneyAfterSell = player.getPlayerToken().getGold();
+		Assertions.assertEquals(moneyBeforeSell + 2, moneyAfterSell);
+
+		//Check reputtaion points before and after (should stay the same)
+		int reputationAfterSell = player.getPlayerToken().getReputation();
+		Assertions.assertEquals(reputationBeforeSell, reputationAfterSell);
+	}
 
 }
