@@ -142,6 +142,16 @@ public class PotionBrewingBoard extends Board{
 	//brew and sell new potion by giving some guarantee
 	//0 guarantee means can be anything, 1 guarantee means not negative, 2 guarantee means only positive
 	public String sellPotion(IngredientCard ingr1, IngredientCard ingr2, int guarantee) throws UserErrorException {
+		// EFFECTS  : This is a partial function. Takes 2 ingredient cards and a guarantee value, then brews
+		//			  the potion and sells it for golds according to the potion neutrality and guarantee value.
+		// REQUIRES : Ingredient cards must be other than null (of GameController)
+		//			  There must be a current player other than null
+		// MODIFIES : Neutrality type and potion type of the new brewed potion,
+		//			  Current player's inventory (removes used ingr cards),
+		//			  Current player's action (-1)
+		//			  Current player's player token (adds golds accordingly)
+		//			  //TODO (Missing in this code) The recipe should have been added to player's recipes list in player token
+
 		//Get current player and needed informations
 		Player player = GameController.getInstance().getCurrentPlayer();
 		PlayerInventory inv = player.getInventory();
