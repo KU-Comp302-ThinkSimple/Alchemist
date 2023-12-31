@@ -25,14 +25,7 @@ class SellAPotionTest {
 	//These functions include getting the proper potion from the recipe etc.
 	//I will assume that these functions already work well since I just want to test Sell a Potion's work
 
-	/*
-	ArrayList<Potion> negativePotions;
-	ArrayList<Potion> positivePotions;
-	ArrayList<Potion> neutralPotions;
-	 */
-
 	Player player;
-
 
 	@BeforeEach
 	void testInitialize() {
@@ -50,12 +43,10 @@ class SellAPotionTest {
 
 	}
 
-
 	@AfterEach
 	void removeActivePlayers() {
 		GameController.getInstance().getActivePlayers().clear();
 	}
-
 
 	@Test
 	void userDoesNotHaveIngredients() {
