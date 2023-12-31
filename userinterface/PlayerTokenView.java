@@ -217,5 +217,6 @@ public class PlayerTokenView extends JPanel {
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
 		displayPlayerPotions();
+		this.repaint();
 	}
 }
