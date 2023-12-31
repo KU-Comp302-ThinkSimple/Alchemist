@@ -103,7 +103,7 @@ public class BrewPotionPanel extends JPanel {
 		drinkPotionButton.setFont(GlobalFonts.BREW_BUTTON);
 		drinkPotionButton.addActionListener(e -> {
 			try {
-				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), false);
+				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), false).toString().toLowerCase();
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
 			}
 			catch (Exception error) {
@@ -134,7 +134,7 @@ public class BrewPotionPanel extends JPanel {
 		testOnStudentButton.setFont(GlobalFonts.BREW_BUTTON);
 		testOnStudentButton.addActionListener(e -> {
 			try {
-				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), true);
+				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), true).toString().toLowerCase();
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
 			}
 			catch (Exception error) {
@@ -152,7 +152,7 @@ public class BrewPotionPanel extends JPanel {
 		JComboBox guaranteeComboBox = new JComboBox(guarantees);
 		guaranteeComboBox.setBounds(464, 196, 181, 20);
 		add(guaranteeComboBox);
-		
+
 		//SELL A POTION PANEL
 		JPanel sellAPotionPanel = new JPanel();
 		sellAPotionPanel.setBounds(446, 223, 247, 311);
@@ -160,7 +160,7 @@ public class BrewPotionPanel extends JPanel {
 		sellAPotionPanel.setOpaque(false);
 		add(sellAPotionPanel);
 		sellAPotionPanel.setLayout(null);
-		
+
 
 		//SELL A POTION BUTTON
 		JButton sellAPotionButton = new JButton("Sell a potion");
@@ -189,7 +189,7 @@ public class BrewPotionPanel extends JPanel {
 		JLabel potionLabel=new JLabel(new ImageIcon(BrewPotionPanel.class.getResource("/userinterface/images/unknownPotion_103x151.png")));
 		potionLabel.setBounds(516, 34, 103, 151);
 		add(potionLabel);
-		
+
 
 
 

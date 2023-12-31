@@ -5,56 +5,76 @@ import domain.GameController;
 import java.util.Arrays;
 
 public class Potion {
-	
+
 	int pValue;
-	int neutralityValue; // 0 if negative, 1 if positive, 2 if neutral
-	String potionType;
-	//String personToTest;
+	//int neutralityValue; // 0 if negative, 1 if positive, 2 if neutral
+
+	public enum potionNeutrality {
+		Negative,
+		Positive,
+		Neutral
+	}
+	potionNeutrality neutrality;
+	//	String potionType;
+
+
+	public enum potionType {
+		Poison,
+		Health,
+		Slow,
+		Speed,
+		Insanity,
+		Wisdom,
+		Neutral
+	}
+	potionType type;
+
+
 	Recipe potionRecipe;
-	
+
 	public Potion(Recipe potionRecipe) {
 		this.potionRecipe=potionRecipe;
 		determinePotion();
 		determinePotionNeutrality();
 	}
-	
+
 	public void determinePotion() {
-		
-		if(potionRecipe.checkRedMatch()==0) {
-			this.potionType="Poison";
-			
-		}else if(potionRecipe.checkRedMatch()==1) {
-			
-			this.potionType="Health";
-		}else if(potionRecipe.checkGreenMatch()==0) {
-			
-			this.potionType="Slow";
-			
-		}else if(potionRecipe.checkGreenMatch()==1) {
-			this.potionType="Speed";
-		
-		}else if(potionRecipe.checkBlueMatch()==0) {
-			this.potionType="Insanity";
-			
-		}else if(potionRecipe.checkBlueMatch()==1) {
-			this.potionType="Wisdom";
-		}else {
-			this.potionType="Neutral";
+
+		if(potionRecipe.checkRedMatch() == 0) {
+			this.type = potionType.Poison;
+		}
+		else if(potionRecipe.checkRedMatch() == 1) {
+			this.type = potionType.Health;
+		}
+		else if(potionRecipe.checkGreenMatch() == 0) {
+			this.type = potionType.Slow;
+		}
+		else if(potionRecipe.checkGreenMatch() == 1) {
+			this.type = potionType.Speed;
+		}
+		else if(potionRecipe.checkBlueMatch() == 0) {
+			this.type = potionType.Insanity;
+		}
+		else if(potionRecipe.checkBlueMatch() == 1) {
+			this.type = potionType.Wisdom;
+		}
+		else {
+			this.type = potionType.Neutral;
 		}
 	}
-	
+
 	public void determinePotionNeutrality() {
-		
-		if(Arrays.asList("Poison", "Slow", "Insanity").contains(this.potionType)) {
-			this.neutralityValue=0;
-		}else if(Arrays.asList("Health", "Slow", "Insanity").contains(this.potionType)) {
-			
-			this.neutralityValue=1;
-		}else {
-			this.neutralityValue=2;
+		if (this.type == potionType.Poison || this.type == potionType.Slow || this.type == potionType.Insanity) {
+			this.neutrality = potionNeutrality.Negative;
+		}
+		else if (this.type == potionType.Health || this.type == potionType.Speed || this.type == potionType.Wisdom) {
+			this.neutrality = potionNeutrality.Positive;
+		}
+		else {
+			this.neutrality = potionNeutrality.Neutral;
 		}
 	}
-	
+
 	/*public void testPotion() {
 		if(this.personToTest.equals("Self")) {
 			if (this.potionType == "Poison") {
@@ -68,29 +88,29 @@ public class Potion {
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().addHealth();
 			}else if(this.potionType == "Slow") {
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().reduceHealth();
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();	 	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 			}else if(this.potionType == "Speed") {
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().setPlayerAction(GameController.getInstance().getCurrentPlayer().getPlayerToken().getPlayerAction()+1);; 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().setPlayerAction(GameController.getInstance().getCurrentPlayer().getPlayerToken().getPlayerAction()+1);;
 			}else if(this.potionType == "Insanity") {
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().reduceHealth();
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractReputationPoint(1); 	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractReputationPoint(1);
 			}else if(this.potionType == "Wisdom") {
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().addReputationPoint(1);
 			}
-			
-			
+
+
 		}else if (this.personToTest.equals("Student")) {
-			
+
 			if (this.potionType == "Poison") {
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);
 			}else if(this.potionType == "Slow") {
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);
 			}else if(this.potionType == "Insanity") {
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);	 
+				GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);
 			}
 		}
 	}*/
-	
+
 
 	public int getpValue() {
 		return pValue;
@@ -100,12 +120,12 @@ public class Potion {
 		this.pValue = pValue;
 	}
 
-	public String getPotionType() {
-		return potionType;
+	public potionType getPotionType() {
+		return type;
 	}
 
-	public void setPotionType(String potionType) {
-		this.potionType = potionType;
+	public void setPotionType(potionType potionType) {
+		this.type = potionType;
 	}
 
 	/*public String getPersonToTest() {
@@ -124,13 +144,13 @@ public class Potion {
 		this.potionRecipe = potionRecipe;
 	}
 
-	public int getNeutralityValue() {
-		return neutralityValue;
+	public potionNeutrality getNeutralityValue() {
+		return neutrality;
 	}
 
-	public void setNeutralityValue(int neutralityValue) {
-		this.neutralityValue = neutralityValue;
+	public void setNeutralityValue(potionNeutrality neutralityValue) {
+		this.neutrality = neutralityValue;
 	}
-	
+
 
 }
