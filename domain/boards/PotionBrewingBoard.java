@@ -144,6 +144,11 @@ public class PotionBrewingBoard extends Board{
 	public String sellPotion(IngredientCard ingr1, IngredientCard ingr2, int guarantee) throws UserErrorException {
 		// EFFECTS  : This is a partial function. Takes 2 ingredient cards and a guarantee value, then brews
 		//			  the potion and sells it for golds according to the potion neutrality and guarantee value.
+		//			  Throws UserError Exception if:
+		//			  ** Current player doesn't have at least one of the ingredients
+		//		      ** It's round 1
+		//			  ** Two ingredients are the same
+		//
 		// REQUIRES : Ingredient cards must be other than null (of GameController)
 		//			  There must be a current player other than null
 		// MODIFIES : Neutrality type and potion type of the new brewed potion,
