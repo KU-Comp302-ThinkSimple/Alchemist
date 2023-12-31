@@ -139,7 +139,7 @@ class SellAPotionTest {
 		System.out.println(moneyAfterSell);
 		Assertions.assertEquals(moneyBeforeSell + 3, moneyAfterSell);
 
-		//check recipes list?
+		//TODO This test passed because I fixed the bug in Recipe's checkRedMatch(), checkGreenMatch() and checkBlueMatch()
 	}
 
 	@Test
