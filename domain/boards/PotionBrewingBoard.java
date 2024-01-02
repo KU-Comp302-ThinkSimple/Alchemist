@@ -14,7 +14,25 @@ public class PotionBrewingBoard extends Board{
 
 
 	public potionType makeExperiment(IngredientCard ingredient1, IngredientCard ingredient2, boolean onStu) throws UserErrorException, RuntimeException {
-
+		//REQUIRES: 2 Ingredient Cards which are not null
+		//			Current Player is present in GameController
+		//EFFECTS:  Brew a potion with given 2 ingredient cards. And drink this potion or test on student. Reduce
+		//			player`s gold if potion tested on stu is NEGATIVE. Reduce players health if drinked potion is NEGATIVE.
+		//			Reduce player`s action if drinked potion is SLOW. Reduce player`s rep if drinked potion is INSANITY.
+		//			Drinked HEALTH potion gives extra health. Drinked WISDOM potion gives extra rep. Drinked SPEED potion
+		//			gives extra action.
+		//			Throws UserError Exception if:
+		//			** 2 ingredients are same
+		//			** Current Player does not have both of ingredients
+		//			** Current Player has this potion already
+		//			** Current Player does not have enough gold or health
+		//MODIFIES: Potion and Neurality type of new brewed potion
+		//			Current Player`s inventory (removes 2 used Ingredient Cards)
+		//			Current Player`s inverntory (adds new potion and recipe)
+		//			Current Player`s token (add/reduce gold or health accordingly)		
+		//			Current Player`s actions (reduce by 1)
+		
+		
 		//Get current player and needed informations
 		Player player = GameController.getInstance().getCurrentPlayer();
 		PlayerInventory inv = player.getInventory();
