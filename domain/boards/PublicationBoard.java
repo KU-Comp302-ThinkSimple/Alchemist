@@ -27,7 +27,13 @@ public class PublicationBoard extends Board{
      * @throws UserErrorException: Thrown if user has insufficient gold, rounds are incorrect, the player doesnt have said ingredient.
      */
     public void publishTheory(Player player, IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
-      PlayerInventory inv = player.getInventory();
+		//modifies: player, hypotheses list
+		//effects:  hypotheses list is updated with the theorized molecule with its ingredient card.
+		//requires: round number == 2 or 3;
+		//			player has at least 1 gold;
+		//			ingredient does not have a related previously published theory;
+		//
+		PlayerInventory inv = player.getInventory();
     	int gold = player.getPlayerToken().getGold();
     	
     	//check if we are in round 2 or 3
