@@ -9,26 +9,21 @@ import domain.player.*;
 import exception.*;
 
 public class IngredientBoard extends Board{
-	private ArrayList<IngredientCard> ingredientList;
+	private IngredientCardDeckArrayList ingredientDeck;
 
 	public IngredientBoard() {
 
-		ingredientList = new ArrayList<IngredientCard>();
 
 	}
 
 	// Function creates deck for ingredient cards
-	public void initializeIngredientList(){
-		ArrayList<IngredientCard> ingrs = new ArrayList<IngredientCard>(GameController.getInstance().getGameInventory().getIngredientCards());
-		while (ingredientList.size() < 3) {
-			Collections.shuffle(ingrs);
-			ingredientList.add(ingrs.get(0));
-		}
+	public void initializeIngredientDeck(){
+		//EFFECTS: initializes the ingredient deck  
+		ingredientDeck = new IngredientCardDeckArrayList(3, GameController.getInstance().getGameInventory().getIngredientCards());
+		ingredientDeck.refill();
 	}
 
 	//Returns top element in deck and add new element for ensuring that deck is endless
-	
-	
 	/**
 	 * @throws UserErrorException if the user doesn't have any actions
 	 * @throws RuntimeException if the ingredient list returned no ingredient
@@ -58,15 +53,24 @@ public class IngredientBoard extends Board{
 
 
 	public IngredientCard popIngredient() {
-		IngredientCard ingr = ingredientList.remove(0);
-		initializeIngredientList();
-		return ingr;
-
+		//REQUIRES: initializeIngredientDeck must be called at least once
+		//EFFECTS: Pops one card from the ingredient deck and returns it.
+		//refills the deck automatically
+		return ingredientDeck.popCard();
 	}
 
 
 	//Sells 1 ingredient card for 1 gold
 	public void transmuteIngredient(IngredientCard ingredientCard) throws UserErrorException, RuntimeException {
+		/* Method: transmuteIngredient
+		 * Requires: Ingredient card must be provided. Current player should have ingredientCard.
+		 * Modifies: Player's inventory.
+		 *           Player's token
+		 * Effects: Throws UserErrorException if the player does not own ingredientCard
+		 *          Transmute 1 ingredientCard to a gold.
+		 *          Reduces player action by 1. 
+		 */
+
 		Player player = GameController.getInstance().getCurrentPlayer();
 		PlayerInventory inv = player.getInventory();
 		PlayerToken token = player.getPlayerToken();
@@ -82,9 +86,8 @@ public class IngredientBoard extends Board{
 		token.reducePlayerAction();
 	}
 
-
-	public ArrayList<IngredientCard> getIngredientList(){
-		return ingredientList;
+	public IngredientCardDeckArrayList getIngredientDeck() {
+		return ingredientDeck;
 	}
 
 }
