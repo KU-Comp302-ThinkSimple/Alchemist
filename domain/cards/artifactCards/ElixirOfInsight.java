@@ -14,25 +14,23 @@ public class ElixirOfInsight extends ArtifactCard<ArrayList<IngredientCard>> {
 
 	}
 
-	public static ArrayList<IngredientCard> shuffle(ArrayList<IngredientCard> cards, int[] order) {
-		ArrayList<IngredientCard> newCards = new ArrayList<IngredientCard>();
-		newCards.add(cards.get(order[0] - 1));
-		newCards.add(cards.get(order[1] - 1));
-		newCards.add(cards.get(order[2] - 1));
-		return newCards;
-	}
+//	public static ArrayList<IngredientCard> shuffle(ArrayList<IngredientCard> cards, int[] order){
+//	ArrayList<IngredientCard> newCards = new ArrayList<IngredientCard>();
+//	newCards.add(cards.get(order[0]-1));
+//	newCards.add(cards.get(order[1]-1));
+//	newCards.add(cards.get(order[2]-1));
+//	return newCards;
+//}
 
 
-	public void changeCards(int[] order) {
-		ArrayList<IngredientCard> topThreeCards = this.useCard();
+public ArrayList<IngredientCard> changeCards(int [] order) {
+	ArrayList<IngredientCard> topThreeCards =this.useCard();
+	
+	GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().reorder(order);
 
-		ArrayList<IngredientCard> newTopThreeCards = shuffle(topThreeCards, order);
+	return GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().getCards();
 
-		for (int i = 0; i < 3; i++) {
-			GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().getCards().set(i, newTopThreeCards.get(i));
-		}
-
-	}
+}
 
 
 }
