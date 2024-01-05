@@ -1,11 +1,10 @@
 package domain.cards.artifactCards;
 
-public class Vaccine implements ArtifactEffectBehavior{
+import domain.cards.artifactCards.behaviors.ArtifactCardBehavior;
 
+public class Vaccine extends ArtifactCard {
 
-
-    @Override
-    public <T> T use() {
-        return null;
+    public Vaccine(ArtifactCardBehavior effect, String name) {
+        super(effect, name);
     }
 }
