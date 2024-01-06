@@ -1,15 +1,15 @@
 package test;
-
-/*import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;*/
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;
 import exception.UserErrorException;
 
-
+//1 min
 public class TransmuteIngredientTest {
 	/*Test Cases:
 	Black-Box Test: Transmuting Ingredient Card owned by current player
@@ -31,27 +31,33 @@ public class TransmuteIngredientTest {
 	Glass-Box Test: Player Action Reduction
 	Scenario: Checking the player action reduction.
 	Expected result: The player's action count decreases by 1 after transmutation.*/
-	
-	//@Test
-    public void testTransmuteOwnedIngredient() throws UserErrorException {
-        // Test: Transmuting an owned ingredient card
+
+	@BeforeAll
+	public void beforeAll(){
 		GameController.getGameInventory().createAtom();
 		GameController.getGameInventory().createMolecule();
 		GameController.getGameInventory().createIngredientCard();
 		
-		IngredientCard ownedCard=GameController.getGameInventory().getIngrCards().get(0);
-		
-        Player currentPlayer = new Player(1, "aa", "bb");
+		IngredientCard ownedCard=GameController.getGameInventory().getIngrCards().get(0);	
+		Player currentPlayer = new Player(1, "aa", "bb");
         currentPlayer.getInventory().addAIngredientCard(ownedCard);
         currentPlayer.getPlayerToken().setPlayerAction(3);
         currentPlayer.getPlayerToken().setGold(5);
         BoardController.transmuteIngredient(ownedCard.getName());
+	}
+	@Test
+    public void testTransmuteOwnedIngredient() throws UserErrorException {
+       
 
         // Assert
-        /*assertEquals(4, currentPlayer.getPlayerToken().getPlayerAction());
+        assertEquals(4, currentPlayer.getPlayerToken().getPlayerAction());
         assertEquals(6, currentPlayer.getPlayerToken().getGold());
-        assertFalse(currentPlayer.getInventory().getPlayerIngredientCardList().contains(ownedCard));*/
+        assertFalse(currentPlayer.getInventory().getPlayerIngredientCardList().contains(ownedCard));
     }
+	@Test
+	public void test2(){
+		assertFalse(currentPlayer.getInventory().getPlayerIngredientCardList().contains(ownedCard));
+	}
 
 
 }
