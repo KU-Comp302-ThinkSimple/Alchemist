@@ -33,17 +33,17 @@ public class TransmuteIngredientTest {
 	Expected result: The player's action count decreases by 1 after transmutation.*/
 
 	@BeforeAll
-	public void beforeAll(){
+	public void beforeAll() throws UserErrorException{
 		GameController.getGameInventory().createAtom();
 		GameController.getGameInventory().createMolecule();
 		GameController.getGameInventory().createIngredientCard();
 		
 		IngredientCard ownedCard=GameController.getGameInventory().getIngrCards().get(0);	
 		Player currentPlayer = new Player(1, "aa", "bb");
-        currentPlayer.getInventory().addAIngredientCard(ownedCard);
-        currentPlayer.getPlayerToken().setPlayerAction(3);
-        currentPlayer.getPlayerToken().setGold(5);
-        BoardController.transmuteIngredient(ownedCard.getName());
+       		currentPlayer.getInventory().addAIngredientCard(ownedCard);
+        	currentPlayer.getPlayerToken().setPlayerAction(3);
+        	currentPlayer.getPlayerToken().setGold(5);
+        	BoardController.transmuteIngredient(ownedCard.getName());
 	}
 	@Test
     public void testTransmuteOwnedIngredient() throws UserErrorException {
