@@ -17,14 +17,9 @@ public class ArtifactCardDeckArrayList  extends RandomCardDeck<ArtifactCard>{
         return ret;
     }
 
-    /**
-     * checks if the underlying representation is intact.
-     *
-     * @return
-     */
     @Override
     boolean repOk() {
-        return false;
+        return getSize() == repr.size();
     }
 
 }
