@@ -75,7 +75,7 @@ public class GameInventory {
 	public void createIngredientCard() {
 		
 		//Shuffles the molecule list and creates ingrCards using those molecules and add them to the list.
-		Collections.shuffle(molecules);
+		//Collections.shuffle(molecules);
 		
 		ingrCards.add(new IngredientCard(0, "Mushroom",molecules.get(0)));
 		ingrCards.add(new IngredientCard(1, "Seedling",molecules.get(1)));
