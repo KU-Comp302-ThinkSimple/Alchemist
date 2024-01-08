@@ -41,7 +41,7 @@ public class TestRandomCardDeck {
 	
 	//Black-box testing
 	//Scenario: Pop one ingredient from the deck
-	//Expected result: The representation should remain functional
+	//Expected result: 
 	@Test
 	public void getOneIngredient() {
 		RandomCardDeck<IngredientCard> deck = GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck();
@@ -62,4 +62,20 @@ public class TestRandomCardDeck {
 		
 		assertEquals(false, deck.repOk());
 	}
+	
+	//Black-box testing
+	//Scenario: Reorder deck in given order
+	//Expected Result: The representation should remain functional
+	@Test
+	public void reorderDeck() {
+		RandomCardDeck<IngredientCard> deck = GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck();
+		
+		int[] order = {2, 0, 1};
+		deck.reorder(order);
+		
+		assertEquals(true, deck.repOk());
+		
+	}
+	
+	
 }
