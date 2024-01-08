@@ -7,12 +7,12 @@ public class InitializeGameHelper {
 	InitializeGameHelper(){
 		// This class calls a various functions to initialize the game within its constructor.
 		initializeIngredientCards();
+		GameController.getInstance().getBoard().getIngredientBoard().initializeIngredientDeck();
 		shuffleCards();
-		GameController.getInstance().getBoard().getIngredientBoard().initializeIngredientList();
 		distributeInitialCards();
 		distributeGold();
 		chooseStartingPlayer();
-
+		
 
 	}
 

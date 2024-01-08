@@ -194,7 +194,7 @@ public class PlayerTokenView extends JPanel {
 
 		for(int i=0;i<player.getInventory().getPlayerPotionList().size();i++) {
 
-			String potname = player.getInventory().getPlayerPotionList().get(i).getPotionType();
+			String potname = player.getInventory().getPlayerPotionList().get(i).getPotionType().toString();
 			ImageIcon icon = GlobalIcons.getLittlePotionImage(potname);
 
 			//if icon is already displayed before don't display it again
@@ -217,5 +217,6 @@ public class PlayerTokenView extends JPanel {
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
 		displayPlayerPotions();
+		this.repaint();
 	}
 }
