@@ -36,18 +36,18 @@ public abstract class RandomCardDeck<T extends Card> {
 	 * Pops a card from the deck
 	 * @return A card from the deck
 	 */
-	abstract T popCard();
+	abstract public T popCard();
 	
 	/**
 	 * checks if the underlying representation is intact.
 	 * @return
 	 */
-	abstract boolean repOk();
+	abstract public boolean repOk();
 	
 	/**
 	 * refills the deck.
 	 */
-	void refill() {
+	public void refill() {
 		//EFFECTS: Random cards from cardSourceList is added to the deck until the deck is full.
 		while(repr.size()<size) {
 			addCardFromSource();
