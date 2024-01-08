@@ -11,7 +11,7 @@ public class ArtifactCardDeckArrayList  extends RandomCardDeck<ArtifactCard>{
     }
 
     @Override
-    ArtifactCard popCard() {
+    public ArtifactCard popCard() {
         ArtifactCard ret = (ArtifactCard)((ArrayList<ArtifactCard>) this.repr).remove(0);
         refill();
         return ret;
@@ -23,7 +23,7 @@ public class ArtifactCardDeckArrayList  extends RandomCardDeck<ArtifactCard>{
      * @return
      */
     @Override
-    boolean repOk() {
+    public boolean repOk() {
         return false;
     }
 
