@@ -15,14 +15,14 @@ public class IngredientCardDeckArrayList extends RandomCardDeck<IngredientCard>{
 	}
 
 	@Override
-	IngredientCard popCard() {
+	public IngredientCard popCard() {
 		IngredientCard ret = (IngredientCard)((ArrayList<IngredientCard>) this.repr).remove(0);
 		refill();
 		return ret;
 	}
 
 	@Override
-	boolean repOk() {
+	public boolean repOk() {
 		return repr.size() == getSize();
 	}
 
