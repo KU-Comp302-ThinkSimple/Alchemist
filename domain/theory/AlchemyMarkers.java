@@ -1,8 +1,14 @@
 package domain.theory;
 
+import java.io.Serializable;
+
 import domain.cards.IngredientCard;
 
-public class AlchemyMarkers {
+public class AlchemyMarkers implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7656321360816079488L;
 	private IngredientCard ingredient;
     private Hypotheses hypothesis;
 	public AlchemyMarkers() {

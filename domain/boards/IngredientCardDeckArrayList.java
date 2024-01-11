@@ -10,6 +10,11 @@ import domain.cards.*;
  */
 public class IngredientCardDeckArrayList extends RandomCardDeck<IngredientCard>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -799222594013390894L;
+
 	public IngredientCardDeckArrayList(int size, Collection<IngredientCard> cardSource) {
 		super(size, cardSource, ArrayList.class);
 	}

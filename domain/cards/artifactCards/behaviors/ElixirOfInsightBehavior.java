@@ -3,9 +3,15 @@ package domain.cards.artifactCards.behaviors;
 import domain.GameController;
 import domain.cards.IngredientCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ElixirOfInsightBehavior implements ArtifactCardBehavior<ArrayList<IngredientCard>> {
+public class ElixirOfInsightBehavior implements ArtifactCardBehavior<ArrayList<IngredientCard>>, Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4707363177434578900L;
 
 	@Override
 	public ArrayList<IngredientCard> use() {

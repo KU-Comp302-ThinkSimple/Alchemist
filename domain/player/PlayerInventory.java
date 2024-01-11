@@ -1,5 +1,6 @@
 package domain.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import domain.cards.*;
@@ -7,8 +8,12 @@ import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.*;
 import domain.theory.Hypotheses;
 
-public class PlayerInventory {
+public class PlayerInventory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7542601474564386240L;
 	final ArrayList<Recipe> playerRecipeList;
 	final ArrayList<Potion> playerPotionList;
 	final ArrayList<Hypotheses> playerHypothesesList;

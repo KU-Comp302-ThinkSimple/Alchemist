@@ -1,13 +1,18 @@
 package domain.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import domain.cards.IngredientCard;
 import domain.potion.*;
 
-public class Player {
+public class Player implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7552661838843237048L;
 	final int playerId;
 	final String playerName;
 	final String playerPassword;

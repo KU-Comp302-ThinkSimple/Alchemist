@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class ArtifactCardDeckArrayList  extends RandomCardDeck<ArtifactCard>{
-    public ArtifactCardDeckArrayList(int size, Collection<ArtifactCard> cardSource) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2624714827388364968L;
+
+	public ArtifactCardDeckArrayList(int size, Collection<ArtifactCard> cardSource) {
         super(size, cardSource, ArrayList.class);
     }
 

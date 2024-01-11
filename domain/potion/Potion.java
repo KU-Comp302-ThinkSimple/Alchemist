@@ -2,9 +2,16 @@ package domain.potion;
 
 import domain.GameController;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Potion {
+public class Potion implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3176729771195387799L;
+
 
 	int pValue;
 	//int neutralityValue; // 0 if negative, 1 if positive, 2 if neutral

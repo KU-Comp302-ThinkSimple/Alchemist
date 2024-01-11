@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,8 +10,9 @@ import domain.player.Player;
 import domain.potion.Atom;
 import userinterface.MainGameWindow;
 
-public class GameController {
-	
+public class GameController implements Serializable{
+	private static final long serialVersionUID = 4936278445022118697L;
+
 	private static GameController instance;
 
 	int currentRound=1; //1 2 and 3

@@ -1,5 +1,6 @@
 package domain.boards;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import domain.GameController;
@@ -10,8 +11,12 @@ import domain.potion.Potion.potionType;
 import domain.theory.Hypotheses;
 import exception.UserErrorException;
 
-public class BoardController {
+public class BoardController implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6077208034265033396L;
 	static GameBoard board = GameController.getInstance().getBoard();
 	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
 	static PublicationBoard pubBoard = board.getPublicationBoard();

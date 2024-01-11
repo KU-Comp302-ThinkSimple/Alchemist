@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class ElixirOfInsight extends ArtifactCard<ArrayList<IngredientCard>> {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6303850557348729601L;
+
 	public ElixirOfInsight(ArtifactCardBehavior effect, String name) {
 		super(effect, name);
 

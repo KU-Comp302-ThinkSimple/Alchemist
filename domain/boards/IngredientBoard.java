@@ -9,6 +9,10 @@ import domain.player.*;
 import exception.*;
 
 public class IngredientBoard extends Board{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8903616112216784654L;
 	private IngredientCardDeckArrayList ingredientDeck;
 
 	public IngredientBoard() {

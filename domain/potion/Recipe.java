@@ -1,9 +1,15 @@
 package domain.potion;
 
+import java.io.Serializable;
+
 import domain.cards.IngredientCard;
 
-public class Recipe {
+public class Recipe implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2571884891497897558L;
 	final private IngredientCard ingredient1;
 	final private IngredientCard ingredient2;
 
