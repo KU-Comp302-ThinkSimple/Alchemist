@@ -1,4 +1,4 @@
-package domain;
+package network;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,17 +14,20 @@ import java.util.concurrent.TimeUnit;
 public class Server extends Thread {
     private ServerSocket serverSocket;
     private int availablePort;
-    
     private final ArrayList<Socket> clients;
-    
     private final int clientBufferSize;
 
+    /**
+     * A server class that relays any message it receives into other connections
+     * @param port Port to connect to
+     * @param clientBufferSize the size of the client buffers (RESTRICTS MAX MESSAGE SIZE!)
+     * @throws IOException if it cannot create server port
+     */
     public Server(int port, int clientBufferSize) throws IOException {
     	this.clients = new ArrayList<Socket>();
 		this.clientBufferSize = clientBufferSize;
         serverSocket = new ServerSocket(port);
         availablePort = port;
-        //serverSocket.setSoTimeout(10000);
     }
 
     public int getAvailablePort() {
@@ -37,6 +40,8 @@ public class Server extends Thread {
         System.out.println("Available port: " + server.getAvailablePort());
         // Start the server thread
         server.start();
+        
+        //create three clients to test the server
         TestClient client1 = new TestClient("client1", "127.0.0.1", port);
         TestClient client2 = new TestClient("client2", "127.0.0.1", port);
         TestClient client3 = new TestClient("client3", "127.0.0.1", port);
@@ -66,23 +71,10 @@ public class Server extends Thread {
             	System.out.println("Waiting for connections on port " + serverSocket.getLocalPort() + "...");
             	Socket newClientSocket = serverSocket.accept();
             	clients.add(newClientSocket);
+            	//handle the client operations (relaying) in a new thread
             	Thread clientThread = new Thread(()->handleClient(newClientSocket));
             	clientThread.start();
             	System.out.println("New connection");
-//				Socket player1 = serverSocket.accept();
-//	            System.out.println("Player 1 connected.");
-//	            Socket player2 = serverSocket.accept();
-//	            System.out.println("Player 2 connected.");
-//
-//				
-//	            BufferedReader frPlayer1 = new BufferedReader(new InputStreamReader(player1.getInputStream()));
-//	            PrintWriter toPlayer1 = new PrintWriter(player1.getOutputStream(), true);
-//	            BufferedReader frPlayer2 = new BufferedReader(new InputStreamReader(player2.getInputStream()));
-//	            PrintWriter toPlayer2 = new PrintWriter(player2.getOutputStream(), true);
-//
-//	            toPlayer1.println("You are Player 1.");
-//	            toPlayer2.println("You are Player 2.");
-                // Logic for handling client connections goes here
             } catch (IOException e) {
                 e.printStackTrace(); // Handle the exception according to your needs
             }
@@ -92,10 +84,11 @@ public class Server extends Thread {
     private void handleClient(Socket clientSocket) {
     	try {
             InputStream input = clientSocket.getInputStream();	
-            OutputStream output = clientSocket.getOutputStream();
 
             byte[] buffer = new byte[clientBufferSize];
             int bytesRead;
+            
+            //read all incoming messages into buffer, then send them out
             while ((bytesRead = input.read(buffer)) != -1) {
                 // Relay the message to all other clients
                 relayBinaryMessage(clientSocket, buffer, bytesRead);
@@ -103,13 +96,14 @@ public class Server extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            // Remove the client when it disconnects
+            // Remove the client when it eventually disconnects
             clients.remove(clientSocket);
             System.out.println("Client disconnected.");
         }
     }
     
     private void relayBinaryMessage(Socket sender, byte[] message, int length) {
+    	//relay each message to all other clients
         for (Socket client : clients) {
             if (client != sender) {
                 try {
