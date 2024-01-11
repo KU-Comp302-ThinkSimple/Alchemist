@@ -40,7 +40,7 @@ public class TestClient extends Thread{
             while ((bytesRead = input.read(buffer)) != -1) {
                 // Relay the message to all other clients
             	String message = new String(buffer);
-            	System.out.println(message);
+            	System.out.println(this.name + " received: " + message);
             }
         } catch (IOException e) {
             e.printStackTrace();
