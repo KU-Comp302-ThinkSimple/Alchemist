@@ -5,6 +5,10 @@ import domain.cards.artifactCards.behaviors.ArtifactCardBehavior;
 
 public abstract class ArtifactCard<R> extends Card  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5185302057469407727L;
 	protected ArtifactCardBehavior<R> effect;
 	private String name;
 

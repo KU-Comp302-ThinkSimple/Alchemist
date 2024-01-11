@@ -10,10 +10,14 @@ import domain.potion.AtomFactory;
 import domain.potion.Molecule;
 import domain.potion.MoleculeFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-public class GameInventory {
-
+public class GameInventory implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7722233986486390188L;
 	private final ArrayList<Atom> atoms=new ArrayList<Atom>();
 	private final ArrayList<Molecule> molecules=new ArrayList<Molecule>();
 	private final ArrayList<IngredientCard> ingrCards=new ArrayList<IngredientCard>();

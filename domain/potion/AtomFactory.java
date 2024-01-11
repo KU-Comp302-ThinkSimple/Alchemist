@@ -1,7 +1,13 @@
 package domain.potion;
 
-public class AtomFactory {
+import java.io.Serializable;
+
+public class AtomFactory implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2984253006416216171L;
 	private static int id;
 	private static AtomFactory instance;
 	

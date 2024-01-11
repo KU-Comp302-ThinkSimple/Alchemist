@@ -6,6 +6,10 @@ import domain.potion.Molecule;
 
 public class IngredientCard extends Card{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3646985582619093105L;
 	final int id;
 	final String name;
 	final Molecule molecule;

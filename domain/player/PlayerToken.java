@@ -9,9 +9,15 @@ import domain.cards.PublicationCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.*;
 import domain.theory.Hypotheses;
-import java.lang.*;
-public class PlayerToken {
 
+import java.io.Serializable;
+import java.lang.*;
+public class PlayerToken implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1622372778708598182L;
 	int gold=0;
 	int reputation=0;
 	int playerHealth = 3;

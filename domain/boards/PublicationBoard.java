@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 public class PublicationBoard extends Board{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8840118540539075045L;
 	private ArrayList<Hypotheses> hypotheses;
 	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
 

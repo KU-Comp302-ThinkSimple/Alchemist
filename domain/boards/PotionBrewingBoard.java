@@ -8,6 +8,11 @@ import domain.potion.Potion.potionType;
 import exception.*;
 
 public class PotionBrewingBoard extends Board{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3304320403492089717L;
+
 	public PotionBrewingBoard() {
 
 	}

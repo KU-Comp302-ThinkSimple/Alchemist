@@ -1,9 +1,14 @@
 package domain.potion;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Molecule {
+public class Molecule implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1684983868961676166L;
 	int moleculeId;
 	Atom redAtom;
 	Atom greenAtom;

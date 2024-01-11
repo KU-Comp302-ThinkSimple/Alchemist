@@ -1,8 +1,13 @@
 package domain.potion;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Atom {
+public class Atom implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4074276591507476096L;
 	int atomId;
 	int atomSize; //0 small, 1 big
 	int atomColor; // 0 red, 1 green, 2 blue

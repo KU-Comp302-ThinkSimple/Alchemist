@@ -1,8 +1,15 @@
 package domain.boards;
 
-public abstract class Board {
+import java.io.Serializable;
 
-    public Board() {
+public abstract class Board implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6913272644607933845L;
+
+	public Board() {
 
     }
 }

@@ -1,4 +1,5 @@
 package domain.boards;
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -11,7 +12,12 @@ import domain.cards.Card;
  * such that it always has size many elements.
  * @param <T>
  */
-public abstract class RandomCardDeck<T extends Card> {
+public abstract class RandomCardDeck<T extends Card> implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2544832921864585670L;
+
 	private final ArrayList<T> cardSourceList;
 
 	protected final Collection<T> repr;

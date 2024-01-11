@@ -1,10 +1,16 @@
 package domain.theory;
 
+import java.io.Serializable;
+
 import domain.cards.IngredientCard;
 import domain.potion.Molecule;
 import domain.player.*;
 
-public class Hypotheses {
+public class Hypotheses implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4080852308402293360L;
 	private final Player owner;
 	private final IngredientCard ingredient;
 	private final Molecule molecule;

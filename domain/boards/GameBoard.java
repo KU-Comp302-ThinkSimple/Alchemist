@@ -1,7 +1,13 @@
 package domain.boards;
 
-public class GameBoard extends Board {
-    private DeductionBoard deductionBoard;
+import java.io.Serializable;
+
+public class GameBoard extends Board implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5471086281121837842L;
+	private DeductionBoard deductionBoard;
     private IngredientBoard ingredientBoard;
     private PublicationBoard publicationBoard;
     private PotionBrewingBoard potionBrewingBoard;
