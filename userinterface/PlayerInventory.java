@@ -4,6 +4,8 @@ import domain.GameController;
 import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.cards.artifactCards.ElixirOfInsight;
+import domain.observer.Observable;
+import domain.observer.Observer;
 import domain.player.Player;
 import userinterface.util.GlobalIcons;
 
@@ -11,16 +13,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PlayerInventory extends JPanel {
+public class PlayerInventory extends JPanel implements Observable {
 
 	private static final long serialVersionUID = 1L;
 	//private int id; //There will be two of this view so there should be an id attribute to separate them
 	private Player player;
 	private JPanel viewPort;
 	private JPanel viewPort_1;
-
-
+	private List<Observer> observers =  new ArrayList<>();
 	/**
 	 * Create the panel.
 	 */
@@ -78,7 +80,7 @@ public class PlayerInventory extends JPanel {
 			button.addActionListener(e -> {
 				currentCard.useCard();
 				System.out.println("Used card named "+ currentCard.getName());
-
+				update();
 
 			});
 
@@ -165,5 +167,18 @@ public class PlayerInventory extends JPanel {
 		}
 
 		//TODO same for artifact cards
+		update();
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void update() {
+		for (Observer observer : observers){
+			observer.update();
+		}
 	}
 }

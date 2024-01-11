@@ -1,19 +1,10 @@
 package userinterface;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import domain.GameController;
 import domain.boards.BoardController;
-import domain.boards.IngredientBoard;
-import domain.boards.PotionBrewingBoard;
 import domain.cards.IngredientCard;
+import domain.observer.MainObserver;
+import domain.observer.Observer;
 import exception.UserErrorException;
 import test.TestGameInitializer;
 import userinterface.util.GlobalColors;
@@ -21,19 +12,10 @@ import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Rectangle;
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.SystemColor;
-import java.awt.List;
-import javax.swing.JMenu;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.ArrayList;
-
-import javax.swing.JComboBox;
 
 public class MainGameWindow {
 	private static String infoText = """
@@ -71,13 +53,21 @@ public class MainGameWindow {
 			""";
 
 	private JPanel contentPane;
-	private JPanel deductionBoard = new DeductionBoard();
-	private JPanel resultsTriangle = new ResultsTriangle(1);
-	private JPanel playerInventory = new PlayerInventory();
-	private JPanel potionBrewingBoard = new BrewPotionPanel();
-	private JPanel playerTokenView = new PlayerTokenView();
-	private JPanel publishTheoryPanel = new PublishTheoryPanel();
-	private JPanel debunkTheoryView = new DebunkTheoryView();
+	private DeductionBoard deductionBoard = new DeductionBoard();
+	private ResultsTriangle resultsTriangle = new ResultsTriangle(1);
+	private PlayerInventory playerInventory = new PlayerInventory();
+	private BrewPotionPanel potionBrewingBoard = new BrewPotionPanel();
+	private PlayerTokenView playerTokenView = new PlayerTokenView();
+	private PublishTheoryPanel publishTheoryPanel = new PublishTheoryPanel();
+	private DebunkTheoryView debunkTheoryView = new DebunkTheoryView();
+//
+//	private JPanel deductionBoard = new DeductionBoard();
+//	private JPanel resultsTriangle = new ResultsTriangle(1);
+//	private JPanel playerInventory = new PlayerInventory();
+//	private JPanel potionBrewingBoard = new BrewPotionPanel();
+//	private JPanel playerTokenView = new PlayerTokenView();
+//	private JPanel publishTheoryPanel = new PublishTheoryPanel();
+//	private JPanel debunkTheoryView = new DebunkTheoryView();
 	private JComboBox transmuteIngredientComboBox;
 
 	public static void main(String[] args) {
@@ -290,14 +280,20 @@ public class MainGameWindow {
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
 
-		//TODO FOR TESTING PURPOSES
-		JButton updateButton = new JButton("Update");
-		updateButton.setBounds(80, 11, 89, 23);
-		updateButton.addActionListener(e ->{
-			updateMainGameWindow();
-
-		});
-		contentPane.add(updateButton);
+		Observer observer = new MainObserver(this);
+		deductionBoard.addObserver(observer);
+		playerTokenView.addObserver(observer);
+		debunkTheoryView.addObserver(observer);
+		publishTheoryPanel.addObserver(observer);
+		playerInventory.addObserver(observer);
+		// FOR TESTING PURPOSES
+//		JButton updateButton = new JButton("Update");
+//		updateButton.setBounds(80, 11, 89, 23);
+//		updateButton.addActionListener(e ->{
+//			updateMainGameWindow();
+//
+//		});
+//		contentPane.add(updateButton);
 		MainGameWindowFrame.setVisible(true);
 	}
 	public void updateMainGameWindow() {

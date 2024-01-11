@@ -1,28 +1,25 @@
 package userinterface;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
-import test.TestGameInitializer;
 import domain.GameController;
 import domain.boards.BoardController;
-import domain.boards.PublicationBoard;
-import domain.cards.IngredientCard;
-import domain.theory.*;
+import domain.observer.Observable;
+import domain.observer.Observer;
+import domain.player.Player;
+import domain.theory.Hypotheses;
 import exception.UserErrorException;
+import test.TestGameInitializer;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicStampedReference;
-import domain.player.*;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-public class DebunkTheoryView extends JPanel implements ActionListener{
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DebunkTheoryView extends JPanel implements ActionListener, Observable {
 	private JComboBox<HypothesisComboBoxItem> hypothesisComboBox;
 	private JComboBox<AtomComboBoxItem> atomComboBox;
+	private List<Observer> observers = new ArrayList<>();
 
 	public static void main(String[] args) throws UserErrorException, RuntimeException {
 		TestGameInitializer.initializeTestGame();
@@ -40,7 +37,19 @@ public class DebunkTheoryView extends JPanel implements ActionListener{
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 	}
-	
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void update() {
+		for(Observer observer: observers){
+			observer.update();
+		}
+	}
+
 	private class HypothesisComboBoxItem{
 		private final Hypotheses hypothesis;
 		
@@ -160,6 +169,7 @@ public class DebunkTheoryView extends JPanel implements ActionListener{
 		} catch (UserErrorException exc) {
 			JOptionPane.showMessageDialog(this, exc.getMessage());
 		}
+		update();
 	}
 	
 	public void updateDebunkTheoryPanel() {
@@ -167,5 +177,6 @@ public class DebunkTheoryView extends JPanel implements ActionListener{
 		for (Hypotheses hypothesis: GameController.getInstance().getBoard().getPublicationBoard().getHypotheses()) {
 			hypothesisComboBox.addItem(new HypothesisComboBoxItem(hypothesis));
 		}
+		update();
 	}
 }

@@ -1,31 +1,21 @@
 package userinterface;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.util.Arrays;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JButton;
-import javax.swing.border.SoftBevelBorder;
-
 import domain.GameController;
+import domain.observer.Observable;
+import domain.observer.Observer;
 import domain.player.Player;
 
-import javax.swing.border.BevelBorder;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DeductionBoard extends JPanel {
+public class DeductionBoard extends JPanel implements Observable {
 
 	private JButton[][] buttons = new JButton[8][8]; //button[y][x]
 	private int[][] buttonSelect;
 	private Player player;
-
+	private List<Observer> observers = new ArrayList<>();
 	public DeductionBoard() {
 
 		player = GameController.getInstance().getCurrentPlayer();
@@ -80,6 +70,7 @@ public class DeductionBoard extends JPanel {
 
 		this.add(buttonsPanel);
 		this.setVisible(true);
+		update();
 	}
 
 	public void updateDeductionBoard() {
@@ -99,6 +90,19 @@ public class DeductionBoard extends JPanel {
 					buttons[y][x].setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/transparent_88x42.png")));
 				}
 			}
+		}
+
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void update() {
+		for (Observer observer : observers) {
+			observer.update();
 		}
 	}
 }

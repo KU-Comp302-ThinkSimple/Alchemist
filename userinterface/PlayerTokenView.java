@@ -1,31 +1,21 @@
 package userinterface;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.swing.JTextField;
-import javax.swing.JSplitPane;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-
 import domain.GameController;
+import domain.observer.Observable;
+import domain.observer.Observer;
 import domain.player.Player;
-import domain.potion.Potion;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PlayerTokenView extends JPanel {
 
+public class PlayerTokenView extends JPanel implements Observable {
+
+	private List<Observer> observers = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	private JTextField nameField;
 	private JTextField goldField;
@@ -206,6 +196,7 @@ public class PlayerTokenView extends JPanel {
 			//after the icon is added, add it to the ArrayList
 			addedPotions.add(potname);
 		}
+		update();
 	}
 
 
@@ -218,5 +209,18 @@ public class PlayerTokenView extends JPanel {
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
 		displayPlayerPotions();
 		this.repaint();
+		this.update();
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void update() {
+		for (Observer observer : observers) {
+			observer.update();
+		}
 	}
 }

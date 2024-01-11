@@ -1,27 +1,39 @@
 package userinterface;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collections;
-
-import javax.swing.*;
-
 import domain.GameController;
-import domain.GameInventory;
-import domain.boards.*;
+import domain.boards.BoardController;
 import domain.cards.IngredientCard;
+import domain.observer.Observable;
+import domain.observer.Observer;
 import domain.player.Player;
-import domain.potion.*;
+import domain.potion.Molecule;
 import exception.UserErrorException;
 import test.TestGameInitializer;
 import userinterface.util.GlobalIcons;
 
-import java.util.*;
-public class PublishTheoryPanel extends JPanel implements ActionListener{
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PublishTheoryPanel extends JPanel implements ActionListener, Observable {
 	private final JComboBox<IngredientCardComboBoxItem> ingredientComboBox;
 	private final JComboBox<MoleculeComboBoxItem> moleculeComboBox;
+	private List<Observer> observers = new ArrayList<>();
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void update() {
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
 
 	private class IngredientCardComboBoxItem{
 		private final IngredientCard ingredientCard;
@@ -133,6 +145,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		for (IngredientCard ingredientCard : GameController.getInstance().getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
 		}
+		update();
 	}
 
 	@Override
