@@ -80,7 +80,7 @@ public class PlayerInventory extends JPanel implements Observable {
 			button.addActionListener(e -> {
 				currentCard.useCard();
 				System.out.println("Used card named "+ currentCard.getName());
-				update();
+				notifyObserver();
 
 			});
 
@@ -167,7 +167,7 @@ public class PlayerInventory extends JPanel implements Observable {
 		}
 
 		//TODO same for artifact cards
-		update();
+		notifyObserver();
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class PlayerInventory extends JPanel implements Observable {
 	}
 
 	@Override
-	public void update() {
+	public void notifyObserver() {
 		for (Observer observer : observers){
 			observer.update();
 		}

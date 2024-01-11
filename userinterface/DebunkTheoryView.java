@@ -44,7 +44,7 @@ public class DebunkTheoryView extends JPanel implements ActionListener, Observab
 	}
 
 	@Override
-	public void update() {
+	public void notifyObserver() {
 		for(Observer observer: observers){
 			observer.update();
 		}
@@ -169,7 +169,7 @@ public class DebunkTheoryView extends JPanel implements ActionListener, Observab
 		} catch (UserErrorException exc) {
 			JOptionPane.showMessageDialog(this, exc.getMessage());
 		}
-		update();
+		notifyObserver();
 	}
 	
 	public void updateDebunkTheoryPanel() {
@@ -177,6 +177,6 @@ public class DebunkTheoryView extends JPanel implements ActionListener, Observab
 		for (Hypotheses hypothesis: GameController.getInstance().getBoard().getPublicationBoard().getHypotheses()) {
 			hypothesisComboBox.addItem(new HypothesisComboBoxItem(hypothesis));
 		}
-		update();
+		notifyObserver();
 	}
 }

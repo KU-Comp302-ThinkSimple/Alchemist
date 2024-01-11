@@ -196,7 +196,7 @@ public class PlayerTokenView extends JPanel implements Observable {
 			//after the icon is added, add it to the ArrayList
 			addedPotions.add(potname);
 		}
-		update();
+		notifyObserver();
 	}
 
 
@@ -209,7 +209,7 @@ public class PlayerTokenView extends JPanel implements Observable {
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
 		displayPlayerPotions();
 		this.repaint();
-		this.update();
+		this.notifyObserver();
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class PlayerTokenView extends JPanel implements Observable {
 	}
 
 	@Override
-	public void update() {
+	public void notifyObserver() {
 		for (Observer observer : observers) {
 			observer.update();
 		}

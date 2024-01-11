@@ -29,7 +29,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener, Observ
 	}
 
 	@Override
-	public void update() {
+	public void notifyObserver() {
 		for (Observer observer : observers){
 			observer.update();
 		}
@@ -145,7 +145,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener, Observ
 		for (IngredientCard ingredientCard : GameController.getInstance().getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
 		}
-		update();
+		notifyObserver();
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class DeductionBoard extends JPanel implements Observable {
 
 		this.add(buttonsPanel);
 		this.setVisible(true);
-		update();
+		notifyObserver();
 	}
 
 	public void updateDeductionBoard() {
@@ -100,7 +100,7 @@ public class DeductionBoard extends JPanel implements Observable {
 	}
 
 	@Override
-	public void update() {
+	public void notifyObserver() {
 		for (Observer observer : observers) {
 			observer.update();
 		}
