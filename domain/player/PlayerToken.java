@@ -1,18 +1,20 @@
 package domain.player;
 
-import java.util.ArrayList;
-
 import domain.GameController;
-import domain.boards.Board;
 import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
 import domain.cards.artifactCards.ArtifactCard;
-import domain.potion.*;
+import domain.potion.Potion;
+import domain.potion.Recipe;
 import domain.theory.Hypotheses;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
 import java.io.Serializable;
-import java.lang.*;
-public class PlayerToken implements Serializable {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayerToken implements Serializable, Observable {
 
 	/**
 	 * 
@@ -24,7 +26,7 @@ public class PlayerToken implements Serializable {
 	int playerAction=3;
 	String playerAvatar; // the directory of the playeravatar is kept in this as a string.
 	PlayerInventory playerInventory;
-	
+	private List<Observer> observers = new ArrayList<>();
 	
 	public PlayerToken() {
 		
@@ -34,20 +36,20 @@ public class PlayerToken implements Serializable {
 	
 	public void addGold(int gold) {
 		this.gold=this.gold+gold;
-		
+		notifyObserver();
 	}
 	public void subtractGold(int gold) {
 		this.gold=this.gold-gold;
-		
+		notifyObserver();
 	}
 
 	public void addReputationPoint(int point) {
 		this.reputation=this.reputation+point;
-		
+		notifyObserver();
 	}
 	public void subtractReputationPoint(int point) {
 		this.reputation=this.reputation-point;
-		
+		notifyObserver();
 	}
 	
 
@@ -55,6 +57,7 @@ public class PlayerToken implements Serializable {
 		if(this.playerHealth<3) {
 			this.playerHealth++;
 		}
+		notifyObserver();
 	}
 	
 	public void reduceHealth() {
@@ -65,6 +68,7 @@ public class PlayerToken implements Serializable {
 			this.playerHealth=3;
 			this.gold=0;
 		}
+		notifyObserver();
 	}
 	
 	
@@ -158,8 +162,10 @@ public class PlayerToken implements Serializable {
 
 	public void setPlayerAction(int playerAction) {
 		this.playerAction = playerAction;
+		notifyObserver();
 	}
 	public boolean hasActionsLeft() {
+		notifyObserver();
 		return this.playerAction>0;
 	}
 
@@ -195,7 +201,7 @@ public class PlayerToken implements Serializable {
 		if(GameController.getInstance().shouldChangeRound()) {
 			GameController.getInstance().changeRounds();
 		}
-		
+		notifyObserver();
 		
 	}
 	
@@ -207,8 +213,18 @@ public class PlayerToken implements Serializable {
 	public void setPlayerInventory(PlayerInventory playerInventory) {
 		this.playerInventory = playerInventory;
 	}
-	
-	
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
 	
 	
 }

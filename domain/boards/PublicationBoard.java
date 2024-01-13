@@ -7,17 +7,22 @@ import domain.player.PlayerInventory;
 import domain.potion.Molecule;
 import domain.theory.Hypotheses;
 import exception.UserErrorException;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-public class PublicationBoard extends Board{
+import java.util.List;
+
+public class PublicationBoard extends Board implements Observable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8840118540539075045L;
 	private ArrayList<Hypotheses> hypotheses;
 	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
+	private List<Observer> observers = new ArrayList<>();
 
 	public PublicationBoard() {
         this.hypotheses = new ArrayList<Hypotheses>();
@@ -133,7 +138,7 @@ public class PublicationBoard extends Board{
     	
     	//Reduce Player Actions
     	player.getPlayerToken().reducePlayerAction();
-    	
+    	notifyObserver();
     	//return the true nature of the ingredient
     	switch (hypothesis.getIngredient().getMolecule().getAtomByColor(atomColorId).getAtomSign()) {
 		case 0: {
@@ -149,5 +154,17 @@ public class PublicationBoard extends Board{
     
     public ArrayList<Hypotheses> getHypotheses() {
 		return hypotheses;
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
 	}
 }

@@ -6,12 +6,18 @@ import domain.cards.*;
 import domain.potion.*;
 import domain.potion.Potion.potionType;
 import exception.*;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
-public class PotionBrewingBoard extends Board{
+import java.util.ArrayList;
+import java.util.List;
+
+public class PotionBrewingBoard extends Board implements Observable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3304320403492089717L;
+	private List<Observer> observers = new ArrayList<>();
 
 	public PotionBrewingBoard() {
 
@@ -91,7 +97,7 @@ public class PotionBrewingBoard extends Board{
 
 		//Reduce Player Action
 		player.getPlayerToken().reducePlayerAction();
-
+		notifyObserver();
 		return pot.getPotionType();
 	}
 
@@ -134,6 +140,7 @@ public class PotionBrewingBoard extends Board{
 		else if (pot.getPotionType() == potionType.Wisdom) {
 			player.getPlayerToken().addReputationPoint(1);
 		}
+		notifyObserver();
 	}
 
 
@@ -159,7 +166,7 @@ public class PotionBrewingBoard extends Board{
 		else if(pot.getPotionType() == potionType.Insanity) {
 			player.getPlayerToken().subtractGold(1);
 		}
-
+		notifyObserver();
 	}
 
 	//brew and sell new potion by giving some guarantee
@@ -245,8 +252,21 @@ public class PotionBrewingBoard extends Board{
 		}
 
 		String potionResult = "Created potion: " + pot.getPotionType().toString();
+		notifyObserver();
 		return potionResult + "\n" + guaranteeMsg;
 
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
 	}
 }
 

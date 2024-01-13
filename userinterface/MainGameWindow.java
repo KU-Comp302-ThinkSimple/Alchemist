@@ -1,39 +1,20 @@
 package userinterface;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import domain.GameController;
 import domain.boards.BoardController;
-import domain.boards.IngredientBoard;
-import domain.boards.PotionBrewingBoard;
 import domain.cards.IngredientCard;
 import exception.UserErrorException;
 import test.TestGameInitializer;
+import userinterface.observer.MainObserver;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Rectangle;
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.SystemColor;
-import java.awt.List;
-import javax.swing.JMenu;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.ArrayList;
-
-import javax.swing.JComboBox;
 
 public class MainGameWindow {
 	private static String infoText = """
@@ -289,6 +270,10 @@ public class MainGameWindow {
 		debunkTheoryView.setLocation(134, 888);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
+
+		MainObserver mainObserver = new MainObserver(this);
+		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
+		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(mainObserver);
 
 		//TODO FOR TESTING PURPOSES
 		JButton updateButton = new JButton("Update");

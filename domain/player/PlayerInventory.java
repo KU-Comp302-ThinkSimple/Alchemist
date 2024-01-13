@@ -1,14 +1,19 @@
 package domain.player;
 
+import domain.cards.IngredientCard;
+import domain.cards.PublicationCard;
+import domain.cards.artifactCards.ArtifactCard;
+import domain.potion.Potion;
+import domain.potion.Recipe;
+import domain.theory.Hypotheses;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-import domain.cards.*;
-import domain.cards.artifactCards.ArtifactCard;
-import domain.potion.*;
-import domain.theory.Hypotheses;
-
-public class PlayerInventory implements Serializable{
+public class PlayerInventory implements Serializable, Observable {
 
 	/**
 	 * 
@@ -20,6 +25,7 @@ public class PlayerInventory implements Serializable{
 	final ArrayList<IngredientCard> playerIngredientCardList;
 	final ArrayList<ArtifactCard> playerArtifactCardList;
 	final ArrayList<PublicationCard> playerPublicationCardList;
+	private List<Observer> observers = new ArrayList<>();
 
 	public PlayerInventory() {
 		
@@ -62,50 +68,73 @@ public class PlayerInventory implements Serializable{
 
 	public void addPotion(Potion potion) {
 		this.playerPotionList.add(potion);
+		notifyObserver();
 	}
 	
 	public void addRecipe(Recipe recipe) {
 		this.playerRecipeList.add(recipe);
+		notifyObserver();
 	}
 	
 	public void addHypoteses(Hypotheses hyp) {
 		this.playerHypothesesList.add(hyp);
+		notifyObserver();
 	}
 	
 	public void addAIngredientCard(IngredientCard ing) {
 		this.playerIngredientCardList.add(ing);
+		notifyObserver();
 	}
 	
 	public void addArtifactCard(ArtifactCard art) {
 		this.playerArtifactCardList.add(art);
+		notifyObserver();
 	}
 	
 	public void addPublicationCard(PublicationCard pub) {
 		this.playerPublicationCardList.add(pub);
+		notifyObserver();
 	}
 	
 	public void removePotion(Potion potion) {
 		this.playerPotionList.remove(potion);
+		notifyObserver();
 	}
 	
 	public void removeRecipe(Recipe recipe) {
 		this.playerRecipeList.remove(recipe);
+		notifyObserver();
 	}
 	
 	public void removeHypoteses(Hypotheses hyp) {
 		this.playerHypothesesList.remove(hyp);
+		notifyObserver();
 	}
 	
 	public void removeIngredientCard(IngredientCard ing) {
 		this.playerIngredientCardList.remove(ing);
+		notifyObserver();
 	}
 	
 	public void removeArtifactCard(ArtifactCard art) {
 		this.playerArtifactCardList.remove(art);
+		notifyObserver();
 	}
 	
 	public void removePublicationCard(PublicationCard pub) {
 		this.playerPublicationCardList.remove(pub);
+		notifyObserver();
+	}
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
 	}
 	
 }

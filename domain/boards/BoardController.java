@@ -1,8 +1,5 @@
 package domain.boards;
 
-import java.io.Serializable;
-import java.util.Random;
-
 import domain.GameController;
 import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
@@ -10,8 +7,15 @@ import domain.potion.Molecule;
 import domain.potion.Potion.potionType;
 import domain.theory.Hypotheses;
 import exception.UserErrorException;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
-public class BoardController implements Serializable{
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class BoardController implements Serializable, Observable {
 
 	/**
 	 * 
@@ -21,6 +25,8 @@ public class BoardController implements Serializable{
 	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
 	static PublicationBoard pubBoard = board.getPublicationBoard();
 	static IngredientBoard ingrBoard = board.getIngredientBoard();
+
+	private List<Observer> observers = new ArrayList<>();
 
 	BoardController(){}
 
@@ -101,11 +107,22 @@ public class BoardController implements Serializable{
 			if (ingredient.getName().equals(ingredient2)) {
 				ingr2 = ingredient;}
 		}
-
+		//notifyObserver();
 		return potBoard.sellPotion(ingr1, ingr2, guarantee);
 
 	}
 
 
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
 }
 

@@ -1,8 +1,10 @@
 package domain.cards;
 
+import userinterface.observer.Observable;
+
 import java.io.Serializable;
 
-public abstract class Card implements Serializable{
+public abstract class Card implements Serializable, Observable {
 
 	/**
 	 * 

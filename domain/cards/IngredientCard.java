@@ -1,8 +1,11 @@
 package domain.cards;
 
-import java.util.Objects;
-
 import domain.potion.Molecule;
+import userinterface.observer.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class IngredientCard extends Card{
 	
@@ -13,6 +16,7 @@ public class IngredientCard extends Card{
 	final int id;
 	final String name;
 	final Molecule molecule;
+	private List<Observer> observers = new ArrayList<>();
 	
 	public IngredientCard(int id, String name, Molecule molecule) {
 		this.id = id;
@@ -48,5 +52,16 @@ public class IngredientCard extends Card{
 		IngredientCard other = (IngredientCard) obj;
 		return id == other.id && Objects.equals(molecule, other.molecule) && Objects.equals(name, other.name);
 	}
-	
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
 }
