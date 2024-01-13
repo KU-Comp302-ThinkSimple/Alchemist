@@ -2,8 +2,12 @@ package domain.cards.artifactCards;
 
 import domain.cards.Card;
 import domain.cards.artifactCards.behaviors.ArtifactCardBehavior;
+import userinterface.observer.Observer;
 
-public abstract class ArtifactCard<R> extends Card  {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class ArtifactCard<R> extends Card {
 
 	/**
 	 * 
@@ -11,6 +15,7 @@ public abstract class ArtifactCard<R> extends Card  {
 	private static final long serialVersionUID = -5185302057469407727L;
 	protected ArtifactCardBehavior<R> effect;
 	private String name;
+	private List<Observer> observers = new ArrayList<>();
 
 	public ArtifactCard(ArtifactCardBehavior effect, String name) {
 		super();
@@ -19,7 +24,7 @@ public abstract class ArtifactCard<R> extends Card  {
 	}
 
 	public  R useCard() {
-
+		notifyObserver();
 		return this.effect.use();
 	}
 
@@ -37,6 +42,15 @@ public abstract class ArtifactCard<R> extends Card  {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	@Override
+	public void notifyObserver(){
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
+	public void addObserver(Observer observer){
+		observers.add(observer);
 	}
 
 }

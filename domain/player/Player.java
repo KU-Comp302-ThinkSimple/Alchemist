@@ -1,13 +1,13 @@
 package domain.player;
 
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
-import domain.cards.IngredientCard;
-import domain.potion.*;
-
-public class Player implements Serializable{
+public class Player implements Serializable, Observable {
 
 	/**
 	 * 
@@ -19,6 +19,7 @@ public class Player implements Serializable{
 	int playerHealth;
 	PlayerToken playerToken;
 	final int[][] deductionSelection;
+	private List<Observer> observers = new ArrayList<>();
 
 	//Constructor of player object
 	public Player(int playerId, String playerName, String password) {
@@ -76,4 +77,15 @@ public class Player implements Serializable{
 		else return false;
 	}
 
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
 }

@@ -32,7 +32,7 @@ public ArrayList<IngredientCard> changeCards(int [] order) {
 	ArrayList<IngredientCard> topThreeCards =this.useCard();
 	
 	GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().reorder(order);
-
+	notifyObserver();
 	return GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().getCards();
 
 }
