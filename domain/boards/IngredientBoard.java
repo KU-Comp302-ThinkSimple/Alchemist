@@ -1,19 +1,25 @@
 package domain.boards;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import domain.GameController;
 import domain.cards.IngredientCard;
-import domain.player.*;
-import exception.*;
+import domain.player.Player;
+import domain.player.PlayerInventory;
+import domain.player.PlayerToken;
+import exception.UserErrorException;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
-public class IngredientBoard extends Board{
+import java.util.ArrayList;
+import java.util.List;
+
+public class IngredientBoard extends Board implements Observable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8903616112216784654L;
 	private IngredientCardDeckArrayList ingredientDeck;
+
+	private List<Observer> observers = new ArrayList<>();
 
 	public IngredientBoard() {
 
@@ -25,6 +31,7 @@ public class IngredientBoard extends Board{
 		//EFFECTS: initializes the ingredient deck  
 		ingredientDeck = new IngredientCardDeckArrayList(3, GameController.getInstance().getGameInventory().getIngredientCards());
 		ingredientDeck.refill();
+		notifyObserver();
 	}
 
 	//Returns top element in deck and add new element for ensuring that deck is endless
@@ -52,6 +59,7 @@ public class IngredientBoard extends Board{
 		
 		//Reduce Player Actions
 		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
+		notifyObserver();
 	}
 
 
@@ -60,6 +68,7 @@ public class IngredientBoard extends Board{
 		//REQUIRES: initializeIngredientDeck must be called at least once
 		//EFFECTS: Pops one card from the ingredient deck and returns it.
 		//refills the deck automatically
+		notifyObserver();
 		return ingredientDeck.popCard();
 	}
 
@@ -88,10 +97,22 @@ public class IngredientBoard extends Board{
 		
 		//Reduce Player Action
 		token.reducePlayerAction();
+		notifyObserver();
 	}
 
 	public IngredientCardDeckArrayList getIngredientDeck() {
 		return ingredientDeck;
 	}
 
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer : observers){
+			observer.update();
+		}
+	}
 }
