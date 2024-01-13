@@ -2,5 +2,5 @@ package domain.cards.artifactCards.behaviors;
 
 public interface ArtifactCardBehavior<R> {
 
-    R use();
+    R use(Object... parameters);
 }

@@ -77,6 +77,7 @@ public class PublicationBoard extends Board implements Observable {
     	
     	//Reduce Player Actions
     	player.getPlayerToken().reducePlayerAction();
+		notifyObserver();
     }
     
     /**

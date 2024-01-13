@@ -3,6 +3,7 @@ package userinterface;
 import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
+import domain.player.Player;
 import exception.UserErrorException;
 import test.TestGameInitializer;
 import userinterface.observer.MainObserver;
@@ -274,15 +275,10 @@ public class MainGameWindow {
 		MainObserver mainObserver = new MainObserver(this);
 		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
 		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(mainObserver);
-
-		//TODO FOR TESTING PURPOSES
-		JButton updateButton = new JButton("Update");
-		updateButton.setBounds(80, 11, 89, 23);
-		updateButton.addActionListener(e ->{
-			updateMainGameWindow();
-
-		});
-		contentPane.add(updateButton);
+		GameController.getInstance().getBoard().getPublicationBoard().addObserver(mainObserver);
+		for (Player player: GameController.getInstance().getActivePlayers()){
+			player.getInventory().addObserver(mainObserver);
+		}
 		MainGameWindowFrame.setVisible(true);
 	}
 	public void updateMainGameWindow() {
