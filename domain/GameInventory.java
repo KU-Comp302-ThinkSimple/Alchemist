@@ -13,6 +13,7 @@ import domain.potion.MoleculeFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+
 public class GameInventory implements Serializable {
 	/**
 	 * 
@@ -23,8 +24,6 @@ public class GameInventory implements Serializable {
 	private final ArrayList<IngredientCard> ingrCards=new ArrayList<IngredientCard>();
 	private final ArrayList<PublicationCard> pubCards=new ArrayList<PublicationCard>();
 	private final ArrayList<ArtifactCard> artCards=new ArrayList<ArtifactCard>();
-
-	
 	AtomFactory atomFactory=AtomFactory.getInstance();
 	MoleculeFactory molFactory=MoleculeFactory.getInstance();
 	
@@ -96,7 +95,7 @@ public class GameInventory implements Serializable {
 		//TODO create artifact cards manually
 		artCards.add(new ElixirOfInsight( new ElixirOfInsightBehavior(), "Elixir Of Insight" ));
 		//artCards.add(new ArtifactCard(new Vaccine(),"Vaccine"));
-}
+	}
 
 	
 	public void createPublicationCard() {
@@ -127,7 +126,7 @@ public class GameInventory implements Serializable {
 	public ArrayList<ArtifactCard> getArtCards() {
 		return artCards;
 	}
-	
-	
-	
+
+
+
 }

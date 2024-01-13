@@ -14,7 +14,7 @@ public class ElixirOfInsightBehavior implements ArtifactCardBehavior<ArrayList<I
 	private static final long serialVersionUID = -4707363177434578900L;
 
 	@Override
-	public ArrayList<IngredientCard> use() {
+	public ArrayList<IngredientCard> use(Object... parameters) {
 
 		IngredientCard card1 = GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().getCards().get(0);
 		IngredientCard card2 = GameController.getInstance().getBoard().getIngredientBoard().getIngredientDeck().getCards().get(1);
