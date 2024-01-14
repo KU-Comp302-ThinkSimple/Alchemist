@@ -119,9 +119,7 @@ public class PlayerInventory extends JPanel {
 			button.addActionListener(e -> {
 				currentCard.useCard();
 				System.out.println("Used card named "+ currentCard.getName());
-				
-	// This area is to create the process if the card is the elixir of insight.			
-				
+
 				
 				if(currentCard.getName().equals("Elixir Of Insight")) {
 					
@@ -153,8 +151,20 @@ public class PlayerInventory extends JPanel {
 					}catch(Exception exc) {
 						System.out.println("Something went wrong");
 					}
-
 				}
+				else if (currentCard.getName().equals("Vaccine")){
+					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+				}
+				else if (currentCard.getName().equals("Magic Mortar")){
+					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+				}
+				else if (currentCard.getName().equals("Printing Press")){
+					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+				}
+				else if (currentCard.getName().equals("Wisdom Idol")){
+					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+				}
+
 				GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 				
