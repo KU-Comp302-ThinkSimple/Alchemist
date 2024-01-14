@@ -25,6 +25,7 @@ public class BoardController implements Serializable, Observable {
 	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
 	static PublicationBoard pubBoard = board.getPublicationBoard();
 	static IngredientBoard ingrBoard = board.getIngredientBoard();
+	static ArtifactCardBoard artifactCardBoard = board.getArtifactCardBoard();
 
 	private List<Observer> observers = new ArrayList<>();
 
@@ -111,7 +112,6 @@ public class BoardController implements Serializable, Observable {
 		return potBoard.sellPotion(ingr1, ingr2, guarantee);
 
 	}
-
 
 	@Override
 	public void addObserver(Observer observer) {
