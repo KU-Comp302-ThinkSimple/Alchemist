@@ -1,47 +1,14 @@
 package userinterface;
-import java.awt.Cursor;
-
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.TextField;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import domain.GameController;
 import domain.boards.BoardController;
 import userinterface.util.GlobalColors;
-import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
-import java.awt.Choice;
-import java.awt.Component;
-import javax.swing.JTextPane;
-import java.awt.ComponentOrientation;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.Icon;
-import java.awt.Rectangle;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 
 
@@ -105,6 +72,9 @@ public class BrewPotionPanel extends JPanel {
 			try {
 				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), false).toString().toLowerCase();
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
+				if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(3))){
+					//TODO: Pop up, kullanmak ister mi diye sor isterse kart seçtir ve o kartı :GameController.getInstance().getGameInventory().getArtCards().get(3).useCard(ingrSelecti) olarak kullan.
+				}
 			}
 			catch (Exception error) {
 				JOptionPane.showMessageDialog(this, error.getMessage());
