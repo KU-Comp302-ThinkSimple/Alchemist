@@ -3,10 +3,7 @@ package domain;
 import domain.cards.IngredientCard;
 import domain.cards.PublicationCard;
 import domain.cards.artifactCards.*;
-import domain.cards.artifactCards.behaviors.ElixirOfInsightBehavior;
-import domain.cards.artifactCards.behaviors.MagicMortarBehavior;
-import domain.cards.artifactCards.behaviors.VaccineBehavior;
-import domain.cards.artifactCards.behaviors.WisdomIdolBehavior;
+import domain.cards.artifactCards.behaviors.*;
 import domain.potion.Atom;
 import domain.potion.AtomFactory;
 import domain.potion.Molecule;
@@ -99,6 +96,7 @@ public class GameInventory implements Serializable {
 		artCards.add(new Vaccine(new VaccineBehavior(),"Vaccine"));
 		artCards.add(new WisdomIdol(new WisdomIdolBehavior(), "WisdonIdol"));
 		artCards.add(new MagicMortar(new MagicMortarBehavior(), "Magic Mortar"));
+		artCards.add(new PrintingPress(new PrintingPressBehavior(), "Printing Press"));
 	}
 
 	

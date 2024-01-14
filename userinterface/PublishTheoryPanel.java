@@ -1,24 +1,19 @@
 package userinterface;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collections;
-
-import javax.swing.*;
-
 import domain.GameController;
-import domain.GameInventory;
-import domain.boards.*;
+import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;
-import domain.potion.*;
+import domain.potion.Molecule;
 import exception.UserErrorException;
 import test.TestGameInitializer;
 import userinterface.util.GlobalIcons;
 
-import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 public class PublishTheoryPanel extends JPanel implements ActionListener{
 	private final JComboBox<IngredientCardComboBoxItem> ingredientComboBox;
 	private final JComboBox<MoleculeComboBoxItem> moleculeComboBox;
@@ -141,6 +136,9 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		Molecule molecule = ((MoleculeComboBoxItem)moleculeComboBox.getSelectedItem()).getMolecule();
 		try {
 			BoardController.publishTheory(ingredientCard, molecule);
+			if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(4))){
+				GameController.getInstance().getGameInventory().getArtCards().get(4).useCard();
+			}
 		}
 		catch (UserErrorException exc) {
 			JOptionPane.showMessageDialog(this, exc.getMessage());
