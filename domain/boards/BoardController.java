@@ -25,7 +25,6 @@ public class BoardController implements Serializable, Observable {
 	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
 	static PublicationBoard pubBoard = board.getPublicationBoard();
 	static IngredientBoard ingrBoard = board.getIngredientBoard();
-	static ArtifactCardBoard artifactCardBoard = board.getArtifactCardBoard();
 
 	private List<Observer> observers = new ArrayList<>();
 

@@ -11,15 +11,12 @@ public class GameBoard extends Board implements Serializable{
     private IngredientBoard ingredientBoard;
     private PublicationBoard publicationBoard;
     private PotionBrewingBoard potionBrewingBoard;
-	private ArtifactCardBoard artifactCardBoard;
-
 
     public GameBoard() {
         this.deductionBoard=new DeductionBoard();
         this.ingredientBoard=new IngredientBoard();
         this.publicationBoard=new PublicationBoard();
         this.potionBrewingBoard=new PotionBrewingBoard();
-        this.artifactCardBoard = new ArtifactCardBoard();
     }
 
 	public DeductionBoard getDeductionBoard() {
@@ -54,11 +51,4 @@ public class GameBoard extends Board implements Serializable{
 		this.potionBrewingBoard = potionBrewingBoard;
 	}
 
-	public ArtifactCardBoard getArtifactCardBoard() {
-		return artifactCardBoard;
-	}
-
-	public void setArtifactCardBoard(ArtifactCardBoard artifactCardBoard) {
-		this.artifactCardBoard = artifactCardBoard;
-	}
 }
