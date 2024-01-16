@@ -29,7 +29,7 @@ public class GameController implements Serializable{
 	GameController(){
 		this.activePlayers = new ArrayList<Player>();
 		this.board = new GameBoard();
-		this.gameInventory = GameInventory.getInstance();
+		this.gameInventory = new GameInventory();
 	}
 	
 	public static GameController getInstance() {

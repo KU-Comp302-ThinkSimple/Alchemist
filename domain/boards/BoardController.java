@@ -15,16 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BoardController implements Serializable, Observable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6077208034265033396L;
-	static GameBoard board = GameController.getInstance().getBoard();
-	static PotionBrewingBoard potBoard =board.getPotionBrewingBoard();
-	static PublicationBoard pubBoard = board.getPublicationBoard();
-	static IngredientBoard ingrBoard = board.getIngredientBoard();
+public class BoardController implements Observable {
 
 	private List<Observer> observers = new ArrayList<>();
 
@@ -40,7 +31,7 @@ public class BoardController implements Serializable, Observable {
 				ingr = ingr_1;}
 		}
 
-		ingrBoard.transmuteIngredient(ingr);
+		GameController.getInstance().getBoard().getIngredientBoard().transmuteIngredient(ingr);
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 	}
 	public static void buyArtifactCard() {
@@ -64,19 +55,19 @@ public class BoardController implements Serializable, Observable {
 		//ingredient card to itself (so that it is always full). The curr player
 		//loses 1 action. If they have no action left the player is changed
 		//(rounds updated) automatically
-		ingrBoard.forageForIngredient();
+		GameController.getInstance().getBoard().getIngredientBoard().forageForIngredient();
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
-		pubBoard.publishTheory(GameController.getInstance().getCurrentPlayer(), ingredient, hypothesizedMolecule);
+		GameController.getInstance().getBoard().getPublicationBoard().publishTheory(GameController.getInstance().getCurrentPlayer(), ingredient, hypothesizedMolecule);
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
-		String ret = pubBoard.debunkTheory(GameController.getInstance().getCurrentPlayer(), hypothesis, atomId);
+		String ret = GameController.getInstance().getBoard().getPublicationBoard().debunkTheory(GameController.getInstance().getCurrentPlayer(), hypothesis, atomId);
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
 	}
@@ -92,7 +83,7 @@ public class BoardController implements Serializable, Observable {
 			if (ingredient.getName().equals(ingredient2)) {
 				ingr2 = ingredient;}
 		}
-		potionType ret = potBoard.makeExperiment(ingr1, ingr2, onStu);
+		potionType ret = GameController.getInstance().getBoard().getPotionBrewingBoard().makeExperiment(ingr1, ingr2, onStu);
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
 	}
@@ -108,7 +99,7 @@ public class BoardController implements Serializable, Observable {
 				ingr2 = ingredient;}
 		}
 		//notifyObserver();
-		return potBoard.sellPotion(ingr1, ingr2, guarantee);
+		return GameController.getInstance().getBoard().getPotionBrewingBoard().sellPotion(ingr1, ingr2, guarantee);
 
 	}
 
