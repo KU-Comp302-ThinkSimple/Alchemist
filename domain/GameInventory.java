@@ -24,31 +24,31 @@ public class GameInventory implements Serializable {
 	private final ArrayList<PublicationCard> pubCards=new ArrayList<PublicationCard>();
 	private final ArrayList<ArtifactCard> artCards=new ArrayList<ArtifactCard>();
 	public GameInventory() {}
-	
-	
+
+
 	//this func creates atoms using factory and adds them to the list
 	public void createAtom() {
-		
+
 		atoms.add(AtomFactory.getInstance().createAtom(0, 0, 0)); // small red negative index 0
 		atoms.add(AtomFactory.getInstance().createAtom(1, 0, 0)); // big red negative	index 1
 		atoms.add(AtomFactory.getInstance().createAtom(0, 0, 1)); // small red positive index 2
 		atoms.add(AtomFactory.getInstance().createAtom(1, 0, 1)); // big red positive index 3
-		
+
 		atoms.add(AtomFactory.getInstance().createAtom(0, 1, 0)); // small green negative index 4
 		atoms.add(AtomFactory.getInstance().createAtom(1, 1, 0)); // big green negative	index 5
 		atoms.add(AtomFactory.getInstance().createAtom(0, 1, 1)); // small green positive index 6
 		atoms.add(AtomFactory.getInstance().createAtom(1, 1, 1)); // big green positive index 7
-		
+
 		atoms.add(AtomFactory.getInstance().createAtom(0, 2, 0)); // small blue negative index 8
 		atoms.add(AtomFactory.getInstance().createAtom(1, 2, 0)); // big blue negative	index 9
 		atoms.add(AtomFactory.getInstance().createAtom(0, 2, 1)); // small blue  positive index 10
 		atoms.add(AtomFactory.getInstance().createAtom(1, 3, 1)); // big blue positive index 11
 	}
-	
+
 	//this func creates molecules using factory and adds them to the list
 	public void createMolecule() {
-		
-		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(0), atoms.get(6), atoms.get(9))); 
+
+		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(0), atoms.get(6), atoms.get(9)));
 		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(2), atoms.get(4), atoms.get(11)));
 		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(2), atoms.get(5), atoms.get(8)));
 		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(0), atoms.get(7), atoms.get(10)));
@@ -57,13 +57,13 @@ public class GameInventory implements Serializable {
 		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(1), atoms.get(5), atoms.get(9)));
 		molecules.add(MoleculeFactory.getInstance().createMolecule(atoms.get(3), atoms.get(7), atoms.get(11)));
 	}
-	
+
 	//this func creates ingrs and adds them to the list
 	public void createIngredientCard() {
-		
+
 		//Shuffles the molecule list and creates ingrCards using those molecules and add them to the list.
 		Collections.shuffle(molecules);
-		
+
 		ingrCards.add(new IngredientCard(0, "Mushroom",molecules.get(0)));
 		ingrCards.add(new IngredientCard(1, "Seedling",molecules.get(1)));
 		ingrCards.add(new IngredientCard(2, "Frog",molecules.get(2)));
@@ -72,29 +72,29 @@ public class GameInventory implements Serializable {
 		ingrCards.add(new IngredientCard(5, "Mandrake Root",molecules.get(5)));
 		ingrCards.add(new IngredientCard(6, "Scorpion",molecules.get(6)));
 		ingrCards.add(new IngredientCard(7, "Raven's Feather",molecules.get(7)));
-		
+
 	}
 	//this func creates artifact cards and adds them to the list
 	public void createArtifactCard() {
-		
+
 		//TODO create artifact cards manually
 		artCards.add(new ElixirOfInsight( new ElixirOfInsightBehavior(), "Elixir Of Insight" ));
 		artCards.add(new Vaccine(new VaccineBehavior(),"Vaccine"));
-		artCards.add(new WisdomIdol(new WisdomIdolBehavior(), "WisdonIdol"));
+		artCards.add(new WisdomIdol(new WisdomIdolBehavior(), "Wisdom Idol"));
 		artCards.add(new MagicMortar(new MagicMortarBehavior(), "Magic Mortar"));
 		artCards.add(new PrintingPress(new PrintingPressBehavior(), "Printing Press"));
 	}
 
-	
+
 	public void createPublicationCard() {
-		
-			//TODO create publication cards manually
+
+		//TODO create publication cards manually
 	}
-	
+
 	public ArrayList<IngredientCard> getIngredientCards() {
 		return ingrCards;
 	}
-	
+
 
 	public ArrayList<Atom> getAtoms() {
 		return atoms;

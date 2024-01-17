@@ -37,12 +37,18 @@ public class GlobalIcons {
 	//Artifact Cards
 	public static ImageIcon elixirofinsight = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/elixirofinsight_100x160.png"));
 	public static ImageIcon vaccine = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/vaccine_100x160.png"));
+	public static ImageIcon wisdomidol = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/wisdomIdol_100x160.png"));
+	public static ImageIcon magicmortar = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/magicMortar_100x160.png"));
+	public static ImageIcon printingpress = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/printingPress_100x160.png"));
 	public static ImageIcon unknownArtifact = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/unknownArtifactCard_100x160.png"));
 
 	public static ImageIcon getArtifactCardImage(String name) {
 		switch (name) {
 		case "Elixir Of Insight": return elixirofinsight;
 		case "Vaccine": return vaccine;
+		case "Wisdom Idol": return wisdomidol;
+		case "Magic Mortar": return magicmortar;
+		case "Printing Press": return printingpress;
 		case "Unknown" : return unknownArtifact;
 		default : return unknownArtifact;
 		}
