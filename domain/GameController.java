@@ -255,8 +255,10 @@ public class GameController implements Serializable{
 			str += "\nThe game ended with a draw between ";
 			for (Player p : drawPlayers) {
 				str += " " + p.getPlayerName();
+				str += " and ";
 			}
-			str += "with " + drawPlayers.get(0).calculatePoints() + " points!";
+			str = str.substring(0, str.length()-4);
+			str += " with " + drawPlayers.get(0).calculatePoints() + " points!";
 		}
 		else {
 			str += "\nThe winner is " + topPlayer.getPlayerName() + " with " + topPlayer.calculatePoints() + " points!";

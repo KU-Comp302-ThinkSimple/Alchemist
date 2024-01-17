@@ -93,7 +93,7 @@ public class Player implements Serializable, Observable {
 	public String toString() {
 		String str = "Player Name: " + this.playerName;
 		str += "\nPlayer Health: " + this.playerHealth;
-		str += this.getPlayerToken();
+		str += "\n" + this.getPlayerToken();
 		return str;
 	}
 

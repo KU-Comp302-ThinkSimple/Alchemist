@@ -140,12 +140,11 @@ public class PlayerInventory implements Serializable, Observable {
 
 	@Override
 	public String toString() {
-		String str = "Remaining Artifact Cards: ";
+		String str = "Remaining Artifact Cards:  ";
 		for (ArtifactCard a : this.playerArtifactCardList) {
 			str += a.getName() + ", ";
 		}
 		str = str.substring(0, str.length() - 2);
-		str += ".";
 		return str;
 	}
 
