@@ -48,7 +48,7 @@ public class GameController implements Serializable{
 
 		//GameController should initialize game when two player are present;
 
-		if(activePlayers.size() == 2) { //TODO change this to number of players
+		if(activePlayers.size() >= 2) {
 			System.out.println("Game initialized");
 			initalizeGameHelper=new InitializeGameHelper();
 		}
