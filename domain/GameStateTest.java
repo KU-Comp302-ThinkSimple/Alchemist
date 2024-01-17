@@ -20,8 +20,8 @@ public class GameStateTest implements Serializable{
 		 * 
 		 */
 		private static final long serialVersionUID = -2133230584530613795L;
-		String name;
-		Element otherElem;
+		private String name;
+		private Element otherElem;
 		public Element(String name) {
 			this.name = name;
 		}
@@ -44,6 +44,7 @@ public class GameStateTest implements Serializable{
 
 		System.out.println(outState.elem1.otherElem == outState.elem2);
 		System.out.println(outState.elem2.otherElem == outState.elem1);
+		System.out.println(outState.elem1.name);
 		
 	}
 	

@@ -271,7 +271,16 @@ public class MainGameWindow {
 		debunkTheoryView.setLocation(134, 888);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
+		
+		JButton btnUpdateNetwork = new JButton("Update Network");
+		btnUpdateNetwork.setBounds(80, 11, 136, 21);
+		btnUpdateNetwork.addActionListener(e -> updateNetworkPressed());
+		contentPane.add(btnUpdateNetwork);
 
+		initializeObservers();
+		MainGameWindowFrame.setVisible(true);
+	}
+	public void initializeObservers() {
 		MainObserver mainObserver = new MainObserver(this);
 		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
 		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(mainObserver);
@@ -279,7 +288,6 @@ public class MainGameWindow {
 		for (Player player: GameController.getInstance().getActivePlayers()){
 			player.getInventory().addObserver(mainObserver);
 		}
-		MainGameWindowFrame.setVisible(true);
 	}
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
@@ -308,5 +316,9 @@ public class MainGameWindow {
 
 		//Debunk theory update
 		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
+	}
+	
+	private void updateNetworkPressed() {
+		System.out.println("Update network pressed");
 	}
 }
