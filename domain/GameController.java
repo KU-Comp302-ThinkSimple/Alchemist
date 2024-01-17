@@ -8,6 +8,7 @@ import domain.boards.Board;
 import domain.boards.GameBoard;
 import domain.player.Player;
 import domain.potion.Atom;
+import exception.UserErrorException;
 import userinterface.MainGameWindow;
 
 public class GameController implements Serializable{
@@ -17,6 +18,8 @@ public class GameController implements Serializable{
 
 	int currentRound=1; //1 2 and 3
 	private Player currentPlayer;
+	private Player localPlayer;
+	private String gameMode;
 	private ArrayList<Player> activePlayers;
 	private GameBoard board;
 	private GameInventory gameInventory;
@@ -45,7 +48,7 @@ public class GameController implements Serializable{
 
 		//GameController should initialize game when two player are present;
 
-		if(activePlayers.size() == 2) {
+		if(activePlayers.size() >= 2) {
 			System.out.println("Game initialized");
 			initalizeGameHelper=new InitializeGameHelper();
 		}
@@ -56,21 +59,46 @@ public class GameController implements Serializable{
 	}
 
 //This func changes rounds
-	public void changeRounds() {
+	public void changeRounds() throws UserErrorException {
+		
+		
+		
+		if(currentRound==3) {
+			throw new UserErrorException("The game is over");
+		}
+		
 		currentRound++;
+		
+		
 
 		for(int i=0;i<activePlayers.size();i++) {
 			activePlayers.get(i).getPlayerToken().setPlayerAction(3);
 		}
+		
 	}
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
 	public Boolean shouldChangeRound(){
+		
+		
+		//Below is the old code before refactoring.
 
-		int player1ActionsLeft= activePlayers.get(0).getPlayerToken().getPlayerAction();
-		int player2ActionsLeft= activePlayers.get(1).getPlayerToken().getPlayerAction();
-
-		if(player1ActionsLeft==0 && player1ActionsLeft==0) {
+//		int player1ActionsLeft= activePlayers.get(0).getPlayerToken().getPlayerAction();
+//		int player2ActionsLeft= activePlayers.get(1).getPlayerToken().getPlayerAction();
+//
+//		if(player1ActionsLeft==0 && player1ActionsLeft==0) {
+//			return true;
+//		}else {
+//			return false;
+//		}
+		
+		int actionCounter=0;
+		for(int i=0; i<activePlayers.size();i++) {
+			if(activePlayers.get(i).getPlayerToken().getPlayerAction()==0) {
+				actionCounter++;
+			}
+		}
+		if(actionCounter==activePlayers.size()) {
 			return true;
 		}else {
 			return false;
@@ -79,13 +107,49 @@ public class GameController implements Serializable{
 
 	//Change the current player after an action using this function
 	public void changeCurrentPlayer() {
-
-		for(int i=0;i<activePlayers.size();i++) {
-			if(!activePlayers.get(i).equals(currentPlayer)) {
-				currentPlayer=activePlayers.get(i);
-				break;
+		
+		//TODO change the gameMode attribute and update these conditions.
+		//If game is online, currentPlayer and localPlayer are different.
+		if(gameMode.equals("online")) {
+			
+			for(int i=0;i<activePlayers.size();i++) {
+				if(!activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get(i);
+					break;
+				}
+			}
+			
+			//If game is offline localPlayer is equal to currentPlayer 
+		}else if(gameMode.equals("offline")) {
+			
+			for(int i=0;i<activePlayers.size();i++) {
+				if(!activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get(i);
+					localPlayer=currentPlayer;
+					break;
+				}
+			}
+			
+		}else {
+			//If the game mode is not specified
+			for(int i=0;i<activePlayers.size();i++) {
+				if(!activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get(i);
+					localPlayer=currentPlayer;
+					break;
+				}
 			}
 		}
+		
+		
+		//Below is the old code.
+//		for(int i=0;i<activePlayers.size();i++) {
+//			if(!activePlayers.get(i).equals(currentPlayer)) {
+//				currentPlayer=activePlayers.get(i);
+//				break;
+//			}
+//		}
+		
 	}
 
 	public int getCurrentRound() {
