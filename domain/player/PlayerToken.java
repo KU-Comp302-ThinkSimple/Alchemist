@@ -7,6 +7,8 @@ import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.Potion;
 import domain.potion.Recipe;
 import domain.theory.Hypotheses;
+import exception.GameOverException;
+import exception.UserErrorException;
 import userinterface.observer.Observable;
 import userinterface.observer.Observer;
 
@@ -27,13 +29,13 @@ public class PlayerToken implements Serializable, Observable {
 	String playerAvatar; // the directory of the playeravatar is kept in this as a string.
 	PlayerInventory playerInventory;
 	private List<Observer> observers = new ArrayList<>();
-	
+
 	public PlayerToken() {
-		
+
 		this.playerInventory= new PlayerInventory();
 	}
-	
-	
+
+
 	public void addGold(int gold) {
 		this.gold=this.gold+gold;
 		notifyObserver();
@@ -51,7 +53,7 @@ public class PlayerToken implements Serializable, Observable {
 		this.reputation=this.reputation-point;
 		notifyObserver();
 	}
-	
+
 
 	public void addHealth() {
 		if(this.playerHealth<3) {
@@ -59,7 +61,7 @@ public class PlayerToken implements Serializable, Observable {
 		}
 		notifyObserver();
 	}
-	
+
 	public void reduceHealth() {
 		if(this.playerHealth>0) {
 			this.playerHealth--;
@@ -70,56 +72,56 @@ public class PlayerToken implements Serializable, Observable {
 		}
 		notifyObserver();
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public void addPotion(Potion potion) {
 		playerInventory.playerPotionList.add(potion);
 	}
-	
+
 	public void addRecipe(Recipe recipe) {
 		playerInventory.playerRecipeList.add(recipe);
 	}
-	
+
 	public void addHypoteses(Hypotheses hyp) {
 		playerInventory.playerHypothesesList.add(hyp);
 	}
-	
+
 	public void addAIngredientCard(IngredientCard ing) {
 		playerInventory.playerIngredientCardList.add(ing);
 	}
-	
+
 	public void addArtifactCard(ArtifactCard art) {
 		playerInventory.playerArtifactCardList.add(art);
 	}
-	
+
 	public void addPublicationCard(PublicationCard pub) {
 		playerInventory.playerPublicationCardList.add(pub);
 	}
-	
+
 
 	public void removePotion(Potion potion) {
 		playerInventory.playerPotionList.remove(potion);
 	}
-	
+
 	public void removeRecipe(Recipe recipe) {
 		playerInventory.playerRecipeList.remove(recipe);
 	}
-	
+
 	public void removeHypoteses(Hypotheses hyp) {
 		playerInventory.playerHypothesesList.remove(hyp);
 	}
-	
+
 	public void removeIngredientCard(IngredientCard ing) {
 		playerInventory.playerIngredientCardList.remove(ing);
 	}
-	
+
 	public void removeArtifactCard(ArtifactCard art) {
 		playerInventory.playerArtifactCardList.remove(art);
 	}
-	
+
 	public void removePublicationCard(PublicationCard pub) {
 		playerInventory.playerPublicationCardList.remove(pub);
 	}
@@ -183,28 +185,29 @@ public class PlayerToken implements Serializable, Observable {
 	 * Reduces the actions a player has by 1
 	 * @throws RuntimeException if the user has no more actions left
 	 */
-	public void reducePlayerAction() throws RuntimeException{
+	public void reducePlayerAction() throws RuntimeException, GameOverException{
 		if(this.playerAction<=0) {
-			
-			
+
+
 			throw new RuntimeException("Tried to reduce user actions when the user had no actions left");
-			
+
 		}
 		this.playerAction -= 1;
-		
+
 		//GameController.changeCurrentPlayer();
 		if(this.playerAction ==0) {
 			GameController.getInstance().changeCurrentPlayer();
 		}
-		
-		
+
+
 		if(GameController.getInstance().shouldChangeRound()) {
 			GameController.getInstance().changeRounds();
+
 		}
 		notifyObserver();
-		
+
 	}
-	
+
 	public PlayerInventory getPlayerInventory() {
 		return playerInventory;
 	}
@@ -225,6 +228,15 @@ public class PlayerToken implements Serializable, Observable {
 			observer.update();
 		}
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		String str = "Gold: " + this.gold;
+		str += "\nReputation: " + this.reputation;
+		str += "\n" + this.playerInventory;
+
+		return str;
+	}
+
+
 }

@@ -211,7 +211,57 @@ public class GameController implements Serializable{
 	public void setMainGameWindow(MainGameWindow mainGameWindow) {
 		this.mainGameWindow = mainGameWindow;
 	}
-	
+
+	public String gameOverMessage() {
+
+		String str = "";
+
+		Player topPlayer = null;
+		ArrayList<Player> drawPlayers = new ArrayList<Player>();
+		for (Player p : this.activePlayers) {
+
+			//update string
+			str += "\n" + p + "\n";
+
+			//Find players with most points
+			if (topPlayer == null) {
+				topPlayer = p;
+			}
+			//if current player has more points
+			else if (topPlayer.calculatePoints() < p.calculatePoints()) {
+				topPlayer = p;
+				drawPlayers.clear();
+			}
+			//if the top players share the same point
+			else if (topPlayer.calculatePoints() == p.calculatePoints()) {
+				if (topPlayer.getPlayerToken().getGold() < p.getPlayerToken().getGold()) {
+					topPlayer = p;
+					drawPlayers.clear();
+				}
+				else {
+					drawPlayers.add(topPlayer);
+					drawPlayers.add(p);
+				}
+			}
+		}
+
+		boolean draw = (drawPlayers.size() != 0);
+		//If top score is not shared
+
+		if (draw) {
+			str += "\nThe game ended with a draw between ";
+			for (Player p : drawPlayers) {
+				str += " " + p.getPlayerName();
+			}
+			str += "with " + drawPlayers.get(0).calculatePoints() + " points!";
+		}
+		else {
+			str += "\nThe winner is " + topPlayer.getPlayerName() + " with " + topPlayer.calculatePoints() + " points!";
+		}
+
+		return str;
+	}
+
 }
 
 

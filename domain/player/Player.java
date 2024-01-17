@@ -88,4 +88,20 @@ public class Player implements Serializable, Observable {
 			observer.update();
 		}
 	}
+
+	@Override
+	public String toString() {
+		String str = "Player Name: " + this.playerName;
+		str += "\nPlayer Health: " + this.playerHealth;
+		str += this.getPlayerToken();
+		return str;
+	}
+
+	public int calculatePoints() {
+		int golds = this.playerToken.gold;
+		int artifactCards = this.playerToken.playerInventory.getPlayerArtifactCardList().size();
+		golds += artifactCards/2;
+		int score = this.playerToken.reputation*10 + golds;
+		return score;
+	}
 }
