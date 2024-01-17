@@ -310,6 +310,9 @@ public class MainGameWindow {
 
 		//Debunk theory update
 		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
+
+		//Show message if game has ended
+		gameEndCheck();
 	}
 
 	public void gameEndCheck() {
