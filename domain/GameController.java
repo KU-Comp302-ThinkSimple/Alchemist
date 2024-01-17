@@ -130,14 +130,26 @@ public class GameController implements Serializable{
 				}
 			}
 			
-		}
-		//Below is the old code.
-		for(int i=0;i<activePlayers.size();i++) {
-			if(!activePlayers.get(i).equals(currentPlayer)) {
-				currentPlayer=activePlayers.get(i);
-				break;
+		}else {
+			//If the game mode is not specified
+			for(int i=0;i<activePlayers.size();i++) {
+				if(!activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get(i);
+					localPlayer=currentPlayer;
+					break;
+				}
 			}
 		}
+		
+		
+		//Below is the old code.
+//		for(int i=0;i<activePlayers.size();i++) {
+//			if(!activePlayers.get(i).equals(currentPlayer)) {
+//				currentPlayer=activePlayers.get(i);
+//				break;
+//			}
+//		}
+		
 	}
 
 	public int getCurrentRound() {
