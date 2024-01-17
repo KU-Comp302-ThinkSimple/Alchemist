@@ -52,6 +52,7 @@ public class MainGameWindow {
 			Good luck, alchemist! May your potions be potent and your theories�groundbreaking!
 			""";
 
+	private JFrame MainGameWindowFrame;
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
 	private JPanel resultsTriangle = new ResultsTriangle(1);
@@ -68,7 +69,7 @@ public class MainGameWindow {
 	}
 	public MainGameWindow() {
 		//		GameController.setMainGameWindow(this);
-		JFrame MainGameWindowFrame = new JFrame();
+		MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
 		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
 		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
@@ -164,7 +165,6 @@ public class MainGameWindow {
 					JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
 				}
 			}
-
 			//IngredientBoard.forageForIngredient();
 		});
 
@@ -188,6 +188,7 @@ public class MainGameWindow {
 		buyArtifactButton.addActionListener(e -> {
 
 			BoardController.buyArtifactCard();
+
 		});
 
 		JLabel buyArtifactLabel = new JLabel();
@@ -281,6 +282,7 @@ public class MainGameWindow {
 		}
 		MainGameWindowFrame.setVisible(true);
 	}
+
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
 		((DeductionBoard)deductionBoard).updateDeductionBoard();
@@ -308,5 +310,12 @@ public class MainGameWindow {
 
 		//Debunk theory update
 		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
+	}
+
+	public void gameEndCheck() {
+		boolean end = GameController.getInstance().checkGameEnd();
+		if (end) {
+			new GameOverDialog(MainGameWindowFrame);
+		}
 	}
 }

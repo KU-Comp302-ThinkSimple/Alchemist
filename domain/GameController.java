@@ -58,18 +58,10 @@ public class GameController implements Serializable{
 
 	}
 
-//This func changes rounds
+	//This func changes rounds
 	public void changeRounds() throws UserErrorException {
-		
-		
-		
-		if(currentRound==3) {
-			throw new UserErrorException("The game is over");
-		}
-		
+
 		currentRound++;
-		
-		
 
 		for(int i=0;i<activePlayers.size();i++) {
 			activePlayers.get(i).getPlayerToken().setPlayerAction(3);
@@ -98,7 +90,11 @@ public class GameController implements Serializable{
 				actionCounter++;
 			}
 		}
-		if(actionCounter==activePlayers.size()) {
+		if (actionCounter == activePlayers.size()) {
+			if ( currentRound == 3) {
+				//TODO Game over
+				return false;
+			}
 			return true;
 		}else {
 			return false;
@@ -210,6 +206,26 @@ public class GameController implements Serializable{
 
 	public void setMainGameWindow(MainGameWindow mainGameWindow) {
 		this.mainGameWindow = mainGameWindow;
+	}
+
+	public boolean checkGameEnd() {
+
+		if (currentRound == 3) {
+
+			int actionCounter = 0;
+			for (int i = 0 ; i < activePlayers.size() ; i++) {
+
+				if (activePlayers.get(i).getPlayerToken().getPlayerAction() == 0) {
+					actionCounter++;
+				}
+			}
+			if (actionCounter == activePlayers.size()) {
+				return true;
+			}
+			else return false;
+		}
+
+		else return false;
 	}
 
 	public String gameOverMessage() {

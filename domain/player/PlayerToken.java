@@ -185,7 +185,7 @@ public class PlayerToken implements Serializable, Observable {
 	 * Reduces the actions a player has by 1
 	 * @throws RuntimeException if the user has no more actions left
 	 */
-	public void reducePlayerAction() throws RuntimeException, GameOverException{
+	public void reducePlayerAction() throws RuntimeException{
 		if(this.playerAction<=0) {
 
 
