@@ -80,11 +80,6 @@ public class LoginSignupWindowNew extends JFrame {
 		offlineButton.setRequestFocusEnabled(false);
 		offlineButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		offlineButton.setFont(GlobalFonts.DISPLAY);
-		offlineButton.addActionListener(e -> {
-			new LoginSignUpWindow();
-			this.dispose();
-		});
-
 
 		//JOIN BUTTON
 		JButton joinButton = new JButton("Join Online Lobby");
@@ -95,9 +90,6 @@ public class LoginSignupWindowNew extends JFrame {
 		joinButton.setRequestFocusEnabled(false);
 		joinButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		joinButton.setFont(GlobalFonts.DISPLAY);
-		joinButton.addActionListener(e -> {
-			//TODO
-		});
 
 		//HOST BUTTON
 		JButton hostButton = new JButton("Host Online Lobby");
@@ -108,9 +100,6 @@ public class LoginSignupWindowNew extends JFrame {
 		hostButton.setRequestFocusEnabled(false);
 		hostButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		hostButton.setFont(GlobalFonts.DISPLAY);
-		hostButton.addActionListener(e -> {
-			//TODO
-		});
 
 		//GAME BUTTONS JPANEL
 		JPanel buttons = new JPanel();
@@ -128,5 +117,105 @@ public class LoginSignupWindowNew extends JFrame {
 		buttons.setOpaque(false);
 		buttons.setLayout(null);
 		this.contentPane.add(buttons);
+
+		//LOG IN SIGN UP PANEL
+		JPanel logsignPanel = new LoginSignUpPanel();
+		getContentPane().add(logsignPanel); //TODO if join or host is chosen
+		logsignPanel.setLocation(937, 212);
+		logsignPanel.setSize(470, 580);
+		logsignPanel.setVisible(false);
+
+		//ENTER LOBBY ID PANEL
+		JPanel joinLobbyPanel = new JPanel();
+		joinLobbyPanel.setBounds(1441, 212, 349, 185);
+		joinLobbyPanel.setVisible(false);
+		contentPane.add(joinLobbyPanel);
+
+		//LOBBY ID HEADER
+		JTextField loginHeaderText = new JTextField();
+		loginHeaderText.setEditable(false);
+		loginHeaderText.setBorder(null);
+		loginHeaderText.setForeground(GlobalColors.TEXT_COLOR);
+		loginHeaderText.setBackground(GlobalColors.BACKGROUND_COLOR);
+		loginHeaderText.setFont(GlobalFonts.DISPLAY_HEADER);
+		loginHeaderText.setOpaque(false);
+		loginHeaderText.setText("ENTER LOBBY ID");
+
+		//LOBBY ID
+		JTextField lobbyIDInputTextField = new JTextField();
+		lobbyIDInputTextField.setBorder(new EmptyBorder(0, 3, 0, 0));
+		lobbyIDInputTextField.setFont(GlobalFonts.INPUT);
+
+		//JOIN LOBBY BUTTON
+		JButton joinIDButton = new JButton("Join Lobby");
+		joinIDButton.setBackground(GlobalColors.BUTTON_COLOR);
+		joinIDButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		joinIDButton.setBorder(null);
+		joinIDButton.setRequestFocusEnabled(false);
+		joinIDButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
+		joinIDButton.setFont(GlobalFonts.DISPLAY);
+		joinIDButton.addActionListener(e -> {
+			String IDs = lobbyIDInputTextField.getText();
+			int ID = Integer.parseInt(IDs);
+
+			//TODO backend calls to join lobby
+		});
+		joinLobbyPanel.setLayout(new GridLayout(3, 1, 0, 0));
+
+		//JOIN LOBBY COMPONENTS PUT IN LABEL
+		joinLobbyPanel.add(loginHeaderText);
+		joinLobbyPanel.add(lobbyIDInputTextField);
+		joinLobbyPanel.add(joinIDButton);
+		getContentPane().add(joinLobbyPanel); //TODO if "join online lobby" is chosen
+
+
+		//HOST GAME BUTTON (after logging in)
+		JButton hostGameButton = new JButton("Host Game");
+		hostGameButton.setSize(349, 100);
+		hostGameButton.setLocation(1441, 476);
+		hostGameButton.setBackground(GlobalColors.BUTTON_COLOR);
+		hostGameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		hostGameButton.setBorder(null);
+		hostGameButton.setRequestFocusEnabled(false);
+		hostGameButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
+		hostGameButton.setFont(GlobalFonts.DISPLAY);
+		hostGameButton.addActionListener(e -> {
+			//TODO call needed functions from backend, open a lobby
+			logsignPanel.setVisible(false);
+			//TODO onlineLobbyPanel.setVisible(true);
+			((JButton) e.getSource()).setVisible(false);
+		});
+		hostGameButton.setVisible(false);
+		getContentPane().add(hostGameButton);
+
+
+		//MAIN MENU OFFLINE GAME BUTTON
+		offlineButton.addActionListener(e -> {
+			new LoginSignUpWindow();
+			this.dispose();
+		});
+
+		//MAIN MENU JOIN ONLINE LOBBY BUTTON
+		joinButton.addActionListener(e -> {
+
+			logsignPanel.setVisible(true);
+			joinLobbyPanel.setVisible(true);
+			buttons.setVisible(false);
+			alchemistImageLabel.setIcon(GlobalIcons.getImage("alchemist square 2"));
+			alchemistImageLabel.repaint();
+
+		});
+
+		//MAIN MENU HOST ONLINE LOBBY BUTTON
+		hostButton.addActionListener(e -> {
+			logsignPanel.setVisible(true);
+			hostGameButton.setVisible(true);
+			buttons.setVisible(false);
+			alchemistImageLabel.setIcon(GlobalIcons.getImage("alchemist square 3"));
+			alchemistImageLabel.repaint();
+		});
+
+
+		this.setVisible(true);
 	}
 }
