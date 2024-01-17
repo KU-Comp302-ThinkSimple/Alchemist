@@ -22,7 +22,7 @@ public class PublicationBoard extends Board implements Observable {
 	private static final long serialVersionUID = 8840118540539075045L;
 	private ArrayList<Hypotheses> hypotheses;
 	private HashMap<IngredientCard, HashSet<Integer>> provenIngredientAtoms;
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 
 	public PublicationBoard() {
         this.hypotheses = new ArrayList<Hypotheses>();
@@ -159,11 +159,17 @@ public class PublicationBoard extends Board implements Observable {
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}

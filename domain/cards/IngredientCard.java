@@ -16,7 +16,7 @@ public class IngredientCard extends Card{
 	final int id;
 	final String name;
 	final Molecule molecule;
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 	
 	public IngredientCard(int id, String name, Molecule molecule) {
 		this.id = id;
@@ -55,11 +55,17 @@ public class IngredientCard extends Card{
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}

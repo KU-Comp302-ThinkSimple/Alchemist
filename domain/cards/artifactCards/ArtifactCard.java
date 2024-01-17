@@ -15,7 +15,7 @@ public abstract class ArtifactCard<R> extends Card {
 	private static final long serialVersionUID = -5185302057469407727L;
 	protected ArtifactCardBehavior<R> effect;
 	private String name;
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 
 	public ArtifactCard(ArtifactCardBehavior effect, String name) {
 		super();
@@ -45,11 +45,17 @@ public abstract class ArtifactCard<R> extends Card {
 	}
 	@Override
 	public void notifyObserver(){
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}
 	}
 	public void addObserver(Observer observer){
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 

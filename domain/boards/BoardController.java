@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class BoardController implements Observable {
 
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 
 	BoardController(){}
 
@@ -105,11 +105,17 @@ public class BoardController implements Observable {
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}

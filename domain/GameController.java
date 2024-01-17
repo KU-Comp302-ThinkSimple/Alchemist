@@ -20,7 +20,6 @@ public class GameController implements Serializable{
 	private ArrayList<Player> activePlayers;
 	private GameBoard board;
 	private GameInventory gameInventory;
-	private InitializeGameHelper initalizeGameHelper;
 	private MainGameWindow mainGameWindow;
 
 
@@ -38,6 +37,10 @@ public class GameController implements Serializable{
 		}
 		return instance;
 	}
+	
+	public static void updateInstance(GameController newInstance) {
+		GameController.instance = newInstance;
+	}
 
 
 	//This func initializes the game by calling creating a new instance of initliazegamehelper
@@ -47,7 +50,7 @@ public class GameController implements Serializable{
 
 		if(activePlayers.size() == 2) {
 			System.out.println("Game initialized");
-			initalizeGameHelper=new InitializeGameHelper();
+			new InitializeGameHelper();
 		}
 		else {
 			System.out.println("Not able to initialize");
@@ -128,15 +131,6 @@ public class GameController implements Serializable{
 	public void setGameInventory(GameInventory gameInventory) {
 		this.gameInventory = gameInventory;
 	}
-
-	public InitializeGameHelper getInitalizeGameHelper() {
-		return initalizeGameHelper;
-	}
-
-	public void setInitalizeGameHelper(InitializeGameHelper initalizeGameHelper) {
-		this.initalizeGameHelper = initalizeGameHelper;
-	}
-
 
 
 	public MainGameWindow getMainGameWindow() {

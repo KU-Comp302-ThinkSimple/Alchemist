@@ -5,6 +5,7 @@ import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;
 import exception.UserErrorException;
+import network.NetworkUtilities;
 import test.TestGameInitializer;
 import userinterface.observer.MainObserver;
 import userinterface.util.GlobalColors;
@@ -15,6 +16,11 @@ import userinterface.util.GlobalIcons;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class MainGameWindow {
@@ -66,6 +72,7 @@ public class MainGameWindow {
 		TestGameInitializer.initializeTestGame();
 		new MainGameWindow();
 	}
+	
 	public MainGameWindow() {
 		//		GameController.setMainGameWindow(this);
 		JFrame MainGameWindowFrame = new JFrame();
@@ -210,8 +217,11 @@ public class MainGameWindow {
 			try {
 				BoardController.forageForIngredient();
 			}
-			catch (Exception a) {
+			catch (UserErrorException a) {
 				JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
+			}
+			catch(Exception exc) {
+				exc.printStackTrace();
 			}
 		});
 		forageForIngredientPanel.add(forageForIngredientButton);
@@ -288,6 +298,7 @@ public class MainGameWindow {
 		for (Player player: GameController.getInstance().getActivePlayers()){
 			player.getInventory().addObserver(mainObserver);
 		}
+		System.out.println("Initialized observers");
 	}
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
@@ -320,5 +331,9 @@ public class MainGameWindow {
 	
 	private void updateNetworkPressed() {
 		System.out.println("Update network pressed");
+		byte[] serializedGameController = NetworkUtilities.serializeObject(GameController.getInstance());
+		GameController newGameController = (GameController) NetworkUtilities.deserializeObject(serializedGameController);
+		GameController.updateInstance(newGameController);
+		initializeObservers();
 	}
 }
