@@ -209,22 +209,9 @@ public class GameController implements Serializable{
 	}
 
 	public boolean checkGameEnd() {
-
-		if (currentRound == 3) {
-
-			int actionCounter = 0;
-			for (int i = 0 ; i < activePlayers.size() ; i++) {
-
-				if (activePlayers.get(i).getPlayerToken().getPlayerAction() == 0) {
-					actionCounter++;
-				}
-			}
-			if (actionCounter == activePlayers.size()) {
-				return true;
-			}
-			else return false;
+		if (currentRound == 4) {
+			return true;
 		}
-
 		else return false;
 	}
 
