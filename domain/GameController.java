@@ -59,7 +59,7 @@ public class GameController implements Serializable{
 	}
 
 	//This func changes rounds
-	public void changeRounds() throws UserErrorException {
+	public void changeRounds() {
 
 		currentRound++;
 
