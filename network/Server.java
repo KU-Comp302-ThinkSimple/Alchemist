@@ -16,6 +16,7 @@ public class Server extends Thread {
     private int availablePort;
     private final ArrayList<Socket> clients;
     private final int clientBufferSize;
+    private static final boolean createTestClients = false;
 
     /**
      * A server class that relays any message it receives into other connections
@@ -41,16 +42,18 @@ public class Server extends Thread {
         // Start the server thread
         server.start();
         
-        //create three clients to test the server
-        TestClient client1 = new TestClient("client1", "127.0.0.1", port);
-        TestClient client2 = new TestClient("client2", "127.0.0.1", port);
-        TestClient client3 = new TestClient("client3", "127.0.0.1", port);
-        
-        client1.start();
-        TimeUnit.SECONDS.sleep(2);
-        client2.start();
-        TimeUnit.SECONDS.sleep(2);
-        client3.start();
+        if(createTestClients) {
+            //create three clients to test the server
+            TestClient client1 = new TestClient("client1", "127.0.0.1", port);
+            TestClient client2 = new TestClient("client2", "127.0.0.1", port);
+            TestClient client3 = new TestClient("client3", "127.0.0.1", port);
+            
+            client1.start();
+            TimeUnit.SECONDS.sleep(2);
+            client2.start();
+            TimeUnit.SECONDS.sleep(2);
+            client3.start();
+        }
     }
 
     public static int findAvailablePort() {

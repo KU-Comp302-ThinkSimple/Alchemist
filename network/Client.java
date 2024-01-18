@@ -8,28 +8,31 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import domain.GameController;
+import userinterface.observer.Observer;
 
-public class Client extends Thread{
+public class Client extends Thread implements Observer{
 	public static boolean debugEnabled = true;
 	private final String name;
 	private final String serverHost;
 	private final int serverPort;
-	private final int bufferSize;
-	public Client(String name, String serverHost, int serverPort, int bufferSize) {
+	private final Socket connection;
+	public Client(String name, String serverHost, int serverPort) throws UnknownHostException, IOException {
 		this.name = name;
 		this.serverHost = serverHost;
 		this.serverPort = serverPort;
-		this.bufferSize = bufferSize;
+		
+		connection = new Socket(serverHost, serverPort);
 	}
 
-    private void sendGameState(Socket socket, GameController gameState) {
+    public void sendGameState(GameController gameState) {
         try {
-            OutputStream output = socket.getOutputStream();
+            OutputStream output = connection.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(output);
             oos.writeObject(gameState);
             if(debugEnabled) {
@@ -40,9 +43,9 @@ public class Client extends Thread{
         }
     }
     
-    private void listen(Socket socket) {
+    private void listen() {
     	try {
-            InputStream input = socket.getInputStream();	
+            InputStream input = connection.getInputStream();	
             ObjectInputStream ois = new ObjectInputStream(input);
             
             while (true) {
@@ -50,6 +53,7 @@ public class Client extends Thread{
             		GameController newGameController = (GameController) ois.readObject();
             		//do sth with gameState
                 	System.out.println(this.name + " received game state");
+                	GameController.updateInstance(newGameController);
 				} catch (ClassNotFoundException e) {
 					if(debugEnabled) {
 						e.printStackTrace();
@@ -67,16 +71,11 @@ public class Client extends Thread{
 	@Override
 	public void run() {
 		System.out.println("Starting client " + this.name);
-		try (Socket serverConnection = new Socket(serverHost, serverPort)){
-			System.out.println("Client " + name + " connected to host");
-			
-            listen(serverConnection);
+        listen();
+	}
 
-		} catch (Exception e) {
-			System.out.println("Client " + this.name + " failed to connect");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			// TODO: handle exception
-		}
+	@Override
+	public void update() {
+		sendGameState(GameController.getInstance());
 	}
 }
