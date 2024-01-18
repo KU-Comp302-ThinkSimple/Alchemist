@@ -102,6 +102,19 @@ public class GlobalIcons {
 		}
 	}
 
+	public static ImageIcon alchemistBig = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square.png"));
+	public static ImageIcon alchemistBig2 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square2.png"));
+	public static ImageIcon alchemistBig3 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square3.png"));
+
+	public static ImageIcon getImage(String image) {
+		switch (image) {
+		case "alchemist square 1": return alchemistBig;
+		case "alchemist square 2": return alchemistBig2;
+		case "alchemist square 3": return alchemistBig3;
+		default : return alchemistBig;
+		}
+	}
+
 
 
 
