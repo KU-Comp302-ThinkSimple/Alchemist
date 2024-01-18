@@ -188,7 +188,7 @@ public class MainGameWindow {
 		buyArtifactButton.addActionListener(e -> {
 
 			BoardController.buyArtifactCard();
-
+			updateMainGameWindow();
 		});
 
 		JLabel buyArtifactLabel = new JLabel();
