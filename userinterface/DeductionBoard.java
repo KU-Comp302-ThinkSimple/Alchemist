@@ -82,7 +82,9 @@ public class DeductionBoard extends JPanel {
 		this.setVisible(true);
 	}
 
-	public void updateDeductionBoard() {
+	public void updateDeductionBoard(String gameMode) {
+		if (gameMode.equals("online")) player = GameController.getInstance().getCurrentPlayer();
+		else player = GameController.getInstance().getCurrentPlayer(); //TODO change this to local player
 		player = GameController.getInstance().getCurrentPlayer();
 		buttonSelect = player.getDeductionSelection();
 
@@ -100,5 +102,9 @@ public class DeductionBoard extends JPanel {
 				}
 			}
 		}
+	}
+
+	public void updateDeductionBoard() { //TODO temporary function
+		updateDeductionBoard("online");
 	}
 }
