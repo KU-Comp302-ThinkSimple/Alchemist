@@ -75,14 +75,16 @@ public class DeductionBoard extends JPanel {
 
 		JLabel deductionBoardLabel = new JLabel();
 		deductionBoardLabel.setBounds(0, 0, 704, 341);
-		deductionBoardLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
+		deductionBoardLabel.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
 		buttonsPanel.add(deductionBoardLabel);
 
 		this.add(buttonsPanel);
 		this.setVisible(true);
 	}
 
-	public void updateDeductionBoard() {
+	public void updateDeductionBoard(String gameMode) {
+		if (gameMode.equals("online")) player = GameController.getInstance().getCurrentPlayer();
+		else player = GameController.getInstance().getCurrentPlayer(); //TODO change this to local player
 		player = GameController.getInstance().getCurrentPlayer();
 		buttonSelect = player.getDeductionSelection();
 
@@ -100,5 +102,9 @@ public class DeductionBoard extends JPanel {
 				}
 			}
 		}
+	}
+
+	public void updateDeductionBoard() { //TODO temporary function
+		updateDeductionBoard("online");
 	}
 }

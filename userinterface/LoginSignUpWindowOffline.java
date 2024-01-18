@@ -24,7 +24,7 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Color;
 
-public class LoginSignUpWindow {
+public class LoginSignUpWindowOffline {
 
 	private JPanel contentPane;
 	private JTextField loginHeaderText;
@@ -47,7 +47,7 @@ public class LoginSignUpWindow {
 
 
 
-	public LoginSignUpWindow() {
+	public LoginSignUpWindowOffline() {
 
 		JFrame LoginSignUpWindowFrame = new JFrame();
 		LoginSignUpWindowFrame.setUndecorated(true);
@@ -98,7 +98,7 @@ public class LoginSignUpWindow {
 			//TODO Call the backend function to start the game with needed arguments *DONE
 			GameController.getInstance().initializeGame();
 			LoginSignUpWindowFrame.dispose();
-			new MainGameWindow();
+			new MainGameWindowOffline();
 		}
 				);
 		contentPane.add(startGameButton);
@@ -343,7 +343,7 @@ public class LoginSignUpWindow {
 
 		alchemistImageLabel = new JLabel();
 		alchemistImageLabel.setBounds(110, 121, 766, 766);
-		alchemistImageLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/alchemist_square.png")));
+		alchemistImageLabel.setIcon(new ImageIcon(LoginSignUpWindowOffline.class.getResource("/userinterface/images/alchemist_square.png")));
 		contentPane.add(alchemistImageLabel);
 
 

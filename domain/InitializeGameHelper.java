@@ -45,7 +45,7 @@ public class InitializeGameHelper {
 	// This func distributes the ingr cards.
 	public void distributeInitialCards() {
 
-		for(int i=0;i<2;i++) {
+		for(int i=0;i<GameController.getInstance().getActivePlayers().size();i++) {
 			for(int j=0;j<2;j++) {
 				GameController.getInstance().getActivePlayers().get(i).getInventory().addAIngredientCard(GameController.getInstance().getBoard().getIngredientBoard().popIngredient());
 
@@ -56,7 +56,7 @@ public class InitializeGameHelper {
 	// This func distributes the gold.
 	public void distributeGold() {
 
-		for(int i=0;i<2;i++) {
+		for(int i=0;i<GameController.getInstance().getActivePlayers().size();i++) {
 			GameController.getInstance().getActivePlayers().get(i).getPlayerToken().addGold(10);
 		}
 	}

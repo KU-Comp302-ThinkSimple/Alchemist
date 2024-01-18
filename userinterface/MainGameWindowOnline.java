@@ -1,11 +1,26 @@
 package userinterface;
 
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
 import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;
 import exception.UserErrorException;
-import network.NetworkUtilities;
 import test.TestGameInitializer;
 import userinterface.observer.MainObserver;
 import userinterface.util.GlobalColors;
@@ -13,81 +28,42 @@ import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+public class MainGameWindowOnline extends JFrame{
 
-public class MainGameWindow {
-	private static String infoText = """
-			Welcome to Alchemy Lab Game!
-
-			In this game, you take on the role of an alchemist conducting experiments in the lab. Your goal is to brew potions, contribute to publications, and form theories about ingredient properties. Here's a quick guide to get you started:
-
-			Game Phases:
-
-			First Round:
-			Forage for Ingredients: Draw ingredients from the deck.
-			Transmute Ingredient: Discard an ingredient for gold.
-			Buy Artifacts: Purchase artifacts with gold.
-			Make Experiments: Mix ingredients, test potions, and gain results.
-			Second Round:
-			Sell a Potion: Offer potions to adventurers for gold.
-			Publish a Theory: Share your knowledge about ingredients for reputation points.
-			Final Round:
-			Debunk or Endorse Theories: Prove or disprove published theories for reputation points.
-			Game Elements:
-
-			Player Tokens: Represent your unique avatar. Track your position, resources, and scores.
-			Ingredients: Various types with unique properties. Store them in the Ingredient Storage.
-			Potions: Brew potions with specific recipes and point values.
-			Publication Cards: Contribute to theories for reputation points.
-			Artifact Cards: Purchase for unique game advantages.
-			Alchemy Markers: Form theories on the Deduction Board.
-			Winning the Game:
-
-			Accumulate reputation points and gold.
-			Exchange leftover artifacts for gold.
-			Score one-third of a point for each gold piece.
-			The player with the most score points wins!
-			Good luck, alchemist! May your potions be potent and your theories�groundbreaking!
-			""";
-
-	private JPanel contentPane;
-	private JPanel deductionBoard = new DeductionBoard();
-	private JPanel resultsTriangle = new ResultsTriangle(1);
-	private JPanel playerInventory = new PlayerInventory();
-	private JPanel potionBrewingBoard = new BrewPotionPanel();
-	private JPanel playerTokenView = new PlayerTokenView();
-	private JPanel publishTheoryPanel = new PublishTheoryPanel();
-	private JPanel debunkTheoryView = new DebunkTheoryView();
-	private JComboBox transmuteIngredientComboBox;
+	Player localPlayer; //TODO
+	JPanel contentPane;
+	JPanel publishTheoryPanel = new PublishTheoryPanel();
+	JPanel debunkTheoryView = new DebunkTheoryView();
+	JPanel potionBrewingBoard = new BrewPotionPanel();
+	JPanel resultsTriangle = new ResultsTriangle(1);
+	JPanel deductionBoard = new DeductionBoard();
+	PlayerTokenView ptwLocal;
+	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
+	JPanel playerInventory = new PlayerInventory();
+	JComboBox transmuteIngredientComboBox;
+	JLabel roundLabel;
+	JLabel turnLabel;
 
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
-		new MainGameWindow();
+		new MainGameWindowOnline();
 	}
-	
-	public MainGameWindow() {
-		//		GameController.setMainGameWindow(this);
-		JFrame MainGameWindowFrame = new JFrame();
-		MainGameWindowFrame.setUndecorated(true);
-		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
-		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
-		//MainGameWindowFrame.setExtendedState(JFrame.NORMAL);
 
-		MainGameWindowFrame.setTitle("Alchemists");
-		MainGameWindowFrame.setResizable(false);
-		MainGameWindowFrame.setSize(GlobalDimensions.FULL_SCREEN);
-		MainGameWindowFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
-		MainGameWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
+	public MainGameWindowOnline() {
 
+		this.setUndecorated(true);
+		this.setMaximumSize(new Dimension(1920, 1080));
+		this.setBounds(0, 0, 1920, 1080);
+		//this.setExtendedState(JFrame.NORMAL);
+
+		this.setTitle("Alchemists Online");
+		this.setResizable(false);
+		this.setSize(GlobalDimensions.FULL_SCREEN);
+		this.setPreferredSize(GlobalDimensions.FULL_SCREEN);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(0, 0, 1920, 1080);
+
+		//CONTENT PANE
 		contentPane = new JPanel();
 		contentPane.setBackground(GlobalColors.BACKGROUND_COLOR);
 		contentPane.setSize(GlobalDimensions.FULL_SCREEN);
@@ -95,9 +71,10 @@ public class MainGameWindow {
 		contentPane.setMinimumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setMaximumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		MainGameWindowFrame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setContentPane(contentPane);
 
+		//CLOSE BUTTON
 		JButton closeButton = new JButton("X");
 		closeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		closeButton.setBorder(null);
@@ -106,22 +83,46 @@ public class MainGameWindow {
 		closeButton.setFont(GlobalFonts.DISPLAY);
 		closeButton.setBounds(10, 11, 60, 39);
 		closeButton.addActionListener(e -> {
-			MainGameWindowFrame.dispose();
+			this.dispose();
 		}
 				);
-		playerTokenView.setLocation(134, 45);
-		//playerTokenView.setSize(playerTokenView.getPreferredSize().getSize());
-		playerTokenView.setSize(325, 300); //TODO for testing purposes, dont show in windowbuilder otherwise
+		getContentPane().add(closeButton);
 
-		contentPane.add(playerTokenView);
-		contentPane.add(closeButton);
+		//INFORMATION BUTTON
+		JButton infoButton = new JButton("i");
+		infoButton.setRequestFocusEnabled(false);
+		infoButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		infoButton.setBorder(null);
+		infoButton.setBackground(SystemColor.controlHighlight);
+		infoButton.setBounds(10, 61, 60, 39);
+		infoButton.addActionListener(e -> {
+			String infoText = GlobalFonts.GAME_INFORMATION;
+			JOptionPane.showMessageDialog(this, infoText);
+		}
+				);
+		contentPane.add(infoButton);
 
+		//PAUSE BUTTON
+		JButton pauseButton = new JButton("P");
+		pauseButton.setRequestFocusEnabled(false);
+		pauseButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		pauseButton.setBorder(null);
+		pauseButton.setBackground(SystemColor.controlHighlight);
+		pauseButton.setBounds(10, 111, 60, 39);
+		pauseButton.addActionListener(e -> {
+			JOptionPane.showMessageDialog(this, "Game paused. Close this window to continue.");
+		});
+		contentPane.add(pauseButton);
+
+
+		//TRANSMUTE, BUY ARTIFACT, FORAGE BUTTONS PANEL
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(134, 370, 325, 174);
+		buttonsPanel.setBounds(142, 620, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
 
+		//TRANSMUTE INGREDIENT
 		JPanel transmuteIngredientPanel = new JPanel();
 		transmuteIngredientPanel.setBounds(0, 0, (buttonsPanel.getSize().width/3), buttonsPanel.getSize().height);
 		buttonsPanel.add(transmuteIngredientPanel);
@@ -138,10 +139,10 @@ public class MainGameWindow {
 		transmuteIngredientButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		transmuteIngredientButton.setFont(GlobalFonts.ACTION_BUTTON);
 		transmuteIngredientButton.setBounds(0, 22, 108, 152);
-		transmuteIngredientButton.setContentAreaFilled(false); //TODO make it transparent
+		transmuteIngredientButton.setContentAreaFilled(false);
 
 
-		//get an array of ingredients of active player
+		//get an array of ingredients of active player //TODO curr player
 		ArrayList<IngredientCard> ingredientsList = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrs = new String[ingredientsList.size()];
 		for (int i = 0; i < ingredientsList.size(); i++) {
@@ -158,21 +159,19 @@ public class MainGameWindow {
 		});
 
 
-		//TODO action listener for transmute ingredient button
+		//action listener for transmute ingredient button
 		transmuteIngredientButton.addActionListener(e -> {
 			if (transmuteIngredientComboBox.getSelectedItem() == null) {
-				JOptionPane.showMessageDialog(MainGameWindowFrame, "Select an ingredient first to sell it for 1 gold.");
+				JOptionPane.showMessageDialog(this, "Select an ingredient first to sell it for 1 gold.");
 			}
 			else {
 				try{
 					BoardController.transmuteIngredient((String)transmuteIngredientComboBox.getSelectedItem());
 				}
 				catch (UserErrorException a) {
-					JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
+					JOptionPane.showMessageDialog(this, a.getMessage());
 				}
 			}
-
-			//IngredientBoard.forageForIngredient();
 		});
 
 		transmuteIngredientPanel.add(transmuteIngredientComboBox);
@@ -193,7 +192,6 @@ public class MainGameWindow {
 		buyArtifactPanel.add(buyArtifactButton);
 
 		buyArtifactButton.addActionListener(e -> {
-
 			BoardController.buyArtifactCard();
 		});
 
@@ -217,11 +215,8 @@ public class MainGameWindow {
 			try {
 				BoardController.forageForIngredient();
 			}
-			catch (UserErrorException a) {
-				JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
-			}
-			catch(Exception exc) {
-				exc.printStackTrace();
+			catch (Exception a) {
+				JOptionPane.showMessageDialog(this, a.getMessage());
 			}
 		});
 		forageForIngredientPanel.add(forageForIngredientButton);
@@ -229,68 +224,93 @@ public class MainGameWindow {
 		JLabel forageForIngredientLabel = new JLabel();
 		forageForIngredientLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
-		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/forageforing_100x160.png")));
+		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindowOffline.class.getResource("/userinterface/images/forageforing_100x160.png")));
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
-		deductionBoard.setLocation(514, 740);
-		deductionBoard.setSize(deductionBoard.getPreferredSize());
-		contentPane.add(deductionBoard);
 
-
-		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(514, 98);
-		contentPane.add(resultsTriangle);
-
-
-		playerInventory.setBounds(1219, 89, 450, 415);
-		contentPane.add(playerInventory);
-
-		JButton infoButton = new JButton("i");
-		infoButton.setRequestFocusEnabled(false);
-		infoButton.setFont(new Font("Tahoma", Font.BOLD, 25));
-		infoButton.setBorder(null);
-		infoButton.setBackground(SystemColor.controlHighlight);
-		infoButton.setBounds(10, 61, 60, 39);
-		infoButton.addActionListener(e -> {
-			//TODO new information
-			JOptionPane.showMessageDialog(MainGameWindowFrame, infoText);
-		}
-				);
-		contentPane.add(infoButton);
-
-
-		JButton pauseButton = new JButton("P");
-		pauseButton.setRequestFocusEnabled(false);
-		pauseButton.setFont(new Font("Tahoma", Font.BOLD, 25));
-		pauseButton.setBorder(null);
-		pauseButton.setBackground(SystemColor.controlHighlight);
-		pauseButton.setBounds(10, 111, 60, 39);
-		pauseButton.addActionListener(e -> {
-			JOptionPane.showMessageDialog(MainGameWindowFrame, "Game paused. Close this window to continue.");
-		});
-		contentPane.add(pauseButton);
-
-		potionBrewingBoard.setLocation(1219, 477);
-		potionBrewingBoard.setSize(new Dimension(690, 555));
-		contentPane.add(potionBrewingBoard);
-
-		publishTheoryPanel.setLocation(134, 566);
+		//PUBLISH THEORY PANEL
+		publishTheoryPanel.setLocation(86, 816);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
 
-		debunkTheoryView.setLocation(134, 888);
+		//DEBUNK THEORY PANEL
+		debunkTheoryView.setLocation(324, 879);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
-		
-		JButton btnUpdateNetwork = new JButton("Update Network");
-		btnUpdateNetwork.setBounds(80, 11, 136, 21);
-		btnUpdateNetwork.addActionListener(e -> updateNetworkPressed());
-		contentPane.add(btnUpdateNetwork);
 
-		initializeObservers();
-		MainGameWindowFrame.setVisible(true);
-	}
-	public void initializeObservers() {
+		//POTION BREWING BOARD
+		potionBrewingBoard.setLocation(1300, 620);
+		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
+		contentPane.add(potionBrewingBoard);
+
+		//RESULTS TRIANGLE
+		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
+		resultsTriangle.setLocation(561, 61);
+		contentPane.add(resultsTriangle);
+
+		//DEDUCTION BOARD
+		deductionBoard.setLocation(571, 703);
+		deductionBoard.setSize(deductionBoard.getPreferredSize());
+		contentPane.add(deductionBoard);
+
+		//PLAYER TOKENS
+		int playercount = GameController.getInstance().getActivePlayers().size(); //TODO
+		//GameController.getInstance().getActivePlayers().size(); maybe?
+		localPlayer = GameController.getInstance().getActivePlayers().get(0);
+		int xalign = 161;
+		int yalign = 21;
+		for (int i = 0; i < playercount; i++) {
+
+			PlayerTokenView ptw = new PlayerTokenView(i);
+
+			if (GameController.getInstance().getActivePlayers().get(i).equals(localPlayer)) {
+				ptwLocal = ptw;
+				ptwLocal.setLocation(1484, 11);
+				ptwLocal.setSize(272, 187);
+				ptwLocal.setSize(new Dimension(272, 187));
+				getContentPane().add(ptwLocal);
+			}
+			else {
+				ptw.setLocation(xalign, yalign);
+				ptw.setSize(new Dimension(272, 187));
+				getContentPane().add(ptw);
+				yalign += 198;
+			}
+
+			ptw.setSize(ptw.getPreferredSize());
+			this.playerTokens.add(ptw);
+		}
+
+
+		//PLAYER INVENTORY
+		playerInventory.setSize(playerInventory.getPreferredSize());
+		playerInventory.setSize(new Dimension(450, 415));
+		//playerInventory.setBounds(getBounds());
+		playerInventory.setLocation(1404, 204);
+		getContentPane().add(playerInventory);
+
+		JPanel roundInfoPanel = new JPanel();
+		roundInfoPanel.setBounds(476, 61, 200, 90);
+		roundInfoPanel.setOpaque(false);
+		roundInfoPanel.setLayout(null);
+		contentPane.add(roundInfoPanel);
+
+		roundLabel = new JLabel("Round: 1");
+		roundLabel.setFont(GlobalFonts.DISPLAY_HEADER);
+		roundLabel.setForeground(GlobalColors.TEXT_COLOR);
+		roundLabel.setBounds(0, 0, 130, 38);
+		roundInfoPanel.add(roundLabel);
+
+		turnLabel = new JLabel("Turn: ");
+		turnLabel.setFont(GlobalFonts.DISPLAY_HEADER);
+		turnLabel.setForeground(GlobalColors.TEXT_COLOR);
+		turnLabel.setBounds(0, 40, 190, 43);
+		roundInfoPanel.add(turnLabel);
+
+		//ROUND AND TURN INFORMATION
+
+
+		//OBSERVER RELATED
 		MainObserver mainObserver = new MainObserver(this);
 		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
 		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(mainObserver);
@@ -298,8 +318,11 @@ public class MainGameWindow {
 		for (Player player: GameController.getInstance().getActivePlayers()){
 			player.getInventory().addObserver(mainObserver);
 		}
-		System.out.println("Initialized observers");
+
+
+		this.setVisible(true);
 	}
+
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
 		((DeductionBoard)deductionBoard).updateDeductionBoard();
@@ -320,20 +343,28 @@ public class MainGameWindow {
 		}
 
 		//Player Token View Changer
-		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+		for (PlayerTokenView playerTokenView : this.playerTokens) {
+			playerTokenView.updatePlayerTokenView();
+		}
 
 		//Publish theory update
 		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
 
 		//Debunk theory update
 		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
+
+		//Round and turn update
+		roundLabel.setText("Round: " + GameController.getInstance().getCurrentRound());
+		turnLabel.setText("Turn: " + GameController.getInstance().getCurrentPlayer().getPlayerName());
+
+		//Show message if game has ended
+		gameEndCheck();
 	}
-	
-	private void updateNetworkPressed() {
-		System.out.println("Update network pressed");
-		byte[] serializedGameController = NetworkUtilities.serializeObject(GameController.getInstance());
-		GameController newGameController = (GameController) NetworkUtilities.deserializeObject(serializedGameController);
-		GameController.updateInstance(newGameController);
-		initializeObservers();
+
+	public void gameEndCheck() {
+		boolean end = GameController.getInstance().checkGameEnd();
+		if (end) {
+			new GameOverDialog(this);
+		}
 	}
 }

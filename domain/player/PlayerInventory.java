@@ -28,7 +28,7 @@ public class PlayerInventory implements Serializable, Observable {
 	private transient List<Observer> observers = new ArrayList<>();
 
 	public PlayerInventory() {
-		
+
 		playerRecipeList = new ArrayList<Recipe>();
 		playerPotionList =  new ArrayList<Potion>();
 		playerHypothesesList =  new ArrayList<Hypotheses>();
@@ -36,7 +36,7 @@ public class PlayerInventory implements Serializable, Observable {
 		playerArtifactCardList =  new ArrayList<ArtifactCard>();
 		playerPublicationCardList = new ArrayList<PublicationCard>();
 	}
-	
+
 	public ArrayList<Recipe> getPlayerRecipeList() {
 		return playerRecipeList;
 	}
@@ -70,57 +70,57 @@ public class PlayerInventory implements Serializable, Observable {
 		this.playerPotionList.add(potion);
 		notifyObserver();
 	}
-	
+
 	public void addRecipe(Recipe recipe) {
 		this.playerRecipeList.add(recipe);
 		notifyObserver();
 	}
-	
+
 	public void addHypoteses(Hypotheses hyp) {
 		this.playerHypothesesList.add(hyp);
 		notifyObserver();
 	}
-	
+
 	public void addAIngredientCard(IngredientCard ing) {
 		this.playerIngredientCardList.add(ing);
 		notifyObserver();
 	}
-	
+
 	public void addArtifactCard(ArtifactCard art) {
 		this.playerArtifactCardList.add(art);
 		notifyObserver();
 	}
-	
+
 	public void addPublicationCard(PublicationCard pub) {
 		this.playerPublicationCardList.add(pub);
 		notifyObserver();
 	}
-	
+
 	public void removePotion(Potion potion) {
 		this.playerPotionList.remove(potion);
 		notifyObserver();
 	}
-	
+
 	public void removeRecipe(Recipe recipe) {
 		this.playerRecipeList.remove(recipe);
 		notifyObserver();
 	}
-	
+
 	public void removeHypoteses(Hypotheses hyp) {
 		this.playerHypothesesList.remove(hyp);
 		notifyObserver();
 	}
-	
+
 	public void removeIngredientCard(IngredientCard ing) {
 		this.playerIngredientCardList.remove(ing);
 		notifyObserver();
 	}
-	
+
 	public void removeArtifactCard(ArtifactCard art) {
 		this.playerArtifactCardList.remove(art);
 		notifyObserver();
 	}
-	
+
 	public void removePublicationCard(PublicationCard pub) {
 		this.playerPublicationCardList.remove(pub);
 		notifyObserver();
@@ -142,5 +142,17 @@ public class PlayerInventory implements Serializable, Observable {
 			observer.update();
 		}
 	}
-	
+
+
+	@Override
+	public String toString() {
+		String str = "Remaining Artifact Cards:  ";
+		for (ArtifactCard a : this.playerArtifactCardList) {
+			str += a.getName() + ", ";
+		}
+		str = str.substring(0, str.length() - 2);
+		return str;
+	}
+
+
 }

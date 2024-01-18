@@ -37,12 +37,18 @@ public class GlobalIcons {
 	//Artifact Cards
 	public static ImageIcon elixirofinsight = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/elixirofinsight_100x160.png"));
 	public static ImageIcon vaccine = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/vaccine_100x160.png"));
+	public static ImageIcon wisdomidol = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/wisdomIdol_100x160.png"));
+	public static ImageIcon magicmortar = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/magicMortar_100x160.png"));
+	public static ImageIcon printingpress = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/printingPress_100x160.png"));
 	public static ImageIcon unknownArtifact = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/unknownArtifactCard_100x160.png"));
 
 	public static ImageIcon getArtifactCardImage(String name) {
 		switch (name) {
 		case "Elixir Of Insight": return elixirofinsight;
 		case "Vaccine": return vaccine;
+		case "Wisdom Idol": return wisdomidol;
+		case "Magic Mortar": return magicmortar;
+		case "Printing Press": return printingpress;
 		case "Unknown" : return unknownArtifact;
 		default : return unknownArtifact;
 		}
@@ -96,6 +102,42 @@ public class GlobalIcons {
 		}
 	}
 
+	public static ImageIcon alchemistBig = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square.png"));
+	public static ImageIcon alchemistBig2 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square2.png"));
+	public static ImageIcon alchemistBig3 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square3.png"));
+
+	public static ImageIcon alchemistSmall1 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist1_90x90.png"));
+	public static ImageIcon alchemistSmall2 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist2_90x90.png"));
+	public static ImageIcon alchemistSmall3 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist3_90x90.png"));
+	public static ImageIcon alchemistSmall4 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist4_90x90.png"));
+
+	public static ImageIcon getImage(String image) {
+		switch (image) {
+		case "alchemist square 1": return alchemistBig;
+		case "alchemist square 2": return alchemistBig2;
+		case "alchemist square 3": return alchemistBig3;
+		case "alchemist icon 1": return alchemistSmall1;
+		case "alchemist icon 2": return alchemistSmall2;
+		case "alchemist icon 3": return alchemistSmall3;
+		case "alchemist icon 4": return alchemistSmall4;
+		default : return alchemistSmall4;
+		}
+	}
+
+	public static ImageIcon drinkPotionSmall = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/drinkPotion_200x200.png"));
+	public static ImageIcon testOnStudentSmall = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/testOnStudent_200x200.png"));
+	public static ImageIcon sellAPotionSmall = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/sellAPotion_200x200.png"));
+
+	public static ImageIcon getButtonImage(String str) {
+		switch (str) {
+		case "drink potion small": return drinkPotionSmall;
+		case "test on student small": return testOnStudentSmall;
+		case "sell a potion small": return sellAPotionSmall;
+		default : return drinkPotionSmall;
+
+		}
+
+	}
 
 
 
