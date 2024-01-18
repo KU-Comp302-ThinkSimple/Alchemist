@@ -29,12 +29,12 @@ public class LocalData {
 		this.localPlayer = localPlayer;
 	}
 	
-	public MainGameWindowOffline getMainGameWindow() {
+	public JFrame getMainGameWindow() {
 		return mainGameWindow;
 	}
 
 
-	public void setMainGameWindow(MainGameWindowOffline mainGameWindow) {
+	public void setMainGameWindow(JFrame mainGameWindow) {
 		this.mainGameWindow = mainGameWindow;
 	}
 }
