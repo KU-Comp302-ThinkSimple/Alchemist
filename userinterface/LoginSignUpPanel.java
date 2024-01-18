@@ -94,8 +94,6 @@ public class LoginSignUpPanel extends JPanel {
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
-			//TODO clear log in panel texts.
-
 			//log in action
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 
@@ -112,7 +110,6 @@ public class LoginSignUpPanel extends JPanel {
 				loginUserNameInputTextField.setText(null);
 				loginPasswordField.setText(null);
 
-				//TODO user info display
 
 				//log in button invisible now
 				((JButton) e.getSource()).setVisible(false);
@@ -195,9 +192,7 @@ public class LoginSignUpPanel extends JPanel {
 			char[] signUpPasswordInput = signUpPasswordField.getPassword();
 			LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
 
-			//TODO please return me a String
-			//Successful. or "There is already a user with the nickanme" ... *DONE
-			String signedUp = LoginSignupController.getInstance().getSignUpMessage() ; //TODO Edit this *DONE
+			String signedUp = LoginSignupController.getInstance().getSignUpMessage() ;
 			signUpMessage.setText(signedUp);
 			signUpMessage.setVisible(true);
 

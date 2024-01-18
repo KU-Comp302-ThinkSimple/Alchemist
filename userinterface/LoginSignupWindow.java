@@ -120,7 +120,7 @@ public class LoginSignupWindow extends JFrame {
 
 		//LOG IN SIGN UP PANEL
 		JPanel logsignPanel = new LoginSignUpPanel();
-		getContentPane().add(logsignPanel); //TODO if join or host is chosen
+		getContentPane().add(logsignPanel);
 		logsignPanel.setLocation(937, 212);
 		logsignPanel.setSize(470, 580);
 		logsignPanel.setVisible(false);
@@ -166,7 +166,7 @@ public class LoginSignupWindow extends JFrame {
 		joinLobbyPanel.add(loginHeaderText);
 		joinLobbyPanel.add(lobbyIDInputTextField);
 		joinLobbyPanel.add(joinIDButton);
-		getContentPane().add(joinLobbyPanel); //TODO if "join online lobby" is chosen
+		getContentPane().add(joinLobbyPanel);
 
 
 		//HOST GAME BUTTON (after logging in)
