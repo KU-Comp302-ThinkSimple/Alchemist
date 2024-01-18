@@ -19,8 +19,10 @@ import javax.swing.border.EmptyBorder;
 import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
+import domain.player.Player;
 import exception.UserErrorException;
 import test.TestGameInitializer;
+import userinterface.observer.MainObserver;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -28,14 +30,19 @@ import userinterface.util.GlobalIcons;
 
 public class MainGameWindowOnline extends JFrame{
 
+	Player localPlayer; //TODO
 	JPanel contentPane;
 	JPanel publishTheoryPanel = new PublishTheoryPanel();
 	JPanel debunkTheoryView = new DebunkTheoryView();
 	JPanel potionBrewingBoard = new BrewPotionPanel();
 	JPanel resultsTriangle = new ResultsTriangle(1);
 	JPanel deductionBoard = new DeductionBoard();
+	PlayerTokenView ptwLocal;
 	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
 	JPanel playerInventory = new PlayerInventory();
+	JComboBox transmuteIngredientComboBox;
+	JLabel roundLabel;
+	JLabel turnLabel;
 
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
@@ -110,7 +117,7 @@ public class MainGameWindowOnline extends JFrame{
 
 		//TRANSMUTE, BUY ARTIFACT, FORAGE BUTTONS PANEL
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(10, 650, 325, 174);
+		buttonsPanel.setBounds(142, 620, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
@@ -142,7 +149,7 @@ public class MainGameWindowOnline extends JFrame{
 			ingrs[i] = ingredientsList.get(i).getName();
 		}
 
-		JComboBox transmuteIngredientComboBox = new JComboBox(ingrs);
+		transmuteIngredientComboBox = new JComboBox(ingrs);
 		transmuteIngredientComboBox.setBounds(0, 0, transmuteIngredientPanel.getWidth(), 22);
 		transmuteIngredientComboBox.addActionListener(e -> {
 			if (transmuteIngredientComboBox.getSelectedItem() != null) {
@@ -222,12 +229,12 @@ public class MainGameWindowOnline extends JFrame{
 
 
 		//PUBLISH THEORY PANEL
-		publishTheoryPanel.setLocation(10, 835);
+		publishTheoryPanel.setLocation(86, 816);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
 
 		//DEBUNK THEORY PANEL
-		debunkTheoryView.setLocation(248, 998);
+		debunkTheoryView.setLocation(324, 879);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
 
@@ -238,53 +245,126 @@ public class MainGameWindowOnline extends JFrame{
 
 		//RESULTS TRIANGLE
 		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(584, 98);
+		resultsTriangle.setLocation(561, 61);
 		contentPane.add(resultsTriangle);
 
 		//DEDUCTION BOARD
-		deductionBoard.setLocation(594, 740);
+		deductionBoard.setLocation(571, 703);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 		//PLAYER TOKENS
-		int playercount = 2; //TODO
+		int playercount = GameController.getInstance().getActivePlayers().size(); //TODO
 		//GameController.getInstance().getActivePlayers().size(); maybe?
-		int xalign;
-		int yalign;
+		localPlayer = GameController.getInstance().getActivePlayers().get(0);
+		int xalign = 161;
+		int yalign = 21;
 		for (int i = 0; i < playercount; i++) {
+
 			PlayerTokenView ptw = new PlayerTokenView(i);
+
+			if (GameController.getInstance().getActivePlayers().get(i).equals(localPlayer)) {
+				ptwLocal = ptw;
+				ptwLocal.setLocation(1484, 11);
+				ptwLocal.setSize(272, 187);
+				ptwLocal.setSize(new Dimension(272, 187));
+				getContentPane().add(ptwLocal);
+			}
+			else {
+				ptw.setLocation(xalign, yalign);
+				ptw.setSize(new Dimension(272, 187));
+				getContentPane().add(ptw);
+				yalign += 198;
+			}
+
 			ptw.setSize(ptw.getPreferredSize());
-
-
+			this.playerTokens.add(ptw);
 		}
-		PlayerTokenView ptw = new PlayerTokenView(0);
-		ptw.setLocation(161, 219);
-		ptw.setSize(new Dimension(272, 187));
-		getContentPane().add(ptw);
-
-		PlayerTokenView ptw_1 = new PlayerTokenView(0);
-		ptw_1.setSize(ptw_1.getPreferredSize());
-		ptw_1.setBounds(161, 417, 272, 187);
-		contentPane.add(ptw_1);
-
-		PlayerTokenView ptw_2 = new PlayerTokenView(0);
-		ptw_2.setSize(ptw_2.getPreferredSize());
-		ptw_2.setBounds(161, 21, 272, 187);
-		contentPane.add(ptw_2);
-
-		PlayerTokenView ptw_local = new PlayerTokenView(0); //TODO how can i achieve this?
-		ptw_local.setLocation(1484, 11);
-		ptw_local.setSize(272, 187);
-		ptw.setSize(new Dimension(272, 187));
-		getContentPane().add(ptw_local);
-		playerInventory.setLocation(1389, 200);
 
 
+		//PLAYER INVENTORY
 		playerInventory.setSize(playerInventory.getPreferredSize());
 		playerInventory.setSize(new Dimension(450, 415));
+		//playerInventory.setBounds(getBounds());
+		playerInventory.setLocation(1404, 204);
 		getContentPane().add(playerInventory);
+
+		JPanel roundInfoPanel = new JPanel();
+		roundInfoPanel.setBounds(476, 61, 200, 90);
+		roundInfoPanel.setOpaque(false);
+		roundInfoPanel.setLayout(null);
+		contentPane.add(roundInfoPanel);
+
+		roundLabel = new JLabel("Round: 1");
+		roundLabel.setFont(GlobalFonts.DISPLAY_HEADER);
+		roundLabel.setForeground(GlobalColors.TEXT_COLOR);
+		roundLabel.setBounds(0, 0, 130, 38);
+		roundInfoPanel.add(roundLabel);
+
+		turnLabel = new JLabel("Turn: ");
+		turnLabel.setFont(GlobalFonts.DISPLAY_HEADER);
+		turnLabel.setForeground(GlobalColors.TEXT_COLOR);
+		turnLabel.setBounds(0, 40, 190, 43);
+		roundInfoPanel.add(turnLabel);
+
+		//ROUND AND TURN INFORMATION
+
+
+		//OBSERVER RELATED
+		MainObserver mainObserver = new MainObserver(this);
+		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
+		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(mainObserver);
+		GameController.getInstance().getBoard().getPublicationBoard().addObserver(mainObserver);
+		for (Player player: GameController.getInstance().getActivePlayers()){
+			player.getInventory().addObserver(mainObserver);
+		}
 
 
 		this.setVisible(true);
+	}
+
+	public void updateMainGameWindow() {
+		//Deduction Board Changer
+		((DeductionBoard)deductionBoard).updateDeductionBoard();
+
+		//Player Inventory Changer
+		((PlayerInventory)playerInventory).updatePlayerInventory();
+
+		//Results Triangle Changer
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+
+		//Transmute Ingredient ComboBoxChanger
+		transmuteIngredientComboBox.removeAllItems();
+		ArrayList<IngredientCard> ingredientsListt = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		String[] ingrss = new String[ingredientsListt.size()];
+		for (int i = 0; i < ingredientsListt.size(); i++) {
+			ingrss[i] = ingredientsListt.get(i).getName();
+			transmuteIngredientComboBox.addItem(ingredientsListt.get(i).getName());
+		}
+
+		//Player Token View Changer
+		for (PlayerTokenView playerTokenView : this.playerTokens) {
+			playerTokenView.updatePlayerTokenView();
+		}
+
+		//Publish theory update
+		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
+
+		//Debunk theory update
+		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
+
+		//Round and turn update
+		roundLabel.setText("Round: " + GameController.getInstance().getCurrentRound());
+		turnLabel.setText("Turn: " + GameController.getInstance().getCurrentPlayer().getPlayerName());
+
+		//Show message if game has ended
+		gameEndCheck();
+	}
+
+	public void gameEndCheck() {
+		boolean end = GameController.getInstance().checkGameEnd();
+		if (end) {
+			new GameOverDialog(this);
+		}
 	}
 }
