@@ -6,6 +6,7 @@ import java.util.Random;
 
 import domain.boards.Board;
 import domain.boards.GameBoard;
+import domain.initialization.InitializeGameHelper;
 import domain.player.Player;
 import domain.potion.Atom;
 import exception.UserErrorException;
