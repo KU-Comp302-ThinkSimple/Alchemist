@@ -58,7 +58,7 @@ public class MainGameWindowOffline {
 	private JPanel resultsTriangle = new ResultsTriangle(1);
 	private JPanel playerInventory = new PlayerInventory();
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
-	private JPanel playerTokenView = new PlayerTokenView();
+	private JPanel playerTokenView = new PlayerTokenView(0);//TODO add ptw 2
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 	private JPanel debunkTheoryView = new DebunkTheoryView();
 	private JComboBox transmuteIngredientComboBox;

@@ -22,6 +22,8 @@ import domain.player.Player;
 import domain.potion.Potion;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
+import java.awt.Component;
+import javax.swing.SwingConstants;
 
 
 public class PlayerTokenView extends JPanel {
@@ -48,18 +50,21 @@ public class PlayerTokenView extends JPanel {
 	 * Create the panel.
 	 */
 
-	public PlayerTokenView() {
+	public PlayerTokenView(int i) {
 
-		player=GameController.getInstance().getCurrentPlayer();
+		player=GameController.getInstance().getActivePlayers().get(i);
+		if (player == null) {
+			throw new RuntimeException("Active player i is null.");
+		}
 		panelFontHeader = GlobalFonts.PLAYER_TOKEN_HEADER;
 		panelFontText = GlobalFonts.PLAYER_TOKEN_TEXT;
 
 		setLayout(null);
-		this.setPreferredSize(new Dimension(325, 300));
+		this.setPreferredSize(new Dimension(272, 187));
 
 		nameField = new JTextField();
 		nameField.setEditable(false);
-		nameField.setBounds(16, 16, 95, 26);
+		nameField.setBounds(16, 5, 95, 25);
 		nameField.setColumns(10);
 		nameField.setText(player.getPlayerName());
 		nameField.setFont(panelFontText);
@@ -67,7 +72,7 @@ public class PlayerTokenView extends JPanel {
 
 		healthField = new JTextField();
 		healthField.setEditable(false);
-		healthField.setBounds(250, 16, 53, 26);
+		healthField.setBounds(222, 5, 32, 25);
 		healthField.setColumns(10);
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		healthField.setFont(panelFontText);
@@ -75,7 +80,7 @@ public class PlayerTokenView extends JPanel {
 
 		goldField = new JTextField();
 		goldField.setEditable(false);
-		goldField.setBounds(249, 46, 54, 26);
+		goldField.setBounds(222, 35, 32, 25);
 		goldField.setColumns(10);
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
 		goldField.setFont(panelFontText);
@@ -83,7 +88,7 @@ public class PlayerTokenView extends JPanel {
 
 		repField = new JTextField();
 		repField.setEditable(false);
-		repField.setBounds(249, 76, 54, 26);
+		repField.setBounds(222, 65, 32, 25);
 		repField.setColumns(10);
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		repField.setFont(panelFontText);
@@ -92,63 +97,78 @@ public class PlayerTokenView extends JPanel {
 		actionField = new JTextField();
 		actionField.setEditable(false);
 		actionField.setColumns(10);
-		actionField.setBounds(249, 109, 54, 26);
+		actionField.setBounds(222, 95, 32, 25);
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
 		actionField.setFont(panelFontText);
 		add(actionField);
 
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(16, 46, 95, 89);
+		imagePanel.setBounds(16, 30, 90, 90);
 		add(imagePanel);
 
-		ImageIcon icon = new ImageIcon(player.getPlayerToken().getPlayerAvatar());
-		imagePanel.add(new JLabel(icon));
+		//ImageIcon icon = new ImageIcon(player.getPlayerToken().getPlayerAvatar());
+		int randint = (int) (Math.random() * 4) + 1 ;
+		String iconname = "alchemist icon " + randint;
+		ImageIcon icon = GlobalIcons.getImage(iconname);
+		JLabel label = new JLabel(icon);
+		label.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		imagePanel.add(label);
+
+
+		int potx = 36;
+		int poty = 60;
 
 		JPanel potPanel0 = new JPanel();
-		potPanel0.setBounds(16, 146, 40, 65);
+		potPanel0.setBounds(5, 124, potx, poty);
 		add(potPanel0);
 		potPanels.add(potPanel0);
 
 		JPanel potPanel1 = new JPanel();
-		potPanel1.setBounds(66, 146, 40, 65);
+		potPanel1.setBounds(43, 124, potx, poty);
 		add(potPanel1);
 		potPanels.add(potPanel1);
 
 		JPanel potPanel2 = new JPanel();
-		potPanel2.setBounds(116, 146, 40, 65);
+		potPanel2.setBounds(81, 124, potx, poty);
 		add(potPanel2);
 		potPanels.add(potPanel2);
 
 		JPanel potPanel3 = new JPanel();
-		potPanel3.setBounds(166, 146, 40, 65);
+		potPanel3.setBounds(119, 124, potx, poty);
 		add(potPanel3);
 		potPanels.add(potPanel3);
 
 		JPanel potPanel4 = new JPanel();
-		potPanel4.setBounds(16, 216, 40, 65);
+		potPanel4.setBounds(157, 124, potx, poty);
 		add(potPanel4);
 		potPanels.add(potPanel4);
 
 		JPanel potPanel5 = new JPanel();
-		potPanel5.setBounds(66, 216, 40, 65);
+		potPanel5.setBounds(195, 124, potx, poty);
 		add(potPanel5);
 		potPanels.add(potPanel5);
 
 		JPanel potPanel6 = new JPanel();
-		potPanel6.setBounds(116, 216, 40, 65);
+		potPanel6.setBounds(233, 124, potx, poty);
 		add(potPanel6);
 		potPanels.add(potPanel6);
 
-		JPanel potPanel7 = new JPanel();
-		potPanel7.setBounds(166, 216, 40, 65);
-		add(potPanel7);
-		potPanels.add(potPanel7);
+		ImageIcon unknownPot = GlobalIcons.getLittlePotionImage("Unknown");
+		for (JPanel p : this.potPanels) {
+			p.setLayout(null);
+			JLabel iconLabel = new JLabel(icon);
+			iconLabel.setBounds(0, 0, 40, 65);
+			iconLabel.setIcon(unknownPot);
+			p.add(iconLabel);
+			p.setVisible(true);
+		}
+
 
 		healthHeader = new JTextField();
 		healthHeader.setText("Health:");
 		healthHeader.setEditable(false);
 		healthHeader.setColumns(10);
-		healthHeader.setBounds(116, 16, 124, 26);
+		healthHeader.setBounds(116, 5, 105, 25);
 		healthHeader.setFont(panelFontHeader);
 		add(healthHeader);
 
@@ -156,7 +176,7 @@ public class PlayerTokenView extends JPanel {
 		goldHeader.setText("Golds:");
 		goldHeader.setEditable(false);
 		goldHeader.setColumns(10);
-		goldHeader.setBounds(116, 46, 124, 26);
+		goldHeader.setBounds(116, 35, 105, 25);
 		goldHeader.setFont(panelFontHeader);
 		add(goldHeader);
 
@@ -164,7 +184,7 @@ public class PlayerTokenView extends JPanel {
 		reputationHeader.setText("Reputation:");
 		reputationHeader.setEditable(false);
 		reputationHeader.setColumns(10);
-		reputationHeader.setBounds(116, 76, 124, 26);
+		reputationHeader.setBounds(116, 65, 105, 25);
 		reputationHeader.setFont(panelFontHeader);
 		add(reputationHeader);
 
@@ -172,14 +192,14 @@ public class PlayerTokenView extends JPanel {
 		actionHeader.setText("Actions Left:");
 		actionHeader.setEditable(false);
 		actionHeader.setColumns(10);
-		actionHeader.setBounds(116, 106, 124, 26);
+		actionHeader.setBounds(116, 95, 105, 25);
 		actionHeader.setFont(panelFontHeader);
 		add(actionHeader);
 
 		displayPlayerPotions();
 
 	}
-	//TODO potion images
+
 	public void displayPlayerPotions() {
 
 		//Clear panels first
@@ -210,7 +230,7 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
-		player = GameController.getInstance().getCurrentPlayer();
+		//player = GameController.getInstance().getCurrentPlayer();
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
@@ -219,4 +239,5 @@ public class PlayerTokenView extends JPanel {
 		displayPlayerPotions();
 		this.repaint();
 	}
+
 }
