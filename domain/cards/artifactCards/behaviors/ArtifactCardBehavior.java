@@ -1,6 +1,8 @@
 package domain.cards.artifactCards.behaviors;
 
-public interface ArtifactCardBehavior<R> {
+import java.io.Serializable;
+
+public interface ArtifactCardBehavior<R> extends Serializable{
 
     R use(Object... parameters);
 }

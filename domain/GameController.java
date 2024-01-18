@@ -41,6 +41,9 @@ public class GameController implements Serializable{
 		return instance;
 	}
 
+	public static void updateInstance(GameController newInstance) {
+		GameController.instance = newInstance;
+	}
 
 	//This func initializes the game by calling creating a new instance of initliazegamehelper
 	public void initializeGame() {
@@ -246,7 +249,7 @@ public class GameController implements Serializable{
 
 		return str;
 	}
-
+	
 }
 
 

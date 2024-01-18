@@ -19,7 +19,7 @@ public class IngredientBoard extends Board implements Observable {
 	private static final long serialVersionUID = 8903616112216784654L;
 	private IngredientCardDeckArrayList ingredientDeck;
 
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 
 	public IngredientBoard() {
 
@@ -106,11 +106,17 @@ public class IngredientBoard extends Board implements Observable {
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}

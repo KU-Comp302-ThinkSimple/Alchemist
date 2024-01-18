@@ -19,7 +19,7 @@ public class Player implements Serializable, Observable {
 	int playerHealth;
 	PlayerToken playerToken;
 	final int[][] deductionSelection;
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 
 	//Constructor of player object
 	public Player(int playerId, String playerName, String password) {
@@ -79,11 +79,17 @@ public class Player implements Serializable, Observable {
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}
