@@ -20,6 +20,7 @@ import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import exception.UserErrorException;
+import test.TestGameInitializer;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -34,6 +35,12 @@ public class MainGameWindowOnline extends JFrame{
 	JPanel resultsTriangle = new ResultsTriangle(1);
 	JPanel deductionBoard = new DeductionBoard();
 	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
+	JPanel playerInventory = new PlayerInventory();
+
+	public static void main(String[] args) {
+		TestGameInitializer.initializeTestGame();
+		new MainGameWindowOnline();
+	}
 
 	public MainGameWindowOnline() {
 
@@ -103,7 +110,7 @@ public class MainGameWindowOnline extends JFrame{
 
 		//TRANSMUTE, BUY ARTIFACT, FORAGE BUTTONS PANEL
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(37, 552, 325, 174);
+		buttonsPanel.setBounds(10, 650, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
@@ -215,32 +222,32 @@ public class MainGameWindowOnline extends JFrame{
 
 
 		//PUBLISH THEORY PANEL
-		publishTheoryPanel.setLocation(37, 748);
+		publishTheoryPanel.setLocation(10, 835);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
 
 		//DEBUNK THEORY PANEL
-		debunkTheoryView.setLocation(319, 961);
+		debunkTheoryView.setLocation(248, 998);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
 
 		//POTION BREWING BOARD
-		potionBrewingBoard.setLocation(1219, 477);
-		potionBrewingBoard.setSize(new Dimension(690, 555));
+		potionBrewingBoard.setLocation(1300, 620);
+		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
 		contentPane.add(potionBrewingBoard);
 
 		//RESULTS TRIANGLE
 		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(514, 98);
+		resultsTriangle.setLocation(584, 98);
 		contentPane.add(resultsTriangle);
 
 		//DEDUCTION BOARD
-		deductionBoard.setLocation(514, 740);
+		deductionBoard.setLocation(594, 740);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 		//PLAYER TOKENS
-		int playercount = 4; //TODO
+		int playercount = 2; //TODO
 		//GameController.getInstance().getActivePlayers().size(); maybe?
 		int xalign;
 		int yalign;
@@ -251,15 +258,33 @@ public class MainGameWindowOnline extends JFrame{
 
 		}
 		PlayerTokenView ptw = new PlayerTokenView(0);
-		ptw.setLocation(37, 354);
+		ptw.setLocation(161, 219);
 		ptw.setSize(new Dimension(272, 187));
 		getContentPane().add(ptw);
 
 		PlayerTokenView ptw_1 = new PlayerTokenView(0);
-		ptw_1.setSize(new Dimension(272, 187));
-		ptw_1.setBounds(37, 156, 272, 187);
+		ptw_1.setSize(ptw_1.getPreferredSize());
+		ptw_1.setBounds(161, 417, 272, 187);
 		contentPane.add(ptw_1);
 
+		PlayerTokenView ptw_2 = new PlayerTokenView(0);
+		ptw_2.setSize(ptw_2.getPreferredSize());
+		ptw_2.setBounds(161, 21, 272, 187);
+		contentPane.add(ptw_2);
 
+		PlayerTokenView ptw_local = new PlayerTokenView(0); //TODO how can i achieve this?
+		ptw_local.setLocation(1484, 11);
+		ptw_local.setSize(272, 187);
+		ptw.setSize(new Dimension(272, 187));
+		getContentPane().add(ptw_local);
+		playerInventory.setLocation(1389, 200);
+
+
+		playerInventory.setSize(playerInventory.getPreferredSize());
+		playerInventory.setSize(new Dimension(450, 415));
+		getContentPane().add(playerInventory);
+
+
+		this.setVisible(true);
 	}
 }

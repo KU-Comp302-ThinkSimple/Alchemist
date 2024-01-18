@@ -124,6 +124,20 @@ public class GlobalIcons {
 		}
 	}
 
+	public static ImageIcon drinkPotionSmall = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/drinkPotion_200x200.png"));
+	public static ImageIcon testOnStudentSmall = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/testOnStudent_200x200.png"));
+	public static ImageIcon sellAPotionSmall = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/sellAPotion_200x200.png"));
+
+	public static ImageIcon getButtonImage(String str) {
+		switch (str) {
+		case "drink potion small": return drinkPotionSmall;
+		case "test on student small": return testOnStudentSmall;
+		case "sell a potion small": return sellAPotionSmall;
+		default : return drinkPotionSmall;
+
+		}
+
+	}
 
 
 
