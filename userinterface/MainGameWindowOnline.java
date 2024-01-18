@@ -28,6 +28,12 @@ import userinterface.util.GlobalIcons;
 public class MainGameWindowOnline extends JFrame{
 
 	JPanel contentPane;
+	JPanel publishTheoryPanel = new PublishTheoryPanel();
+	JPanel debunkTheoryView = new DebunkTheoryView();
+	JPanel potionBrewingBoard = new BrewPotionPanel();
+	JPanel resultsTriangle = new ResultsTriangle(1);
+	JPanel deductionBoard = new DeductionBoard();
+	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
 
 	public MainGameWindowOnline() {
 
@@ -66,7 +72,7 @@ public class MainGameWindowOnline extends JFrame{
 			this.dispose();
 		}
 				);
-		this.add(closeButton);
+		getContentPane().add(closeButton);
 
 		//INFORMATION BUTTON
 		JButton infoButton = new JButton("i");
@@ -97,7 +103,7 @@ public class MainGameWindowOnline extends JFrame{
 
 		//TRANSMUTE, BUY ARTIFACT, FORAGE BUTTONS PANEL
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(134, 370, 325, 174);
+		buttonsPanel.setBounds(37, 552, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
@@ -139,7 +145,7 @@ public class MainGameWindowOnline extends JFrame{
 		});
 
 
-		//TODO action listener for transmute ingredient button
+		//action listener for transmute ingredient button
 		transmuteIngredientButton.addActionListener(e -> {
 			if (transmuteIngredientComboBox.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(this, "Select an ingredient first to sell it for 1 gold.");
@@ -152,7 +158,6 @@ public class MainGameWindowOnline extends JFrame{
 					JOptionPane.showMessageDialog(this, a.getMessage());
 				}
 			}
-			//IngredientBoard.forageForIngredient();
 		});
 
 		transmuteIngredientPanel.add(transmuteIngredientComboBox);
@@ -173,9 +178,7 @@ public class MainGameWindowOnline extends JFrame{
 		buyArtifactPanel.add(buyArtifactButton);
 
 		buyArtifactButton.addActionListener(e -> {
-
 			BoardController.buyArtifactCard();
-
 		});
 
 		JLabel buyArtifactLabel = new JLabel();
@@ -211,6 +214,52 @@ public class MainGameWindowOnline extends JFrame{
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
 
-	}
+		//PUBLISH THEORY PANEL
+		publishTheoryPanel.setLocation(37, 748);
+		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
+		contentPane.add(publishTheoryPanel);
 
+		//DEBUNK THEORY PANEL
+		debunkTheoryView.setLocation(319, 961);
+		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
+		contentPane.add(debunkTheoryView);
+
+		//POTION BREWING BOARD
+		potionBrewingBoard.setLocation(1219, 477);
+		potionBrewingBoard.setSize(new Dimension(690, 555));
+		contentPane.add(potionBrewingBoard);
+
+		//RESULTS TRIANGLE
+		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
+		resultsTriangle.setLocation(514, 98);
+		contentPane.add(resultsTriangle);
+
+		//DEDUCTION BOARD
+		deductionBoard.setLocation(514, 740);
+		deductionBoard.setSize(deductionBoard.getPreferredSize());
+		contentPane.add(deductionBoard);
+
+		//PLAYER TOKENS
+		int playercount = 4; //TODO
+		//GameController.getInstance().getActivePlayers().size(); maybe?
+		int xalign;
+		int yalign;
+		for (int i = 0; i < playercount; i++) {
+			PlayerTokenView ptw = new PlayerTokenView(i);
+			ptw.setSize(ptw.getPreferredSize());
+
+
+		}
+		PlayerTokenView ptw = new PlayerTokenView(0);
+		ptw.setLocation(37, 354);
+		ptw.setSize(new Dimension(272, 187));
+		getContentPane().add(ptw);
+
+		PlayerTokenView ptw_1 = new PlayerTokenView(0);
+		ptw_1.setSize(new Dimension(272, 187));
+		ptw_1.setBounds(37, 156, 272, 187);
+		contentPane.add(ptw_1);
+
+
+	}
 }

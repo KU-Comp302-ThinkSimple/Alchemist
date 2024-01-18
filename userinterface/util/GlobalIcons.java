@@ -106,12 +106,21 @@ public class GlobalIcons {
 	public static ImageIcon alchemistBig2 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square2.png"));
 	public static ImageIcon alchemistBig3 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist_square3.png"));
 
+	public static ImageIcon alchemistSmall1 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist1_90x90.png"));
+	public static ImageIcon alchemistSmall2 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist2_90x90.png"));
+	public static ImageIcon alchemistSmall3 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist3_90x90.png"));
+	public static ImageIcon alchemistSmall4 = new ImageIcon(GlobalIcons.class.getResource("/userinterface/images/alchemist4_90x90.png"));
+
 	public static ImageIcon getImage(String image) {
 		switch (image) {
 		case "alchemist square 1": return alchemistBig;
 		case "alchemist square 2": return alchemistBig2;
 		case "alchemist square 3": return alchemistBig3;
-		default : return alchemistBig;
+		case "alchemist icon 1": return alchemistSmall1;
+		case "alchemist icon 2": return alchemistSmall2;
+		case "alchemist icon 3": return alchemistSmall3;
+		case "alchemist icon 4": return alchemistSmall4;
+		default : return alchemistSmall4;
 		}
 	}
 
