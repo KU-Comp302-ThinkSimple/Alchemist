@@ -18,13 +18,11 @@ public class GameController implements Serializable{
 
 	int currentRound=1; //1 2 and 3
 	private Player currentPlayer;
-	private Player localPlayer;
 	private String gameMode;
 	private ArrayList<Player> activePlayers;
 	private GameBoard board;
 	private GameInventory gameInventory;
-	private InitializeGameHelper initalizeGameHelper;
-	private MainGameWindowOffline mainGameWindow;
+	
 
 
 	// This is the main game controller, it holds various states and attributes of the game
@@ -50,7 +48,7 @@ public class GameController implements Serializable{
 
 		if(activePlayers.size() >= 2) {
 			System.out.println("Game initialized");
-			initalizeGameHelper=new InitializeGameHelper();
+			new InitializeGameHelper();
 		}
 		else {
 			System.out.println("Not able to initialize");
@@ -121,7 +119,7 @@ public class GameController implements Serializable{
 			for(int i=0;i<activePlayers.size();i++) {
 				if(!activePlayers.get(i).equals(currentPlayer)) {
 					currentPlayer=activePlayers.get(i);
-					localPlayer=currentPlayer;
+					LocalData.getInstance().setLocalPlayer(currentPlayer);
 					break;
 				}
 			}
@@ -131,7 +129,7 @@ public class GameController implements Serializable{
 			for(int i=0;i<activePlayers.size();i++) {
 				if(!activePlayers.get(i).equals(currentPlayer)) {
 					currentPlayer=activePlayers.get(i);
-					localPlayer=currentPlayer;
+					LocalData.getInstance().setLocalPlayer(currentPlayer);
 					break;
 				}
 			}
@@ -187,25 +185,6 @@ public class GameController implements Serializable{
 
 	public void setGameInventory(GameInventory gameInventory) {
 		this.gameInventory = gameInventory;
-	}
-
-	public InitializeGameHelper getInitalizeGameHelper() {
-		return initalizeGameHelper;
-	}
-
-	public void setInitalizeGameHelper(InitializeGameHelper initalizeGameHelper) {
-		this.initalizeGameHelper = initalizeGameHelper;
-	}
-
-
-
-	public MainGameWindowOffline getMainGameWindow() {
-		return mainGameWindow;
-	}
-
-
-	public void setMainGameWindow(MainGameWindowOffline mainGameWindow) {
-		this.mainGameWindow = mainGameWindow;
 	}
 
 	public boolean checkGameEnd() {
