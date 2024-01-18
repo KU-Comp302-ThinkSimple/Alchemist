@@ -98,7 +98,7 @@ public class LoginSignUpWindowOffline {
 			//TODO Call the backend function to start the game with needed arguments *DONE
 			GameController.getInstance().initializeGame();
 			LoginSignUpWindowFrame.dispose();
-			new MainGameWindow();
+			new MainGameWindowOffline();
 		}
 				);
 		contentPane.add(startGameButton);

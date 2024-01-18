@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MainGameWindow {
+public class MainGameWindowOffline {
 	private static String infoText = """
 			Welcome to Alchemy Lab Game!
 
@@ -65,9 +65,9 @@ public class MainGameWindow {
 
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
-		new MainGameWindow();
+		new MainGameWindowOffline();
 	}
-	public MainGameWindow() {
+	public MainGameWindowOffline() {
 		//		GameController.setMainGameWindow(this);
 		MainGameWindowFrame = new JFrame();
 		MainGameWindowFrame.setUndecorated(true);
@@ -220,7 +220,7 @@ public class MainGameWindow {
 		JLabel forageForIngredientLabel = new JLabel();
 		forageForIngredientLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		forageForIngredientLabel.setBounds(0, 0, 105, 174);
-		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindow.class.getResource("/userinterface/images/forageforing_100x160.png")));
+		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindowOffline.class.getResource("/userinterface/images/forageforing_100x160.png")));
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
 		deductionBoard.setLocation(514, 740);

@@ -9,7 +9,7 @@ import domain.boards.GameBoard;
 import domain.player.Player;
 import domain.potion.Atom;
 import exception.UserErrorException;
-import userinterface.MainGameWindow;
+import userinterface.MainGameWindowOffline;
 
 public class GameController implements Serializable{
 	private static final long serialVersionUID = 4936278445022118697L;
@@ -24,7 +24,7 @@ public class GameController implements Serializable{
 	private GameBoard board;
 	private GameInventory gameInventory;
 	private InitializeGameHelper initalizeGameHelper;
-	private MainGameWindow mainGameWindow;
+	private MainGameWindowOffline mainGameWindow;
 
 
 	// This is the main game controller, it holds various states and attributes of the game
@@ -199,12 +199,12 @@ public class GameController implements Serializable{
 
 
 
-	public MainGameWindow getMainGameWindow() {
+	public MainGameWindowOffline getMainGameWindow() {
 		return mainGameWindow;
 	}
 
 
-	public void setMainGameWindow(MainGameWindow mainGameWindow) {
+	public void setMainGameWindow(MainGameWindowOffline mainGameWindow) {
 		this.mainGameWindow = mainGameWindow;
 	}
 

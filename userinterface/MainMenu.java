@@ -19,14 +19,14 @@ import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-public class LoginSignupWindow extends JFrame {
+public class MainMenu extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel alchemistImageLabel;
 	private JTextField loginHeaderText;
 	private int loggedinUserCount;
 
-	public LoginSignupWindow() {
+	public MainMenu() {
 
 
 		this.setUndecorated(true);

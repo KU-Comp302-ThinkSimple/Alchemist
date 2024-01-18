@@ -1,10 +1,10 @@
 package userinterface.observer;
 
-import userinterface.MainGameWindow;
+import userinterface.MainGameWindowOffline;
 
 public class MainObserver implements Observer{
-    private MainGameWindow mainGameWindow;
-    public MainObserver(MainGameWindow mainGameWindow){
+    private MainGameWindowOffline mainGameWindow;
+    public MainObserver(MainGameWindowOffline mainGameWindow){
         this.mainGameWindow = mainGameWindow;
     }
 
