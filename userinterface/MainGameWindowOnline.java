@@ -142,7 +142,7 @@ public class MainGameWindowOnline extends JFrame{
 		transmuteIngredientButton.setContentAreaFilled(false);
 
 
-		//get an array of ingredients of active player //TODO curr player
+		//get an array of ingredients of active player //TODO LOCAL player
 		ArrayList<IngredientCard> ingredientsList = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrs = new String[ingredientsList.size()];
 		for (int i = 0; i < ingredientsList.size(); i++) {
@@ -254,8 +254,7 @@ public class MainGameWindowOnline extends JFrame{
 		contentPane.add(deductionBoard);
 
 		//PLAYER TOKENS
-		int playercount = GameController.getInstance().getActivePlayers().size(); //TODO
-		//GameController.getInstance().getActivePlayers().size(); maybe?
+		int playercount = GameController.getInstance().getActivePlayers().size();
 		localPlayer = GameController.getInstance().getActivePlayers().get(0);
 		int xalign = 161;
 		int yalign = 21;
