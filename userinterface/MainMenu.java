@@ -168,6 +168,11 @@ public class MainMenu extends JFrame {
 		joinLobbyPanel.add(joinIDButton);
 		getContentPane().add(joinLobbyPanel);
 
+		//ONLINE LOBBY PANEL
+		JPanel onlineLobbyPanel = new OnlineLobbyPanel();
+		onlineLobbyPanel.setSize(onlineLobbyPanel.getPreferredSize());
+		onlineLobbyPanel.setLocation(937, 121);
+		onlineLobbyPanel.setVisible(false);
 
 		//HOST GAME BUTTON (after logging in)
 		JButton hostGameButton = new JButton("Host Game");
@@ -182,11 +187,13 @@ public class MainMenu extends JFrame {
 		hostGameButton.addActionListener(e -> {
 			//TODO call needed functions from backend, open a lobby
 			logsignPanel.setVisible(false);
-			//TODO onlineLobbyPanel.setVisible(true);
+			getContentPane().add(onlineLobbyPanel);
+			onlineLobbyPanel.setVisible(true);
 			((JButton) e.getSource()).setVisible(false);
 		});
 		hostGameButton.setVisible(false);
 		getContentPane().add(hostGameButton);
+
 
 
 		//MAIN MENU OFFLINE GAME BUTTON

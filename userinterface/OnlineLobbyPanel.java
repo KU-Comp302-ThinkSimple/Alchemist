@@ -9,6 +9,7 @@ import userinterface.util.GlobalFonts;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Dimension;
 
 public class OnlineLobbyPanel extends JPanel {
 
@@ -17,6 +18,7 @@ public class OnlineLobbyPanel extends JPanel {
 	int playercount = 0;
 
 	public OnlineLobbyPanel() {
+		setPreferredSize(new Dimension(600, 300));
 
 		this.setSize(600, 300);
 		this.setBackground(GlobalColors.BACKGROUND_COLOR);
