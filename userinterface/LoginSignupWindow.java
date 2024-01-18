@@ -19,14 +19,14 @@ import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-public class LoginSignupWindowNew extends JFrame {
+public class LoginSignupWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel alchemistImageLabel;
 	private JTextField loginHeaderText;
 	private int loggedinUserCount;
 
-	public LoginSignupWindowNew() {
+	public LoginSignupWindow() {
 
 
 		this.setUndecorated(true);
@@ -191,7 +191,7 @@ public class LoginSignupWindowNew extends JFrame {
 
 		//MAIN MENU OFFLINE GAME BUTTON
 		offlineButton.addActionListener(e -> {
-			new LoginSignUpWindow();
+			new LoginSignUpWindowOffline();
 			this.dispose();
 		});
 

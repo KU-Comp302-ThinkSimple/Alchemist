@@ -75,7 +75,7 @@ public class DeductionBoard extends JPanel {
 
 		JLabel deductionBoardLabel = new JLabel();
 		deductionBoardLabel.setBounds(0, 0, 704, 341);
-		deductionBoardLabel.setIcon(new ImageIcon(LoginSignUpWindow.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
+		deductionBoardLabel.setIcon(new ImageIcon(DeductionBoard.class.getResource("/userinterface/images/deductionBoard_706x339.png")));
 		buttonsPanel.add(deductionBoardLabel);
 
 		this.add(buttonsPanel);
