@@ -69,20 +69,20 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		setLayout(null);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setSize(274,107);
-		setPreferredSize(new Dimension(272, 284));
+		setPreferredSize(new Dimension(228, 234));
 
 		JLabel moleculeLabel = new JLabel();
-		moleculeLabel.setBounds(150, 107, 100, 100);
+		moleculeLabel.setBounds(120, 72, 100, 100);
 		//moleculeLabel.setIcon(); //TODO unknown molecule
 		add(moleculeLabel);
 
 		JLabel ingredientLabel = new JLabel();
-		ingredientLabel.setBounds(25, 77, 100, 160);
+		ingredientLabel.setBounds(10, 47, 100, 160);
 		ingredientLabel.setIcon(GlobalIcons.getIngredientCardImage("Unknown"));
 		add(ingredientLabel);
 
 		ingredientComboBox = new JComboBox<IngredientCardComboBoxItem>();
-		ingredientComboBox.setBounds(10, 30, 120, 25);
+		ingredientComboBox.setBounds(10, 18, 100, 25);
 		ingredientComboBox.addActionListener(e -> {
 			if (ingredientComboBox.getSelectedItem() != null) {
 				String ingr = ingredientComboBox.getSelectedItem().toString();
@@ -97,7 +97,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		for (Molecule molecule : moleculesCopy) {
 			moleculeComboBox.addItem(new MoleculeComboBoxItem(molecule));
 		}
-		moleculeComboBox.setBounds(140, 30, 120, 25);
+		moleculeComboBox.setBounds(113, 18, 105, 25);
 		moleculeComboBox.addActionListener(e -> {
 			if (moleculeComboBox.getSelectedItem() != null) {
 				String moleculeid = moleculeComboBox.getSelectedItem().toString();
@@ -107,15 +107,15 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		add(moleculeComboBox);
 
 		JLabel lblNewLabel = new JLabel("Select ingredient");
-		lblNewLabel.setBounds(10, 10, 120, 13);
+		lblNewLabel.setBounds(10, 5, 120, 13);
 		add(lblNewLabel);
 
 		JLabel lblSelectMolecule = new JLabel("Select molecule");
-		lblSelectMolecule.setBounds(140, 10, 120, 13);
+		lblSelectMolecule.setBounds(113, 5, 120, 13);
 		add(lblSelectMolecule);
 
 		JButton publishTheoryButton = new JButton("Publish Theory");
-		publishTheoryButton.setBounds(73, 248, 120, 25);
+		publishTheoryButton.setBounds(60, 205, 120, 25);
 		publishTheoryButton.addActionListener(this);
 		add(publishTheoryButton);
 
