@@ -30,7 +30,7 @@ public class Client extends Thread implements Observer{
 		connection = new Socket(serverHost, serverPort);
 	}
 
-    public void sendGameState(GameController gameState) {
+    private void sendGameState(GameController gameState) {
         try {
             OutputStream output = connection.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(output);
