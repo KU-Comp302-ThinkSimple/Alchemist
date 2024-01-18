@@ -13,9 +13,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Server extends Thread {
     private ServerSocket serverSocket;
-    private int availablePort;
+    private int port;
     private final ArrayList<Socket> clients;
     private final int clientBufferSize;
+    private static final boolean createTestClients = false;
 
     /**
      * A server class that relays any message it receives into other connections
@@ -27,30 +28,32 @@ public class Server extends Thread {
     	this.clients = new ArrayList<Socket>();
 		this.clientBufferSize = clientBufferSize;
         serverSocket = new ServerSocket(port);
-        availablePort = port;
+        this.port = port;
     }
 
-    public int getAvailablePort() {
-        return availablePort;
+    public int getPort() {
+        return port;
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
     	int port = findAvailablePort();
         Server server = new Server(port, 1024);
-        System.out.println("Available port: " + server.getAvailablePort());
+        System.out.println("Available port: " + server.getPort());
         // Start the server thread
         server.start();
         
-        //create three clients to test the server
-        TestClient client1 = new TestClient("client1", "127.0.0.1", port);
-        TestClient client2 = new TestClient("client2", "127.0.0.1", port);
-        TestClient client3 = new TestClient("client3", "127.0.0.1", port);
-        
-        client1.start();
-        TimeUnit.SECONDS.sleep(2);
-        client2.start();
-        TimeUnit.SECONDS.sleep(2);
-        client3.start();
+        if(createTestClients) {
+            //create three clients to test the server
+            TestClient client1 = new TestClient("client1", "127.0.0.1", port);
+            TestClient client2 = new TestClient("client2", "127.0.0.1", port);
+            TestClient client3 = new TestClient("client3", "127.0.0.1", port);
+            
+            client1.start();
+            TimeUnit.SECONDS.sleep(2);
+            client2.start();
+            TimeUnit.SECONDS.sleep(2);
+            client3.start();
+        }
     }
 
     public static int findAvailablePort() {

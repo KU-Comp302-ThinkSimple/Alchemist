@@ -28,8 +28,8 @@ public class PlayerToken implements Serializable, Observable {
 	int playerAction=3;
 	String playerAvatar; // the directory of the playeravatar is kept in this as a string.
 	PlayerInventory playerInventory;
-	private List<Observer> observers = new ArrayList<>();
-
+	private transient List<Observer> observers = new ArrayList<>();
+	
 	public PlayerToken() {
 
 		this.playerInventory= new PlayerInventory();
@@ -219,11 +219,17 @@ public class PlayerToken implements Serializable, Observable {
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
 		for (Observer observer : observers){
 			observer.update();
 		}
