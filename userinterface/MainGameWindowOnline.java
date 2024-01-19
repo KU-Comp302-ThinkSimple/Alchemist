@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class MainGameWindowOnline extends JFrame{
 
-	Player localPlayer; //TODO
+	Player localPlayer = LocalData.getInstance().getLocalPlayer(); //TODO DONE
 	JPanel contentPane;
 	JPanel publishTheoryPanel = new PublishTheoryPanel();
 	JPanel debunkTheoryView = new DebunkTheoryView();
@@ -29,7 +29,7 @@ public class MainGameWindowOnline extends JFrame{
 	JPanel deductionBoard = new DeductionBoard();
 	PlayerTokenView ptwLocal;
 	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
-	JPanel playerInventory = new PlayerInventory();
+	JPanel playerInventory = new PlayerInventory("online");
 	JComboBox transmuteIngredientComboBox;
 	JLabel roundLabel;
 	JLabel turnLabel;
@@ -316,7 +316,7 @@ public class MainGameWindowOnline extends JFrame{
 		((DeductionBoard)deductionBoard).updateDeductionBoard();
 
 		//Player Inventory Changer
-		((PlayerInventory)playerInventory).updatePlayerInventory();
+		((PlayerInventory)playerInventory).updatePlayerInventory("online");
 
 		//Results Triangle Changer
 		((ResultsTriangle)resultsTriangle).updateResultsTriangle();

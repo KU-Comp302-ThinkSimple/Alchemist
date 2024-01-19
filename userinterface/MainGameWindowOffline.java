@@ -22,7 +22,7 @@ public class MainGameWindowOffline extends JFrame{
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
 	private JPanel resultsTriangle = new ResultsTriangle(1);
-	private JPanel playerInventory = new PlayerInventory();
+	private JPanel playerInventory = new PlayerInventory("offline");
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
 	private JPanel playerTokenView = new PlayerTokenView(0);//TODO add ptw 2
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
@@ -281,7 +281,7 @@ public class MainGameWindowOffline extends JFrame{
 		((DeductionBoard)deductionBoard).updateDeductionBoard();
 
 		//Player Inventory Changer
-		((PlayerInventory)playerInventory).updatePlayerInventory();
+		((PlayerInventory)playerInventory).updatePlayerInventory("offline");
 
 		//Results Triangle Changer
 		((ResultsTriangle)resultsTriangle).updateResultsTriangle();

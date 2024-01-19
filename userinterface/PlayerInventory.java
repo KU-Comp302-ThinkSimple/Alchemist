@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.cards.artifactCards.ElixirOfInsight;
@@ -15,22 +16,25 @@ import java.util.ArrayList;
 public class PlayerInventory extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	//private int id; //There will be two of this view so there should be an id attribute to separate them
 	private Player player;
 	private JPanel viewPort;
 	private JPanel viewPort_1;
 
 
-	/**
-	 * Create the panel.
-	 */
-	public PlayerInventory() {
-		//this.id=id;
+
+	public PlayerInventory(String online) {
+		if (online.equals("online")) player = LocalData.getInstance().getLocalPlayer();
+		else player = GameController.getInstance().getCurrentPlayer();
+		ConstructorHelper();
+	}
+
+	private void ConstructorHelper() {
+
 		this.setPreferredSize(new Dimension(450, 415));
 		this.setMinimumSize(getPreferredSize());
 		this.setMaximumSize(getPreferredSize());
 
-		player = GameController.getInstance().getCurrentPlayer();
+
 		setLayout(null);
 
 		JScrollPane ingredientCardsScrollPanel = new JScrollPane();
@@ -86,14 +90,22 @@ public class PlayerInventory extends JPanel {
 		}
 
 	}
-//This func updtaes this component
-	public void updatePlayerInventory() {
+
+	//This func updtaes this component
+	public void updatePlayerInventory(String online) {
+
+		if (online.equals("online")) updatePlayerInventoryHelper();
+		else {
+			player = GameController.getInstance().getCurrentPlayer();
+			updatePlayerInventoryHelper();
+		}
+	}
+
+	private void updatePlayerInventoryHelper() {
 		viewPort.removeAll();
 		viewPort.repaint();
 		viewPort_1.removeAll();
 		viewPort_1.repaint();
-
-		player = GameController.getInstance().getCurrentPlayer();
 
 		for(int i=0;i<player.getInventory().getPlayerIngredientCardList().size();i++) {
 
@@ -119,8 +131,8 @@ public class PlayerInventory extends JPanel {
 			button.addActionListener(e -> {
 				currentCard.useCard();
 				System.out.println("Used card named "+ currentCard.getName());
+				String message = "This artifact cards shall awaits its usage when its time comes.";
 
-				
 				if(currentCard.getName().equals("Elixir Of Insight")) {
 					GameController.getInstance().getCurrentPlayer().getPlayerToken().addGold(-1);
 					ArrayList<IngredientCard> cards= (ArrayList<IngredientCard>) currentCard.useCard();
@@ -131,49 +143,53 @@ public class PlayerInventory extends JPanel {
 						s+="\n";
 					}
 					s+="Please write the new order of cards, separated by comma";
-					
+
 					JTextArea jta = new JTextArea(10, 30);
-		            jta.setText(s);
-		            jta.setEditable(false);
-		            JScrollPane jsp = new JScrollPane(jta);
+					jta.setText(s);
+					jta.setEditable(false);
+					JScrollPane jsp = new JScrollPane(jta);
 					String order= JOptionPane.showInputDialog(null, jsp);
-					
+
 					try {
 						String[] numString = order.split(",");
 						int[] arr = new int[numString.length];
 						for (int j = 0; j < numString.length; j++) {
-					            arr[j] = Integer.valueOf(numString[j]);
+							arr[j] = Integer.valueOf(numString[j]);
 						}
 						ElixirOfInsight elixCard= (ElixirOfInsight) currentCard;
 						elixCard.changeCards(arr);
-						
-						
+
+
 					}catch(Exception exc) {
 						System.out.println("Something went wrong");
 					}
 				}
 				else if (currentCard.getName().equals("Vaccine")){
 					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+					JOptionPane. showMessageDialog(this, message);
 				}
 				else if (currentCard.getName().equals("Magic Mortar")){
 					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+					JOptionPane. showMessageDialog(this, message);
 				}
 				else if (currentCard.getName().equals("Printing Press")){
 					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+					JOptionPane. showMessageDialog(this, message);
 				}
 				else if (currentCard.getName().equals("Wisdom Idol")){
 					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+					JOptionPane. showMessageDialog(this, message);
 				}
 
 				GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
 				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
-				
+
 			});
-			
+
 			viewPort_1.add(button);
 
-		}
 
-		//TODO same for artifact cards
+		}
 	}
+
 }
