@@ -92,7 +92,7 @@ public class GameController implements Serializable, Observable {
 		if (actionCounter == activePlayers.size()) {
 			if ( currentRound == 3) {
 				//TODO Game over
-				return false;
+				return true;
 			}
 			return true;
 		}else {

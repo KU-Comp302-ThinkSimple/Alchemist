@@ -1,29 +1,13 @@
 package userinterface;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.swing.JTextField;
-import javax.swing.JSplitPane;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-
 import domain.GameController;
 import domain.player.Player;
-import domain.potion.Potion;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
-import java.awt.Component;
-import javax.swing.SwingConstants;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 
 public class PlayerTokenView extends JPanel {
@@ -230,7 +214,7 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
-		//player = GameController.getInstance().getCurrentPlayer();
+		player = GameController.getInstance().getCurrentPlayer();
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
