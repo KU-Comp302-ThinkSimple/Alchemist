@@ -314,17 +314,17 @@ public class MainGameWindowOnline extends JFrame{
 
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
-		((DeductionBoard)deductionBoard).updateDeductionBoard();
+		((DeductionBoard)deductionBoard).updateDeductionBoard("online");
 
 		//Player Inventory Changer
 		((PlayerInventory)playerInventory).updatePlayerInventory("online");
 
 		//Results Triangle Changer
-		((ResultsTriangle)resultsTriangle).updateResultsTriangle("offline");
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle("online");
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();
-		ArrayList<IngredientCard> ingredientsListt = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		ArrayList<IngredientCard> ingredientsListt = localPlayer.getInventory().getPlayerIngredientCardList();
 		String[] ingrss = new String[ingredientsListt.size()];
 		for (int i = 0; i < ingredientsListt.size(); i++) {
 			ingrss[i] = ingredientsListt.get(i).getName();

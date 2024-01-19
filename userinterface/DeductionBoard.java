@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.border.SoftBevelBorder;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.player.Player;
 
 import javax.swing.border.BevelBorder;
@@ -26,9 +27,12 @@ public class DeductionBoard extends JPanel {
 	private int[][] buttonSelect;
 	private Player player;
 
-	public DeductionBoard() {
 
-		player = GameController.getInstance().getCurrentPlayer();
+	public  DeductionBoard(String online) {
+
+		if (online.equals("online")) this.player = LocalData.getInstance().getLocalPlayer();
+		else this.player = GameController.getInstance().getCurrentPlayer();
+
 		buttonSelect = player.getDeductionSelection();
 		this.setPreferredSize(new Dimension(704, 341));
 		this.setLayout(null);
@@ -83,9 +87,9 @@ public class DeductionBoard extends JPanel {
 	}
 
 	public void updateDeductionBoard(String gameMode) {
-		if (gameMode.equals("online")) player = GameController.getInstance().getCurrentPlayer();
-		else player = GameController.getInstance().getCurrentPlayer(); //TODO change this to local player
-		player = GameController.getInstance().getCurrentPlayer();
+		if (gameMode.equals("online")) player = LocalData.getInstance().getLocalPlayer();
+		else player = GameController.getInstance().getCurrentPlayer();
+
 		buttonSelect = player.getDeductionSelection();
 
 		for (int y = 0; y < 8; y++) {
@@ -104,7 +108,4 @@ public class DeductionBoard extends JPanel {
 		}
 	}
 
-	public void updateDeductionBoard() { //TODO temporary function
-		updateDeductionBoard("online");
-	}
 }

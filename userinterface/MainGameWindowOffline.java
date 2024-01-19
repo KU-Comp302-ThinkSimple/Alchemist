@@ -300,7 +300,7 @@ public class MainGameWindowOffline extends JFrame{
 
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
-		((DeductionBoard)deductionBoard).updateDeductionBoard();
+		((DeductionBoard)deductionBoard).updateDeductionBoard("offline");
 
 		//Player Inventory Changer
 		((PlayerInventory)playerInventory).updatePlayerInventory("offline");

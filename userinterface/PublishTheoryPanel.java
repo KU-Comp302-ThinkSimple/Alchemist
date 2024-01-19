@@ -123,7 +123,6 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 	}
 
 	public void updatePublishTheoryPanel() {
-		Player player = GameController.getInstance().getCurrentPlayer();
 		ingredientComboBox.removeAllItems();
 		for (IngredientCard ingredientCard : GameController.getInstance().getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
