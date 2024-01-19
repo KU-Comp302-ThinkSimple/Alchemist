@@ -323,7 +323,7 @@ public class MainGameWindowOnline extends JFrame{
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();
-		ArrayList<IngredientCard> ingredientsListt = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		ArrayList<IngredientCard> ingredientsListt = LocalData.getInstance().getLocalPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrss = new String[ingredientsListt.size()];
 		for (int i = 0; i < ingredientsListt.size(); i++) {
 			ingrss[i] = ingredientsListt.get(i).getName();

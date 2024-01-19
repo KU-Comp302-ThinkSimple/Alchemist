@@ -142,7 +142,11 @@ public class LoginSignUpPanel extends JPanel {
 				
 				try {
 					gameInitializer.finalizeInitialization(settings);
-					System.out.println("START GAME");
+					if(gameInitializer instanceof OnlineHostGameInitializerAdapter) {
+						System.out.println("Loading host screen");
+						System.out.println(LocalData.getInstance().getLocalPlayer().getPlayerName());
+						new MainGameWindowOnline();
+					}
 				} catch (Exception e1) {
 					System.out.println(e1.getMessage());
 					e1.printStackTrace();

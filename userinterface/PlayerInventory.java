@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.cards.artifactCards.ElixirOfInsight;
@@ -30,7 +31,8 @@ public class PlayerInventory extends JPanel {
 		this.setMinimumSize(getPreferredSize());
 		this.setMaximumSize(getPreferredSize());
 
-		player = GameController.getInstance().getCurrentPlayer();
+//		player = GameController.getInstance().getCurrentPlayer();
+		player = LocalData.getInstance().getLocalPlayer();
 		setLayout(null);
 
 		JScrollPane ingredientCardsScrollPanel = new JScrollPane();
@@ -93,7 +95,7 @@ public class PlayerInventory extends JPanel {
 		viewPort_1.removeAll();
 		viewPort_1.repaint();
 
-		player = GameController.getInstance().getCurrentPlayer();
+		player = LocalData.getInstance().getLocalPlayer();
 
 		for(int i=0;i<player.getInventory().getPlayerIngredientCardList().size();i++) {
 
@@ -122,7 +124,7 @@ public class PlayerInventory extends JPanel {
 
 				
 				if(currentCard.getName().equals("Elixir Of Insight")) {
-					GameController.getInstance().getCurrentPlayer().getPlayerToken().addGold(-1);
+					LocalData.getInstance().getLocalPlayer().getPlayerToken().addGold(-1);
 					ArrayList<IngredientCard> cards= (ArrayList<IngredientCard>) currentCard.useCard();
 					String s="The top 3 cards are: \n";
 					for(int j=0;j<3;j++) {
@@ -165,8 +167,8 @@ public class PlayerInventory extends JPanel {
 					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
 				}
 
-				GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
-				GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
+				LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
+				LocalData.getInstance().getLocalPlayer().getPlayerToken().reducePlayerAction();
 				
 			});
 			

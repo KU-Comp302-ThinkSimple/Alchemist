@@ -9,6 +9,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,9 +25,10 @@ import network.messages.LoginResponseMessage;
 import network.messages.Message;
 import network.messages.SignupMessage;
 import network.messages.SignupResponseMessage;
+import userinterface.observer.Observable;
 import userinterface.observer.Observer;
 
-public class Client extends Thread implements Observer{
+public class Client extends Thread implements Observer, Observable{
 	public static boolean debugEnabled = true;
 	private final String name;
 	private final Socket connection;
@@ -33,9 +37,11 @@ public class Client extends Thread implements Observer{
 	private final Object responseLock = new Object();
 	private ObjectInputStream objectInputStream;
 	private ObjectOutputStream objectOutputStream;
+	private List<Observer> observers;
 	public Client(String name, String serverHost, int serverPort) throws UnknownHostException, IOException {
 		this.name = name;
 		connection = new Socket(serverHost, serverPort);
+		observers = new ArrayList<Observer>();
 		receivedSignupResponse = null;
 		receivedLoginResponse = null;
 	}
@@ -65,6 +71,7 @@ public class Client extends Thread implements Observer{
                 			System.out.println(this.name + " received game state");
                     	}
                     	GameController.updateInstance(newGameController);
+                    	notifyObserver();
             		}
             		else if(receivedMessage instanceof SignupResponseMessage) {
             			receivedSignupResponse = (SignupResponseMessage)receivedMessage;
@@ -146,5 +153,25 @@ public class Client extends Thread implements Observer{
 			objectOutputStream = new ObjectOutputStream(connection.getOutputStream());
 		}
 		return objectOutputStream;
+	}
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+	
+	public void clearObservers() {
+		observers.clear();
+	}
+	@Override
+	public void notifyObserver() {
+		if(observers == null) {
+			return;
+		}
+		for(int i = 0; i<observers.size(); i++) {
+			if(i>=observers.size()) {
+				continue;
+			}
+			observers.get(i).update();
+		}
 	}
 }

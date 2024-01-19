@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.player.Player;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
@@ -214,7 +215,7 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
-		player = GameController.getInstance().getCurrentPlayer();
+		player = LocalData.getInstance().getLocalPlayer();
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));

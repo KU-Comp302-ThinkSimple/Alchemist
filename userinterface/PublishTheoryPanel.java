@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;
@@ -123,7 +124,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 	}
 
 	public void updatePublishTheoryPanel() {
-		Player player = GameController.getInstance().getCurrentPlayer();
+		Player player = LocalData.getInstance().getLocalPlayer();
 		ingredientComboBox.removeAllItems();
 		for (IngredientCard ingredientCard : GameController.getInstance().getGameInventory().getIngrCards()) {
 			ingredientComboBox.addItem(new IngredientCardComboBoxItem(ingredientCard));
@@ -136,7 +137,7 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		Molecule molecule = ((MoleculeComboBoxItem)moleculeComboBox.getSelectedItem()).getMolecule();
 		try {
 			BoardController.publishTheory(ingredientCard, molecule);
-			if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(4))){
+			if (LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(4))){
 				GameController.getInstance().getGameInventory().getArtCards().get(4).useCard();
 			}
 		}

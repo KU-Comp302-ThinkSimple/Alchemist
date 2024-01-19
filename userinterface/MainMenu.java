@@ -15,16 +15,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import domain.LocalData;
 import domain.initialization.GameInitializerAdapter;
 import domain.initialization.GameInitializerAdapterFactory;
 import domain.initialization.GameInitializerAdapterFactory.InitializerType;
 import domain.initialization.OfflineGameInitializerAdapter;
+import domain.initialization.OnlineClientGameInitializerAdapter;
+import userinterface.observer.Observer;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
 
-public class MainMenu extends JFrame {
+public class MainMenu extends JFrame implements Observer{
 
 	private JPanel contentPane;
 	private JLabel alchemistImageLabel;
@@ -168,6 +171,7 @@ public class MainMenu extends JFrame {
 			try {
 				gameInitializer.startInitialization(settings);
 				logsignPanel.setVisible(true);
+				LocalData.getInstance().getClient().addObserver(this);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -256,5 +260,16 @@ public class MainMenu extends JFrame {
 
 
 		this.setVisible(true);
+	}
+
+	@Override
+	public void update() {
+		if(gameInitializer instanceof OnlineClientGameInitializerAdapter) {
+			LocalData.getInstance().getClient().clearObservers();
+			System.out.println("Loading client screen");
+			System.out.println(LocalData.getInstance().getLocalPlayer().getPlayerName());
+			new MainGameWindowOnline();
+			this.dispose();
+		}
 	}
 }

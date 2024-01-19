@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.boards.BoardController;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalFonts;
@@ -72,7 +73,7 @@ public class BrewPotionPanel extends JPanel {
 			try {
 				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), false).toString().toLowerCase();
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
-				if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(3))){
+				if (LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(3))){
 					//TODO: Pop up, kullanmak ister mi diye sor isterse kart seçtir ve o kartı :GameController.getInstance().getGameInventory().getArtCards().get(3).useCard(ingrSelecti) olarak kullan.
 				}
 			}

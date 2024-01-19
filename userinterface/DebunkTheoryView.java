@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.boards.BoardController;
 import domain.player.Player;
 import domain.theory.Hypotheses;
@@ -19,13 +20,12 @@ public class DebunkTheoryView extends JPanel implements ActionListener {
     public static void main(String[] args) throws UserErrorException, RuntimeException {
         TestGameInitializer.initializeTestGame();
         GameController.getInstance().setCurrentRound(3);
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = LocalData.getInstance().getLocalPlayer();
         System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getRedAtom().getAtomSign());
         System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getGreenAtom().getAtomSign());
         System.out.println(player.getInventory().getPlayerIngredientCardList().get(0).getMolecule().getBlueAtom().getAtomSign());
 
         BoardController.publishTheory(player.getInventory().getPlayerIngredientCardList().get(0), GameController.getInstance().getGameInventory().getMolecules().get(0));
-//		Hypotheses hyp = new Hypotheses(GameController.getCurrentPlayer(), GameController.getGameInventory().getIngrCards().get(0), GameController.getGameInventory().getMolecules().get(0));
         JFrame frame = new JFrame();
         DebunkTheoryView dbk = new DebunkTheoryView();
         frame.getContentPane().add(dbk);
@@ -149,7 +149,7 @@ public class DebunkTheoryView extends JPanel implements ActionListener {
             String trueSign = BoardController.debunkTheory(hypothesis, atomColorId);
             JOptionPane.showMessageDialog(this, "The true sign of " + hypothesis.getIngredient().getName() + "'s " + atomComboBox.getSelectedItem() + " atom is " + trueSign + "!");
             if (trueSign.contains("false")) {
-                if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(2))){
+                if (LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(2))){
 					GameController.getInstance().getGameInventory().getArtCards().get(2).useCard();
 				}
 
