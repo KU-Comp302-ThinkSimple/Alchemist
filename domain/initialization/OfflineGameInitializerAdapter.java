@@ -9,6 +9,6 @@ public class OfflineGameInitializerAdapter implements GameInitializerAdapter {
 	};
 	@Override
 	public void finalizeInitialization(Map<String, Object> gameSettings) throws Exception{
-		new InitializeGameHelper();		
+		new InitializeGameHelper();
 	}
 }
