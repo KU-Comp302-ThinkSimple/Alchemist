@@ -1,21 +1,5 @@
 package userinterface;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.SystemColor;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
 import domain.GameController;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
@@ -27,6 +11,11 @@ import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class MainGameWindowOnline extends JFrame{
 
@@ -317,6 +306,7 @@ public class MainGameWindowOnline extends JFrame{
 		for (Player player: GameController.getInstance().getActivePlayers()){
 			player.getInventory().addObserver(mainObserver);
 		}
+		GameController.getInstance().addObserver(mainObserver);
 
 
 		this.setVisible(true);
