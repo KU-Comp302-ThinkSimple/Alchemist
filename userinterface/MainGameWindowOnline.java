@@ -244,7 +244,7 @@ public class MainGameWindowOnline extends JFrame{
 		contentPane.add(potionBrewingBoard);
 
 		//RESULTS TRIANGLE
-		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
+		resultsTriangle.setSize(resultsTriangle.getPreferredSize());
 		resultsTriangle.setLocation(561, 61);
 		contentPane.add(resultsTriangle);
 
@@ -283,9 +283,7 @@ public class MainGameWindowOnline extends JFrame{
 
 
 		//PLAYER INVENTORY
-		playerInventory.setSize(playerInventory.getPreferredSize());
 		playerInventory.setSize(new Dimension(450, 415));
-		//playerInventory.setBounds(getBounds());
 		playerInventory.setLocation(1404, 204);
 		getContentPane().add(playerInventory);
 

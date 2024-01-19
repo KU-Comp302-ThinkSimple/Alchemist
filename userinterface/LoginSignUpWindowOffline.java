@@ -39,7 +39,10 @@ public class LoginSignUpWindowOffline {
 	private JTextField signUpUserNameInputTextField;
 	private JPasswordField signUpPasswordField;
 	private JLabel alchemistImageLabel;
+	private JLabel user1info;
 	private JLabel user2info;
+	private JLabel user3info;
+	private JLabel user4info;
 
 	private int loggedinUserCount = 0;
 	private JTextField loginMessageDisplay;
@@ -92,7 +95,7 @@ public class LoginSignUpWindowOffline {
 		startGameButton.setFont(new Font("Tahoma", Font.BOLD, 25));
 		startGameButton.setBorder(null);
 		startGameButton.setBackground(GlobalColors.BUTTON_COLOR);
-		startGameButton.setBounds(1497, 470, 232, 50);
+		startGameButton.setBounds(1497, 543, 232, 50);
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
 			//TODO Call the backend function to start the game with needed arguments *DONE
@@ -105,7 +108,7 @@ public class LoginSignUpWindowOffline {
 
 
 		JPanel loggedinUserInfo = new JPanel();
-		loggedinUserInfo.setBounds(1497, 242, 290, 207);
+		loggedinUserInfo.setBounds(1497, 242, 290, 277);
 		loggedinUserInfo.setOpaque(false);
 		loggedinUserInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -115,7 +118,7 @@ public class LoginSignUpWindowOffline {
 		user1.setFont(GlobalFonts.DISPLAY);
 		loggedinUserInfo.add(user1);
 
-		JLabel user1info = new JLabel();
+		user1info  = new JLabel();
 		user1info.setVisible(false);
 		user1info.setForeground(GlobalColors.TEXT_COLOR);
 		user1info.setFont(GlobalFonts.DISPLAY);
@@ -131,6 +134,28 @@ public class LoginSignUpWindowOffline {
 		user2info.setForeground(GlobalColors.TEXT_COLOR);
 		user2info.setFont(GlobalFonts.DISPLAY);
 		loggedinUserInfo.add(user2info);
+
+		JLabel user3 = new JLabel("User 3");
+		user3.setForeground(GlobalColors.TEXT_COLOR);
+		user3.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user3);
+
+		user3info = new JLabel();
+		user3info.setVisible(false);
+		user3info.setForeground(GlobalColors.TEXT_COLOR);
+		user3info.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user3info);
+
+		JLabel user4 = new JLabel("User 4");
+		user4.setForeground(GlobalColors.TEXT_COLOR);
+		user4.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user4);
+
+		user4info = new JLabel();
+		user4info.setVisible(false);
+		user4info.setForeground(GlobalColors.TEXT_COLOR);
+		user4info.setFont(GlobalFonts.DISPLAY);
+		loggedinUserInfo.add(user4info);
 
 		contentPane.add(loggedinUserInfo);
 
@@ -205,49 +230,50 @@ public class LoginSignUpWindowOffline {
 		loginButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		loginButton.setFont(GlobalFonts.DISPLAY);
 		loginButton.addActionListener(e -> {
+
 			String loginUserNameInput = loginUserNameInputTextField.getText();
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
-			//TODO clear log in panel texts.
-
 			//log in action
 			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
-
-			//TODO please return me an error message.
-			//"Log in successful"
-			//"Wrong password."
-			//"There is no user with the username." etc. *DONE
-			String loginMessage = LoginSignupController.getInstance().getLoginMessage(); //TODO edit this *DONE
-			String successMessage = LoginSignupController.loginSuccessMessage; //TODO edit this (make this a public variable in your controller class so I can check if the log in was successful by simply comparing two strings. *DONE
+			String loginMessage = LoginSignupController.getLoginMessage();
+			String successMessage = LoginSignupController.loginSuccessMessage;
 			if (loginMessage.equals(successMessage)) {
 
 				loggedinUserCount += 1;
 
-				loginMessageDisplay.setText(loginMessage);
+				loginMessageDisplay.setText("");
 				loginMessageDisplay.setVisible(true);
 
 				//clear editables
 				loginUserNameInputTextField.setText(null);
 				loginPasswordField.setText(null);
 
-				if (loggedinUserCount == 2) {
-
-					//user2 info display
+				switch (loggedinUserCount) {
+				case 1 :
+					//user1 info display
+					user1info.setText(loginUserNameInput);
+					user1info.setVisible(true);
+					break;
+				case 2 :
 					user2info.setText(loginUserNameInput);
 					user2info.setVisible(true);
 
 					//start game button active
 					startGameButton.setVisible(true);
-
+					break;
+				case 3 :
+					user3info.setText(loginUserNameInput);
+					user3info.setVisible(true);
+					break;
+				case 4 :
+					user4info.setText(loginUserNameInput);
+					user4info.setVisible(true);
 					//log in button deactivated
 					loginButton.setVisible(false);
+					break;
 				}
 
-				else {
-					//user1 info display
-					user1info.setText(loginUserNameInput);
-					user1info.setVisible(true);
-				}
 			}
 			//log in unsuccessful
 			else {
