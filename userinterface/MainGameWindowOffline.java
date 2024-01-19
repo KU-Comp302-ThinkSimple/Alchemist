@@ -296,7 +296,9 @@ public class MainGameWindowOffline extends JFrame{
 		}
 
 		//Player Token View Changer
-		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+		for (PlayerTokenView p : this.playerTokens) {
+			p.updatePlayerTokenView();
+		}
 
 		//Publish theory update
 		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
