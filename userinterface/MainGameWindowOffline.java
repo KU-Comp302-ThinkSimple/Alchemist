@@ -280,6 +280,7 @@ public class MainGameWindowOffline {
 		for (Player player: GameController.getInstance().getActivePlayers()){
 			player.getInventory().addObserver(mainObserver);
 		}
+		GameController.getInstance().addObserver(mainObserver);
 		MainGameWindowFrame.setVisible(true);
 	}
 

@@ -1,21 +1,19 @@
 package domain;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
-
-import domain.boards.Board;
 import domain.boards.GameBoard;
 import domain.player.Player;
-import domain.potion.Atom;
-import exception.UserErrorException;
-import userinterface.MainGameWindowOffline;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
-public class GameController implements Serializable{
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GameController implements Serializable, Observable {
 	private static final long serialVersionUID = 4936278445022118697L;
 
 	private static GameController instance;
-
+	private List<Observer> observers = new ArrayList<>();
 	int currentRound=1; //1 2 and 3
 	private Player currentPlayer;
 	private String gameMode;
@@ -56,7 +54,7 @@ public class GameController implements Serializable{
 		else {
 			System.out.println("Not able to initialize");
 		}
-
+		notifyObserver();
 	}
 
 	//This func changes rounds
@@ -67,7 +65,7 @@ public class GameController implements Serializable{
 		for(int i=0;i<activePlayers.size();i++) {
 			activePlayers.get(i).getPlayerToken().setPlayerAction(3);
 		}
-		
+		notifyObserver();
 	}
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
@@ -145,7 +143,7 @@ public class GameController implements Serializable{
 		}
 		System.out.println(currentPlayer.getPlayerName());
 		
-		
+		notifyObserver();
 		//Below is the old code.
 //		for(int i=0;i<activePlayers.size();i++) {
 //			if(!activePlayers.get(i).equals(currentPlayer)) {
@@ -255,7 +253,18 @@ public class GameController implements Serializable{
 
 		return str;
 	}
-	
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer: observers){
+			observer.update();
+		}
+	}
 }
 
 
