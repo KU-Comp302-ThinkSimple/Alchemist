@@ -107,18 +107,11 @@ public class GameController implements Serializable{
 		
 		//TODO change the gameMode attribute and update these conditions.
 		//If game is online, currentPlayer and localPlayer are different.
-		if(gameMode.equals("online")) {
-			
-			for(int i=0;i<activePlayers.size();i++) {
-				if(activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
-					break;
-				}
-			}
-			
-			//If game is offline localPlayer is equal to currentPlayer 
-		}else if(gameMode.equals("offline")) {
-			
+		
+		System.out.println("Changed player");
+		System.out.println(currentPlayer.getPlayerName());
+		
+		if(this.gameMode==null) {
 			for(int i=0;i<activePlayers.size();i++) {
 				if(activePlayers.get(i).equals(currentPlayer)) {
 					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
@@ -126,17 +119,31 @@ public class GameController implements Serializable{
 					break;
 				}
 			}
-			
 		}else {
-			//If the game mode is not specified
-			for(int i=0;i<activePlayers.size();i++) {
-				if(activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
-					LocalData.getInstance().setLocalPlayer(currentPlayer);
-					break;
+		
+			if(gameMode.equals("online")) {
+			
+				for(int i=0;i<activePlayers.size();i++) {
+					if(activePlayers.get(i).equals(currentPlayer)) {
+						currentPlayer=activePlayers.get((i+1)%activePlayers.size());
+						break;
+					}
 				}
+				
+			//If game is offline localPlayer is equal to currentPlayer 
+			}else if(gameMode.equals("offline")) {
+			
+				for(int i=0;i<activePlayers.size();i++) {
+					if(activePlayers.get(i).equals(currentPlayer)) {
+						currentPlayer=activePlayers.get((i+1)%activePlayers.size());
+						LocalData.getInstance().setLocalPlayer(currentPlayer);
+						break;
+					}
+				}
+			
 			}
 		}
+		System.out.println(currentPlayer.getPlayerName());
 		
 		
 		//Below is the old code.
