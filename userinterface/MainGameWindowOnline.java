@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class MainGameWindowOnline extends JFrame{
 
-	Player localPlayer = LocalData.getInstance().getLocalPlayer(); //TODO DONE
+	Player localPlayer = LocalData.getInstance().getLocalPlayer();
 	JPanel contentPane;
 	JPanel publishTheoryPanel = new PublishTheoryPanel();
 	JPanel debunkTheoryView = new DebunkTheoryView();
@@ -40,7 +40,7 @@ public class MainGameWindowOnline extends JFrame{
 	}
 
 	public MainGameWindowOnline() {
-
+		LocalData.getInstance().setMainGameWindow(this);
 		this.setUndecorated(true);
 		this.setMaximumSize(new Dimension(1920, 1080));
 		this.setBounds(0, 0, 1920, 1080);
@@ -298,6 +298,13 @@ public class MainGameWindowOnline extends JFrame{
 
 
 
+		addThisToObservables();
+
+
+		this.setVisible(true);
+	}
+
+	public void addThisToObservables() {
 		//OBSERVER RELATED
 		MainObserver mainObserver = new MainObserver(this);
 		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
@@ -307,12 +314,10 @@ public class MainGameWindowOnline extends JFrame{
 			player.getInventory().addObserver(mainObserver);
 		}
 		GameController.getInstance().addObserver(mainObserver);
-
-
-		this.setVisible(true);
 	}
 
 	public void updateMainGameWindow() {
+		System.out.println("Main Game Window Update");
 		//Deduction Board Changer
 		((DeductionBoard)deductionBoard).updateDeductionBoard();
 

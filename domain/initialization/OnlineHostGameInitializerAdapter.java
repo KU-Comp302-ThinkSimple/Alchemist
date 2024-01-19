@@ -3,6 +3,7 @@ package domain.initialization;
 import java.io.IOException;
 import java.util.Map;
 
+import domain.GameController;
 import domain.LocalData;
 import domain.loginSignup.LoginResult;
 import domain.loginSignup.LoginSignupController;
@@ -51,6 +52,8 @@ public class OnlineHostGameInitializerAdapter implements GameInitializerAdapter{
 		LocalData.getInstance().setLocalPlayerIndex(result.getLocalPlayerIndex());
 		
 		new InitializeGameHelper();	
+		GameController.getInstance().setGameMode("online");
+		LocalData.getInstance().getClient().addThisToObservables();
 		LocalData.getInstance().getClient().update();
 	}
 

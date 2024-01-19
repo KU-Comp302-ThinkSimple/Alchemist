@@ -19,12 +19,14 @@ import java.util.concurrent.TimeoutException;
 
 import domain.GameController;
 import domain.loginSignup.*;
+import domain.player.Player;
 import network.messages.GameStateUpdateMessage;
 import network.messages.LoginMessage;
 import network.messages.LoginResponseMessage;
 import network.messages.Message;
 import network.messages.SignupMessage;
 import network.messages.SignupResponseMessage;
+import userinterface.observer.MainObserver;
 import userinterface.observer.Observable;
 import userinterface.observer.Observer;
 
@@ -106,6 +108,10 @@ public class Client extends Thread implements Observer, Observable{
 
 	@Override
 	public void update() {
+		System.out.println("Sending game state");
+		for (Player player : GameController.getInstance().getActivePlayers()) {
+			System.out.println(player.getPlayerName() + ": " + player.getPlayerToken().getPlayerAction());
+		}
 		sendMessage(new GameStateUpdateMessage(GameController.getInstance()));
 	}
 	
@@ -171,7 +177,20 @@ public class Client extends Thread implements Observer, Observable{
 			if(i>=observers.size()) {
 				continue;
 			}
+			System.out.println("Client notifying observer: " + i);
 			observers.get(i).update();
 		}
+	}
+	
+	public void addThisToObservables() {
+		System.out.println("Client observing");
+		//OBSERVER RELATED
+		GameController.getInstance().getBoard().getIngredientBoard().addObserver(this);
+		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(this);
+		GameController.getInstance().getBoard().getPublicationBoard().addObserver(this);
+		for (Player player: GameController.getInstance().getActivePlayers()){
+			player.getInventory().addObserver(this);
+		}
+		GameController.getInstance().addObserver(this);
 	}
 }
