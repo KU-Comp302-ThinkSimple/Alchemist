@@ -31,21 +31,26 @@ public class Client extends Thread implements Observer{
 	private final Socket connection;
 	private SignupResponseMessage receivedSignupResponse;
 	private LoginResponseMessage receivedLoginResponse;
+	private final Object responseLock = new Object();
+	private ObjectInputStream objectInputStream;
+	private ObjectOutputStream objectOutputStream;
 	public Client(String name, String serverHost, int serverPort) throws UnknownHostException, IOException {
 		this.name = name;
 		this.serverHost = serverHost;
 		this.serverPort = serverPort;
 		
 		connection = new Socket(serverHost, serverPort);
+//		InputStream is = connection.getInputStream();
+//		objectInputStream = new ObjectInputStream(is);
+//		OutputStream os = connection.getOutputStream();
+//		objectOutputStream = new ObjectOutputStream(os);
 		receivedSignupResponse = null;
 		receivedLoginResponse = null;
 	}
 
     private void sendMessage(Message message) {
         try {
-            OutputStream output = connection.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(output);
-            oos.writeObject(message);
+            getObjectOutputStream().writeObject(message);
             if(debugEnabled) {
                 System.out.println(this.name + " sent game state");
             }
@@ -56,12 +61,10 @@ public class Client extends Thread implements Observer{
     
     private void listen() {
     	try {
-            InputStream input = connection.getInputStream();	
-            ObjectInputStream ois = new ObjectInputStream(input);
             
             while (true) {
             	try {
-            		Message receivedMessage = (Message) ois.readObject();
+            		Message receivedMessage = (Message) getObjectInputStream().readObject();
             		if(receivedMessage instanceof GameStateUpdateMessage) {
             			GameController newGameController = ((GameStateUpdateMessage) receivedMessage).getNewGameController();
                     	if(debugEnabled) {
@@ -72,9 +75,12 @@ public class Client extends Thread implements Observer{
             		else if(receivedMessage instanceof SignupResponseMessage) {
             			receivedSignupResponse = (SignupResponseMessage)receivedMessage;
             		}
-            		else if (receivedMessage instanceof LoginResponseMessage) {
-            			receivedLoginResponse = (LoginResponseMessage)receivedLoginResponse;
+            		else if(receivedMessage instanceof LoginResponseMessage) {
+            			receivedLoginResponse = (LoginResponseMessage)receivedMessage;
             		}
+            		synchronized (responseLock) {
+        				responseLock.notify();
+					}
             		
 				} catch (ClassNotFoundException e) {
 					System.out.println("Client received invalid packet");
@@ -105,10 +111,15 @@ public class Client extends Thread implements Observer{
 	public String remoteSignupBlocking(String username, String password, int timeoutMillis) throws TimeoutException{
 		sendMessage(new SignupMessage(username, password));
 		receivedSignupResponse = null;
-		long startTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < timeoutMillis) {
-			if(receivedSignupResponse != null) {
-				return receivedSignupResponse.getResponse();
+		synchronized (responseLock) {
+			try {
+				responseLock.wait(timeoutMillis);
+				if(receivedSignupResponse!= null) {
+					return receivedSignupResponse.getResponse();
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		throw new TimeoutException("Remote signup operation timed out!");
@@ -117,12 +128,37 @@ public class Client extends Thread implements Observer{
 	public String remoteLoginBlocking(String username, String password, int timeoutMillis) throws TimeoutException {
 		sendMessage(new LoginMessage(username, password));
 		receivedLoginResponse = null;
-		long startTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < timeoutMillis) {
-			if(receivedLoginResponse != null) {
-				return receivedLoginResponse.getResponse();
+//		long startTime = System.currentTimeMillis();
+		synchronized (responseLock) {
+			try {
+				responseLock.wait(timeoutMillis);
+				if(receivedLoginResponse != null) {
+					return receivedLoginResponse.getResponse();
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+//		while(System.currentTimeMillis() - startTime < timeoutMillis) {
+//			if(receivedLoginResponse != null) {
+//				return receivedLoginResponse.getResponse();
+//			}
+//		}
 		throw new TimeoutException("Remote login operation timed out!");
+	}
+	
+	private ObjectInputStream getObjectInputStream() throws IOException {
+		if(objectInputStream == null) {
+			objectInputStream = new ObjectInputStream(connection.getInputStream());
+		}
+		return objectInputStream;
+	}
+	
+	private ObjectOutputStream getObjectOutputStream() throws IOException {
+		if(objectOutputStream == null) {
+			objectOutputStream = new ObjectOutputStream(connection.getOutputStream());
+		}
+		return objectOutputStream;
 	}
 }

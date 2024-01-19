@@ -10,9 +10,13 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
+import domain.GameController;
 import network.messages.GameStateUpdateMessage;
 import network.messages.LoginMessage;
 import network.messages.LoginResponseMessage;
@@ -24,19 +28,53 @@ import userinterface.LoginSignupController;
 public class Server extends Thread {
     private ServerSocket serverSocket;
     private int port;
-    private final ArrayList<Socket> clients;
-    private final int clientBufferSize;
-    private static final boolean createTestClients = false;
+    private final ArrayList<ClientConnection> clients;
+    
+    private class ClientConnection{
+		private final Socket socket;
+    	private final ObjectInputStream objectInputStream;
+    	private final ObjectOutputStream objectOutputStream;
+    	
+    	public ClientConnection(Socket socket) throws IOException {
+			this.socket = socket;
+			this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+			this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+    	}
+    	
+    	
+    	public Socket getSocket() {
+			return socket;
+		}
 
+		public ObjectInputStream getObjectInputStream() {
+			return objectInputStream;
+		}
+
+		public ObjectOutputStream getObjectOutputStream() {
+			return objectOutputStream;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ClientConnection other = (ClientConnection) obj;
+
+			return Objects.equals(socket, other.socket);
+		}
+    }
     /**
      * A server class that relays any message it receives into other connections
      * @param port Port to connect to
      * @param clientBufferSize the size of the client buffers (RESTRICTS MAX MESSAGE SIZE!)
      * @throws IOException if it cannot create server port
      */
-    public Server(int port, int clientBufferSize) throws IOException {
-    	this.clients = new ArrayList<Socket>();
-		this.clientBufferSize = clientBufferSize;
+    public Server(int port) throws IOException {
+    	this.clients = new ArrayList<ClientConnection>();
         serverSocket = new ServerSocket(port);
         this.port = port;
     }
@@ -47,22 +85,31 @@ public class Server extends Thread {
 
     public static void main(String[] args) throws IOException, InterruptedException {
     	int port = findAvailablePort();
-        Server server = new Server(port, 1024);
+        Server server = new Server(port);
         System.out.println("Available port: " + server.getPort());
         // Start the server thread
         server.start();
         
-        if(createTestClients) {
+        if(true) {
+        	System.out.println("a");
             //create three clients to test the server
-            TestClient client1 = new TestClient("client1", "127.0.0.1", port);
-            TestClient client2 = new TestClient("client2", "127.0.0.1", port);
-            TestClient client3 = new TestClient("client3", "127.0.0.1", port);
-            
+            Client client1 = new Client("client1", "127.0.0.1", port);
+            System.out.println("starting");
             client1.start();
-            TimeUnit.SECONDS.sleep(2);
-            client2.start();
-            TimeUnit.SECONDS.sleep(2);
-            client3.start();
+            System.out.println("started");
+//            Client client2 = new Client("client2", "127.0.0.1", port);
+            
+            try {
+				String response = client1.remoteSignupBlocking("user_1", "pwd", 3000);
+				System.out.println(response);
+				response = client1.remoteLoginBlocking("user_1", "pwd", 3000);
+				System.out.println(response);
+				
+				System.out.println(GameController.getInstance().getActivePlayers().size());
+			} catch (TimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 
@@ -82,10 +129,10 @@ public class Server extends Thread {
         while (true) {
             try {
             	System.out.println("Waiting for connections on port " + serverSocket.getLocalPort() + "...");
-            	Socket newClientSocket = serverSocket.accept();
-            	clients.add(newClientSocket);
+            	ClientConnection newClientConnection = new ClientConnection(serverSocket.accept());
+            	clients.add(newClientConnection);
             	//handle the client operations (relaying) in a new thread
-            	Thread clientThread = new Thread(()->handleClient(newClientSocket));
+            	Thread clientThread = new Thread(()->handleClient(newClientConnection));
             	clientThread.start();
             	System.out.println("New connection");
             } catch (IOException e) {
@@ -94,29 +141,19 @@ public class Server extends Thread {
         }
     }
     
-    private void handleClient(Socket clientSocket) {
+    private void handleClient(ClientConnection clientConnection) {
     	try {
-            InputStream input = clientSocket.getInputStream();	
-            ObjectInputStream ois = new ObjectInputStream(input);
-
-            byte[] buffer = new byte[clientBufferSize];
-            int bytesRead;
-            
-            //read all incoming messages into buffer, then send them out
             while (true) {
-            	Message receivedMessage = (Message) ois.readObject();
+            	Message receivedMessage = (Message) clientConnection.getObjectInputStream().readObject();
             	if (receivedMessage instanceof GameStateUpdateMessage) {
             		// Relay the message to all other clients
-                	relayMessage(clientSocket, receivedMessage);
+                	relayMessage(clientConnection, receivedMessage);
             	}
                 else if (receivedMessage instanceof SignupMessage) {
-					handleSignupMessage(clientSocket, (SignupMessage)receivedMessage);
+					handleSignupMessage(clientConnection, (SignupMessage)receivedMessage);
 				}
                 else if (receivedMessage instanceof LoginMessage) {
-                	handleLoginMessage(clientSocket, (LoginMessage)receivedMessage);
-                }
-                else {
-                	
+                	handleLoginMessage(clientConnection, (LoginMessage)receivedMessage);
                 }
             }
         } catch (IOException e) {
@@ -129,14 +166,14 @@ public class Server extends Thread {
 			cce.printStackTrace();
 		} finally {
             // Remove the client when it eventually disconnects
-            clients.remove(clientSocket);
+            clients.remove(clientConnection);
             System.out.println("Client disconnected.");
         }
     }
     
-    private void relayMessage(Socket sender, Message message) {
+    private void relayMessage(ClientConnection sender, Message message) {
     	//relay each message to all other clients
-        for (Socket client : clients) {
+        for (ClientConnection client : clients) {
             if (client != sender) {
                 try {
                     sendMessage(client, message);
@@ -147,18 +184,16 @@ public class Server extends Thread {
         }
     }
     
-    private void sendMessage(Socket receiver, Message message) throws IOException{
-    	OutputStream output = receiver.getOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(output);
-        oos.writeObject(message);
+    private void sendMessage(ClientConnection receiver, Message message) throws IOException{
+        receiver.getObjectOutputStream().writeObject(message);
     }
     
-    private void handleSignupMessage(Socket sender, SignupMessage message) throws IOException {
+    private void handleSignupMessage(ClientConnection sender, SignupMessage message) throws IOException {
     	LoginSignupController.getInstance().signup(message.getUsername(), message.getPassword());
     	sendMessage(sender, new SignupResponseMessage(LoginSignupController.getSignUpMessage()));
     }
     
-    private void handleLoginMessage(Socket sender, LoginMessage message) throws IOException {
+    private void handleLoginMessage(ClientConnection sender, LoginMessage message) throws IOException {
     	LoginSignupController.getInstance().login(message.getUsername(), message.getPassword());
     	sendMessage(sender, new LoginResponseMessage(LoginSignupController.getLoginMessage()));
     }
