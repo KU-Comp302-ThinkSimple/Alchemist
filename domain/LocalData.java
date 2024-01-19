@@ -8,7 +8,7 @@ import userinterface.MainGameWindowOffline;
 
 public class LocalData {
 
-	private Player localPlayer;
+	private int localPlayerIndex;
 	private JFrame mainGameWindow;
 	private static LocalData instance;
 	private LocalData() {
@@ -22,11 +22,11 @@ public class LocalData {
 	}
 
 	public Player getLocalPlayer() {
-		return localPlayer;
+		return GameController.getInstance().getActivePlayers().get(localPlayerIndex);
 	}
 
-	public void setLocalPlayer(Player localPlayer) {
-		this.localPlayer = localPlayer;
+	public void setLocalPlayerIndex(int localPlayerIndex) {
+		this.localPlayerIndex = localPlayerIndex;
 	}
 	
 	public JFrame getMainGameWindow() {
