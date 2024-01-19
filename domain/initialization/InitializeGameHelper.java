@@ -1,10 +1,12 @@
-package domain;
+package domain.initialization;
 
 import java.util.Random;
 
+import domain.GameController;
+
 public class InitializeGameHelper {
 
-	InitializeGameHelper(){
+	public InitializeGameHelper(){
 		// This class calls a various functions to initialize the game within its constructor.
 		initializeIngredientCards();
 		GameController.getInstance().getBoard().getIngredientBoard().initializeIngredientDeck();
@@ -12,8 +14,6 @@ public class InitializeGameHelper {
 		distributeInitialCards();
 		distributeGold();
 		chooseStartingPlayer();
-		
-
 	}
 
 // This func initializes the ingr cards.

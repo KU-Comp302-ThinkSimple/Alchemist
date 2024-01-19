@@ -1,6 +1,18 @@
 package domain;
 
 import domain.boards.GameBoard;
+import domain.initialization.InitializeGameHelper;
+import domain.player.Player;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Random;
+
+import domain.boards.Board;
+import domain.boards.GameBoard;
+import domain.initialization.InitializeGameHelper;
 import domain.player.Player;
 import userinterface.observer.Observable;
 import userinterface.observer.Observer;
@@ -42,20 +54,20 @@ public class GameController implements Serializable, Observable {
 		GameController.instance = newInstance;
 	}
 
-	//This func initializes the game by calling creating a new instance of initliazegamehelper
-	public void initializeGame() {
-
-		//GameController should initialize game when two player are present;
-
-		if(activePlayers.size() >= 2) {
-			System.out.println("Game initialized");
-			new InitializeGameHelper();
-		}
-		else {
-			System.out.println("Not able to initialize");
-		}
-		notifyObserver();
-	}
+//	//This func initializes the game by calling creating a new instance of initliazegamehelper
+//	public void initializeGame() {
+//
+//		//GameController should initialize game when two player are present;
+//
+//		if(activePlayers.size() >= 2) {
+//			System.out.println("Game initialized");
+//			new InitializeGameHelper();
+//		}
+//		else {
+//			System.out.println("Not able to initialize");
+//		}
+//
+//	}
 
 	//This func changes rounds
 	public void changeRounds() {
