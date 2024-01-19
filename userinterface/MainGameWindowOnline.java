@@ -276,6 +276,7 @@ public class MainGameWindowOnline extends JFrame{
 		playerInventory.setLocation(1404, 204);
 		getContentPane().add(playerInventory);
 
+		//ROUND AND TURN INFORMATION
 		JPanel roundInfoPanel = new JPanel();
 		roundInfoPanel.setBounds(476, 61, 200, 90);
 		roundInfoPanel.setOpaque(false);
@@ -294,7 +295,7 @@ public class MainGameWindowOnline extends JFrame{
 		turnLabel.setBounds(0, 40, 190, 43);
 		roundInfoPanel.add(turnLabel);
 
-		//ROUND AND TURN INFORMATION
+
 
 
 		//OBSERVER RELATED

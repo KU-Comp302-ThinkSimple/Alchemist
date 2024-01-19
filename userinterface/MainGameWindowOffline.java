@@ -28,6 +28,8 @@ public class MainGameWindowOffline extends JFrame{
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 	private JPanel debunkTheoryView = new DebunkTheoryView();
 	private JComboBox transmuteIngredientComboBox;
+	private JLabel roundLabel;
+	private JLabel turnLabel;
 	private ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
 
 	public static void main(String[] args) {
@@ -265,6 +267,26 @@ public class MainGameWindowOffline extends JFrame{
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
 
+		//ROUND AND TURN INFORMATION
+		JPanel roundInfoPanel = new JPanel();
+		roundInfoPanel.setBounds(476, 61, 200, 90);
+		roundInfoPanel.setOpaque(false);
+		roundInfoPanel.setLayout(null);
+		contentPane.add(roundInfoPanel);
+
+		roundLabel = new JLabel("Round: 1");
+		roundLabel.setFont(GlobalFonts.DISPLAY_HEADER);
+		roundLabel.setForeground(GlobalColors.TEXT_COLOR);
+		roundLabel.setBounds(0, 0, 130, 38);
+		roundInfoPanel.add(roundLabel);
+
+		turnLabel = new JLabel("Turn: " + GameController.getInstance().getCurrentPlayer().getPlayerName());
+		turnLabel.setFont(GlobalFonts.DISPLAY_HEADER);
+		turnLabel.setForeground(GlobalColors.TEXT_COLOR);
+		turnLabel.setBounds(0, 40, 190, 43);
+		roundInfoPanel.add(turnLabel);
+
+
 		MainObserver mainObserver = new MainObserver(this);
 		GameController.getInstance().getBoard().getIngredientBoard().addObserver(mainObserver);
 		GameController.getInstance().getBoard().getPotionBrewingBoard().addObserver(mainObserver);
@@ -305,6 +327,10 @@ public class MainGameWindowOffline extends JFrame{
 
 		//Debunk theory update
 		((DebunkTheoryView)debunkTheoryView).updateDebunkTheoryPanel();
+
+		//Round and turn update
+		roundLabel.setText("Round: " + GameController.getInstance().getCurrentRound());
+		turnLabel.setText("Turn: " + GameController.getInstance().getCurrentPlayer().getPlayerName());
 
 		//Show message if game has ended
 		gameEndCheck();
