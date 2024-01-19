@@ -17,42 +17,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MainGameWindowOffline {
-	private static String infoText = """
-			Welcome to Alchemy Lab Game!
+public class MainGameWindowOffline extends JFrame{
 
-			In this game, you take on the role of an alchemist conducting experiments in the lab. Your goal is to brew potions, contribute to publications, and form theories about ingredient properties. Here's a quick guide to get you started:
-
-			Game Phases:
-
-			First Round:
-			Forage for Ingredients: Draw ingredients from the deck.
-			Transmute Ingredient: Discard an ingredient for gold.
-			Buy Artifacts: Purchase artifacts with gold.
-			Make Experiments: Mix ingredients, test potions, and gain results.
-			Second Round:
-			Sell a Potion: Offer potions to adventurers for gold.
-			Publish a Theory: Share your knowledge about ingredients for reputation points.
-			Final Round:
-			Debunk or Endorse Theories: Prove or disprove published theories for reputation points.
-			Game Elements:
-
-			Player Tokens: Represent your unique avatar. Track your position, resources, and scores.
-			Ingredients: Various types with unique properties. Store them in the Ingredient Storage.
-			Potions: Brew potions with specific recipes and point values.
-			Publication Cards: Contribute to theories for reputation points.
-			Artifact Cards: Purchase for unique game advantages.
-			Alchemy Markers: Form theories on the Deduction Board.
-			Winning the Game:
-
-			Accumulate reputation points and gold.
-			Exchange leftover artifacts for gold.
-			Score one-third of a point for each gold piece.
-			The player with the most score points wins!
-			Good luck, alchemist! May your potions be potent and your theories�groundbreaking!
-			""";
-
-	private JFrame MainGameWindowFrame;
 	private JPanel contentPane;
 	private JPanel deductionBoard = new DeductionBoard();
 	private JPanel resultsTriangle = new ResultsTriangle(1);
@@ -62,6 +28,7 @@ public class MainGameWindowOffline {
 	private JPanel publishTheoryPanel = new PublishTheoryPanel();
 	private JPanel debunkTheoryView = new DebunkTheoryView();
 	private JComboBox transmuteIngredientComboBox;
+	private ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
 
 	public static void main(String[] args) {
 		TestGameInitializer.initializeTestGame();
@@ -69,18 +36,18 @@ public class MainGameWindowOffline {
 	}
 	public MainGameWindowOffline() {
 		//		GameController.setMainGameWindow(this);
-		MainGameWindowFrame = new JFrame();
-		MainGameWindowFrame.setUndecorated(true);
-		MainGameWindowFrame.setMaximumSize(new Dimension(1920, 1080));
-		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
-		//MainGameWindowFrame.setExtendedState(JFrame.NORMAL);
 
-		MainGameWindowFrame.setTitle("Alchemists");
-		MainGameWindowFrame.setResizable(false);
-		MainGameWindowFrame.setSize(GlobalDimensions.FULL_SCREEN);
-		MainGameWindowFrame.setPreferredSize(GlobalDimensions.FULL_SCREEN);
-		MainGameWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		MainGameWindowFrame.setBounds(0, 0, 1920, 1080);
+		this.setUndecorated(true);
+		this.setMaximumSize(new Dimension(1920, 1080));
+		this.setBounds(0, 0, 1920, 1080);
+		//this.setExtendedState(JFrame.NORMAL);
+
+		this.setTitle("Alchemists");
+		this.setResizable(false);
+		this.setSize(GlobalDimensions.FULL_SCREEN);
+		this.setPreferredSize(GlobalDimensions.FULL_SCREEN);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(0, 0, 1920, 1080);
 
 		contentPane = new JPanel();
 		contentPane.setBackground(GlobalColors.BACKGROUND_COLOR);
@@ -89,7 +56,7 @@ public class MainGameWindowOffline {
 		contentPane.setMinimumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setMaximumSize(GlobalDimensions.FULL_SCREEN);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		MainGameWindowFrame.setContentPane(contentPane);
+		this.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JButton closeButton = new JButton("X");
@@ -100,18 +67,35 @@ public class MainGameWindowOffline {
 		closeButton.setFont(GlobalFonts.DISPLAY);
 		closeButton.setBounds(10, 11, 60, 39);
 		closeButton.addActionListener(e -> {
-			MainGameWindowFrame.dispose();
+			this.dispose();
 		}
 				);
-		playerTokenView.setLocation(134, 45);
-		//playerTokenView.setSize(playerTokenView.getPreferredSize().getSize());
-		playerTokenView.setSize(325, 300); //TODO for testing purposes, dont show in windowbuilder otherwise
-
-		contentPane.add(playerTokenView);
 		contentPane.add(closeButton);
 
+		//PLAYER TOKENS
+		int playercount = GameController.getInstance().getActivePlayers().size();
+		int xalign = 161;
+		int yalign = 21;
+		for (int i = 0; i < playercount; i++) {
+
+			PlayerTokenView ptw = new PlayerTokenView(i);
+			ptw.setSize(272, 187);
+
+			if ( i != 3) {
+				ptw.setLocation(xalign, yalign);
+				yalign += 198;
+			}
+			else ptw.setLocation(1484, 11);
+
+			getContentPane().add(ptw);
+			this.playerTokens.add(ptw);
+
+		}
+
+
+
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBounds(134, 370, 325, 174);
+		buttonsPanel.setBounds(142, 620, 325, 174);
 		contentPane.add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 
@@ -155,14 +139,14 @@ public class MainGameWindowOffline {
 		//TODO action listener for transmute ingredient button
 		transmuteIngredientButton.addActionListener(e -> {
 			if (transmuteIngredientComboBox.getSelectedItem() == null) {
-				JOptionPane.showMessageDialog(MainGameWindowFrame, "Select an ingredient first to sell it for 1 gold.");
+				JOptionPane.showMessageDialog(this, "Select an ingredient first to sell it for 1 gold.");
 			}
 			else {
 				try{
 					BoardController.transmuteIngredient((String)transmuteIngredientComboBox.getSelectedItem());
 				}
 				catch (UserErrorException a) {
-					JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
+					JOptionPane.showMessageDialog(this, a.getMessage());
 				}
 			}
 			//IngredientBoard.forageForIngredient();
@@ -212,7 +196,7 @@ public class MainGameWindowOffline {
 				BoardController.forageForIngredient();
 			}
 			catch (Exception a) {
-				JOptionPane.showMessageDialog(MainGameWindowFrame, a.getMessage());
+				JOptionPane.showMessageDialog(this, a.getMessage());
 			}
 		});
 		forageForIngredientPanel.add(forageForIngredientButton);
@@ -223,17 +207,22 @@ public class MainGameWindowOffline {
 		forageForIngredientLabel.setIcon(new ImageIcon(MainGameWindowOffline.class.getResource("/userinterface/images/forageforing_100x160.png")));
 		forageForIngredientPanel.add(forageForIngredientLabel);
 
-		deductionBoard.setLocation(514, 740);
+
+		//DEDUCTION BOARD
+		deductionBoard.setLocation(571, 703);
 		deductionBoard.setSize(deductionBoard.getPreferredSize());
 		contentPane.add(deductionBoard);
 
 
-		resultsTriangle.setSize(resultsTriangle.getMaximumSize());
-		resultsTriangle.setLocation(514, 98);
+		//RESULTS TRIANGLE
+		resultsTriangle.setSize(resultsTriangle.getPreferredSize());
+		resultsTriangle.setLocation(561, 61);
 		contentPane.add(resultsTriangle);
 
 
-		playerInventory.setBounds(1219, 89, 450, 415);
+		//PLAYER INVENTORY
+		playerInventory.setSize(new Dimension(450, 415));
+		playerInventory.setLocation(1404, 204);
 		contentPane.add(playerInventory);
 
 		JButton infoButton = new JButton("i");
@@ -243,8 +232,8 @@ public class MainGameWindowOffline {
 		infoButton.setBackground(SystemColor.controlHighlight);
 		infoButton.setBounds(10, 61, 60, 39);
 		infoButton.addActionListener(e -> {
-			//TODO new information
-			JOptionPane.showMessageDialog(MainGameWindowFrame, infoText);
+
+			JOptionPane.showMessageDialog(this, GlobalFonts.GAME_INFORMATION);
 		}
 				);
 		contentPane.add(infoButton);
@@ -257,19 +246,22 @@ public class MainGameWindowOffline {
 		pauseButton.setBackground(SystemColor.controlHighlight);
 		pauseButton.setBounds(10, 111, 60, 39);
 		pauseButton.addActionListener(e -> {
-			JOptionPane.showMessageDialog(MainGameWindowFrame, "Game paused. Close this window to continue.");
+			JOptionPane.showMessageDialog(this, "Game paused. Close this window to continue.");
 		});
 		contentPane.add(pauseButton);
 
-		potionBrewingBoard.setLocation(1219, 477);
-		potionBrewingBoard.setSize(new Dimension(690, 555));
+		//POTION BREWING BOARD
+		potionBrewingBoard.setLocation(1300, 620);
+		potionBrewingBoard.setSize(potionBrewingBoard.getPreferredSize());
 		contentPane.add(potionBrewingBoard);
 
-		publishTheoryPanel.setLocation(134, 566);
+		//PUBLISH THEORY PANEL
+		publishTheoryPanel.setLocation(86, 816);
 		publishTheoryPanel.setSize(publishTheoryPanel.getPreferredSize());
 		contentPane.add(publishTheoryPanel);
 
-		debunkTheoryView.setLocation(134, 888);
+		//DEBUNK THEORY PANEL
+		debunkTheoryView.setLocation(324, 879);
 		debunkTheoryView.setSize(debunkTheoryView.getPreferredSize());
 		contentPane.add(debunkTheoryView);
 
@@ -280,7 +272,8 @@ public class MainGameWindowOffline {
 		for (Player player: GameController.getInstance().getActivePlayers()){
 			player.getInventory().addObserver(mainObserver);
 		}
-		MainGameWindowFrame.setVisible(true);
+		GameController.getInstance().addObserver(mainObserver);
+		this.setVisible(true);
 	}
 
 	public void updateMainGameWindow() {
@@ -303,7 +296,9 @@ public class MainGameWindowOffline {
 		}
 
 		//Player Token View Changer
-		((PlayerTokenView)playerTokenView).updatePlayerTokenView();
+		for (PlayerTokenView p : this.playerTokens) {
+			p.updatePlayerTokenView();
+		}
 
 		//Publish theory update
 		((PublishTheoryPanel)publishTheoryPanel).updatePublishTheoryPanel();
@@ -318,7 +313,7 @@ public class MainGameWindowOffline {
 	public void gameEndCheck() {
 		boolean end = GameController.getInstance().checkGameEnd();
 		if (end) {
-			new GameOverDialog(MainGameWindowFrame);
+			new GameOverDialog(this);
 		}
 	}
 }

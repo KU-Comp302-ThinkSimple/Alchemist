@@ -12,29 +12,36 @@ import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import domain.GameController;
+import network.messages.GameStateUpdateMessage;
+import network.messages.LoginMessage;
+import network.messages.LoginResponseMessage;
+import network.messages.Message;
+import network.messages.SignupMessage;
+import network.messages.SignupResponseMessage;
 import userinterface.observer.Observer;
 
 public class Client extends Thread implements Observer{
 	public static boolean debugEnabled = true;
 	private final String name;
-	private final String serverHost;
-	private final int serverPort;
 	private final Socket connection;
+	private SignupResponseMessage receivedSignupResponse;
+	private LoginResponseMessage receivedLoginResponse;
+	private final Object responseLock = new Object();
+	private ObjectInputStream objectInputStream;
+	private ObjectOutputStream objectOutputStream;
 	public Client(String name, String serverHost, int serverPort) throws UnknownHostException, IOException {
 		this.name = name;
-		this.serverHost = serverHost;
-		this.serverPort = serverPort;
-		
 		connection = new Socket(serverHost, serverPort);
+		receivedSignupResponse = null;
+		receivedLoginResponse = null;
 	}
 
-    private void sendGameState(GameController gameState) {
+    private void sendMessage(Message message) {
         try {
-            OutputStream output = connection.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(output);
-            oos.writeObject(gameState);
+            getObjectOutputStream().writeObject(message);
             if(debugEnabled) {
                 System.out.println(this.name + " sent game state");
             }
@@ -45,16 +52,29 @@ public class Client extends Thread implements Observer{
     
     private void listen() {
     	try {
-            InputStream input = connection.getInputStream();	
-            ObjectInputStream ois = new ObjectInputStream(input);
             
             while (true) {
             	try {
-            		GameController newGameController = (GameController) ois.readObject();
-            		//do sth with gameState
-                	System.out.println(this.name + " received game state");
-                	GameController.updateInstance(newGameController);
+            		Message receivedMessage = (Message) getObjectInputStream().readObject();
+            		if(receivedMessage instanceof GameStateUpdateMessage) {
+            			GameController newGameController = ((GameStateUpdateMessage) receivedMessage).getNewGameController();
+                    	if(debugEnabled) {
+                			System.out.println(this.name + " received game state");
+                    	}
+                    	GameController.updateInstance(newGameController);
+            		}
+            		else if(receivedMessage instanceof SignupResponseMessage) {
+            			receivedSignupResponse = (SignupResponseMessage)receivedMessage;
+            		}
+            		else if(receivedMessage instanceof LoginResponseMessage) {
+            			receivedLoginResponse = (LoginResponseMessage)receivedMessage;
+            		}
+            		synchronized (responseLock) {
+        				responseLock.notify();
+					}
+            		
 				} catch (ClassNotFoundException e) {
+					System.out.println("Client received invalid packet");
 					if(debugEnabled) {
 						e.printStackTrace();
 					}
@@ -76,6 +96,52 @@ public class Client extends Thread implements Observer{
 
 	@Override
 	public void update() {
-		sendGameState(GameController.getInstance());
+		sendMessage(new GameStateUpdateMessage(GameController.getInstance()));
+	}
+	
+	public String remoteSignupBlocking(String username, String password, int timeoutMillis) throws TimeoutException{
+		sendMessage(new SignupMessage(username, password));
+		receivedSignupResponse = null;
+		synchronized (responseLock) {
+			try {
+				responseLock.wait(timeoutMillis);
+				if(receivedSignupResponse!= null) {
+					return receivedSignupResponse.getResponse();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		throw new TimeoutException("Remote signup operation timed out!");
+	}
+	
+	public String remoteLoginBlocking(String username, String password, int timeoutMillis) throws TimeoutException {
+		sendMessage(new LoginMessage(username, password));
+		receivedLoginResponse = null;
+		synchronized (responseLock) {
+			try {
+				responseLock.wait(timeoutMillis);
+				if(receivedLoginResponse != null) {
+					return receivedLoginResponse.getResponse();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		throw new TimeoutException("Remote login operation timed out!");
+	}
+	
+	private ObjectInputStream getObjectInputStream() throws IOException {
+		if(objectInputStream == null) {
+			objectInputStream = new ObjectInputStream(connection.getInputStream());
+		}
+		return objectInputStream;
+	}
+	
+	private ObjectOutputStream getObjectOutputStream() throws IOException {
+		if(objectOutputStream == null) {
+			objectOutputStream = new ObjectOutputStream(connection.getOutputStream());
+		}
+		return objectOutputStream;
 	}
 }

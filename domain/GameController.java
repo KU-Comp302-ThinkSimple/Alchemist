@@ -1,5 +1,11 @@
 package domain;
 
+import domain.boards.GameBoard;
+import domain.initialization.InitializeGameHelper;
+import domain.player.Player;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -8,15 +14,18 @@ import domain.boards.Board;
 import domain.boards.GameBoard;
 import domain.initialization.InitializeGameHelper;
 import domain.player.Player;
-import domain.potion.Atom;
-import exception.UserErrorException;
-import userinterface.MainGameWindowOffline;
+import userinterface.observer.Observable;
+import userinterface.observer.Observer;
 
-public class GameController implements Serializable{
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GameController implements Serializable, Observable {
 	private static final long serialVersionUID = 4936278445022118697L;
 
 	private static GameController instance;
-
+	private List<Observer> observers = new ArrayList<>();
 	int currentRound=1; //1 2 and 3
 	private Player currentPlayer;
 	private String gameMode;
@@ -68,7 +77,7 @@ public class GameController implements Serializable{
 		for(int i=0;i<activePlayers.size();i++) {
 			activePlayers.get(i).getPlayerToken().setPlayerAction(3);
 		}
-		
+		notifyObserver();
 	}
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
@@ -95,7 +104,7 @@ public class GameController implements Serializable{
 		if (actionCounter == activePlayers.size()) {
 			if ( currentRound == 3) {
 				//TODO Game over
-				return false;
+				return true;
 			}
 			return true;
 		}else {
@@ -108,38 +117,45 @@ public class GameController implements Serializable{
 		
 		//TODO change the gameMode attribute and update these conditions.
 		//If game is online, currentPlayer and localPlayer are different.
-		if(gameMode.equals("online")) {
-			
+		
+		System.out.println("Changed player");
+		System.out.println(currentPlayer.getPlayerName());
+		
+		if(this.gameMode==null) {
 			for(int i=0;i<activePlayers.size();i++) {
-				if(!activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get(i);
-					break;
-				}
-			}
-			
-			//If game is offline localPlayer is equal to currentPlayer 
-		}else if(gameMode.equals("offline")) {
-			
-			for(int i=0;i<activePlayers.size();i++) {
-				if(!activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get(i);
+				if(activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
 					LocalData.getInstance().setLocalPlayer(currentPlayer);
 					break;
 				}
 			}
-			
 		}else {
-			//If the game mode is not specified
-			for(int i=0;i<activePlayers.size();i++) {
-				if(!activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get(i);
-					LocalData.getInstance().setLocalPlayer(currentPlayer);
-					break;
+		
+			if(gameMode.equals("online")) {
+			
+				for(int i=0;i<activePlayers.size();i++) {
+					if(activePlayers.get(i).equals(currentPlayer)) {
+						currentPlayer=activePlayers.get((i+1)%activePlayers.size());
+						break;
+					}
 				}
+				
+			//If game is offline localPlayer is equal to currentPlayer 
+			}else if(gameMode.equals("offline")) {
+			
+				for(int i=0;i<activePlayers.size();i++) {
+					if(activePlayers.get(i).equals(currentPlayer)) {
+						currentPlayer=activePlayers.get((i+1)%activePlayers.size());
+						LocalData.getInstance().setLocalPlayer(currentPlayer);
+						break;
+					}
+				}
+			
 			}
 		}
+		System.out.println(currentPlayer.getPlayerName());
 		
-		
+		notifyObserver();
 		//Below is the old code.
 //		for(int i=0;i<activePlayers.size();i++) {
 //			if(!activePlayers.get(i).equals(currentPlayer)) {
@@ -249,7 +265,18 @@ public class GameController implements Serializable{
 
 		return str;
 	}
-	
+
+	@Override
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer observer: observers){
+			observer.update();
+		}
+	}
 }
 
 
