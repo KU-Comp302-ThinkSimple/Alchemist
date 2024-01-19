@@ -1,6 +1,9 @@
 package test;
 
 import domain.GameController;
+import domain.initialization.GameInitializerAdapter;
+import domain.initialization.GameInitializerAdapterFactory;
+import domain.initialization.GameInitializerAdapterFactory.InitializerType;
 import domain.loginSignup.LoginSignupController;
 
 public class TestGameInitializer {
@@ -20,6 +23,12 @@ public class TestGameInitializer {
 		LoginSignupController.getInstance().login("user_3", "user_3");
 		LoginSignupController.getInstance().login("user_4", "user_4");
 
-		GameController.getInstance().initializeGame();
+		GameInitializerAdapter initializerAdapter =  GameInitializerAdapterFactory.getInstance().getInitializerAdapter(InitializerType.Offline);
+		try {
+			initializerAdapter.finalizeInitialization(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

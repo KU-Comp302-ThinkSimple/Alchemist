@@ -103,8 +103,6 @@ public class LoginSignUpWindowOffline {
 		startGameButton.setBounds(1497, 543, 232, 50);
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
-			//TODO Call the backend function to start the game with needed arguments *DONE
-//			GameController.getInstance().initializeGame();
 			try {
 				gameInitializer.finalizeInitialization(null);
 				LoginSignUpWindowFrame.dispose();

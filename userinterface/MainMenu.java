@@ -15,6 +15,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import domain.initialization.GameInitializerAdapter;
+import domain.initialization.GameInitializerAdapterFactory;
+import domain.initialization.GameInitializerAdapterFactory.InitializerType;
+import domain.initialization.OfflineGameInitializerAdapter;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -26,10 +29,9 @@ public class MainMenu extends JFrame {
 	private JLabel alchemistImageLabel;
 	private JTextField loginHeaderText;
 	private int loggedinUserCount;
+	GameInitializerAdapter gameInitializer;
 
 	public MainMenu() {
-		GameInitializerAdapter gameInitializer = null;
-
 		this.setUndecorated(true);
 		this.setMaximumSize(new Dimension(1920, 1080));
 		this.setBounds(0, 0, 1920, 1080);
@@ -133,14 +135,14 @@ public class MainMenu extends JFrame {
 		contentPane.add(joinLobbyPanel);
 
 		//LOBBY ID HEADER
-		JTextField loginHeaderText = new JTextField();
+		JTextField loginHeaderText = new JTextField("ENTER LOBBY ID");
 		loginHeaderText.setEditable(false);
 		loginHeaderText.setBorder(null);
 		loginHeaderText.setForeground(GlobalColors.TEXT_COLOR);
 		loginHeaderText.setBackground(GlobalColors.BACKGROUND_COLOR);
 		loginHeaderText.setFont(GlobalFonts.DISPLAY_HEADER);
 		loginHeaderText.setOpaque(false);
-		loginHeaderText.setText("ENTER LOBBY ID");
+//		loginHeaderText.setText();
 
 		//LOBBY ID
 		JTextField lobbyIDInputTextField = new JTextField();
@@ -186,6 +188,8 @@ public class MainMenu extends JFrame {
 		hostGameButton.setForeground(GlobalColors.BUTTON_TEXT_COLOR);
 		hostGameButton.setFont(GlobalFonts.DISPLAY);
 		hostGameButton.addActionListener(e -> {
+			gameInitializer = GameInitializerAdapterFactory.getInstance().getInitializerAdapter(InitializerType.OnlineHost);
+			gameInitializer.startInitialization(null);
 			//TODO call needed functions from backend, open a lobby
 			logsignPanel.setVisible(false);
 			getContentPane().add(onlineLobbyPanel);
@@ -199,7 +203,14 @@ public class MainMenu extends JFrame {
 
 		//MAIN MENU OFFLINE GAME BUTTON
 		offlineButton.addActionListener(e -> {
-			new LoginSignUpWindowOffline();
+			gameInitializer = GameInitializerAdapterFactory.getInstance().getInitializerAdapter(InitializerType.Offline);
+			try {
+				gameInitializer.startInitialization(null);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			new LoginSignUpWindowOffline((OfflineGameInitializerAdapter)gameInitializer);
 			this.dispose();
 		});
 
