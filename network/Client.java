@@ -39,13 +39,15 @@ public class Client extends Thread implements Observer{
 		receivedSignupResponse = null;
 		receivedLoginResponse = null;
 	}
+	public static void main(String[] args) throws UnknownHostException, IOException, TimeoutException {
+		Client client = new Client("client1", "127.0.0.1", 4000);
+		client.start();
+//		client.remoteSignupBlocking("a", "a", 1000);
+	}
 
     private void sendMessage(Message message) {
         try {
             getObjectOutputStream().writeObject(message);
-            if(debugEnabled) {
-                System.out.println(this.name + " sent game state");
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }

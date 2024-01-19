@@ -24,6 +24,7 @@ public class OnlineClientGameInitializerAdapter implements GameInitializerAdapte
 		
 		client = new Client("client_" + (new Random()).nextInt(100000), hostAddress, port);
 		client.start();
+		LocalData.getInstance().setClient(client);
 	};
 	@Override
 	public void finalizeInitialization(Map<String, Object> gameSettings) throws Exception{

@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ public class MainMenu extends JFrame {
 	private JTextField loginHeaderText;
 	private int loggedinUserCount;
 	GameInitializerAdapter gameInitializer;
+	private LoginSignUpPanel logsignPanel;
 
 	public MainMenu() {
 		this.setUndecorated(true);
@@ -121,8 +123,7 @@ public class MainMenu extends JFrame {
 		buttons.setLayout(null);
 		this.contentPane.add(buttons);
 
-		//LOG IN SIGN UP PANEL
-		JPanel logsignPanel = new LoginSignUpPanel();
+		logsignPanel = new LoginSignUpPanel();
 		getContentPane().add(logsignPanel);
 		logsignPanel.setLocation(937, 212);
 		logsignPanel.setSize(470, 580);
@@ -159,8 +160,18 @@ public class MainMenu extends JFrame {
 		joinIDButton.setFont(GlobalFonts.DISPLAY);
 		joinIDButton.addActionListener(e -> {
 			String IDs = lobbyIDInputTextField.getText();
-			int ID = Integer.parseInt(IDs);
-
+			gameInitializer = GameInitializerAdapterFactory.getInstance().getInitializerAdapter(InitializerType.OnlineClient);
+			logsignPanel.setGameInitializer(gameInitializer);
+			HashMap<String, Object> settings = new HashMap<>();
+			settings.put("port", Integer.valueOf(4000));
+			settings.put("hostAddress", IDs);
+			try {
+				gameInitializer.startInitialization(settings);
+				logsignPanel.setVisible(true);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//TODO backend calls to join lobby
 		});
 		joinLobbyPanel.setLayout(new GridLayout(3, 1, 0, 0));
@@ -189,12 +200,20 @@ public class MainMenu extends JFrame {
 		hostGameButton.setFont(GlobalFonts.DISPLAY);
 		hostGameButton.addActionListener(e -> {
 			gameInitializer = GameInitializerAdapterFactory.getInstance().getInitializerAdapter(InitializerType.OnlineHost);
-			gameInitializer.startInitialization(null);
-			//TODO call needed functions from backend, open a lobby
-			logsignPanel.setVisible(false);
-			getContentPane().add(onlineLobbyPanel);
-			onlineLobbyPanel.setVisible(true);
-			((JButton) e.getSource()).setVisible(false);
+			logsignPanel.setGameInitializer(gameInitializer);
+			HashMap<String, Object> settings = new HashMap<>();
+			settings.put("port", Integer.valueOf(4000));
+			try {
+				gameInitializer.startInitialization(settings);
+				//TODO call needed functions from backend, open a lobby
+				logsignPanel.setVisible(true);
+				getContentPane().add(onlineLobbyPanel);
+				onlineLobbyPanel.setVisible(true);
+				((JButton) e.getSource()).setVisible(false);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		hostGameButton.setVisible(false);
 		getContentPane().add(hostGameButton);
@@ -204,6 +223,7 @@ public class MainMenu extends JFrame {
 		//MAIN MENU OFFLINE GAME BUTTON
 		offlineButton.addActionListener(e -> {
 			gameInitializer = GameInitializerAdapterFactory.getInstance().getInitializerAdapter(InitializerType.Offline);
+			logsignPanel.setGameInitializer(gameInitializer);
 			try {
 				gameInitializer.startInitialization(null);
 			} catch (Exception e1) {
@@ -217,7 +237,7 @@ public class MainMenu extends JFrame {
 		//MAIN MENU JOIN ONLINE LOBBY BUTTON
 		joinButton.addActionListener(e -> {
 
-			logsignPanel.setVisible(true);
+			logsignPanel.setVisible(false);
 			joinLobbyPanel.setVisible(true);
 			buttons.setVisible(false);
 			alchemistImageLabel.setIcon(GlobalIcons.getImage("alchemist square 2"));
@@ -227,7 +247,7 @@ public class MainMenu extends JFrame {
 
 		//MAIN MENU HOST ONLINE LOBBY BUTTON
 		hostButton.addActionListener(e -> {
-			logsignPanel.setVisible(true);
+			logsignPanel.setVisible(false);
 			hostGameButton.setVisible(true);
 			buttons.setVisible(false);
 			alchemistImageLabel.setIcon(GlobalIcons.getImage("alchemist square 3"));
