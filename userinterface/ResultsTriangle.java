@@ -110,11 +110,15 @@ public class ResultsTriangle extends JPanel {
 		}
 	}
 
+	public void updateResultsTriangle(String online) {
+		if (online.equals("online")) updateResultsTriangleHelper(LocalData.getInstance().getLocalPlayer());
+		else updateResultsTriangleHelper(GameController.getInstance().getCurrentPlayer());
+	}
+
 	/**
 	 * updates the triangle to reflect the active user's potions
 	 */
-	public void updateResultsTriangle() {
-		Player player = GameController.getInstance().getCurrentPlayer();
+	public void updateResultsTriangleHelper(Player player) {
 		updateTriangleUsingPotionList(player.getInventory().getPlayerPotionList());
 	}
 

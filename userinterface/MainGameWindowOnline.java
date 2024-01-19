@@ -320,7 +320,7 @@ public class MainGameWindowOnline extends JFrame{
 		((PlayerInventory)playerInventory).updatePlayerInventory("online");
 
 		//Results Triangle Changer
-		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle("offline");
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();

@@ -306,7 +306,7 @@ public class MainGameWindowOffline extends JFrame{
 		((PlayerInventory)playerInventory).updatePlayerInventory("offline");
 
 		//Results Triangle Changer
-		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle("offline");
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();
