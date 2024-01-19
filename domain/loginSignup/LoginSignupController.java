@@ -1,18 +1,19 @@
-package userinterface;
+package domain.loginSignup;
 
 import domain.GameController;
 import domain.player.*;
 import techServices.UserInfoSaver;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class LoginSignupController {
 	private static LoginSignupController instance;
-	private static String loginMessage="";
+//	private static String loginMessage="";
 	public static String loginSuccessMessage = "Log in successful.";
-	private static String signUpMessage="";
+//	private static String signUpMessage="";
 	public static String signUpSuccessMessage = "Signed up successfully.";
-
+	
 	private LoginSignupController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,7 +25,7 @@ public class LoginSignupController {
 		return instance;
 	}
 
-	public void signup(String username, String password) {
+	public SignupResult signup(String username, String password) {
 		Random rand = new Random();
 		int id = rand.nextInt();
 		while(!UserInfoSaver.isPlayerIDAvailable(id)) {
@@ -33,20 +34,19 @@ public class LoginSignupController {
 		Player player = new Player(id, username, password);
 		try {
 			UserInfoSaver.savePlayer(player);
-			signUpMessage= signUpSuccessMessage;
+			return new SignupResult(signUpSuccessMessage, true);
 		} catch (Exception e) {
-			signUpMessage="There is already a user with the nickname";
+			return new SignupResult("There is already a user with the nickname", true);
 			// TODO: add game controller message logic
 			//GameController.showErrorMessage(e.toString());
 		}
 	}
 
-	public void login(String username, String password) {
+	public LoginResult login(String username, String password) {
 		try {
 			Player player = UserInfoSaver.getPlayer(username, password);
 			if (GameController.getInstance().getActivePlayers().contains(player)) {
-				loginMessage = "This user is already logged in.";
-				return;
+				return new LoginResult("This user is already logged in.", -1);
 			}
 			//TODO: add game controller logged in player logic
 			System.out.print("Logged in username: ");
@@ -54,28 +54,11 @@ public class LoginSignupController {
 			System.out.print(" password: ");
 			System.out.println(player.getPassword());
 			GameController.getInstance().getActivePlayers().add(player);
-			loginMessage= loginSuccessMessage;
+			return new LoginResult(loginSuccessMessage, GameController.getInstance().getActivePlayers().size()-1);
 		} catch (Exception e) {
-			loginMessage="Username or password does not match.";
+			return new LoginResult("Username or password does not match.", -1);
 			// TODO: add game controller message logic
 			//GameController.showErrorMessage(e.toString());
 		}
 	}
-
-	public static String getLoginMessage() {
-		return loginMessage;
-	}
-
-	public static void setLoginMessage(String loginMessage) {
-		LoginSignupController.loginMessage = loginMessage;
-	}
-
-	public static String getSignUpMessage() {
-		return signUpMessage;
-	}
-
-	public static void setSignUpMessage(String signUpMessage) {
-		LoginSignupController.signUpMessage = signUpMessage;
-	}
-
 }

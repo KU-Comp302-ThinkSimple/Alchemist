@@ -11,6 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import domain.loginSignup.LoginSignupController;
+import domain.loginSignup.*;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalFonts;
 
@@ -95,15 +97,13 @@ public class LoginSignUpPanel extends JPanel {
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
 			//log in action
-			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
+			LoginResult result = LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
 
-			String loginMessage = LoginSignupController.getInstance().getLoginMessage();
-			String successMessage = LoginSignupController.loginSuccessMessage;
-			if (loginMessage.equals(successMessage)) {
+			if (result.isSuccess()) {
 
 				loggedinUserCount += 1;
 
-				loginMessageDisplay.setText(loginMessage);
+				loginMessageDisplay.setText(result.getMessage());
 				loginMessageDisplay.setVisible(true);
 
 				//clear editables
@@ -117,7 +117,7 @@ public class LoginSignUpPanel extends JPanel {
 			}
 			//log in unsuccessful
 			else {
-				loginMessageDisplay.setText(loginMessage);
+				loginMessageDisplay.setText(result.getMessage());
 			}
 		}
 				);
@@ -190,10 +190,9 @@ public class LoginSignUpPanel extends JPanel {
 			//sign up action
 			String signUpUserNameInput = signUpUserNameInputTextField.getText();
 			char[] signUpPasswordInput = signUpPasswordField.getPassword();
-			LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
+			SignupResult result = LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
 
-			String signedUp = LoginSignupController.getInstance().getSignUpMessage() ;
-			signUpMessage.setText(signedUp);
+			signUpMessage.setText(result.getMessage());
 			signUpMessage.setVisible(true);
 
 			//clear editible textfields

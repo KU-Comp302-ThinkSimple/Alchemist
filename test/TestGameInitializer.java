@@ -1,7 +1,7 @@
 package test;
 
 import domain.GameController;
-import userinterface.LoginSignupController;
+import domain.loginSignup.LoginSignupController;
 
 public class TestGameInitializer {
 

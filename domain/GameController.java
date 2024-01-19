@@ -124,8 +124,8 @@ public class GameController implements Serializable, Observable {
 		if(this.gameMode==null) {
 			for(int i=0;i<activePlayers.size();i++) {
 				if(activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
-					LocalData.getInstance().setLocalPlayer(currentPlayer);
+					int currentPlayerIndex = (i+1)%activePlayers.size();
+					LocalData.getInstance().setLocalPlayerIndex(currentPlayerIndex);
 					break;
 				}
 			}
@@ -145,8 +145,8 @@ public class GameController implements Serializable, Observable {
 			
 				for(int i=0;i<activePlayers.size();i++) {
 					if(activePlayers.get(i).equals(currentPlayer)) {
-						currentPlayer=activePlayers.get((i+1)%activePlayers.size());
-						LocalData.getInstance().setLocalPlayer(currentPlayer);
+						int currentPlayerIndex = (i+1)%activePlayers.size();
+						LocalData.getInstance().setLocalPlayerIndex(currentPlayerIndex);
 						break;
 					}
 				}
