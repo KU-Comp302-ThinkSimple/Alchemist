@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 public class MainGameWindowOnline extends JFrame{
 
-	Player localPlayer = LocalData.getInstance().getLocalPlayer(); //TODO DONE
+	Player localPlayer = LocalData.getInstance().getLocalPlayer();
 	JPanel contentPane;
 	JPanel publishTheoryPanel = new PublishTheoryPanel();
 	JPanel debunkTheoryView = new DebunkTheoryView();
 	JPanel potionBrewingBoard = new BrewPotionPanel();
 	JPanel resultsTriangle = new ResultsTriangle(1);
-	JPanel deductionBoard = new DeductionBoard();
+	JPanel deductionBoard = new DeductionBoard("online");
 	PlayerTokenView ptwLocal;
 	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
 	JPanel playerInventory = new PlayerInventory("online");
