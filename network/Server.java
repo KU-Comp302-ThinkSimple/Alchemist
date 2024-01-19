@@ -4,12 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import network.messages.GameStateUpdateMessage;
+import network.messages.LoginMessage;
+import network.messages.LoginResponseMessage;
+import network.messages.Message;
+import network.messages.SignupMessage;
+import network.messages.SignupResponseMessage;
+import userinterface.LoginSignupController;
 
 public class Server extends Thread {
     private ServerSocket serverSocket;
@@ -87,35 +97,69 @@ public class Server extends Thread {
     private void handleClient(Socket clientSocket) {
     	try {
             InputStream input = clientSocket.getInputStream();	
+            ObjectInputStream ois = new ObjectInputStream(input);
 
             byte[] buffer = new byte[clientBufferSize];
             int bytesRead;
             
             //read all incoming messages into buffer, then send them out
-            while ((bytesRead = input.read(buffer)) != -1) {
-                // Relay the message to all other clients
-                relayBinaryMessage(clientSocket, buffer, bytesRead);
+            while (true) {
+            	Message receivedMessage = (Message) ois.readObject();
+            	if (receivedMessage instanceof GameStateUpdateMessage) {
+            		// Relay the message to all other clients
+                	relayMessage(clientSocket, receivedMessage);
+            	}
+                else if (receivedMessage instanceof SignupMessage) {
+					handleSignupMessage(clientSocket, (SignupMessage)receivedMessage);
+				}
+                else if (receivedMessage instanceof LoginMessage) {
+                	handleLoginMessage(clientSocket, (LoginMessage)receivedMessage);
+                }
+                else {
+                	
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        } catch (ClassNotFoundException e) {
+			System.out.println("Host server received invalid message type");
+			e.printStackTrace();
+        }catch (ClassCastException cce) {
+			System.out.println("Host server received message which wasn't of type 'Message'");
+			cce.printStackTrace();
+		} finally {
             // Remove the client when it eventually disconnects
             clients.remove(clientSocket);
             System.out.println("Client disconnected.");
         }
     }
     
-    private void relayBinaryMessage(Socket sender, byte[] message, int length) {
+    private void relayMessage(Socket sender, Message message) {
     	//relay each message to all other clients
         for (Socket client : clients) {
             if (client != sender) {
                 try {
-                    OutputStream output = client.getOutputStream();
-                    output.write(message, 0, length);
+                    sendMessage(client, message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+    
+    private void sendMessage(Socket receiver, Message message) throws IOException{
+    	OutputStream output = receiver.getOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(output);
+        oos.writeObject(message);
+    }
+    
+    private void handleSignupMessage(Socket sender, SignupMessage message) throws IOException {
+    	LoginSignupController.getInstance().signup(message.getUsername(), message.getPassword());
+    	sendMessage(sender, new SignupResponseMessage(LoginSignupController.getSignUpMessage()));
+    }
+    
+    private void handleLoginMessage(Socket sender, LoginMessage message) throws IOException {
+    	LoginSignupController.getInstance().login(message.getUsername(), message.getPassword());
+    	sendMessage(sender, new LoginResponseMessage(LoginSignupController.getLoginMessage()));
     }
 }
