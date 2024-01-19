@@ -37,12 +37,10 @@ public class OnlineLobbyPanel extends JPanel {
 		lobbyIDHeaderText.setFont(GlobalFonts.DISPLAY_HEADER);
 		lobbyIDHeaderText.setOpaque(false);
 		lobbyIDHeaderText.setText("LOBBY ID: ");
+
 		//TODO update text after log in
-
-
 		//TODO altlarýndaki user nameler
 		//TODO lobby id code text þeyi
-		//TODO start game butonu
 		//TODO lokal player host ise start game butonu aktive olacak
 
 		GridBagConstraints gbc_lobbyIDHeaderText = new GridBagConstraints();
