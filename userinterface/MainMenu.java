@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import domain.initialization.GameInitializerAdapter;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -27,7 +28,7 @@ public class MainMenu extends JFrame {
 	private int loggedinUserCount;
 
 	public MainMenu() {
-
+		GameInitializerAdapter gameInitializer = null;
 
 		this.setUndecorated(true);
 		this.setMaximumSize(new Dimension(1920, 1080));

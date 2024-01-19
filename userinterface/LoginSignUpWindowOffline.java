@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import domain.GameController;
+import domain.initialization.GameInitializerAdapter;
+import domain.initialization.OfflineGameInitializerAdapter;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
@@ -47,7 +49,7 @@ public class LoginSignUpWindowOffline {
 
 
 
-	public LoginSignUpWindowOffline() {
+	public LoginSignUpWindowOffline(OfflineGameInitializerAdapter gameInitializer) {
 
 		JFrame LoginSignUpWindowFrame = new JFrame();
 		LoginSignUpWindowFrame.setUndecorated(true);
@@ -96,9 +98,16 @@ public class LoginSignUpWindowOffline {
 		startGameButton.setVisible(false);
 		startGameButton.addActionListener(e -> {
 			//TODO Call the backend function to start the game with needed arguments *DONE
-			GameController.getInstance().initializeGame();
-			LoginSignUpWindowFrame.dispose();
-			new MainGameWindowOffline();
+//			GameController.getInstance().initializeGame();
+			try {
+				gameInitializer.finalizeInitialization(null);
+				LoginSignUpWindowFrame.dispose();
+				new MainGameWindowOffline();
+			}
+			catch (Exception exc) {
+				System.out.println("Cannot initialize game: " + exc.getMessage());
+				exc.printStackTrace();
+			}
 		}
 				);
 		contentPane.add(startGameButton);

@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;
@@ -142,8 +143,8 @@ public class MainGameWindowOnline extends JFrame{
 		transmuteIngredientButton.setContentAreaFilled(false);
 
 
-		//get an array of ingredients of active player //TODO LOCAL player
-		ArrayList<IngredientCard> ingredientsList = GameController.getInstance().getCurrentPlayer().getInventory().getPlayerIngredientCardList();
+		//get an array of ingredients of active player //TODO: LOCAL player DONE.
+		ArrayList<IngredientCard> ingredientsList = LocalData.getInstance().getLocalPlayer().getInventory().getPlayerIngredientCardList();
 		String[] ingrs = new String[ingredientsList.size()];
 		for (int i = 0; i < ingredientsList.size(); i++) {
 			ingrs[i] = ingredientsList.get(i).getName();

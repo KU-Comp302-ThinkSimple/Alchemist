@@ -45,20 +45,20 @@ public class GameController implements Serializable{
 		GameController.instance = newInstance;
 	}
 
-	//This func initializes the game by calling creating a new instance of initliazegamehelper
-	public void initializeGame() {
-
-		//GameController should initialize game when two player are present;
-
-		if(activePlayers.size() >= 2) {
-			System.out.println("Game initialized");
-			new InitializeGameHelper();
-		}
-		else {
-			System.out.println("Not able to initialize");
-		}
-
-	}
+//	//This func initializes the game by calling creating a new instance of initliazegamehelper
+//	public void initializeGame() {
+//
+//		//GameController should initialize game when two player are present;
+//
+//		if(activePlayers.size() >= 2) {
+//			System.out.println("Game initialized");
+//			new InitializeGameHelper();
+//		}
+//		else {
+//			System.out.println("Not able to initialize");
+//		}
+//
+//	}
 
 	//This func changes rounds
 	public void changeRounds() {
@@ -72,7 +72,7 @@ public class GameController implements Serializable{
 	}
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
-	public Boolean shouldChangeRound(){
+	public boolean shouldChangeRound(){
 		
 		
 		//Below is the old code before refactoring.
