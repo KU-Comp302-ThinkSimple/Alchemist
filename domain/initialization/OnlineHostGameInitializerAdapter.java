@@ -34,7 +34,7 @@ public class OnlineHostGameInitializerAdapter implements GameInitializerAdapter{
 		new InitializeGameHelper();	
 		//TODO: how to set local player?
 		//LocalData.getInstance().setLocalPlayer(null);
-		server
+		client.update();
 	}
 
 }

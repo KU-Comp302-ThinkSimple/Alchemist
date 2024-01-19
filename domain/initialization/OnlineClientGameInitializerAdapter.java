@@ -9,9 +9,13 @@ public class OnlineClientGameInitializerAdapter implements GameInitializerAdapte
 	public OnlineClientGameInitializerAdapter() {
 		// TODO Auto-generated constructor stub
 	}
-
 	@Override
-	public void initializeGame(Map<String, Object> gameSettings) throws Exception {
+	public void startInitialization(Map<String, Object> initialSettings) throws Exception{
+		//login
+		//if login successful, connect to server
+	};
+	@Override
+	public void finalizeInitialization(Map<String, Object> gameSettings) throws Exception{
 		//TODO: add when network gets completed
 	}
 
