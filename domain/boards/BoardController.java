@@ -40,6 +40,7 @@ public class BoardController implements Observable {
 		int randomIndex = rand.nextInt(GameController.getInstance().getGameInventory().getArtCards().size());
 		ArtifactCard card= GameController.getInstance().getGameInventory().getArtCards().get(randomIndex);
 		GameController.getInstance().getCurrentPlayer().getInventory().addArtifactCard(card);
+		GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);
 		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
 
 	}
