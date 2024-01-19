@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class MainGameWindowOnline extends JFrame{
 
-	Player localPlayer; //TODO
+	Player localPlayer = LocalData.getInstance().getLocalPlayer(); //TODO DONE
 	JPanel contentPane;
 	JPanel publishTheoryPanel = new PublishTheoryPanel();
 	JPanel debunkTheoryView = new DebunkTheoryView();
@@ -29,7 +29,7 @@ public class MainGameWindowOnline extends JFrame{
 	JPanel deductionBoard = new DeductionBoard();
 	PlayerTokenView ptwLocal;
 	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
-	JPanel playerInventory = new PlayerInventory();
+	JPanel playerInventory = new PlayerInventory("online");
 	JComboBox transmuteIngredientComboBox;
 	JLabel roundLabel;
 	JLabel turnLabel;
@@ -276,6 +276,7 @@ public class MainGameWindowOnline extends JFrame{
 		playerInventory.setLocation(1404, 204);
 		getContentPane().add(playerInventory);
 
+		//ROUND AND TURN INFORMATION
 		JPanel roundInfoPanel = new JPanel();
 		roundInfoPanel.setBounds(476, 61, 200, 90);
 		roundInfoPanel.setOpaque(false);
@@ -294,7 +295,7 @@ public class MainGameWindowOnline extends JFrame{
 		turnLabel.setBounds(0, 40, 190, 43);
 		roundInfoPanel.add(turnLabel);
 
-		//ROUND AND TURN INFORMATION
+
 
 
 		//OBSERVER RELATED
@@ -316,7 +317,7 @@ public class MainGameWindowOnline extends JFrame{
 		((DeductionBoard)deductionBoard).updateDeductionBoard();
 
 		//Player Inventory Changer
-		((PlayerInventory)playerInventory).updatePlayerInventory();
+		((PlayerInventory)playerInventory).updatePlayerInventory("online");
 
 		//Results Triangle Changer
 		((ResultsTriangle)resultsTriangle).updateResultsTriangle();

@@ -32,7 +32,7 @@ public class GameController implements Serializable, Observable {
 	private ArrayList<Player> activePlayers;
 	private GameBoard board;
 	private GameInventory gameInventory;
-	
+
 
 
 	// This is the main game controller, it holds various states and attributes of the game
@@ -42,7 +42,7 @@ public class GameController implements Serializable, Observable {
 		this.board = new GameBoard();
 		this.gameInventory = new GameInventory();
 	}
-	
+
 	public static GameController getInstance() {
 		if(instance == null) {
 			instance = new GameController();
@@ -54,20 +54,20 @@ public class GameController implements Serializable, Observable {
 		GameController.instance = newInstance;
 	}
 
-//	//This func initializes the game by calling creating a new instance of initliazegamehelper
-//	public void initializeGame() {
-//
-//		//GameController should initialize game when two player are present;
-//
-//		if(activePlayers.size() >= 2) {
-//			System.out.println("Game initialized");
-//			new InitializeGameHelper();
-//		}
-//		else {
-//			System.out.println("Not able to initialize");
-//		}
-//
-//	}
+	//	//This func initializes the game by calling creating a new instance of initliazegamehelper
+	//	public void initializeGame() {
+	//
+	//		//GameController should initialize game when two player are present;
+	//
+	//		if(activePlayers.size() >= 2) {
+	//			System.out.println("Game initialized");
+	//			new InitializeGameHelper();
+	//		}
+	//		else {
+	//			System.out.println("Not able to initialize");
+	//		}
+	//
+	//	}
 
 	//This func changes rounds
 	public void changeRounds() {
@@ -82,19 +82,19 @@ public class GameController implements Serializable, Observable {
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
 	public boolean shouldChangeRound(){
-		
-		
+
+
 		//Below is the old code before refactoring.
 
-//		int player1ActionsLeft= activePlayers.get(0).getPlayerToken().getPlayerAction();
-//		int player2ActionsLeft= activePlayers.get(1).getPlayerToken().getPlayerAction();
-//
-//		if(player1ActionsLeft==0 && player1ActionsLeft==0) {
-//			return true;
-//		}else {
-//			return false;
-//		}
-		
+		//		int player1ActionsLeft= activePlayers.get(0).getPlayerToken().getPlayerAction();
+		//		int player2ActionsLeft= activePlayers.get(1).getPlayerToken().getPlayerAction();
+		//
+		//		if(player1ActionsLeft==0 && player1ActionsLeft==0) {
+		//			return true;
+		//		}else {
+		//			return false;
+		//		}
+
 		int actionCounter=0;
 		for(int i=0; i<activePlayers.size();i++) {
 			if(activePlayers.get(i).getPlayerToken().getPlayerAction()==0) {
@@ -114,56 +114,14 @@ public class GameController implements Serializable, Observable {
 
 	//Change the current player after an action using this function
 	public void changeCurrentPlayer() {
-		
-		//TODO change the gameMode attribute and update these conditions.
-		//If game is online, currentPlayer and localPlayer are different.
-		
-		System.out.println("Changed player");
-		System.out.println(currentPlayer.getPlayerName());
-		
-		if(this.gameMode==null) {
-			for(int i=0;i<activePlayers.size();i++) {
-				if(activePlayers.get(i).equals(currentPlayer)) {
-					int currentPlayerIndex = (i+1)%activePlayers.size();
-					LocalData.getInstance().setLocalPlayerIndex(currentPlayerIndex);
-					break;
-				}
-			}
-		}else {
-		
-			if(gameMode.equals("online")) {
-			
-				for(int i=0;i<activePlayers.size();i++) {
-					if(activePlayers.get(i).equals(currentPlayer)) {
-						currentPlayer=activePlayers.get((i+1)%activePlayers.size());
-						break;
-					}
-				}
-				
-			//If game is offline localPlayer is equal to currentPlayer 
-			}else if(gameMode.equals("offline")) {
-			
-				for(int i=0;i<activePlayers.size();i++) {
-					if(activePlayers.get(i).equals(currentPlayer)) {
-						int currentPlayerIndex = (i+1)%activePlayers.size();
-						LocalData.getInstance().setLocalPlayerIndex(currentPlayerIndex);
-						break;
-					}
-				}
-			
+
+		for(int i=0;i<activePlayers.size();i++) {
+			if(activePlayers.get(i).equals(currentPlayer)) {
+				currentPlayer = activePlayers.get((i+1)%activePlayers.size());
+				break;
 			}
 		}
-		System.out.println(currentPlayer.getPlayerName());
-		
 		notifyObserver();
-		//Below is the old code.
-//		for(int i=0;i<activePlayers.size();i++) {
-//			if(!activePlayers.get(i).equals(currentPlayer)) {
-//				currentPlayer=activePlayers.get(i);
-//				break;
-//			}
-//		}
-		
 	}
 
 	public int getCurrentRound() {

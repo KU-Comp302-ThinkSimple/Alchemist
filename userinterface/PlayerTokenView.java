@@ -37,7 +37,7 @@ public class PlayerTokenView extends JPanel {
 
 	public PlayerTokenView(int i) {
 
-		player=GameController.getInstance().getActivePlayers().get(i);
+		player = GameController.getInstance().getActivePlayers().get(i);
 		if (player == null) {
 			throw new RuntimeException("Active player i is null.");
 		}
@@ -207,6 +207,7 @@ public class PlayerTokenView extends JPanel {
 			JLabel iconLabel = new JLabel(icon);
 			iconLabel.setBounds(0, 0, 40, 65);
 			potPanels.get(i).add(iconLabel);
+			potPanels.get(i).repaint();
 
 			//after the icon is added, add it to the ArrayList
 			addedPotions.add(potname);
@@ -218,9 +219,14 @@ public class PlayerTokenView extends JPanel {
 		player = LocalData.getInstance().getLocalPlayer();
 		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
+		healthField.repaint();
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
+		System.out.println("gold test: " + Integer.toString(player.getPlayerToken().getGold()));
+		goldField.repaint();
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
+		repField.repaint();
 		actionField.setText(Integer.toString(player.getPlayerToken().getPlayerAction()));
+		actionField.repaint();
 		displayPlayerPotions();
 		this.repaint();
 	}
