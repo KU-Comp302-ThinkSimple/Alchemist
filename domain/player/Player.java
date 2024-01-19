@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.GameController;
+
 public class Player implements Serializable, Observable {
 
 	/**
@@ -100,6 +102,9 @@ public class Player implements Serializable, Observable {
 		String str = "Player Name: " + this.playerName;
 		str += "\nPlayer Health: " + this.playerHealth;
 		str += "\n" + this.getPlayerToken();
+		str += "\nPoints: " + this.calculatePoints();
+		str += "\nHypotheses published by this player:\n";
+		str += GameController.getInstance().getBoard().getPublicationBoard().playerHypoThesisCorrectnessList(this);
 		return str;
 	}
 

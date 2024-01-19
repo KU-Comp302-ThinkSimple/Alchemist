@@ -12,16 +12,16 @@ public class Atom implements Serializable{
 	int atomSize; //0 small, 1 big
 	int atomColor; // 0 red, 1 green, 2 blue
 	int atomSign; //0 negative, 1 positive
-	
+
 	public Atom(int atomId, int atomSize, int atomColor, int atomSign) {
-		
+
 		this.atomId=atomId;
 		this.atomSize = atomSize;
 		this.atomColor = atomColor;
 		this.atomSign = atomSign;
 	}
 
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(atomColor, atomSign, atomSize);
@@ -38,7 +38,7 @@ public class Atom implements Serializable{
 		Atom other = (Atom) obj;
 		return atomColor == other.atomColor && atomSign == other.atomSign && atomSize == other.atomSize;
 	}
-	
+
 	public int getAtomId() {
 		return atomId;
 	}
@@ -49,8 +49,6 @@ public class Atom implements Serializable{
 	public void setAtomId(int atomId) {
 		this.atomId = atomId;
 	}
-
-
 
 
 	public int getAtomSize() {
@@ -75,5 +73,40 @@ public class Atom implements Serializable{
 
 	public void setAtomSign(int atomSign) {
 		this.atomSign = atomSign;
+	}
+
+	@Override
+	public String toString() {
+		String str = "";
+		switch (this.atomColor) {
+		case 0 :
+			str += "Red ";
+			break;
+		case 1 :
+			str += "Green " ;
+			break;
+		case 2 :
+			str += "Blue ";
+			break;
+		}
+
+		switch (this.atomSize) {
+		case 0 :
+			str += "Small ";
+			break;
+		case 1 :
+			str += "Big ";
+			break;
+		}
+
+		switch (this.atomSign) {
+		case 0 :
+			str += " -";
+			break;
+		case 1 :
+			str += " +";
+			break;
+		}
+		return str;
 	}
 }

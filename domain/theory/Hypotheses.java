@@ -21,11 +21,11 @@ public class Hypotheses implements Serializable{
 		this.ingredient = ingredient;
 		this.molecule = molecule;
 	}
-	
+
 	public boolean isValid(int atomColorId) {
-		return ingredient.getMolecule().getAtomByColor(atomColorId).equals(molecule.getAtomByColor(atomColorId));		
+		return ingredient.getMolecule().getAtomByColor(atomColorId).equals(molecule.getAtomByColor(atomColorId));
 	}
-	
+
 	public IngredientCard getIngredient() {
 		return ingredient;
 	}
@@ -33,8 +33,27 @@ public class Hypotheses implements Serializable{
 	public Molecule getMolecule() {
 		return molecule;
 	}
-	
+
 	public Player getOwner() {
 		return owner;
 	}
+
+	public String isValid() {
+		String str = "";
+		Molecule actualMol = this.getIngredient().getMolecule();
+		Molecule theoryMol = this.getMolecule();
+		if (actualMol.equals(theoryMol)) {
+			str += "The hypotheses by " + this.owner.getPlayerName() + " was correct!";
+			str += "\nIngredient Card of Hypothesis: " + this.getIngredient().getName();
+			str += "\nGuessed molecule : " + theoryMol;
+		}
+		else {
+			str += "The hypotheses by " + this.owner.getPlayerName() + " was wrong!";
+			str += "\nIngredient Card of Hypothesis: " + this.getIngredient().getName();
+			str += "\nGuessed molecule : " + theoryMol;
+			str += "\nActual molecule: " + actualMol;
+		}
+		return str;
+	}
+
 }

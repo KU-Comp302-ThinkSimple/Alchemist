@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Molecule implements Serializable{
-	
+
 	/**
 	 * 
 	 */
@@ -15,7 +15,7 @@ public class Molecule implements Serializable{
 	Atom blueAtom;
 
 	public Molecule(int moleculeId, Atom redAtom, Atom greenAtom, Atom blueAtom) {
-		
+
 		this.moleculeId = moleculeId;
 		this.redAtom = redAtom;
 		this.greenAtom = greenAtom;
@@ -43,27 +43,27 @@ public class Molecule implements Serializable{
 	}
 
 	public void setAtom(Atom atom) {
-		
+
 		if(atom.getAtomColor()==0) {
 			this.redAtom=atom;
 		}else if(atom.getAtomColor()==1) {
-			
+
 			this.greenAtom=atom;
 		}else if(atom.getAtomColor()==2) {
-			
+
 			this.blueAtom=atom;
 		}
 	}
-	
+
 	public Atom getAtomByColor(int atomColorId) {
 		if(redAtom.getAtomColor() == atomColorId) {
 			return redAtom;
 		}
-		
+
 		else if(greenAtom.getAtomColor() == atomColorId) {
 			return greenAtom;
 		}
-		
+
 		else if(blueAtom.getAtomColor() == atomColorId) {
 			return blueAtom;
 		}
@@ -118,6 +118,11 @@ public class Molecule implements Serializable{
 	public void setBlueAtom(Atom blueAtom) {
 		this.blueAtom = blueAtom;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		String str = this.redAtom + ", " + this.greenAtom + " ," + this.blueAtom;
+		return str;
+	}
+
 }
