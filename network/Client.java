@@ -26,8 +26,6 @@ import userinterface.observer.Observer;
 public class Client extends Thread implements Observer{
 	public static boolean debugEnabled = true;
 	private final String name;
-	private final String serverHost;
-	private final int serverPort;
 	private final Socket connection;
 	private SignupResponseMessage receivedSignupResponse;
 	private LoginResponseMessage receivedLoginResponse;
@@ -36,14 +34,7 @@ public class Client extends Thread implements Observer{
 	private ObjectOutputStream objectOutputStream;
 	public Client(String name, String serverHost, int serverPort) throws UnknownHostException, IOException {
 		this.name = name;
-		this.serverHost = serverHost;
-		this.serverPort = serverPort;
-		
 		connection = new Socket(serverHost, serverPort);
-//		InputStream is = connection.getInputStream();
-//		objectInputStream = new ObjectInputStream(is);
-//		OutputStream os = connection.getOutputStream();
-//		objectOutputStream = new ObjectOutputStream(os);
 		receivedSignupResponse = null;
 		receivedLoginResponse = null;
 	}
@@ -118,7 +109,6 @@ public class Client extends Thread implements Observer{
 					return receivedSignupResponse.getResponse();
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -128,7 +118,6 @@ public class Client extends Thread implements Observer{
 	public String remoteLoginBlocking(String username, String password, int timeoutMillis) throws TimeoutException {
 		sendMessage(new LoginMessage(username, password));
 		receivedLoginResponse = null;
-//		long startTime = System.currentTimeMillis();
 		synchronized (responseLock) {
 			try {
 				responseLock.wait(timeoutMillis);
@@ -136,15 +125,9 @@ public class Client extends Thread implements Observer{
 					return receivedLoginResponse.getResponse();
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-//		while(System.currentTimeMillis() - startTime < timeoutMillis) {
-//			if(receivedLoginResponse != null) {
-//				return receivedLoginResponse.getResponse();
-//			}
-//		}
 		throw new TimeoutException("Remote login operation timed out!");
 	}
 	

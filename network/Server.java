@@ -91,13 +91,8 @@ public class Server extends Thread {
         server.start();
         
         if(true) {
-        	System.out.println("a");
-            //create three clients to test the server
             Client client1 = new Client("client1", "127.0.0.1", port);
-            System.out.println("starting");
             client1.start();
-            System.out.println("started");
-//            Client client2 = new Client("client2", "127.0.0.1", port);
             
             try {
 				String response = client1.remoteSignupBlocking("user_1", "pwd", 3000);
