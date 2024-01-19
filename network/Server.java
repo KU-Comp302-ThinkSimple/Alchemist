@@ -17,13 +17,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import domain.GameController;
+import domain.loginSignup.LoginSignupController;
+import domain.loginSignup.*;
 import network.messages.GameStateUpdateMessage;
 import network.messages.LoginMessage;
 import network.messages.LoginResponseMessage;
 import network.messages.Message;
 import network.messages.SignupMessage;
 import network.messages.SignupResponseMessage;
-import userinterface.LoginSignupController;
 
 public class Server extends Thread {
     private ServerSocket serverSocket;
@@ -95,11 +96,11 @@ public class Server extends Thread {
             client1.start();
             
             try {
-				String response = client1.remoteSignupBlocking("user_1", "pwd", 3000);
+				String response = client1.remoteSignupBlocking("user_1", "pwd", 3000).getMessage();
 				System.out.println(response);
-				response = client1.remoteLoginBlocking("user_1", "pwd", 3000);
-				System.out.println(response);
-				
+				LoginResult result = client1.remoteLoginBlocking("user_1", "pwd", 3000);
+				System.out.println(result.getMessage());
+				System.out.println(result.getLocalPlayerIndex());
 				System.out.println(GameController.getInstance().getActivePlayers().size());
 			} catch (TimeoutException e) {
 				// TODO Auto-generated catch block
@@ -184,12 +185,12 @@ public class Server extends Thread {
     }
     
     private void handleSignupMessage(ClientConnection sender, SignupMessage message) throws IOException {
-    	LoginSignupController.getInstance().signup(message.getUsername(), message.getPassword());
-    	sendMessage(sender, new SignupResponseMessage(LoginSignupController.getSignUpMessage()));
+    	SignupResult result = LoginSignupController.getInstance().signup(message.getUsername(), message.getPassword());
+    	sendMessage(sender, new SignupResponseMessage(result));
     }
     
     private void handleLoginMessage(ClientConnection sender, LoginMessage message) throws IOException {
-    	LoginSignupController.getInstance().login(message.getUsername(), message.getPassword());
-    	sendMessage(sender, new LoginResponseMessage(LoginSignupController.getLoginMessage()));
+    	LoginResult result = LoginSignupController.getInstance().login(message.getUsername(), message.getPassword());
+    	sendMessage(sender, new LoginResponseMessage(result));
     }
 }

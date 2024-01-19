@@ -1,11 +1,13 @@
 package network.messages;
 
+import domain.loginSignup.*;
+
 public class SignupResponseMessage extends Message {
-	private final String response;
-	public SignupResponseMessage(String response) {
+	private final SignupResult response;
+	public SignupResponseMessage(SignupResult response) {
 		this.response = response;
 	}
-	public String getResponse() {
+	public SignupResult getResponse() {
 		return response;
 	}
 

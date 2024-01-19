@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import domain.GameController;
+import domain.loginSignup.*;
 import network.messages.GameStateUpdateMessage;
 import network.messages.LoginMessage;
 import network.messages.LoginResponseMessage;
@@ -99,7 +100,7 @@ public class Client extends Thread implements Observer{
 		sendMessage(new GameStateUpdateMessage(GameController.getInstance()));
 	}
 	
-	public String remoteSignupBlocking(String username, String password, int timeoutMillis) throws TimeoutException{
+	public SignupResult remoteSignupBlocking(String username, String password, int timeoutMillis) throws TimeoutException{
 		sendMessage(new SignupMessage(username, password));
 		receivedSignupResponse = null;
 		synchronized (responseLock) {
@@ -115,7 +116,7 @@ public class Client extends Thread implements Observer{
 		throw new TimeoutException("Remote signup operation timed out!");
 	}
 	
-	public String remoteLoginBlocking(String username, String password, int timeoutMillis) throws TimeoutException {
+	public LoginResult remoteLoginBlocking(String username, String password, int timeoutMillis) throws TimeoutException {
 		sendMessage(new LoginMessage(username, password));
 		receivedLoginResponse = null;
 		synchronized (responseLock) {
