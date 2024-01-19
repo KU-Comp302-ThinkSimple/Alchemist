@@ -15,11 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import domain.GameController;
+import domain.loginSignup.LoginSignupController;
+import domain.loginSignup.*;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalDimensions;
 import userinterface.util.GlobalFonts;
 
 import userinterface.*;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Color;
@@ -235,10 +238,8 @@ public class LoginSignUpWindowOffline {
 			char[] loginPasswordInput = loginPasswordField.getPassword();
 
 			//log in action
-			LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
-			String loginMessage = LoginSignupController.getLoginMessage();
-			String successMessage = LoginSignupController.loginSuccessMessage;
-			if (loginMessage.equals(successMessage)) {
+			LoginResult result = LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
+			if (result.isSuccess()) {
 
 				loggedinUserCount += 1;
 
@@ -277,7 +278,7 @@ public class LoginSignUpWindowOffline {
 			}
 			//log in unsuccessful
 			else {
-				loginMessageDisplay.setText(loginMessage);
+				loginMessageDisplay.setText(result.getMessage());
 			}
 		}
 				);
@@ -350,12 +351,9 @@ public class LoginSignUpWindowOffline {
 			//sign up action
 			String signUpUserNameInput = signUpUserNameInputTextField.getText();
 			char[] signUpPasswordInput = signUpPasswordField.getPassword();
-			LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
+			SignupResult result = LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
 
-			//TODO please return me a String
-			//Successful. or "There is already a user with the nickanme" ... *DONE
-			String signedUp = LoginSignupController.getInstance().getSignUpMessage() ; //TODO Edit this *DONE
-			signUpMessage.setText(signedUp);
+			signUpMessage.setText(result.getMessage());
 			signUpMessage.setVisible(true);
 
 			//clear editible textfields
