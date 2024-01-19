@@ -69,7 +69,7 @@ public class GameController implements Serializable, Observable {
 	}
 
 	//Use this function to check whether the gameController should change the round, and if it does, then change the round using changeRounds fucntion.
-	public Boolean shouldChangeRound(){
+	public boolean shouldChangeRound(){
 		
 		
 		//Below is the old code before refactoring.
