@@ -110,8 +110,8 @@ public class GameController implements Serializable{
 		if(gameMode.equals("online")) {
 			
 			for(int i=0;i<activePlayers.size();i++) {
-				if(!activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get(i);
+				if(activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
 					break;
 				}
 			}
@@ -120,8 +120,8 @@ public class GameController implements Serializable{
 		}else if(gameMode.equals("offline")) {
 			
 			for(int i=0;i<activePlayers.size();i++) {
-				if(!activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get(i);
+				if(activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
 					LocalData.getInstance().setLocalPlayer(currentPlayer);
 					break;
 				}
@@ -130,8 +130,8 @@ public class GameController implements Serializable{
 		}else {
 			//If the game mode is not specified
 			for(int i=0;i<activePlayers.size();i++) {
-				if(!activePlayers.get(i).equals(currentPlayer)) {
-					currentPlayer=activePlayers.get(i);
+				if(activePlayers.get(i).equals(currentPlayer)) {
+					currentPlayer=activePlayers.get((i+1)%activePlayers.size());
 					LocalData.getInstance().setLocalPlayer(currentPlayer);
 					break;
 				}
