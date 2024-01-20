@@ -2,6 +2,8 @@ package userinterface;
 
 import domain.GameController;
 import domain.boards.BoardController;
+import domain.cards.IngredientCard;
+import domain.player.Player;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalFonts;
 import userinterface.util.GlobalIcons;
@@ -70,10 +72,34 @@ public class BrewPotionPanel extends JPanel {
 		drinkPotionButton.setFont(GlobalFonts.BREW_BUTTON);
 		drinkPotionButton.addActionListener(e -> {
 			try {
+				Player currPlayer = GameController.getInstance().getCurrentPlayer();
 				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), false).toString().toLowerCase();
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
-				if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(3))){
-					//TODO: Pop up, kullanmak ister mi diye sor isterse kart seçtir ve o kartı :GameController.getInstance().getGameInventory().getArtCards().get(3).useCard(ingrSelecti) olarak kullan.
+				if (currPlayer.getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(3))){
+					IngredientCard ingr1 = null;
+					IngredientCard ingr2 = null;
+					for (IngredientCard ingredient : GameController.getInstance().getGameInventory().getIngredientCards()){
+						if (ingredient.getName().equals((String)ingrSelect1.getSelectedItem())) {
+							ingr1 = ingredient;}
+						if (ingredient.getName().equals((String)ingrSelect2.getSelectedItem())) {
+							ingr2 = ingredient;}
+					}
+					
+					int result = JOptionPane.showConfirmDialog(null, "Do you want to use the card?");
+					if(result == JOptionPane.YES_OPTION ){
+						 String[] options = { "Ingredient 1", "Ingredient 2" };
+						 var selection = JOptionPane.showOptionDialog(null, "Select one:", "", 
+                                0, 2, null, options, options[0]);
+						 	if (selection == 0) {
+						 		GameController.getInstance().getCurrentPlayer().getInventory().addAIngredientCard(ingr1);
+						    	GameController.getInstance().getCurrentPlayer().getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(3));
+
+						    }
+						    if (selection == 1) { 
+						    	GameController.getInstance().getCurrentPlayer().getInventory().addAIngredientCard(ingr2);
+						    	GameController.getInstance().getCurrentPlayer().getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(3));
+						    }
+					} 
 				}
 			}
 			catch (Exception error) {
@@ -104,8 +130,36 @@ public class BrewPotionPanel extends JPanel {
 		testOnStudentButton.setFont(GlobalFonts.BREW_BUTTON);
 		testOnStudentButton.addActionListener(e -> {
 			try {
+				Player currPlayer = GameController.getInstance().getCurrentPlayer();
 				String message = BoardController.brewPotion(((String)ingrSelect1.getSelectedItem()), ((String)ingrSelect2.getSelectedItem()), true).toString().toLowerCase();
 				JOptionPane.showMessageDialog(this, "You brew: " + message);
+				if (currPlayer.getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(3))){
+					IngredientCard ingr1 = null;
+					IngredientCard ingr2 = null;
+					for (IngredientCard ingredient : GameController.getInstance().getGameInventory().getIngredientCards()){
+						if (ingredient.getName().equals((String)ingrSelect1.getSelectedItem())) {
+							ingr1 = ingredient;}
+						if (ingredient.getName().equals((String)ingrSelect2.getSelectedItem())) {
+							ingr2 = ingredient;}
+					}
+
+					int result = JOptionPane.showConfirmDialog(null, "Do you want to use the card?");
+					if(result == JOptionPane.YES_OPTION ){
+						String[] options = { "Ingredient 1", "Ingredient 2" };
+						var selection = JOptionPane.showOptionDialog(null, "Select one:", "",
+								0, 2, null, options, options[0]);
+						if (selection == 0) {
+							GameController.getInstance().getCurrentPlayer().getInventory().addAIngredientCard(ingr1);
+							GameController.getInstance().getCurrentPlayer().getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(3));
+
+						}
+						if (selection == 1) {
+							GameController.getInstance().getCurrentPlayer().getInventory().addAIngredientCard(ingr2);
+							GameController.getInstance().getCurrentPlayer().getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(3));
+						}
+					}
+				}
+
 			}
 			catch (Exception error) {
 				JOptionPane.showMessageDialog(this, error.getMessage());

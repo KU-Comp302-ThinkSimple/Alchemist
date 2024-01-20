@@ -134,9 +134,20 @@ public class PublishTheoryPanel extends JPanel implements ActionListener{
 		IngredientCard ingredientCard = ((IngredientCardComboBoxItem)ingredientComboBox.getSelectedItem()).getIngredientCard();
 		Molecule molecule = ((MoleculeComboBoxItem)moleculeComboBox.getSelectedItem()).getMolecule();
 		try {
+			Player currPlayer = GameController.getInstance().getCurrentPlayer();
 			BoardController.publishTheory(ingredientCard, molecule);
-			if (GameController.getInstance().getCurrentPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(4))){
-				GameController.getInstance().getGameInventory().getArtCards().get(4).useCard();
+			if (currPlayer.getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(4))){
+				if (currPlayer == GameController.getInstance().getCurrentPlayer()){
+					GameController.getInstance().getGameInventory().getArtCards().get(4).useCard();
+					GameController.getInstance().getCurrentPlayer().getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(4));
+					GameController.getInstance().getBoard().getPublicationBoard().notifyObserver();
+				}
+				else {
+					GameController.getInstance().getActivePlayers().get(GameController.getInstance().getActivePlayers().size()-1).getPlayerToken().addGold(1);
+					GameController.getInstance().getActivePlayers().get(GameController.getInstance().getActivePlayers().size()-1).getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(4));
+					GameController.getInstance().getBoard().getPublicationBoard().notifyObserver();
+
+				}
 			}
 		}
 		catch (UserErrorException exc) {
