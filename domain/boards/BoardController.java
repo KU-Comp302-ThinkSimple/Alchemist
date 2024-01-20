@@ -1,6 +1,7 @@
 package domain.boards;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.cards.IngredientCard;
 import domain.cards.artifactCards.ArtifactCard;
 import domain.potion.Molecule;
@@ -35,6 +36,10 @@ public class BoardController implements Observable {
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 	}
 	public static void buyArtifactCard() {
+		if(GameController.getInstance().getCurrentPlayer() != LocalData.getInstance().getLocalPlayer()) {
+			System.out.println("It isn't your turn.");
+			return;
+		}
 
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(GameController.getInstance().getGameInventory().getArtCards().size());
@@ -56,18 +61,27 @@ public class BoardController implements Observable {
 		//ingredient card to itself (so that it is always full). The curr player
 		//loses 1 action. If they have no action left the player is changed
 		//(rounds updated) automatically
+		if(GameController.getInstance().getCurrentPlayer() != LocalData.getInstance().getLocalPlayer()) {
+			throw new UserErrorException("It isn't your turn.");
+		}
 		GameController.getInstance().getBoard().getIngredientBoard().forageForIngredient();
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static void publishTheory(IngredientCard ingredient, Molecule hypothesizedMolecule) throws UserErrorException, RuntimeException{
+		if(GameController.getInstance().getCurrentPlayer() != LocalData.getInstance().getLocalPlayer()) {
+			throw new UserErrorException("It isn't your turn.");
+		}
 		GameController.getInstance().getBoard().getPublicationBoard().publishTheory(GameController.getInstance().getCurrentPlayer(), ingredient, hypothesizedMolecule);
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 
 	}
 
 	public static String debunkTheory(Hypotheses hypothesis, int atomId) throws UserErrorException, RuntimeException {
+		if(GameController.getInstance().getCurrentPlayer() != LocalData.getInstance().getLocalPlayer()) {
+			throw new UserErrorException("It isn't your turn.");
+		}
 		String ret = GameController.getInstance().getBoard().getPublicationBoard().debunkTheory(GameController.getInstance().getCurrentPlayer(), hypothesis, atomId);
 		//		GameController.getMainGameWindow().updateMainGameWindow();
 		return ret;
@@ -75,6 +89,9 @@ public class BoardController implements Observable {
 
 
 	public static potionType brewPotion(String ingredient1, String ingredient2, boolean onStu) throws UserErrorException, RuntimeException{
+		if(GameController.getInstance().getCurrentPlayer() != LocalData.getInstance().getLocalPlayer()) {
+			throw new UserErrorException("It isn't your turn.");
+		}
 		//Find ingredients with given names
 		IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;
@@ -90,6 +107,9 @@ public class BoardController implements Observable {
 	}
 
 	public static String sellPotion(String ingredient1, String ingredient2, int guarantee) throws UserErrorException{
+		if(GameController.getInstance().getCurrentPlayer() != LocalData.getInstance().getLocalPlayer()) {
+			throw new UserErrorException("It isn't your turn.");
+		}
 		//Find ingredients with given names
 		IngredientCard ingr1 = null;
 		IngredientCard ingr2 = null;

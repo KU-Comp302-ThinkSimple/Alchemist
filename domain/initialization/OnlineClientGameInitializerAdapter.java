@@ -11,7 +11,6 @@ import exception.UserErrorException;
 import network.Client;
 
 public class OnlineClientGameInitializerAdapter implements GameInitializerAdapter{
-	private Client client;
 	
 	@Override
 	public void startInitialization(Map<String, Object> initialSettings) throws Exception{
@@ -22,8 +21,9 @@ public class OnlineClientGameInitializerAdapter implements GameInitializerAdapte
 			throw new Exception("Port or hostAddress cannot be null");
 		}
 		
-		client = new Client("client_" + (new Random()).nextInt(100000), hostAddress, port);
+		Client client = new Client("client_" + (new Random()).nextInt(100000), hostAddress, port);
 		client.start();
+		LocalData.getInstance().setClient(client);
 	};
 	@Override
 	public void finalizeInitialization(Map<String, Object> gameSettings) throws Exception{
@@ -38,7 +38,7 @@ public class OnlineClientGameInitializerAdapter implements GameInitializerAdapte
 			throw new Exception("Password or username cannot be null");
 		}
 		
-		LoginResult result = client.remoteLoginBlocking(username, password, timeoutMillis);
+		LoginResult result = LocalData.getInstance().getClient().remoteLoginBlocking(username, password, timeoutMillis);
 		if(!result.isSuccess()) {
 			throw new UserErrorException(result.getMessage());
 		}

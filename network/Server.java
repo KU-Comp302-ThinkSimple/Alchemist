@@ -33,13 +33,11 @@ public class Server extends Thread {
     
     private class ClientConnection{
 		private final Socket socket;
-    	private final ObjectInputStream objectInputStream;
-    	private final ObjectOutputStream objectOutputStream;
+    	private ObjectInputStream objectInputStream;
+    	private ObjectOutputStream objectOutputStream;
     	
-    	public ClientConnection(Socket socket) throws IOException {
+    	public ClientConnection(Socket socket){
 			this.socket = socket;
-			this.objectInputStream = new ObjectInputStream(socket.getInputStream());
-			this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     	}
     	
     	
@@ -47,11 +45,17 @@ public class Server extends Thread {
 			return socket;
 		}
 
-		public ObjectInputStream getObjectInputStream() {
+		public ObjectInputStream getObjectInputStream() throws IOException {
+			if(objectInputStream == null) {
+				objectInputStream = new ObjectInputStream(socket.getInputStream());
+			}
 			return objectInputStream;
 		}
 
-		public ObjectOutputStream getObjectOutputStream() {
+		public ObjectOutputStream getObjectOutputStream() throws IOException {
+			if(objectOutputStream == null) {
+				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			}
 			return objectOutputStream;
 		}
 		
@@ -85,13 +89,14 @@ public class Server extends Thread {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-    	int port = findAvailablePort();
+//    	int port = findAvailablePort();
+    	int port = 4000;
         Server server = new Server(port);
         System.out.println("Available port: " + server.getPort());
         // Start the server thread
         server.start();
         
-        if(true) {
+        if(false) {
             Client client1 = new Client("client1", "127.0.0.1", port);
             client1.start();
             
@@ -126,11 +131,13 @@ public class Server extends Thread {
             try {
             	System.out.println("Waiting for connections on port " + serverSocket.getLocalPort() + "...");
             	ClientConnection newClientConnection = new ClientConnection(serverSocket.accept());
+            	System.out.println("New connection found, adding to list");
             	clients.add(newClientConnection);
             	//handle the client operations (relaying) in a new thread
+            	System.out.println("Starting new thread");
             	Thread clientThread = new Thread(()->handleClient(newClientConnection));
             	clientThread.start();
-            	System.out.println("New connection");
+            	System.out.println("New connection fully established");
             } catch (IOException e) {
                 e.printStackTrace(); // Handle the exception according to your needs
             }
@@ -181,7 +188,12 @@ public class Server extends Thread {
     }
     
     private void sendMessage(ClientConnection receiver, Message message) throws IOException{
-        receiver.getObjectOutputStream().writeObject(message);
+    	receiver.getObjectOutputStream().flush();
+    	receiver.getObjectOutputStream().reset();
+        receiver.getObjectOutputStream().writeUnshared(message);
+        receiver.getObjectOutputStream().reset();
+    	receiver.getObjectOutputStream().flush();
+
     }
     
     private void handleSignupMessage(ClientConnection sender, SignupMessage message) throws IOException {

@@ -1,6 +1,7 @@
 package userinterface;
 
 import domain.GameController;
+import domain.LocalData;
 import domain.boards.BoardController;
 import domain.cards.IngredientCard;
 import domain.player.Player;

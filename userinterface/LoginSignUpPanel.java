@@ -2,6 +2,8 @@ package userinterface;
 
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -12,6 +14,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import domain.loginSignup.LoginSignupController;
+import domain.LocalData;
+import domain.initialization.GameInitializerAdapter;
+import domain.initialization.OfflineGameInitializerAdapter;
+import domain.initialization.OnlineClientGameInitializerAdapter;
+import domain.initialization.OnlineHostGameInitializerAdapter;
 import domain.loginSignup.*;
 import userinterface.util.GlobalColors;
 import userinterface.util.GlobalFonts;
@@ -20,6 +27,9 @@ import userinterface.util.GlobalFonts;
 public class LoginSignUpPanel extends JPanel {
 
 	private int loggedinUserCount = 0;
+	
+	private GameInitializerAdapter gameInitializer;
+
 
 	public LoginSignUpPanel() {
 
@@ -94,31 +104,55 @@ public class LoginSignUpPanel extends JPanel {
 		loginButton.setFont(GlobalFonts.DISPLAY);
 		loginButton.addActionListener(e -> {
 			String loginUserNameInput = loginUserNameInputTextField.getText();
-			char[] loginPasswordInput = loginPasswordField.getPassword();
-
-			//log in action
-			LoginResult result = LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
-
-			if (result.isSuccess()) {
-
-				loggedinUserCount += 1;
-
-				loginMessageDisplay.setText(result.getMessage());
-				loginMessageDisplay.setVisible(true);
-
-				//clear editables
-				loginUserNameInputTextField.setText(null);
-				loginPasswordField.setText(null);
-
-
-				//log in button invisible now
-				((JButton) e.getSource()).setVisible(false);
-
+			String loginPasswordInput = new String(loginPasswordField.getPassword());
+			
+			if(gameInitializer == null) {
+				throw new RuntimeException("GameInitializer cannot be null.");
 			}
-			//log in unsuccessful
+			
+			if(gameInitializer instanceof OfflineGameInitializerAdapter) {
+				//log in action
+				LoginResult result = LoginSignupController.getInstance().login(loginUserNameInput, new String(loginPasswordInput));
+
+				if (result.isSuccess()) {
+
+					loggedinUserCount += 1;
+
+					loginMessageDisplay.setText(result.getMessage());
+					loginMessageDisplay.setVisible(true);
+
+					//clear editables
+					loginUserNameInputTextField.setText(null);
+					loginPasswordField.setText(null);
+
+
+					//log in button invisible now
+					((JButton) e.getSource()).setVisible(false);
+
+				}
+				//log in unsuccessful
+				else {
+					loginMessageDisplay.setText(result.getMessage());
+				}
+			}
 			else {
-				loginMessageDisplay.setText(result.getMessage());
+				HashMap<String, Object> settings = new HashMap<>();
+				settings.put("password", loginPasswordInput);
+				settings.put("username", loginUserNameInput);
+				
+				try {
+					gameInitializer.finalizeInitialization(settings);
+					if(gameInitializer instanceof OnlineHostGameInitializerAdapter) {
+						System.out.println("Loading host screen");
+						System.out.println(LocalData.getInstance().getLocalPlayer().getPlayerName());
+						new MainGameWindowOnline();
+					}
+				} catch (Exception e1) {
+					System.out.println(e1.getMessage());
+					e1.printStackTrace();
+				}
 			}
+			
 		}
 				);
 		this.add(loginButton);
@@ -189,11 +223,26 @@ public class LoginSignUpPanel extends JPanel {
 
 			//sign up action
 			String signUpUserNameInput = signUpUserNameInputTextField.getText();
-			char[] signUpPasswordInput = signUpPasswordField.getPassword();
-			SignupResult result = LoginSignupController.getInstance().signup(signUpUserNameInput, new String(signUpPasswordInput));
+			String signUpPasswordInput = new String(signUpPasswordField.getPassword());
+			
+			if(gameInitializer instanceof OnlineClientGameInitializerAdapter) {
+				try {
+					SignupResult result = LocalData.getInstance().getClient().remoteSignupBlocking(signUpUserNameInput, signUpPasswordInput, 5000);
 
-			signUpMessage.setText(result.getMessage());
-			signUpMessage.setVisible(true);
+					signUpMessage.setText(result.getMessage());
+					signUpMessage.setVisible(true);
+				} catch (TimeoutException e1) {
+					System.out.println("Signup request timed out");
+					e1.printStackTrace();
+				}
+			}
+			else {
+				SignupResult result = LoginSignupController.getInstance().signup(signUpUserNameInput, signUpPasswordInput);
+
+				signUpMessage.setText(result.getMessage());
+				signUpMessage.setVisible(true);
+			}
+			
 
 			//clear editible textfields
 			signUpUserNameInputTextField.setText("");
@@ -204,5 +253,10 @@ public class LoginSignUpPanel extends JPanel {
 
 		this.setVisible(true);
 		this.repaint();
+	}
+	
+
+	public void setGameInitializer(GameInitializerAdapter gameInitializer) {
+		this.gameInitializer = gameInitializer;
 	}
 }

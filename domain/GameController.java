@@ -3,11 +3,13 @@ package domain;
 import domain.boards.GameBoard;
 import domain.initialization.InitializeGameHelper;
 import domain.player.Player;
+import userinterface.MainGameWindowOnline;
 import userinterface.observer.Observable;
 import userinterface.observer.Observer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import domain.boards.Board;
@@ -25,7 +27,7 @@ public class GameController implements Serializable, Observable {
 	private static final long serialVersionUID = 4936278445022118697L;
 
 	private static GameController instance;
-	private List<Observer> observers = new ArrayList<>();
+	private transient List<Observer> observers = new ArrayList<>();
 	int currentRound=1; //1 2 and 3
 	private Player currentPlayer;
 	private String gameMode;
@@ -52,6 +54,15 @@ public class GameController implements Serializable, Observable {
 
 	public static void updateInstance(GameController newInstance) {
 		GameController.instance = newInstance;
+		if(GameController.getInstance().getGameMode().equals("online")) {
+			System.out.println("update instance online");
+			MainGameWindowOnline window = ((MainGameWindowOnline)LocalData.getInstance().getMainGameWindow());
+			if(window != null) {
+				window.addThisToObservables();
+				window.updateMainGameWindow();
+			}
+			LocalData.getInstance().getClient().addThisToObservables();
+		}
 	}
 
 	//	//This func initializes the game by calling creating a new instance of initliazegamehelper
@@ -68,6 +79,14 @@ public class GameController implements Serializable, Observable {
 	//		}
 	//
 	//	}
+
+	public String getGameMode() {
+		return gameMode;
+	}
+
+	public void setGameMode(String gameMode) {
+		this.gameMode = gameMode;
+	}
 
 	//This func changes rounds
 	public void changeRounds() {
@@ -118,6 +137,9 @@ public class GameController implements Serializable, Observable {
 		for(int i=0;i<activePlayers.size();i++) {
 			if(activePlayers.get(i).equals(currentPlayer)) {
 				currentPlayer = activePlayers.get((i+1)%activePlayers.size());
+				if(gameMode.equals("offline")) {
+					LocalData.getInstance().setLocalPlayerIndex((i+1)%activePlayers.size());
+				}
 				break;
 			}
 		}
@@ -226,12 +248,18 @@ public class GameController implements Serializable, Observable {
 
 	@Override
 	public void addObserver(Observer observer) {
+		if(observers == null) {
+			observers = new ArrayList<>();
+		}
 		observers.add(observer);
 	}
 
 	@Override
 	public void notifyObserver() {
-		for (Observer observer: observers){
+		if(observers == null) {
+			return;
+		}
+		for (Observer observer : observers){
 			observer.update();
 		}
 	}

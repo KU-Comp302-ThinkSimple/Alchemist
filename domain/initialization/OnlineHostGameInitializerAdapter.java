@@ -3,6 +3,7 @@ package domain.initialization;
 import java.io.IOException;
 import java.util.Map;
 
+import domain.GameController;
 import domain.LocalData;
 import domain.loginSignup.LoginResult;
 import domain.loginSignup.LoginSignupController;
@@ -11,9 +12,6 @@ import network.Client;
 import network.Server;
 
 public class OnlineHostGameInitializerAdapter implements GameInitializerAdapter{
-	private Server server;
-	private Client client;
-
 	public void startInitialization(Map<String, Object> initialSettings) throws Exception{
 		try {
 			Integer port = (Integer) initialSettings.get("port");
@@ -21,11 +19,15 @@ public class OnlineHostGameInitializerAdapter implements GameInitializerAdapter{
 				throw new Exception("Port cannot be null");
 			}
 			
-			server = new Server(port);
+			Server server = new Server(port);
 			server.start();
+			LocalData.getInstance().setServer(server);
+
 			
-			client = new Client("hostClient", "127.0.0.1", port);
+			Client client = new Client("hostClient", "127.0.0.1", port);
 			client.start();
+			LocalData.getInstance().setClient(client);
+
 		}
 		catch(IOException ioe) {
 			throw new Exception("Could not start server, or connect to local server.");
@@ -50,7 +52,9 @@ public class OnlineHostGameInitializerAdapter implements GameInitializerAdapter{
 		LocalData.getInstance().setLocalPlayerIndex(result.getLocalPlayerIndex());
 		
 		new InitializeGameHelper();	
-		client.update();
+		GameController.getInstance().setGameMode("online");
+		LocalData.getInstance().getClient().addThisToObservables();
+		LocalData.getInstance().getClient().update();
 	}
 
 }

@@ -3,6 +3,7 @@ package domain.initialization;
 import java.util.Random;
 
 import domain.GameController;
+import domain.LocalData;
 
 public class InitializeGameHelper {
 
@@ -30,7 +31,12 @@ public class InitializeGameHelper {
 	public void chooseStartingPlayer() {
 		Random rand = new Random();
 		int num = rand.nextInt(GameController.getInstance().getActivePlayers().size());
-		GameController.getInstance().setCurrentPlayer(GameController.getInstance().getActivePlayers().get(num));;
+		GameController.getInstance().setCurrentPlayer(GameController.getInstance().getActivePlayers().get(num));
+		if(GameController.getInstance().getGameMode() != null) {
+			if(GameController.getInstance().getGameMode().equals("offline")) {
+				LocalData.getInstance().setLocalPlayerIndex(num);
+			}
+		}
 	}
 
 	// This func shuffles cards

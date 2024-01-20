@@ -17,6 +17,7 @@ public class MainObserver implements Observer{
 
 	@Override
 	public void update(){
+		System.out.println("Updating main game window via observer");
 		if (this.mainGameWindow == null) {
 			mainGameWindowOnline.updateMainGameWindow();
 		}
