@@ -190,7 +190,7 @@ public class Server extends Thread {
     private void sendMessage(ClientConnection receiver, Message message) throws IOException{
     	receiver.getObjectOutputStream().flush();
     	receiver.getObjectOutputStream().reset();
-        receiver.getObjectOutputStream().writeObject(message);
+        receiver.getObjectOutputStream().writeUnshared(message);
         receiver.getObjectOutputStream().reset();
     	receiver.getObjectOutputStream().flush();
 

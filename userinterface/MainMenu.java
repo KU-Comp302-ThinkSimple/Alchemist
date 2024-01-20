@@ -35,8 +35,10 @@ public class MainMenu extends JFrame implements Observer{
 	private int loggedinUserCount;
 	GameInitializerAdapter gameInitializer;
 	private LoginSignUpPanel logsignPanel;
+	private boolean loadedGame;
 
 	public MainMenu() {
+		loadedGame = false;
 		this.setUndecorated(true);
 		this.setMaximumSize(new Dimension(1920, 1080));
 		this.setBounds(0, 0, 1920, 1080);
@@ -265,6 +267,10 @@ public class MainMenu extends JFrame implements Observer{
 	@Override
 	public void update() {
 		if(gameInitializer instanceof OnlineClientGameInitializerAdapter) {
+			if(loadedGame) {
+				return;
+			}
+			loadedGame = true;
 			LocalData.getInstance().getClient().clearObservers();
 			System.out.println("Loading client screen");
 			System.out.println(LocalData.getInstance().getLocalPlayer().getPlayerName());
