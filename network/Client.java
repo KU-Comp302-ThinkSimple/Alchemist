@@ -55,9 +55,11 @@ public class Client extends Thread implements Observer, Observable{
 
     private void sendMessage(Message message) {
         try {
+        	getObjectOutputStream().flush();
         	getObjectOutputStream().reset();
             getObjectOutputStream().writeObject(message);
             getObjectOutputStream().reset();
+        	getObjectOutputStream().flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,9 +70,7 @@ public class Client extends Thread implements Observer, Observable{
             
             while (true) {
             	try {
-            		getObjectInputStream().reset();
             		Message receivedMessage = (Message) getObjectInputStream().readObject();
-            		getObjectInputStream().reset();
             		if(receivedMessage instanceof GameStateUpdateMessage) {
             			GameController newGameController = ((GameStateUpdateMessage) receivedMessage).getNewGameController();
                     	if(debugEnabled) {

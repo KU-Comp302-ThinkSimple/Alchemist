@@ -147,9 +147,7 @@ public class Server extends Thread {
     private void handleClient(ClientConnection clientConnection) {
     	try {
             while (true) {
-            	clientConnection.getObjectInputStream().reset();
             	Message receivedMessage = (Message) clientConnection.getObjectInputStream().readObject();
-            	clientConnection.getObjectInputStream().reset();
             	if (receivedMessage instanceof GameStateUpdateMessage) {
             		// Relay the message to all other clients
                 	relayMessage(clientConnection, receivedMessage);
@@ -190,9 +188,12 @@ public class Server extends Thread {
     }
     
     private void sendMessage(ClientConnection receiver, Message message) throws IOException{
+    	receiver.getObjectOutputStream().flush();
     	receiver.getObjectOutputStream().reset();
         receiver.getObjectOutputStream().writeObject(message);
         receiver.getObjectOutputStream().reset();
+    	receiver.getObjectOutputStream().flush();
+
     }
     
     private void handleSignupMessage(ClientConnection sender, SignupMessage message) throws IOException {
