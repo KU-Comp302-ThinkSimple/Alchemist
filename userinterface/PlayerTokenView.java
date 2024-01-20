@@ -25,7 +25,7 @@ public class PlayerTokenView extends JPanel {
 	private JTextField actionHeader;
 	private ArrayList<JPanel> potPanels=new  ArrayList<JPanel>();
 	//private int id; //There will be two of this view so there should be an id attribute to separate them
-	private Player player;
+	private int playerindex;
 	private Font panelFontHeader;
 	private Font panelFontText;
 
@@ -36,8 +36,8 @@ public class PlayerTokenView extends JPanel {
 	 */
 
 	public PlayerTokenView(int i) {
-
-		player = GameController.getInstance().getActivePlayers().get(i);
+		this.playerindex = i;
+		Player player = GameController.getInstance().getActivePlayers().get(i);
 		if (player == null) {
 			throw new RuntimeException("Active player i is null.");
 		}
@@ -197,6 +197,7 @@ public class PlayerTokenView extends JPanel {
 		//If player has 2 different recipes for a potion, the same image won't be shown twice.
 		ArrayList<String> addedPotions = new ArrayList<String>();
 
+		Player player = GameController.getInstance().getActivePlayers().get(playerindex);
 		for(int i=0;i<player.getInventory().getPlayerPotionList().size();i++) {
 
 			String potname = player.getInventory().getPlayerPotionList().get(i).getPotionType().toString();
@@ -216,6 +217,7 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
+		Player player = GameController.getInstance().getActivePlayers().get(this.playerindex);
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		healthField.repaint();
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
