@@ -132,7 +132,7 @@ public class PlayerInventory extends JPanel {
 
 			ArtifactCard currentCard=player.getInventory().getPlayerArtifactCardList().get(i);
 			button.addActionListener(e -> {
-				currentCard.useCard();
+
 				System.out.println("Used card named "+ currentCard.getName());
 				String message = "This artifact cards shall awaits its usage when its time comes.";
 
@@ -162,6 +162,8 @@ public class PlayerInventory extends JPanel {
 						ElixirOfInsight elixCard= (ElixirOfInsight) currentCard;
 						elixCard.changeCards(arr);
 
+						LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
+						LocalData.getInstance().getLocalPlayer().getPlayerToken().reducePlayerAction();
 
 					}catch(Exception exc) {
 						System.out.println("Something went wrong");
@@ -169,6 +171,7 @@ public class PlayerInventory extends JPanel {
 				}
 				else if (currentCard.getName().equals("Vaccine")){
 					//TODO Create a pop up telling "This artifact cards shall awaits its usage when its time comes."
+
 					JOptionPane. showMessageDialog(this, message);
 				}
 				else if (currentCard.getName().equals("Magic Mortar")){
@@ -184,9 +187,7 @@ public class PlayerInventory extends JPanel {
 					JOptionPane. showMessageDialog(this, message);
 				}
 
-				LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
-				LocalData.getInstance().getLocalPlayer().getPlayerToken().reducePlayerAction();
-				
+
 			});
 
 			viewPort_1.add(button);
