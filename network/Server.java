@@ -147,7 +147,9 @@ public class Server extends Thread {
     private void handleClient(ClientConnection clientConnection) {
     	try {
             while (true) {
+            	clientConnection.getObjectInputStream().reset();
             	Message receivedMessage = (Message) clientConnection.getObjectInputStream().readObject();
+            	clientConnection.getObjectInputStream().reset();
             	if (receivedMessage instanceof GameStateUpdateMessage) {
             		// Relay the message to all other clients
                 	relayMessage(clientConnection, receivedMessage);

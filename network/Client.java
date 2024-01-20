@@ -68,7 +68,9 @@ public class Client extends Thread implements Observer, Observable{
             
             while (true) {
             	try {
+            		getObjectInputStream().reset();
             		Message receivedMessage = (Message) getObjectInputStream().readObject();
+            		getObjectInputStream().reset();
             		if(receivedMessage instanceof GameStateUpdateMessage) {
             			GameController newGameController = ((GameStateUpdateMessage) receivedMessage).getNewGameController();
                     	if(debugEnabled) {
