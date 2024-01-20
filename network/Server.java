@@ -188,7 +188,9 @@ public class Server extends Thread {
     }
     
     private void sendMessage(ClientConnection receiver, Message message) throws IOException{
+    	receiver.getObjectOutputStream().reset();
         receiver.getObjectOutputStream().writeObject(message);
+        receiver.getObjectOutputStream().reset();
     }
     
     private void handleSignupMessage(ClientConnection sender, SignupMessage message) throws IOException {

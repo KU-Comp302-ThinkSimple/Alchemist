@@ -57,6 +57,7 @@ public class Client extends Thread implements Observer, Observable{
         try {
         	getObjectOutputStream().reset();
             getObjectOutputStream().writeObject(message);
+            getObjectOutputStream().reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
