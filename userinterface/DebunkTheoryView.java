@@ -146,12 +146,23 @@ public class DebunkTheoryView extends JPanel implements ActionListener {
         Hypotheses hypothesis = ((HypothesisComboBoxItem) hypothesisComboBox.getSelectedItem()).getHypothesis();
         int atomColorId = ((AtomComboBoxItem) atomComboBox.getSelectedItem()).getAtomColorId();
         try {
+            Player currPlayer = GameController.getInstance().getCurrentPlayer();
             String trueSign = BoardController.debunkTheory(hypothesis, atomColorId);
             JOptionPane.showMessageDialog(this, "The true sign of " + hypothesis.getIngredient().getName() + "'s " + atomComboBox.getSelectedItem() + " atom is " + trueSign + "!");
             if (trueSign.contains("false")) {
-                if (LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(2))){
-					GameController.getInstance().getGameInventory().getArtCards().get(2).useCard();
-				}
+                if (currPlayer.getInventory().getPlayerArtifactCardList().contains(GameController.getInstance().getGameInventory().getArtCards().get(2))){
+                    if (currPlayer == GameController.getInstance().getCurrentPlayer()){
+                        GameController.getInstance().getGameInventory().getArtCards().get(2).useCard();
+                        GameController.getInstance().getCurrentPlayer().getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(2));
+                        GameController.getInstance().getBoard().getPublicationBoard().notifyObserver();
+                    }
+                    else {
+                        GameController.getInstance().getActivePlayers().get(GameController.getInstance().getActivePlayers().size()-1).getPlayerToken().addReputationPoint(1);
+                        GameController.getInstance().getActivePlayers().get(GameController.getInstance().getActivePlayers().size()-1).getInventory().removeArtifactCard(GameController.getInstance().getGameInventory().getArtCards().get(2));
+                        GameController.getInstance().getBoard().getPublicationBoard().notifyObserver();
+
+                    }
+                }
 
             }
         } catch (UserErrorException exc) {
