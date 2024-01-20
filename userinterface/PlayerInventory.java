@@ -164,6 +164,7 @@ public class PlayerInventory extends JPanel {
 
 						LocalData.getInstance().getLocalPlayer().getInventory().getPlayerArtifactCardList().remove(currentCard);
 						LocalData.getInstance().getLocalPlayer().getPlayerToken().reducePlayerAction();
+						GameController.getInstance().getBoard().getPublicationBoard().notifyObserver();
 
 					}catch(Exception exc) {
 						System.out.println("Something went wrong");

@@ -11,7 +11,6 @@ import exception.UserErrorException;
 import userinterface.observer.Observable;
 import userinterface.observer.Observer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,6 +46,7 @@ public class BoardController implements Observable {
 		GameController.getInstance().getCurrentPlayer().getInventory().addArtifactCard(card);
 		GameController.getInstance().getCurrentPlayer().getPlayerToken().subtractGold(1);
 		GameController.getInstance().getCurrentPlayer().getPlayerToken().reducePlayerAction();
+		GameController.getInstance().getBoard().getPublicationBoard().notifyObserver();
 
 	}
 
