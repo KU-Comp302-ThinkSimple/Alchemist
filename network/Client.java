@@ -71,6 +71,10 @@ public class Client extends Thread implements Observer, Observable{
             			GameController newGameController = ((GameStateUpdateMessage) receivedMessage).getNewGameController();
                     	if(debugEnabled) {
                 			System.out.println(this.name + " received game state");
+                			System.out.println("Incoming gamestate:");
+                			for (Player player : GameController.getInstance().getActivePlayers()) {
+                				System.out.println(player.getPlayerName() + ": " + player.getPlayerToken().getPlayerAction());
+                			}
                     	}
                     	GameController.updateInstance(newGameController);
                     	notifyObserver();
@@ -108,11 +112,17 @@ public class Client extends Thread implements Observer, Observable{
 
 	@Override
 	public void update() {
-		System.out.println("Sending game state");
-		for (Player player : GameController.getInstance().getActivePlayers()) {
+		GameStateUpdateMessage message = new GameStateUpdateMessage(GameController.getInstance());
+		System.out.println("Before sending game state");
+		for (Player player : message.getNewGameController().getActivePlayers()) {
 			System.out.println(player.getPlayerName() + ": " + player.getPlayerToken().getPlayerAction());
 		}
-		sendMessage(new GameStateUpdateMessage(GameController.getInstance()));
+		sendMessage(message);
+		System.out.println("After sending game state");
+		for (Player player : message.getNewGameController().getActivePlayers()) {
+			System.out.println(player.getPlayerName() + ": " + player.getPlayerToken().getPlayerAction());
+		}
+		System.out.println(GameController.getInstance().getCurrentPlayer().getPlayerToken().getPlayerAction());
 	}
 	
 	public SignupResult remoteSignupBlocking(String username, String password, int timeoutMillis) throws TimeoutException{

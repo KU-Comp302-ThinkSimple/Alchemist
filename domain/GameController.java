@@ -54,10 +54,6 @@ public class GameController implements Serializable, Observable {
 
 	public static void updateInstance(GameController newInstance) {
 		GameController.instance = newInstance;
-		System.out.println("Incoming:");
-		for (Player player : GameController.getInstance().getActivePlayers()) {
-			System.out.println(player.getPlayerName() + ": " + player.getPlayerToken().getPlayerAction());
-		}
 		if(GameController.getInstance().getGameMode().equals("online")) {
 			System.out.println("update instance online");
 			MainGameWindowOnline window = ((MainGameWindowOnline)LocalData.getInstance().getMainGameWindow());

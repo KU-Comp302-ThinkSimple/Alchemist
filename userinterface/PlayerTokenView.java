@@ -219,7 +219,6 @@ public class PlayerTokenView extends JPanel {
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		healthField.repaint();
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
-		System.out.println("gold test: " + Integer.toString(player.getPlayerToken().getGold()));
 		goldField.repaint();
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		repField.repaint();
