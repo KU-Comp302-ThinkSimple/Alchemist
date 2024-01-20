@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MainGameWindowOffline extends JFrame{
 
 	private JPanel contentPane;
-	private JPanel deductionBoard = new DeductionBoard();
+	private JPanel deductionBoard = new DeductionBoard("offline");
 	private JPanel resultsTriangle = new ResultsTriangle(1);
 	private JPanel playerInventory = new PlayerInventory("offline");
 	private JPanel potionBrewingBoard = new BrewPotionPanel();
@@ -300,13 +300,13 @@ public class MainGameWindowOffline extends JFrame{
 
 	public void updateMainGameWindow() {
 		//Deduction Board Changer
-		((DeductionBoard)deductionBoard).updateDeductionBoard();
+		((DeductionBoard)deductionBoard).updateDeductionBoard("offline");
 
 		//Player Inventory Changer
 		((PlayerInventory)playerInventory).updatePlayerInventory("offline");
 
 		//Results Triangle Changer
-		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle("offline");
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();

@@ -26,7 +26,7 @@ public class MainGameWindowOnline extends JFrame{
 	JPanel debunkTheoryView = new DebunkTheoryView();
 	JPanel potionBrewingBoard = new BrewPotionPanel();
 	JPanel resultsTriangle = new ResultsTriangle(1);
-	JPanel deductionBoard = new DeductionBoard();
+	JPanel deductionBoard = new DeductionBoard("online");
 	PlayerTokenView ptwLocal;
 	ArrayList<PlayerTokenView> playerTokens = new ArrayList<PlayerTokenView>();
 	JPanel playerInventory = new PlayerInventory("online");
@@ -319,17 +319,17 @@ public class MainGameWindowOnline extends JFrame{
 	public void updateMainGameWindow() {
 		System.out.println("Main Game Window Update");
 		//Deduction Board Changer
-		((DeductionBoard)deductionBoard).updateDeductionBoard();
+		((DeductionBoard)deductionBoard).updateDeductionBoard("online");
 
 		//Player Inventory Changer
 		((PlayerInventory)playerInventory).updatePlayerInventory("online");
 
 		//Results Triangle Changer
-		((ResultsTriangle)resultsTriangle).updateResultsTriangle();
+		((ResultsTriangle)resultsTriangle).updateResultsTriangle("online");
 
 		//Transmute Ingredient ComboBoxChanger
 		transmuteIngredientComboBox.removeAllItems();
-		ArrayList<IngredientCard> ingredientsListt = LocalData.getInstance().getLocalPlayer().getInventory().getPlayerIngredientCardList();
+		ArrayList<IngredientCard> ingredientsListt = localPlayer.getInventory().getPlayerIngredientCardList();
 		String[] ingrss = new String[ingredientsListt.size()];
 		for (int i = 0; i < ingredientsListt.size(); i++) {
 			ingrss[i] = ingredientsListt.get(i).getName();
