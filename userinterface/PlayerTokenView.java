@@ -216,12 +216,10 @@ public class PlayerTokenView extends JPanel {
 
 
 	public void updatePlayerTokenView() {
-		player = LocalData.getInstance().getLocalPlayer();
-		nameField.setText(player.getPlayerName());
 		healthField.setText(Integer.toString(player.getPlayerToken().getPlayerHealth()));
 		healthField.repaint();
 		goldField.setText(Integer.toString(player.getPlayerToken().getGold()));
-//		System.out.println("gold test: " + Integer.toString(player.getPlayerToken().getGold()));
+		System.out.println("gold test: " + Integer.toString(player.getPlayerToken().getGold()));
 		goldField.repaint();
 		repField.setText(Integer.toString(player.getPlayerToken().getReputation()));
 		repField.repaint();
